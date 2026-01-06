@@ -1,45 +1,125 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
+# =========================
+# OS / system junk
+# =========================
 .DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
 
-# IntelliJ related
+# =========================
+# IDE / editors
+# =========================
+.idea/
 *.iml
 *.ipr
 *.iws
-.idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code (keep common shared configs, ignore the rest)
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Flutter / Dart
+# =========================
 .dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
+.packages
 .pub/
-/build/
-/coverage/
+.pub-cache/
+build/
+coverage/
+.flutter-plugins
+.flutter-plugins-dependencies
 
-# Symbolication related
-app.*.symbols
+# =========================
+# Android / Gradle
+# =========================
+android/.gradle/
+android/local.properties
+android/**/key.properties
 
-# Obfuscation related
-app.*.map.json
+# Keystores / signing
+*.jks
+*.keystore
+*.p12
+*.pem
+*.pfx
+*.key
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# =========================
+# iOS / macOS (Xcode / CocoaPods)
+# =========================
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+ios/Flutter/.last_build_id
+macos/Pods/
+macos/Flutter/ephemeral/
+DerivedData/
+
+*.xcuserstate
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# =========================
+# Windows / Linux ephemeral
+# =========================
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+
+# =========================
+# Web
+# =========================
+web/**/.dart_tool/
+web/**/build/
+
+# =========================
+# Backend (common)
+# =========================
+backend/node_modules/
+backend/.dart_tool/
+backend/build/
+
+# =========================
+# Env / secrets
+# =========================
+.env
+.env.*
+*.env
+
+# =========================
+# Firebase / Google credentials
+# (These often contain API keys and can trigger GitHub secret scanning)
+# =========================
+lib/firebase_options.dart
+**/firebase_options.dart
+
+android/app/google-services.json
+android/**/google-services.json
+
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+
+ios/firebase_app_id_file.json
+macos/firebase_app_id_file.json
+
+# Firebase Admin SDK / Service Accounts (DO NOT COMMIT)
+**/*serviceAccount*.json
+**/*service-account*.json
+**/*adminsdk*.json
+**/*firebase-adminsdk*.json
