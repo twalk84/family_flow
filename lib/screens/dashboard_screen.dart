@@ -1,0 +1,2035 @@
+// FILE: lib/screens/dashboard_screen.dart
+//
+// Dashboard (FamilyOS)
+//
+// Polished UX updates (kept):
+// - Assignment rows use InkWell ripple + subtle "⋯" actions button
+// - All assignment actions use a smooth bottom sheet (complete, grade, undo, delete)
+// - Add Student/Subject/Assignment use smooth bottom sheets
+// - AppBar actions become text "pill" buttons on wide screens, icon buttons on narrow screens
+//
+// Current features in this version:
+// - ✅ Subjects are a TAB (not a button), alongside Assignments
+// - ✅ Subjects tab shows all subjects + counts + SEARCH BAR
+// - ✅ Subject detail sheet shows which students have assignments in that subject
+// - ✅ Subject rename (edit) flow
+// - ✅ Student streak reset (per-student + reset-all in Manage Students sheet)
+
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import '../firestore_paths.dart';
+import '../models.dart';
+import '../widgets/app_scaffolds.dart';
+import '../widgets/assistant_sheet.dart';
+import 'daily_schedule_screen.dart';
+import 'student_profile_screen.dart';
+
+class DashboardScreen extends StatefulWidget {
+  final bool openScheduleOnStart;
+
+  const DashboardScreen({super.key, this.openScheduleOnStart = false});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabController; // narrow layout only
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? _settingsSub;
+
+  String? teacherMood;
+  bool _autoOpenedSchedule = false;
+
+  // Subjects search UI
+  final TextEditingController _subjectSearchCtrl = TextEditingController();
+  String _subjectQuery = '';
+
+  final List<String> _moods = const ['😫', '😔', '😐', '😊', '🔥'];
+
+  final List<Color> _defaultStudentPalette = const [
+    Colors.blue,
+    Colors.green,
+    Colors.purple,
+    Colors.pink,
+    Colors.orange,
+    Colors.teal,
+    Colors.red,
+    Colors.amber,
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Narrow layout uses 3 tabs: Students / Assignments / Subjects
+    _tabController = TabController(length: 3, vsync: this);
+
+    _settingsSub = FirestorePaths.settingsDoc().snapshots().listen((doc) {
+      if (!mounted) return;
+      final d = doc.data();
+      setState(() {
+        teacherMood = d == null ? null : (d['teacherMood'] as String?);
+      });
+    });
+
+    _subjectSearchCtrl.addListener(() {
+      final q = _subjectSearchCtrl.text.trim();
+      if (q == _subjectQuery) return;
+      if (!mounted) return;
+      setState(() => _subjectQuery = q);
+    });
+  }
+
+  @override
+  void dispose() {
+    _settingsSub?.cancel();
+    _tabController.dispose();
+    _subjectSearchCtrl.dispose();
+    super.dispose();
+  }
+
+  // ============================================================
+  // Helpers
+  // ============================================================
+
+  void _snack(String msg, {Color? color}) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  Future<void> _setTeacherMood(String? mood) async {
+    await FirestorePaths.settingsDoc().set(
+      {'teacherMood': mood, 'updatedAt': FieldValue.serverTimestamp()},
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> _signOut() => FirebaseAuth.instance.signOut();
+
+  String _todayYmd() {
+    final d = DateTime.now();
+    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  }
+
+  Color _colorForStudent(Student student, int index) {
+    final v = student.colorValue; // matches your models.dart
+    if (v != 0) return Color(v);
+    return _defaultStudentPalette[index % _defaultStudentPalette.length];
+  }
+
+  // ============================================================
+  // Smooth Bottom Sheet (general-purpose)
+  // ============================================================
+
+  Future<T?> _showSmoothSheet<T>({
+    required String title,
+    required Widget Function(BuildContext sheetContext) builder,
+  }) {
+    return showModalBottomSheet<T>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF111827),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
+      ),
+      builder: (sheetContext) {
+        final viewInsets = MediaQuery.of(sheetContext).viewInsets.bottom;
+        final size = MediaQuery.of(sheetContext).size;
+        final targetW = size.width > 720 ? 640.0 : size.width;
+
+        return SafeArea(
+          top: false,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: viewInsets),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: targetW,
+                  maxHeight: size.height * 0.88,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 18),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.white24,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: 'Close',
+                            onPressed: () => Navigator.pop(sheetContext),
+                            icon: const Icon(Icons.close),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: builder(sheetContext),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // ============================================================
+  // Firestore mutations
+  // ============================================================
+
+  Future<void> _toggleAssignmentComplete(
+    String assignmentId, {
+    required bool completed,
+    int? grade,
+  }) async {
+    await FirestorePaths.assignmentsCol().doc(assignmentId).set(
+      {
+        'completed': completed,
+        'grade': completed ? grade : null,
+        'updatedAt': FieldValue.serverTimestamp(),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> _deleteAssignment(String assignmentId) async {
+    await FirestorePaths.assignmentsCol().doc(assignmentId).delete();
+  }
+
+  // Streak reset (safe even if you haven’t added streak to your Student model)
+  Future<void> _resetStudentStreak(Student s) async {
+    await FirestorePaths.studentsCol().doc(s.id).set(
+      {
+        'streak': 0,
+        'streakUpdatedAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future<void> _resetAllStudentStreaks(List<Student> students) async {
+    const limit = 450;
+    final refs = students.map((s) => FirestorePaths.studentsCol().doc(s.id)).toList();
+
+    for (var i = 0; i < refs.length; i += limit) {
+      final chunk = refs.sublist(i, (i + limit) > refs.length ? refs.length : (i + limit));
+      final batch = FirebaseFirestore.instance.batch();
+      for (final r in chunk) {
+        batch.set(
+          r,
+          {
+            'streak': 0,
+            'streakUpdatedAt': FieldValue.serverTimestamp(),
+            'updatedAt': FieldValue.serverTimestamp(),
+          },
+          SetOptions(merge: true),
+        );
+      }
+      await batch.commit();
+    }
+  }
+
+  Future<void> _renameSubject(Subject subject, String newName) async {
+    await FirestorePaths.subjectsCol().doc(subject.id).set(
+      {
+        'name': newName,
+        'nameLower': newName.toLowerCase(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  // ============================================================
+  // Student demo cleanup + utilities
+  // ============================================================
+
+  Future<void> _showStudentsManageSheet({
+    required List<Student> students,
+  }) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: const Color(0xFF111827),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+      ),
+      builder: (_) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Manage Students',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Use this to remove demo data before entering real students.',
+                style: TextStyle(color: Colors.white60),
+              ),
+              const SizedBox(height: 16),
+              ListTile(
+                leading: const Icon(Icons.restart_alt, color: Colors.orangeAccent),
+                title: const Text('Reset ALL streaks (set to 0)'),
+                subtitle: const Text('Keeps students + assignments.'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await _confirmResetAllStreaks(students);
+                },
+              ),
+              const Divider(color: Colors.white12),
+              ListTile(
+                leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
+                title: const Text('Delete ALL students (and their assignments)'),
+                subtitle: const Text('This cannot be undone.'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  await _confirmDeleteAllStudents();
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _confirmResetAllStreaks(List<Student> students) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Reset all streaks?'),
+        content: const Text(
+          'This will set streak = 0 for ALL students. Assignments are unchanged.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Reset'),
+          ),
+        ],
+      ),
+    );
+
+    if (ok == true) {
+      try {
+        await _resetAllStudentStreaks(students);
+        _snack('All streaks reset.', color: Colors.orange);
+      } catch (e) {
+        _snack('Reset failed: $e', color: Colors.red);
+      }
+    }
+  }
+
+  Future<void> _confirmDeleteAllStudents() async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Delete all students?'),
+        content: const Text(
+          'This will delete ALL students and ALL assignments for those students. '
+          'This cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete All'),
+          ),
+        ],
+      ),
+    );
+
+    if (ok == true) {
+      await _deleteAllStudentsAndTheirAssignments();
+    }
+  }
+
+  Future<void> _deleteAllStudentsAndTheirAssignments() async {
+    try {
+      final studentsSnap = await FirestorePaths.studentsCol().get();
+      final studentIds = studentsSnap.docs.map((d) => d.id).toList();
+
+      for (final sid in studentIds) {
+        final q = await FirestorePaths.assignmentsCol()
+            .where('studentId', isEqualTo: sid)
+            .get();
+        await _batchDeleteDocs(q.docs.map((d) => d.reference).toList());
+      }
+
+      await _batchDeleteDocs(studentsSnap.docs.map((d) => d.reference).toList());
+
+      _snack('All students deleted.', color: Colors.green);
+    } catch (e) {
+      _snack('Delete failed: $e', color: Colors.red);
+    }
+  }
+
+  Future<void> _batchDeleteDocs(
+    List<DocumentReference<Map<String, dynamic>>> refs,
+  ) async {
+    const limit = 450; // keep under Firestore 500 write batch limit
+    for (var i = 0; i < refs.length; i += limit) {
+      final chunk = refs.sublist(i, (i + limit) > refs.length ? refs.length : (i + limit));
+      final batch = FirebaseFirestore.instance.batch();
+      for (final r in chunk) {
+        batch.delete(r);
+      }
+      await batch.commit();
+    }
+  }
+
+  // ============================================================
+  // Add flows (smooth sheets)
+  // ============================================================
+
+  Future<void> _showAddStudentDialog() async {
+    final nameCtrl = TextEditingController();
+    final ageCtrl = TextEditingController();
+    final gradeCtrl = TextEditingController();
+    final pinCtrl = TextEditingController();
+
+    int selectedColorValue = _defaultStudentPalette.first.value;
+
+    await _showSmoothSheet<void>(
+      title: 'Add Student',
+      builder: (sheetContext) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Student Info', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: nameCtrl,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: ageCtrl,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          labelText: 'Age',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextField(
+                        controller: gradeCtrl,
+                        textInputAction: TextInputAction.next,
+                        decoration: const InputDecoration(
+                          labelText: 'Grade Level',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: pinCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Student PIN (optional)',
+                    helperText: 'Student login (view/claim rewards only).',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text('Color', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: _defaultStudentPalette.map((c) {
+                    final selected = c.value == selectedColorValue;
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(999),
+                      onTap: () => setSheetState(() => selectedColorValue = c.value),
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          color: c,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: selected ? Colors.white : Colors.white24,
+                            width: selected ? 3 : 1,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(sheetContext),
+                        child: const Text('Cancel'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.person_add_alt_1),
+                        label: const Text('Add'),
+                        onPressed: () async {
+                          final name = nameCtrl.text.trim();
+                          if (name.isEmpty) {
+                            _snack('Name is required.', color: Colors.orange);
+                            return;
+                          }
+
+                          final age = int.tryParse(ageCtrl.text.trim()) ?? 0;
+                          final grade = gradeCtrl.text.trim();
+                          final pin = pinCtrl.text.trim();
+
+                          final payload = <String, dynamic>{
+                            'name': name,
+                            'nameLower': name.toLowerCase(),
+                            'age': age,
+                            'gradeLevel': grade,
+                            'color': selectedColorValue,
+                            'updatedAt': FieldValue.serverTimestamp(),
+                            'createdAt': FieldValue.serverTimestamp(),
+                          };
+
+                          if (pin.isNotEmpty) payload['pin'] = pin;
+
+                          await FirestorePaths.studentsCol().add(payload);
+
+                          if (mounted) Navigator.pop(sheetContext);
+                          _snack('Student added.', color: Colors.green);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _showAddSubjectDialog() async {
+    final nameCtrl = TextEditingController();
+
+    await _showSmoothSheet<void>(
+      title: 'Add Subject',
+      builder: (sheetContext) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Subject Name', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(
+              controller: nameCtrl,
+              autofocus: true,
+              decoration: const InputDecoration(
+                labelText: 'e.g. Math, Latin, Science',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.bookmark_add),
+                    label: const Text('Add'),
+                    onPressed: () async {
+                      final name = nameCtrl.text.trim();
+                      if (name.isEmpty) {
+                        _snack('Subject name is required.', color: Colors.orange);
+                        return;
+                      }
+
+                      await FirestorePaths.subjectsCol().add({
+                        'name': name,
+                        'nameLower': name.toLowerCase(),
+                        'createdAt': FieldValue.serverTimestamp(),
+                        'updatedAt': FieldValue.serverTimestamp(),
+                      });
+
+                      if (mounted) Navigator.pop(sheetContext);
+                      _snack('Subject added.', color: Colors.green);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showAddAssignmentDialog({
+    required List<Student> students,
+    required List<Subject> subjects,
+  }) async {
+    if (students.isEmpty) {
+      _snack('Add a student first.', color: Colors.orange);
+      return;
+    }
+    if (subjects.isEmpty) {
+      _snack('Add a subject first.', color: Colors.orange);
+      return;
+    }
+
+    String studentId = students.first.id;
+    String subjectId = subjects.first.id;
+
+    final nameCtrl = TextEditingController();
+    final dateCtrl = TextEditingController(text: _todayYmd());
+
+    await _showSmoothSheet<void>(
+      title: 'Add Assignment',
+      builder: (sheetContext) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Details', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  value: studentId,
+                  decoration: const InputDecoration(
+                    labelText: 'Student',
+                    border: OutlineInputBorder(),
+                  ),
+                  dropdownColor: const Color(0xFF374151),
+                  items: students
+                      .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+                      .toList(),
+                  onChanged: (v) => setSheetState(() => studentId = v ?? studentId),
+                ),
+                const SizedBox(height: 12),
+                DropdownButtonFormField<String>(
+                  value: subjectId,
+                  decoration: const InputDecoration(
+                    labelText: 'Subject',
+                    border: OutlineInputBorder(),
+                  ),
+                  dropdownColor: const Color(0xFF374151),
+                  items: subjects
+                      .map((s) => DropdownMenuItem(value: s.id, child: Text(s.name)))
+                      .toList(),
+                  onChanged: (v) => setSheetState(() => subjectId = v ?? subjectId),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: nameCtrl,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Assignment Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: dateCtrl,
+                  decoration: const InputDecoration(
+                    labelText: 'Due Date (YYYY-MM-DD)',
+                    helperText: 'Date only, e.g. 2025-12-30',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(sheetContext),
+                        child: const Text('Cancel'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.add_circle_outline),
+                        label: const Text('Add'),
+                        onPressed: () async {
+                          final name = nameCtrl.text.trim();
+                          final due = normalizeDueDate(dateCtrl.text.trim());
+                          if (name.isEmpty || due.isEmpty) {
+                            _snack('Name and due date are required.', color: Colors.orange);
+                            return;
+                          }
+
+                          await FirestorePaths.assignmentsCol().add({
+                            'studentId': studentId,
+                            'subjectId': subjectId,
+                            'name': name,
+                            'dueDate': due,
+                            'completed': false,
+                            'grade': null,
+                            'createdAt': FieldValue.serverTimestamp(),
+                            'updatedAt': FieldValue.serverTimestamp(),
+                          });
+
+                          if (mounted) Navigator.pop(sheetContext);
+                          _snack('Assignment added.', color: Colors.green);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // ============================================================
+  // Assignment actions (smooth)
+  // ============================================================
+
+  Future<void> _showAssignmentActionsSheet(Assignment a) async {
+    final gradeCtrl = TextEditingController(text: a.grade?.toString() ?? '');
+
+    await _showSmoothSheet<void>(
+      title: 'Assignment',
+      builder: (sheetContext) {
+        final done = a.isCompleted;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              a.name,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '${a.subjectName} • ${a.studentName}',
+              style: const TextStyle(color: Colors.white60),
+            ),
+            const SizedBox(height: 6),
+            Row(
+              children: [
+                const Icon(Icons.event, size: 18, color: Colors.white70),
+                const SizedBox(width: 8),
+                Text(
+                  a.dueDate.isEmpty ? 'No due date' : a.dueDate,
+                  style: const TextStyle(color: Colors.white70),
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: done ? Colors.green.withOpacity(0.18) : Colors.white10,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color: done ? Colors.green.withOpacity(0.35) : Colors.white12,
+                    ),
+                  ),
+                  child: Text(
+                    done ? 'Completed' : 'Not completed',
+                    style: TextStyle(
+                      color: done ? Colors.greenAccent : Colors.white70,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Divider(color: Colors.white12),
+            if (!done) ...[
+              const SizedBox(height: 10),
+              const Text('Complete', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              TextField(
+                controller: gradeCtrl,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'Grade % (optional)',
+                  hintText: 'e.g. 95',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.check),
+                      label: const Text('No Grade'),
+                      onPressed: () async {
+                        try {
+                          await _toggleAssignmentComplete(a.id, completed: true, grade: null);
+                          if (mounted) Navigator.pop(sheetContext);
+                          _snack('Marked complete.', color: Colors.green);
+                        } catch (e) {
+                          _snack('Update failed: $e', color: Colors.red);
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.check_circle),
+                      label: const Text('With Grade'),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                      onPressed: () async {
+                        final raw = gradeCtrl.text.trim();
+                        final g = raw.isEmpty ? null : int.tryParse(raw);
+
+                        if (raw.isNotEmpty && (g == null || g < 0 || g > 100)) {
+                          _snack('Enter a grade 0–100, or leave blank.', color: Colors.orange);
+                          return;
+                        }
+
+                        try {
+                          await _toggleAssignmentComplete(a.id, completed: true, grade: g);
+                          if (mounted) Navigator.pop(sheetContext);
+                          _snack(g == null ? 'Completed.' : 'Completed • $g%', color: Colors.green);
+                        } catch (e) {
+                          _snack('Update failed: $e', color: Colors.red);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ] else ...[
+              const SizedBox(height: 10),
+              const Text('Actions', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              if (a.grade != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.green.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.green.withOpacity(0.25)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.grade, color: Colors.greenAccent),
+                      const SizedBox(width: 10),
+                      Text(
+                        'Grade: ${a.grade}%',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.undo),
+                label: const Text('Mark Incomplete'),
+                onPressed: () async {
+                  try {
+                    await _toggleAssignmentComplete(a.id, completed: false);
+                    if (mounted) Navigator.pop(sheetContext);
+                    _snack('Marked incomplete.', color: Colors.orange);
+                  } catch (e) {
+                    _snack('Update failed: $e', color: Colors.red);
+                  }
+                },
+              ),
+            ],
+            const SizedBox(height: 16),
+            const Divider(color: Colors.white12),
+            const SizedBox(height: 10),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.delete, color: Colors.redAccent),
+              title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
+              subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
+              onTap: () async {
+                Navigator.pop(sheetContext);
+                await _showDeleteAssignmentConfirmSheet(a);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showDeleteAssignmentConfirmSheet(Assignment a) async {
+    await _showSmoothSheet<void>(
+      title: 'Delete?',
+      builder: (sheetContext) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Delete "${a.name}"?',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${a.subjectName} • ${a.studentName}\nDue: ${a.dueDate.isEmpty ? '—' : a.dueDate}',
+              style: const TextStyle(color: Colors.white60),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.delete_forever),
+                    label: const Text('Delete'),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    onPressed: () async {
+                      try {
+                        await _deleteAssignment(a.id);
+                        if (mounted) Navigator.pop(sheetContext);
+                        _snack('Deleted.', color: Colors.redAccent);
+                      } catch (e) {
+                        _snack('Delete failed: $e', color: Colors.red);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // ============================================================
+  // Student quick actions (streak reset)
+  // ============================================================
+
+  Future<void> _showStudentActionsSheet(Student s) async {
+    await _showSmoothSheet<void>(
+      title: 'Student',
+      builder: (sheetContext) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(s.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 6),
+            Text('Grade ${s.gradeLevel} • Age ${s.age}', style: const TextStyle(color: Colors.white60)),
+            const SizedBox(height: 16),
+            const Divider(color: Colors.white12),
+            const SizedBox(height: 8),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.restart_alt, color: Colors.orangeAccent),
+              title: const Text('Reset streak (set to 0)'),
+              subtitle: const Text('Keeps assignments; just resets the streak counter.'),
+              onTap: () async {
+                try {
+                  await _resetStudentStreak(s);
+                  if (mounted) Navigator.pop(sheetContext);
+                  _snack('Streak reset for ${s.name}.', color: Colors.orange);
+                } catch (e) {
+                  _snack('Reset failed: $e', color: Colors.red);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // ============================================================
+  // Subjects: detail + edit
+  // ============================================================
+
+  Future<void> _showEditSubjectSheet(Subject subject) async {
+    final ctrl = TextEditingController(text: subject.name);
+
+    await _showSmoothSheet<void>(
+      title: 'Edit Subject',
+      builder: (sheetContext) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Rename', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(
+              controller: ctrl,
+              autofocus: true,
+              decoration: const InputDecoration(
+                labelText: 'Subject name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.save),
+                    label: const Text('Save'),
+                    onPressed: () async {
+                      final name = ctrl.text.trim();
+                      if (name.isEmpty) {
+                        _snack('Name is required.', color: Colors.orange);
+                        return;
+                      }
+                      try {
+                        await _renameSubject(subject, name);
+                        if (mounted) Navigator.pop(sheetContext);
+                        _snack('Subject updated.', color: Colors.green);
+                      } catch (e) {
+                        _snack('Update failed: $e', color: Colors.red);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showSubjectDetailSheet({
+    required Subject subject,
+    required List<Student> students,
+    required List<Assignment> assignments,
+  }) async {
+    final subjectAssignments = assignments.where((a) => a.subjectId == subject.id).toList();
+
+    final byStudent = <String, List<Assignment>>{};
+    for (final a in subjectAssignments) {
+      byStudent.putIfAbsent(a.studentId, () => <Assignment>[]).add(a);
+    }
+
+    final studentById = {for (final s in students) s.id: s};
+
+    final rows = byStudent.entries.map((e) {
+      final sid = e.key;
+      final list = e.value;
+      final completed = list.where((x) => x.isCompleted).length;
+      return _SubjectStudentRow(
+        studentId: sid,
+        studentName: studentById[sid]?.name ?? (list.isNotEmpty ? list.first.studentName : ''),
+        total: list.length,
+        completed: completed,
+      );
+    }).toList();
+
+    rows.sort((a, b) {
+      final ai = a.incomplete;
+      final bi = b.incomplete;
+      if (ai != bi) return bi.compareTo(ai); // most incomplete first
+      return a.studentName.toLowerCase().compareTo(b.studentName.toLowerCase());
+    });
+
+    // small “upcoming” sample (keeps sheet fast)
+    final sample = [...subjectAssignments];
+    sample.sort((a, b) {
+      final ac = a.isCompleted ? 1 : 0;
+      final bc = b.isCompleted ? 1 : 0;
+      if (ac != bc) return ac.compareTo(bc);
+      if (a.dueDate.isEmpty && b.dueDate.isNotEmpty) return 1;
+      if (a.dueDate.isNotEmpty && b.dueDate.isEmpty) return -1;
+      return a.dueDate.compareTo(b.dueDate);
+    });
+    final upcomingSample = sample.take(10).toList();
+
+    await _showSmoothSheet<void>(
+      title: 'Subject',
+      builder: (sheetContext) {
+        final totalA = subjectAssignments.length;
+        final totalDone = subjectAssignments.where((x) => x.isCompleted).length;
+        final totalStudents = rows.length;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    subject.name,
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    Navigator.pop(sheetContext);
+                    await _showEditSubjectSheet(subject);
+                  },
+                  icon: const Icon(Icons.edit, size: 18),
+                  label: const Text('Edit'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                _pillStat(label: 'Assignments', value: '$totalA'),
+                _pillStat(label: 'Completed', value: '$totalDone'),
+                _pillStat(label: 'Students', value: '$totalStudents'),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Divider(color: Colors.white12),
+            const SizedBox(height: 10),
+            const Text('Students with assignments', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            if (rows.isEmpty)
+              Text('No assignments are linked to this subject yet.',
+                  style: TextStyle(color: Colors.grey[500]))
+            else
+              Column(
+                children: rows.map((r) {
+                  final st = studentById[r.studentId];
+                  final idx = st == null ? 0 : students.indexWhere((s) => s.id == st.id);
+                  final color = st == null ? Colors.grey : _colorForStudent(st, idx < 0 ? 0 : idx);
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1F2937),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: color.withOpacity(0.25)),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            r.studentName.isEmpty ? '(Unknown student)' : r.studentName,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          '${r.completed}/${r.total}',
+                          style: const TextStyle(color: Colors.white70),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            const SizedBox(height: 12),
+            const Divider(color: Colors.white12),
+            const SizedBox(height: 10),
+            const Text('Sample assignments', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            if (upcomingSample.isEmpty)
+              Text('No assignments yet.', style: TextStyle(color: Colors.grey[500]))
+            else
+              Column(
+                children: upcomingSample.map((a) {
+                  final done = a.isCompleted;
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: done ? Colors.green.withOpacity(0.10) : const Color(0xFF1F2937),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: done ? Colors.green.withOpacity(0.25) : Colors.white12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(done ? Icons.check_circle : Icons.circle_outlined,
+                            color: done ? Colors.green : Colors.grey),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                a.name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  decoration: done ? TextDecoration.lineThrough : null,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                a.studentName,
+                                style: const TextStyle(color: Colors.white60, fontSize: 12),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          a.dueDate.isEmpty ? '—' : a.dueDate,
+                          style: const TextStyle(color: Colors.white60, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _pillStat({required String label, required String value}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(label, style: const TextStyle(color: Colors.white60, fontSize: 12)),
+          const SizedBox(width: 8),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    );
+  }
+
+  // ============================================================
+  // Navigation
+  // ============================================================
+
+  void _openStudentProfile(Student student, Color color, List<Assignment> allAssignments) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => StudentProfileScreen(
+          student: student,
+          color: color,
+          assignments: allAssignments.where((x) => x.studentId == student.id).toList(),
+        ),
+      ),
+    );
+  }
+
+  void _openDailySchedule({
+    required List<Student> students,
+    required List<Assignment> assignments,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => DailyScheduleScreen(
+          students: students,
+          assignments: assignments,
+          onComplete: (id, grade) => _toggleAssignmentComplete(id, completed: true, grade: grade),
+        ),
+      ),
+    );
+  }
+
+  void _openAssistantSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(0xFF111827),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (_) => const AssistantSheet(),
+    );
+  }
+
+  // ============================================================
+  // UI pieces
+  // ============================================================
+
+  Widget _moodBar() {
+    final moodText = teacherMood ?? 'Not set';
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1F2937),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.coffee, color: Colors.white),
+          const SizedBox(width: 10),
+          const Text('Mood:', style: TextStyle(color: Colors.white70)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              moodText,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          PopupMenuButton<String?>(
+            tooltip: 'Change mood',
+            onSelected: (m) => _setTeacherMood(m),
+            itemBuilder: (_) => [
+              ..._moods.map(
+                (m) => PopupMenuItem<String?>(
+                  value: m,
+                  child: Text(m, style: const TextStyle(fontSize: 20)),
+                ),
+              ),
+              const PopupMenuDivider(),
+              const PopupMenuItem<String?>(value: null, child: Text('Clear mood')),
+            ],
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white10,
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: Colors.white12),
+              ),
+              child: const Text('Change', style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _pillButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+    Color? color,
+  }) {
+    final bg = (color ?? Colors.white).withOpacity(0.10);
+    final br = (color ?? Colors.white).withOpacity(0.22);
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 8),
+      child: TextButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 18, color: color ?? Colors.white),
+        label: Text(label, style: TextStyle(color: color ?? Colors.white)),
+        style: TextButton.styleFrom(
+          backgroundColor: bg,
+          shape: const StadiumBorder(),
+          side: BorderSide(color: br),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        ),
+      ),
+    );
+  }
+
+  // ============================================================
+  // Build
+  // ============================================================
+
+  @override
+  Widget build(BuildContext context) {
+    final isNarrow = MediaQuery.of(context).size.width < 900;
+
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: FirestorePaths.studentsCol().snapshots(),
+      builder: (context, studentsSnap) {
+        if (!studentsSnap.hasData) return const LoadingScaffold();
+        final students = studentsSnap.data!.docs.map(Student.fromDoc).toList();
+
+        return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream: FirestorePaths.subjectsCol().snapshots(),
+          builder: (context, subjectsSnap) {
+            if (!subjectsSnap.hasData) return const LoadingScaffold();
+            final subjects = subjectsSnap.data!.docs.map(Subject.fromDoc).toList();
+
+            final studentsById = {for (final s in students) s.id: s};
+            final subjectsById = {for (final s in subjects) s.id: s};
+
+            return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirestorePaths.assignmentsCol().orderBy('dueDate').snapshots(),
+              builder: (context, assignmentsSnap) {
+                if (!assignmentsSnap.hasData) return const LoadingScaffold();
+
+                final assignments = assignmentsSnap.data!.docs
+                    .map((d) => Assignment.fromDoc(
+                          d,
+                          studentsById: studentsById,
+                          subjectsById: subjectsById,
+                        ))
+                    .toList();
+
+                if (widget.openScheduleOnStart && !_autoOpenedSchedule) {
+                  _autoOpenedSchedule = true;
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (!mounted) return;
+                    _openDailySchedule(students: students, assignments: assignments);
+                  });
+                }
+
+                List<Widget> buildActions() {
+                  if (isNarrow) {
+                    return [
+                      IconButton(
+                        tooltip: 'Add Student',
+                        icon: const Icon(Icons.person_add_alt_1),
+                        onPressed: _showAddStudentDialog,
+                      ),
+                      IconButton(
+                        tooltip: 'Add Subject',
+                        icon: const Icon(Icons.bookmark_add),
+                        onPressed: _showAddSubjectDialog,
+                      ),
+                      IconButton(
+                        tooltip: "Today's Schedule",
+                        icon: const Icon(Icons.calendar_today),
+                        onPressed: () => _openDailySchedule(students: students, assignments: assignments),
+                      ),
+                      IconButton(
+                        tooltip: 'Add Assignment',
+                        icon: const Icon(Icons.add_circle_outline),
+                        onPressed: () => _showAddAssignmentDialog(students: students, subjects: subjects),
+                      ),
+                      IconButton(
+                        tooltip: 'Assistant',
+                        icon: const Icon(Icons.chat_bubble_outline),
+                        onPressed: _openAssistantSheet,
+                      ),
+                      IconButton(
+                        tooltip: 'Sign out',
+                        icon: const Icon(Icons.logout),
+                        onPressed: _signOut,
+                      ),
+                    ];
+                  }
+
+                  return [
+                    _pillButton(
+                      icon: Icons.person_add_alt_1,
+                      label: 'Add Student',
+                      onPressed: _showAddStudentDialog,
+                    ),
+                    _pillButton(
+                      icon: Icons.bookmark_add,
+                      label: 'Add Subject',
+                      onPressed: _showAddSubjectDialog,
+                    ),
+                    _pillButton(
+                      icon: Icons.calendar_today,
+                      label: 'Schedule',
+                      onPressed: () => _openDailySchedule(students: students, assignments: assignments),
+                    ),
+                    _pillButton(
+                      icon: Icons.add_circle_outline,
+                      label: 'Add Assignment',
+                      onPressed: () => _showAddAssignmentDialog(students: students, subjects: subjects),
+                    ),
+                    _pillButton(
+                      icon: Icons.chat_bubble_outline,
+                      label: 'Assistant',
+                      onPressed: _openAssistantSheet,
+                    ),
+                    _pillButton(
+                      icon: Icons.logout,
+                      label: 'Sign out',
+                      onPressed: _signOut,
+                      color: Colors.white70,
+                    ),
+                    const SizedBox(width: 6),
+                  ];
+                }
+
+                return Scaffold(
+                  appBar: AppBar(
+                    title: const Text('FamilyOS'),
+                    actions: buildActions(),
+                  ),
+                  body: SafeArea(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final maxW = constraints.maxWidth;
+                        final targetW = maxW > 1100 ? 1100.0 : maxW;
+
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: SizedBox(
+                            width: targetW,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    isNarrow
+                                        ? 'Tap tabs • Tap rows for actions • Long-press delete'
+                                        : 'Students always visible • Assignments/Subjects on right • Tap for actions',
+                                    style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  _moodBar(),
+                                  const SizedBox(height: 12),
+                                  Expanded(
+                                    child: isNarrow
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFF1F2937),
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                child: TabBar(
+                                                  controller: _tabController,
+                                                  indicatorSize: TabBarIndicatorSize.tab,
+                                                  tabs: const [
+                                                    Tab(icon: Icon(Icons.people), text: 'Students'),
+                                                    Tab(icon: Icon(Icons.assignment), text: 'Assignments'),
+                                                    Tab(icon: Icon(Icons.book), text: 'Subjects'),
+                                                  ],
+                                                ),
+                                              ),
+                                              const SizedBox(height: 12),
+                                              Expanded(
+                                                child: TabBarView(
+                                                  controller: _tabController,
+                                                  children: [
+                                                    _studentsPanel(students, assignments),
+                                                    _assignmentsPanel(assignments),
+                                                    _subjectsPanel(
+                                                      subjects: subjects,
+                                                      students: students,
+                                                      assignments: assignments,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: _studentsPanel(students, assignments),
+                                              ),
+                                              const SizedBox(width: 24),
+                                              Expanded(
+                                                flex: 2,
+                                                child: DefaultTabController(
+                                                  length: 2,
+                                                  child: Column(
+                                                    children: [
+                                                      Container(
+                                                        decoration: BoxDecoration(
+                                                          color: const Color(0xFF1F2937),
+                                                          borderRadius: BorderRadius.circular(12),
+                                                        ),
+                                                        child: const TabBar(
+                                                          indicatorSize: TabBarIndicatorSize.tab,
+                                                          tabs: [
+                                                            Tab(icon: Icon(Icons.assignment), text: 'Assignments'),
+                                                            Tab(icon: Icon(Icons.book), text: 'Subjects'),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 12),
+                                                      Expanded(
+                                                        child: TabBarView(
+                                                          children: [
+                                                            _assignmentsPanel(assignments),
+                                                            _subjectsPanel(
+                                                              subjects: subjects,
+                                                              students: students,
+                                                              assignments: assignments,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // ============================================================
+  // Panels
+  // ============================================================
+
+  Widget _studentsPanel(List<Student> students, List<Assignment> assignments) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Students (${students.length})',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            IconButton(
+              tooltip: 'Manage students',
+              onPressed: () => _showStudentsManageSheet(students: students),
+              icon: const Icon(Icons.manage_accounts),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Expanded(
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: students.length,
+            itemBuilder: (context, index) {
+              final student = students[index];
+              final color = _colorForStudent(student, index);
+
+              final studentAssignments = assignments.where((a) => a.studentId == student.id).toList();
+              final total = studentAssignments.length;
+              final completed = studentAssignments.where((a) => a.isCompleted).length;
+
+              return GestureDetector(
+                onTap: () => _openStudentProfile(student, color, assignments),
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 12),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1F2937),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: color.withOpacity(0.3)),
+                  ),
+                  child: Row(
+                    children: [
+                      Hero(
+                        tag: 'avatar_${student.id}',
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: color,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Center(
+                            child: Text(
+                              student.name.isNotEmpty ? student.name[0] : '?',
+                              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    student.name,
+                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                const Icon(Icons.chevron_right, color: Colors.grey, size: 16),
+                              ],
+                            ),
+                            Text(
+                              'Age ${student.age} • Grade ${student.gradeLevel}',
+                              style: const TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
+                            const SizedBox(height: 8),
+                            LinearProgressIndicator(
+                              value: total > 0 ? completed / total : 0,
+                              backgroundColor: Colors.grey[800],
+                              valueColor: AlwaysStoppedAnimation<Color>(color),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '$completed/$total completed',
+                              style: const TextStyle(fontSize: 12, color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: 'Student actions',
+                        icon: const Icon(Icons.more_horiz, color: Colors.white70),
+                        onPressed: () => _showStudentActionsSheet(student),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _assignmentsPanel(List<Assignment> assignments) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Assignments (${assignments.length})',
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 12),
+        Expanded(
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemCount: assignments.length,
+            itemBuilder: (context, index) {
+              final a = assignments[index];
+              final isCompleted = a.isCompleted;
+
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () => _showAssignmentActionsSheet(a),
+                    onLongPress: () => _showDeleteAssignmentConfirmSheet(a),
+                    child: Ink(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isCompleted ? Colors.green.withOpacity(0.1) : const Color(0xFF1F2937),
+                        border: isCompleted ? Border.all(color: Colors.green.withOpacity(0.3)) : null,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            isCompleted ? Icons.check_circle : Icons.circle_outlined,
+                            color: isCompleted ? Colors.green : Colors.grey,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  a.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    decoration: isCompleted ? TextDecoration.lineThrough : null,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Text(
+                                  '${a.subjectName} • ${a.studentName}',
+                                  style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                a.dueDate,
+                                style: const TextStyle(fontSize: 12, color: Colors.grey),
+                              ),
+                              if (a.grade != null)
+                                Text(
+                                  '${a.grade}%',
+                                  style: const TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                            ],
+                          ),
+                          const SizedBox(width: 6),
+                          IconButton(
+                            tooltip: 'Actions',
+                            icon: const Icon(Icons.more_horiz, color: Colors.white70),
+                            onPressed: () => _showAssignmentActionsSheet(a),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _subjectsPanel({
+    required List<Subject> subjects,
+    required List<Student> students,
+    required List<Assignment> assignments,
+  }) {
+    // Precompute counts fast.
+    final assignmentCountBySubject = <String, int>{};
+    final studentSetBySubject = <String, Set<String>>{};
+
+    for (final a in assignments) {
+      assignmentCountBySubject[a.subjectId] = (assignmentCountBySubject[a.subjectId] ?? 0) + 1;
+      (studentSetBySubject[a.subjectId] ??= <String>{}).add(a.studentId);
+    }
+
+    final sorted = [...subjects]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+    final q = _subjectQuery.toLowerCase();
+    final filtered = q.isEmpty
+        ? sorted
+        : sorted.where((s) => s.name.toLowerCase().contains(q)).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Subjects (${subjects.length})',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            IconButton(
+              tooltip: 'Add Subject',
+              onPressed: _showAddSubjectDialog,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+
+        // ✅ Search bar (back)
+        TextField(
+          controller: _subjectSearchCtrl,
+          decoration: InputDecoration(
+            prefixIcon: const Icon(Icons.search),
+            hintText: 'Search subjects...',
+            filled: true,
+            fillColor: const Color(0xFF1F2937),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(14),
+              borderSide: BorderSide.none,
+            ),
+            suffixIcon: _subjectQuery.isEmpty
+                ? null
+                : IconButton(
+                    tooltip: 'Clear',
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      _subjectSearchCtrl.clear();
+                      FocusScope.of(context).unfocus();
+                    },
+                  ),
+          ),
+        ),
+
+        const SizedBox(height: 8),
+        if (_subjectQuery.isNotEmpty)
+          Text(
+            'Showing ${filtered.length} of ${subjects.length}',
+            style: const TextStyle(color: Colors.white60, fontSize: 12),
+          ),
+        const SizedBox(height: 10),
+
+        Expanded(
+          child: filtered.isEmpty
+              ? Center(
+                  child: Text(
+                    'No subjects match "${_subjectQuery.trim()}".',
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                )
+              : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: filtered.length,
+                  itemBuilder: (context, index) {
+                    final s = filtered[index];
+                    final aCount = assignmentCountBySubject[s.id] ?? 0;
+                    final stuCount = studentSetBySubject[s.id]?.length ?? 0;
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () => _showSubjectDetailSheet(
+                            subject: s,
+                            students: students,
+                            assignments: assignments,
+                          ),
+                          child: Ink(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF1F2937),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.white12),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.book, color: Colors.white70),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        s.name,
+                                        style: const TextStyle(fontWeight: FontWeight.w600),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        '$aCount assignment${aCount == 1 ? '' : 's'} • $stuCount student${stuCount == 1 ? '' : 's'}',
+                                        style: const TextStyle(color: Colors.white60, fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                IconButton(
+                                  tooltip: 'Edit subject',
+                                  icon: const Icon(Icons.edit, color: Colors.white70),
+                                  onPressed: () => _showEditSubjectSheet(s),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SubjectStudentRow {
+  final String studentId;
+  final String studentName;
+  final int total;
+  final int completed;
+
+  const _SubjectStudentRow({
+    required this.studentId,
+    required this.studentName,
+    required this.total,
+    required this.completed,
+  });
+
+  int get incomplete => total - completed;
+}

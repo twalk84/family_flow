@@ -1,0 +1,35 @@
+# FILE: backend/.dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+ENV/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Docs
+*.md
+LICENSE
+
+# Local config
+.env
+.env.local
+
+# Tests
+tests/
+test_*.py
+*_test.py
