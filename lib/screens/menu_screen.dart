@@ -1,13 +1,11 @@
 // FILE: lib/screens/menu_screen.dart
 //
-// Menu (FamilyFlow) — Polished theme pass
+// Menu (FamilyFlow) — Polished theme pass + clickable Due Today / Overdue
 //
-// Updates:
-// - Removes the bland default feel (no plain email line, no plain prompt text)
-// - Dark, centered layout like Dashboard/Schedule
-// - "Account chip" for email + clean overflow actions
-// - "Today at a glance" card (Due today / Overdue) using Firestore
-// - Upgraded action cards (consistent spacing, hierarchy, ripple, chevrons)
+// Fixes:
+// - Due Today now navigates (same as Overdue)
+// - Counts are robust: normalizeDueDate() handles Timestamp / DateTime / ISO strings
+// - If count is 0, we show a helpful snack (no “dead” buttons)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +13,8 @@ import 'package:flutter/material.dart';
 
 import '../app/routes.dart';
 import '../firestore_paths.dart';
+import '../core/models/models.dart' show normalizeDueDate;
+import 'assignment_bucket_screen.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
@@ -25,19 +25,38 @@ class MenuScreen extends StatelessWidget {
     Navigator.pushNamed(context, route);
   }
 
-  String _todayYmd() {
-    final d = DateTime.now();
-    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _todayYmd() => normalizeDueDate(DateTime.now());
+
+  String _dueAsYmd(dynamic v) => normalizeDueDate(v);
+
+  void _snack(BuildContext context, String msg, {Color? color}) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 
-  String _dueAsYmd(dynamic v) {
-    if (v == null) return '';
-    if (v is String) return v.trim();
-    if (v is Timestamp) {
-      final dt = v.toDate();
-      return '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
+  void _openBucket(BuildContext context, AssignmentBucket bucket, int count) {
+    if (count <= 0) {
+      _snack(
+        context,
+        bucket == AssignmentBucket.dueToday
+            ? 'No incomplete assignments due today.'
+            : 'No overdue assignments right now.',
+        color: Colors.white24,
+      );
+      return;
     }
-    return v.toString().trim();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => AssignmentBucketScreen(bucket: bucket)),
+    );
   }
 
   void _showAccountSheet(BuildContext context, {required String email}) {
@@ -194,24 +213,42 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _metricPill({required IconData icon, required String label, required String value, Color? accent}) {
-    final c = accent ?? Colors.white70;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 18, color: c),
-          const SizedBox(width: 8),
-          Text(label, style: const TextStyle(color: Colors.white60)),
-          const SizedBox(width: 8),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
-        ],
+  Widget _metricPill({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color accent,
+    required VoidCallback onTap,
+  }) {
+    final disabled = value == '0';
+
+    return Opacity(
+      opacity: disabled ? 0.55 : 1,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.06),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.white12),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, size: 18, color: accent),
+                const SizedBox(width: 8),
+                Text(label, style: const TextStyle(color: Colors.white60)),
+                const SizedBox(width: 8),
+                Text(value, style: const TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -229,7 +266,8 @@ class MenuScreen extends StatelessWidget {
           for (final d in snap.data!.docs) {
             final data = d.data();
             final completed = (data['completed'] == true);
-            final due = _dueAsYmd(data['dueDate']);
+
+            final due = _dueAsYmd(data['dueDate'] ?? data['due_date']);
             if (due.isEmpty) continue;
 
             if (!completed && due == today) dueToday++;
@@ -263,23 +301,27 @@ class MenuScreen extends StatelessWidget {
                 runSpacing: 10,
                 children: [
                   _metricPill(
+                    context: context,
                     icon: Icons.event_available,
                     label: 'Due today',
                     value: dueToday.toString(),
                     accent: Colors.greenAccent,
+                    onTap: () => _openBucket(context, AssignmentBucket.dueToday, dueToday),
                   ),
                   _metricPill(
+                    context: context,
                     icon: Icons.warning_amber,
                     label: 'Overdue',
                     value: overdue.toString(),
                     accent: Colors.orangeAccent,
+                    onTap: () => _openBucket(context, AssignmentBucket.overdue, overdue),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
               Text(
                 overdue > 0
-                    ? 'Tip: Open Schedule to knock out overdue items first.'
+                    ? 'Tip: Open Overdue to knock those out first.'
                     : 'Nice — no overdue assignments right now.',
                 style: const TextStyle(color: Colors.white60),
               ),
@@ -372,7 +414,6 @@ class MenuScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      // Top row (subtle, keeps things consistent with your app)
                       Row(
                         children: [
                           const Spacer(),
@@ -388,7 +429,6 @@ class MenuScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       Expanded(
                         child: ListView(
                           children: [
@@ -429,8 +469,6 @@ class MenuScreen extends StatelessWidget {
                               iconTint: Colors.white,
                             ),
                             const SizedBox(height: 18),
-
-                            // Sign out (kept visible, but not visually loud)
                             OutlinedButton.icon(
                               onPressed: _signOut,
                               icon: const Icon(Icons.logout, color: Colors.white70),

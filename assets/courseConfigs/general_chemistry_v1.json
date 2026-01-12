@@ -1,0 +1,32 @@
+{
+  "title": "General Chemistry",
+  "version": 1,
+  "grading": {
+    "mode": "points",
+    "courseTotalPossible": 2820,
+    "categories": {
+      "reading_set": { "pointsEach": 10, "countsTowardGrade": true },
+      "problem_set": { "pointsEach": 15, "countsTowardGrade": true },
+      "worksheet": { "pointsEach": 15, "countsTowardGrade": true },
+      "topic_test": { "pointsEach": 100, "countsTowardGrade": true }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "reading_set": 10,
+      "problem_set": 15,
+      "worksheet": 15,
+      "topic_test": 100
+    },
+    "multipliers": {
+      "topic_test_mastery": { "minPercent": 95, "multiplier": 1.5 }
+    },
+    "streak": {
+      "enabled": true,
+      "bonusPercentPerDay": 0.01,
+      "maxBonusPercent": 0.5,
+      "resetOnMissedDay": true
+    }
+  }
+}

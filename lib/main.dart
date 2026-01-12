@@ -1,13 +1,24 @@
 // FILE: lib/main.dart
+//
+// App entrypoint + startup bootstrap.
+//
+// Includes:
+// - Firebase.initializeApp()
+// - Optional CourseConfigLoader smoke test (debug by default)
+// - AuthGate (login/register)
+// - Named route foundation
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart'; // kDebugMode, debugPrintStack
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app/routes.dart';
 import 'firebase_options.dart';
 import 'firestore_bootstrap.dart';
+
+import 'core/course_configs/course_config_loader.dart';
 
 import 'screens/menu_screen.dart';
 import 'screens/help_screen.dart';
@@ -17,15 +28,51 @@ import 'screens/assistant_standalone_screen.dart';
 
 import 'widgets/app_scaffolds.dart';
 
+/// Flip this ONLY if you want smoke tests to run in release builds too.
+const bool kRunCourseConfigSmokeTestInRelease = false;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
+  // Run all pre-runApp initialization here.
+  await _bootstrap();
+
+  runApp(const FamilyFlowApp());
+}
+
+/// All startup initialization that must happen before runApp().
+Future<void> _bootstrap() async {
+  debugPrint('--- FamilyFlow bootstrap: begin ---');
+
+  // 1) Firebase
+  debugPrint('Bootstrap: Firebase.initializeApp()...');
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  debugPrint('Bootstrap: Firebase.initializeApp() OK');
 
-  runApp(const FamilyFlowApp());
+  // 2) Course config smoke test (debug by default)
+  final shouldRunSmokeTest = kDebugMode || kRunCourseConfigSmokeTestInRelease;
+
+  if (shouldRunSmokeTest) {
+    debugPrint('Bootstrap: CourseConfigLoader.smokeTest()...');
+    try {
+      await CourseConfigLoader.smokeTest();
+      debugPrint('Bootstrap: CourseConfigLoader.smokeTest() OK');
+    } catch (e, st) {
+      // We do NOT want a config test to block the whole app unless you want it to.
+      debugPrint('Bootstrap: CourseConfigLoader.smokeTest() FAILED: $e');
+      debugPrintStack(stackTrace: st);
+
+      // If you want this to HARD FAIL instead, replace the above with:
+      // rethrow;
+    }
+  } else {
+    debugPrint('Bootstrap: smokeTest skipped (release mode).');
+  }
+
+  debugPrint('--- FamilyFlow bootstrap: done ---');
 }
 
 class FamilyFlowApp extends StatelessWidget {
@@ -53,7 +100,6 @@ class FamilyFlowApp extends StatelessWidget {
         AppRoutes.menu: (_) => const MenuScreen(),
         AppRoutes.dashboard: (_) => const DashboardScreen(),
         AppRoutes.dailySchedule: (_) => const DashboardScreen(openScheduleOnStart: true),
-
         AppRoutes.assistant: (_) => const AssistantStandaloneScreen(),
         AppRoutes.help: (_) => const HelpScreen(),
       },

@@ -1,4 +1,4 @@
-// FILE: lib/assistant_action_runner.dart
+// FILE: lib/features/assistant/assistant_action_runner.dart
 //
 // Runs structured assistant "actions" by writing to Firestore.
 // This keeps the assistant cloud stateless and the app authoritative.

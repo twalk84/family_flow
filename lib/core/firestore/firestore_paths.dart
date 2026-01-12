@@ -1,4 +1,4 @@
-// FILE: lib/firestore_paths.dart
+// FILE: lib/core/firestore/firestore_paths.dart
 //
 // Centralized Firestore path helpers.
 // Keeps collection/document paths consistent across the app.

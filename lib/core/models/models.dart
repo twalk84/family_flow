@@ -27,6 +27,15 @@ String normalizeDueDate(dynamic v) {
     // Already yyyy-mm-dd
     final simple = RegExp(r'^\d{4}-\d{2}-\d{2}$');
     if (simple.hasMatch(s)) return s;
+        // Handle yyyy-m-d (not padded) -> yyyy-mm-dd
+    final loose = RegExp(r'^(\d{4})-(\d{1,2})-(\d{1,2})$').firstMatch(s);
+    
+    if (loose != null) {
+      final y = loose.group(1)!;
+      final m = loose.group(2)!.padLeft(2, '0');
+      final d = loose.group(3)!.padLeft(2, '0');
+      return '$y-$m-$d';
+    }
 
     // Try parse ISO-ish
     final dt = DateTime.tryParse(s);
@@ -45,6 +54,13 @@ int asInt(dynamic v, {int fallback = 0}) {
   if (v is int) return v;
   if (v is num) return v.toInt();
   return int.tryParse(v.toString()) ?? fallback;
+}
+
+double asDouble(dynamic v, {double fallback = 0}) {
+  if (v == null) return fallback;
+  if (v is double) return v;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString()) ?? fallback;
 }
 
 bool asBool(dynamic v, {bool fallback = false}) {
@@ -77,6 +93,9 @@ class Student {
   final String pin; // optional student PIN
   final String notes; // optional notes
 
+  // Wallet
+  final int walletBalance; // points
+
   const Student({
     required this.id,
     required this.name,
@@ -85,6 +104,7 @@ class Student {
     required this.colorValue,
     required this.pin,
     required this.notes,
+    required this.walletBalance,
   });
 
   factory Student.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -104,6 +124,7 @@ class Student {
       colorValue: c,
       pin: asString(data['pin'], fallback: ''),
       notes: asString(data['notes'], fallback: ''),
+      walletBalance: asInt(data['walletBalance'] ?? data['wallet_balance'], fallback: 0),
     );
   }
 
@@ -115,6 +136,7 @@ class Student {
         'color': colorValue,
         'pin': pin,
         'notes': notes,
+        'walletBalance': walletBalance,
       };
 }
 
@@ -125,9 +147,13 @@ class Subject {
   final String id; // Firestore doc id
   final String name;
 
+  /// Optional: ties a subject to a course config doc (e.g. "general_chemistry_v1").
+  final String courseConfigId;
+
   const Subject({
     required this.id,
     required this.name,
+    required this.courseConfigId,
   });
 
   factory Subject.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -135,12 +161,14 @@ class Subject {
     return Subject(
       id: doc.id,
       name: asString(data['name']),
+      courseConfigId: asString(data['courseConfigId'] ?? data['course_config_id'], fallback: ''),
     );
   }
 
   Map<String, dynamic> toMap() => {
         'name': name,
         'nameLower': name.toLowerCase(),
+        'courseConfigId': courseConfigId,
       };
 }
 
@@ -160,6 +188,16 @@ class Assignment {
   final bool isCompleted;
   final int? grade;
 
+  // Chemistry / rubric metadata (safe for other subjects too)
+  final String categoryKey; // e.g. reading_set, problem_set, topic_test
+  final int pointsPossible; // optional, can be 0
+  final double weight; // optional (future grading)
+  final String courseConfigId; // optional override on assignment doc
+
+  // Wallet tracking (optional)
+  final String rewardTxnId; // deposit txn id (if applied)
+  final int rewardPointsApplied; // points actually deposited for this assignment
+
   // Resolved display names (optional)
   final String studentName;
   final String subjectName;
@@ -172,6 +210,12 @@ class Assignment {
     required this.dueDate,
     required this.isCompleted,
     required this.grade,
+    required this.categoryKey,
+    required this.pointsPossible,
+    required this.weight,
+    required this.courseConfigId,
+    required this.rewardTxnId,
+    required this.rewardPointsApplied,
     required this.studentName,
     required this.subjectName,
   });
@@ -201,6 +245,15 @@ class Assignment {
       dueDate: normalizeDueDate(data['dueDate'] ?? data['due_date']),
       isCompleted: asBool(data['completed'] ?? data['isCompleted'] ?? data['is_completed']),
       grade: data['grade'] == null ? null : asInt(data['grade'], fallback: 0),
+
+      categoryKey: asString(data['categoryKey'] ?? data['category_key'], fallback: ''),
+      pointsPossible: asInt(data['pointsPossible'] ?? data['points_possible'], fallback: 0),
+      weight: asDouble(data['weight'], fallback: 1.0),
+      courseConfigId: asString(data['courseConfigId'] ?? data['course_config_id'], fallback: ''),
+
+      rewardTxnId: asString(data['rewardTxnId'] ?? data['reward_txn_id'], fallback: ''),
+      rewardPointsApplied: asInt(data['rewardPointsApplied'] ?? data['reward_points_applied'], fallback: 0),
+
       studentName: resolvedStudentName,
       subjectName: resolvedSubjectName,
     );
@@ -214,5 +267,13 @@ class Assignment {
         'dueDate': dueDate,
         'completed': isCompleted,
         'grade': grade,
+
+        'categoryKey': categoryKey,
+        'pointsPossible': pointsPossible,
+        'weight': weight,
+        'courseConfigId': courseConfigId,
+
+        'rewardTxnId': rewardTxnId,
+        'rewardPointsApplied': rewardPointsApplied,
       };
 }
