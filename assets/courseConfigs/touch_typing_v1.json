@@ -1,0 +1,504 @@
+{
+  "id": "touch_typing_v1",
+  "title": "Touch Typing",
+  "subtitle": "TypingTest.com Curriculum",
+  "version": 1,
+  "type": "skill",
+
+  "philosophy": {
+    "summary": "Practice > Progress | Accuracy First",
+    "principles": [
+      "Consistent daily practice builds muscle memory",
+      "Accuracy is non-negotiable — speed follows naturally",
+      "15 minutes daily minimum — streaks earn bonuses",
+      "All activities require 95%+ accuracy",
+      "End-of-lesson tests require 100% (corrections allowed)"
+    ]
+  },
+
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "daily_practice": { "pointsEach": 10, "countsTowardGrade": true },
+      "activity": { "pointsEach": 5, "countsTowardGrade": true },
+      "end_of_lesson_test": { "pointsEach": 15, "countsTowardGrade": true },
+      "lesson_completion": { "pointsEach": 25, "countsTowardGrade": true },
+      "module_completion": { "pointsEach": 50, "countsTowardGrade": true }
+    }
+  },
+
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "daily_practice": 10,
+      "activity": 5,
+      "end_of_lesson_test": 15,
+      "lesson_completion": 25,
+      "module_completion": 50
+    },
+    "streak": {
+      "enabled": true,
+      "trackedCategories": ["daily_practice"],
+      "bonusSchedule": [
+        { "daysRequired": 5, "bonusPercent": 0.05 },
+        { "daysRequired": 10, "bonusPercent": 0.10 },
+        { "daysRequired": 15, "bonusPercent": 0.15 },
+        { "daysRequired": 20, "bonusPercent": 0.20 },
+        { "daysRequired": 25, "bonusPercent": 0.25 },
+        { "daysRequired": 30, "bonusPercent": 0.30 },
+        { "daysRequired": 50, "bonusPercent": 0.40 },
+        { "daysRequired": 75, "bonusPercent": 0.50 }
+      ],
+      "maxBonusPercent": 0.50,
+      "resetOnMissedDay": true
+    },
+    "improvementBonus": {
+      "enabled": true,
+      "metric": "wpm",
+      "thresholds": [
+        { "improvement": 5, "points": 25 },
+        { "improvement": 10, "points": 50 },
+        { "improvement": 15, "points": 75 },
+        { "improvement": 20, "points": 100 },
+        { "improvement": 25, "points": 150 }
+      ],
+      "requiresSameOrBetterAccuracy": true
+    }
+  },
+
+  "masteryRequirements": {
+    "activities": { "minAccuracyPercent": 95 },
+    "endOfLessonTests": { "minAccuracyPercent": 100, "allowCorrections": true }
+  },
+
+  "curriculum": {
+    "structure": "modules > lessons > activities",
+    "totalModules": 4,
+    "totalLessons": 27,
+
+    "modules": [
+      {
+        "id": "touch_typing",
+        "index": 1,
+        "title": "Touch Typing",
+        "description": "Core keyboard mastery",
+        "lessonCount": 14,
+        "badgeId": "touch_typing_graduate",
+        "lessons": [
+          {
+            "id": "lesson_1",
+            "index": 1,
+            "title": "Introduction and Initial Test",
+            "activityCount": 7,
+            "estimatedMinutes": 19,
+            "focusKeys": "Baseline assessment",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_2",
+            "index": 2,
+            "title": "The Home Row",
+            "activityCount": 7,
+            "estimatedMinutes": 16,
+            "focusKeys": "A S D F J K L ;",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_3",
+            "index": 3,
+            "title": "Letters E and I",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "E, I",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_4",
+            "index": 4,
+            "title": "Ergonomics and Letters R and U",
+            "activityCount": 8,
+            "estimatedMinutes": 22,
+            "focusKeys": "R, U + posture",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_5",
+            "index": 5,
+            "title": "Letters T and O",
+            "activityCount": 9,
+            "estimatedMinutes": 21,
+            "focusKeys": "T, O",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_6",
+            "index": 6,
+            "title": "Capital Letters and Period",
+            "activityCount": 9,
+            "estimatedMinutes": 22,
+            "focusKeys": "Shift, .",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_7",
+            "index": 7,
+            "title": "Letter C and Comma",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "C, ,",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_8",
+            "index": 8,
+            "title": "Letters G and H, keys ' and \"",
+            "activityCount": 9,
+            "estimatedMinutes": 22,
+            "focusKeys": "G, H, ', \"",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_9",
+            "index": 9,
+            "title": "Letters V and N and Question Mark",
+            "activityCount": 9,
+            "estimatedMinutes": 22,
+            "focusKeys": "V, N, ?",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_10",
+            "index": 10,
+            "title": "Letters W and M",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "W, M",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_11",
+            "index": 11,
+            "title": "Letters Q and P",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "Q, P",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_12",
+            "index": 12,
+            "title": "Letters B and Y",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "B, Y",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_13",
+            "index": 13,
+            "title": "Letters Z and X",
+            "activityCount": 8,
+            "estimatedMinutes": 20,
+            "focusKeys": "Z, X",
+            "hasEndOfLessonTest": true
+          },
+          {
+            "id": "lesson_14",
+            "index": 14,
+            "title": "Final Test",
+            "activityCount": 1,
+            "estimatedMinutes": 3,
+            "focusKeys": "Full keyboard test",
+            "hasEndOfLessonTest": true
+          }
+        ]
+      },
+      {
+        "id": "speed_building",
+        "index": 2,
+        "title": "Speed Building",
+        "description": "Increase WPM while maintaining accuracy",
+        "lessonCount": 7,
+        "badgeId": "speed_demon",
+        "lessons": [
+          { "id": "speed_1", "index": 1, "title": "Speed Building Lesson 1", "focusKeys": "Rhythm and flow", "hasEndOfLessonTest": true },
+          { "id": "speed_2", "index": 2, "title": "Speed Building Lesson 2", "focusKeys": "Common words", "hasEndOfLessonTest": true },
+          { "id": "speed_3", "index": 3, "title": "Speed Building Lesson 3", "focusKeys": "Word patterns", "hasEndOfLessonTest": true },
+          { "id": "speed_4", "index": 4, "title": "Speed Building Lesson 4", "focusKeys": "Sentence practice", "hasEndOfLessonTest": true },
+          { "id": "speed_5", "index": 5, "title": "Speed Building Lesson 5", "focusKeys": "Paragraph practice", "hasEndOfLessonTest": true },
+          { "id": "speed_6", "index": 6, "title": "Speed Building Lesson 6", "focusKeys": "Timed exercises", "hasEndOfLessonTest": true },
+          { "id": "speed_7", "index": 7, "title": "Speed Building Lesson 7", "focusKeys": "Final speed test", "hasEndOfLessonTest": true }
+        ]
+      },
+      {
+        "id": "number_row",
+        "index": 3,
+        "title": "Number Row",
+        "description": "Numbers 0-9",
+        "lessonCount": 2,
+        "badgeId": "number_cruncher",
+        "lessons": [
+          { "id": "num_1", "index": 1, "title": "Number Row Lesson 1", "focusKeys": "Numbers 1-5", "hasEndOfLessonTest": true },
+          { "id": "num_2", "index": 2, "title": "Number Row Lesson 2", "focusKeys": "Numbers 6-0", "hasEndOfLessonTest": true }
+        ]
+      },
+      {
+        "id": "symbols",
+        "index": 4,
+        "title": "Symbols",
+        "description": "Special characters",
+        "lessonCount": 4,
+        "badgeId": "symbol_master",
+        "lessons": [
+          { "id": "sym_1", "index": 1, "title": "Symbols Lesson 1", "focusKeys": "! @ # $ %", "hasEndOfLessonTest": true },
+          { "id": "sym_2", "index": 2, "title": "Symbols Lesson 2", "focusKeys": "^ & * ( )", "hasEndOfLessonTest": true },
+          { "id": "sym_3", "index": 3, "title": "Symbols Lesson 3", "focusKeys": "- = + _ [ ]", "hasEndOfLessonTest": true },
+          { "id": "sym_4", "index": 4, "title": "Symbols Lesson 4", "focusKeys": "{ } | \\ ; :", "hasEndOfLessonTest": true }
+        ]
+      }
+    ]
+  },
+
+  "metrics": {
+    "tracked": ["wpm", "accuracy"],
+    "baseline": {
+      "capturedAt": "lesson_1",
+      "fields": ["wpm", "accuracy"]
+    },
+    "milestones": {
+      "wpm": [20, 30, 40, 50, 60, 70, 80, 90, 100]
+    }
+  },
+
+  "badges": [
+    {
+      "id": "beginner_typist",
+      "title": "Beginner Typist",
+      "description": "Reach 20 WPM",
+      "tier": "bronze",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 20 }
+    },
+    {
+      "id": "developing_typist",
+      "title": "Developing Typist",
+      "description": "Reach 30 WPM",
+      "tier": "bronze",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 30 }
+    },
+    {
+      "id": "intermediate_typist",
+      "title": "Intermediate Typist",
+      "description": "Reach 40 WPM",
+      "tier": "silver",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 40 }
+    },
+    {
+      "id": "proficient_typist",
+      "title": "Proficient Typist",
+      "description": "Reach 50 WPM",
+      "tier": "silver",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 50 }
+    },
+    {
+      "id": "advanced_typist",
+      "title": "Advanced Typist",
+      "description": "Reach 60 WPM",
+      "tier": "gold",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 60 }
+    },
+    {
+      "id": "expert_typist",
+      "title": "Expert Typist",
+      "description": "Reach 70 WPM",
+      "tier": "gold",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 70 }
+    },
+    {
+      "id": "master_typist",
+      "title": "Master Typist",
+      "description": "Reach 80 WPM",
+      "tier": "platinum",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 80 }
+    },
+    {
+      "id": "elite_typist",
+      "title": "Elite Typist",
+      "description": "Reach 90 WPM",
+      "tier": "platinum",
+      "icon": "speed",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 90 }
+    },
+    {
+      "id": "legendary_typist",
+      "title": "Legendary Typist",
+      "description": "Reach 100+ WPM",
+      "tier": "diamond",
+      "icon": "emoji_events",
+      "category": "speed",
+      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 100 }
+    },
+    {
+      "id": "careful_typist",
+      "title": "Careful Typist",
+      "description": "Complete 10 activities at 95%+",
+      "tier": "bronze",
+      "icon": "verified",
+      "category": "accuracy",
+      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_95", "threshold": 10 }
+    },
+    {
+      "id": "precise_typist",
+      "title": "Precise Typist",
+      "description": "Complete 25 activities at 95%+",
+      "tier": "silver",
+      "icon": "verified",
+      "category": "accuracy",
+      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_95", "threshold": 25 }
+    },
+    {
+      "id": "accurate_typist",
+      "title": "Accurate Typist",
+      "description": "Complete 50 activities at 97%+",
+      "tier": "gold",
+      "icon": "verified",
+      "category": "accuracy",
+      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_97", "threshold": 50 }
+    },
+    {
+      "id": "flawless_typist",
+      "title": "Flawless Typist",
+      "description": "Complete 10 lessons with 100% tests",
+      "tier": "platinum",
+      "icon": "verified",
+      "category": "accuracy",
+      "unlockCriteria": { "type": "count_threshold", "condition": "lessons_with_perfect_test", "threshold": 10 }
+    },
+    {
+      "id": "perfect_typist",
+      "title": "Perfect Typist",
+      "description": "Complete all lessons with 100% tests",
+      "tier": "diamond",
+      "icon": "verified",
+      "category": "accuracy",
+      "unlockCriteria": { "type": "count_threshold", "condition": "lessons_with_perfect_test", "threshold": 27 }
+    },
+    {
+      "id": "dedicated_typist",
+      "title": "Dedicated Typist",
+      "description": "5-day practice streak",
+      "tier": "bronze",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 5 }
+    },
+    {
+      "id": "committed_typist",
+      "title": "Committed Typist",
+      "description": "10-day practice streak",
+      "tier": "bronze",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 10 }
+    },
+    {
+      "id": "persistent_typist",
+      "title": "Persistent Typist",
+      "description": "20-day practice streak",
+      "tier": "silver",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 20 }
+    },
+    {
+      "id": "devoted_typist",
+      "title": "Devoted Typist",
+      "description": "30-day practice streak",
+      "tier": "gold",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 30 }
+    },
+    {
+      "id": "unstoppable_typist",
+      "title": "Unstoppable Typist",
+      "description": "50-day practice streak",
+      "tier": "platinum",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 50 }
+    },
+    {
+      "id": "legendary_dedication",
+      "title": "Legendary Dedication",
+      "description": "75-day practice streak",
+      "tier": "diamond",
+      "icon": "local_fire_department",
+      "category": "streak",
+      "unlockCriteria": { "type": "streak", "daysRequired": 75 }
+    },
+    {
+      "id": "touch_typing_graduate",
+      "title": "Touch Typing Graduate",
+      "description": "Complete all 14 Touch Typing lessons",
+      "tier": "gold",
+      "icon": "school",
+      "category": "module_completion",
+      "moduleId": "touch_typing",
+      "unlockCriteria": { "type": "module_completion", "moduleId": "touch_typing" }
+    },
+    {
+      "id": "speed_demon",
+      "title": "Speed Demon",
+      "description": "Complete all 7 Speed Building lessons",
+      "tier": "gold",
+      "icon": "school",
+      "category": "module_completion",
+      "moduleId": "speed_building",
+      "unlockCriteria": { "type": "module_completion", "moduleId": "speed_building" }
+    },
+    {
+      "id": "number_cruncher",
+      "title": "Number Cruncher",
+      "description": "Complete all 2 Number Row lessons",
+      "tier": "silver",
+      "icon": "school",
+      "category": "module_completion",
+      "moduleId": "number_row",
+      "unlockCriteria": { "type": "module_completion", "moduleId": "number_row" }
+    },
+    {
+      "id": "symbol_master",
+      "title": "Symbol Master",
+      "description": "Complete all 4 Symbol lessons",
+      "tier": "silver",
+      "icon": "school",
+      "category": "module_completion",
+      "moduleId": "symbols",
+      "unlockCriteria": { "type": "module_completion", "moduleId": "symbols" }
+    },
+    {
+      "id": "keyboard_master",
+      "title": "Keyboard Master",
+      "description": "Complete ALL 27 lessons",
+      "tier": "diamond",
+      "icon": "emoji_events",
+      "category": "course_completion",
+      "unlockCriteria": { "type": "course_completion" }
+    }
+  ]
+}

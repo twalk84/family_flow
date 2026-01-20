@@ -7,6 +7,11 @@
 // - Optional CourseConfigLoader smoke test (debug by default)
 // - AuthGate (login/register)
 // - Named route foundation
+//
+// Flow after login:
+// - StudentSelectionScreen (PIN-protected profile selection)
+//   - Student PIN → StudentProfileScreen (read-only)
+//   - Parent PIN → DashboardScreen (full admin)
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +30,7 @@ import 'screens/help_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/daily_schedule_screen.dart';
 import 'screens/assistant_standalone_screen.dart';
+import 'screens/student_selection_screen.dart';
 
 import 'widgets/app_scaffolds.dart';
 
@@ -102,6 +108,8 @@ class FamilyFlowApp extends StatelessWidget {
         AppRoutes.dailySchedule: (_) => const DashboardScreen(openScheduleOnStart: true),
         AppRoutes.assistant: (_) => const AssistantStandaloneScreen(),
         AppRoutes.help: (_) => const HelpScreen(),
+        // Add student selection as a named route too
+        AppRoutes.studentSelection: (_) => const StudentSelectionScreen(),
       },
 
       // Helpful fallback for debugging if you navigate to a missing route
@@ -146,7 +154,10 @@ class AuthGate extends StatelessWidget {
                 message: bootSnap.error.toString(),
               );
             }
-            return const MenuScreen();
+            // ========================================
+            // CHANGED: Go to StudentSelectionScreen instead of MenuScreen
+            // ========================================
+            return const StudentSelectionScreen();
           },
         );
       },

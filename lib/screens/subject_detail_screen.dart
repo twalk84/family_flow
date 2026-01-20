@@ -6,6 +6,7 @@
 // - ✅ Search + Student filter chips
 // - ✅ Tap an assignment to open the shared polished actions sheet
 // - ✅ Live stream so completes/deletes instantly reflect here
+// - ✅ Progress header with completion bar, badges, streaks
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,14 @@ import 'package:flutter/material.dart';
 import '../firestore_paths.dart';
 import '../models.dart';
 import '../widgets/assignment_actions_sheet.dart';
+import '../widgets/progress_header.dart';
 
 class SubjectDetailScreen extends StatefulWidget {
   final Subject subject;
   final List<Student> students;
+
+  /// Optional: current student for progress header (if viewing for a specific student)
+  final Student? currentStudent;
 
   /// Kept for backwards compatibility with your existing Dashboard push.
   /// The screen uses live Firestore by default.
@@ -26,6 +31,7 @@ class SubjectDetailScreen extends StatefulWidget {
     super.key,
     required this.subject,
     required this.students,
+    this.currentStudent,
     this.assignments,
   });
 
@@ -57,6 +63,11 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
       if (next == _query) return;
       setState(() => _query = next);
     });
+
+    // If a current student is specified, default filter to them
+    if (widget.currentStudent != null) {
+      _selectedStudentId = widget.currentStudent!.id;
+    }
   }
 
   @override
@@ -186,9 +197,26 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
 
     final filtersActive = _query.isNotEmpty || _selectedStudentId != null;
 
+    // Determine which student to show progress for
+    Student? progressStudent = widget.currentStudent;
+    if (progressStudent == null && _selectedStudentId != null) {
+      progressStudent = widget.students.where((s) => s.id == _selectedStudentId).firstOrNull;
+    }
+
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        // ========================================
+        // NEW: Progress Header (if we have a student context)
+        // ========================================
+        if (progressStudent != null) ...[
+          ProgressHeader(
+            student: progressStudent,
+            subject: widget.subject,
+          ),
+          const SizedBox(height: 8),
+        ],
+
         Text(
           'Assignments by Student',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -260,7 +288,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
           TextField(
             controller: _searchCtrl,
             decoration: InputDecoration(
-              hintText: 'Search assignments (e.g. “Lesson 3” or a student name)',
+              hintText: 'Search assignments (e.g. "Lesson 3" or a student name)',
               prefixIcon: const Icon(Icons.search),
               suffixIcon: _query.isEmpty
                   ? null
@@ -424,6 +452,21 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                     ],
                   ),
                 ),
+                // Show points earned if available
+                if (isDone && a.rewardPointsApplied > 0) ...[
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: Colors.purple.withOpacity(0.18),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      '+${a.rewardPointsApplied}',
+                      style: const TextStyle(color: Colors.purpleAccent, fontWeight: FontWeight.w600, fontSize: 12),
+                    ),
+                  ),
+                ],
                 if (a.grade != null) ...[
                   const SizedBox(width: 10),
                   Container(

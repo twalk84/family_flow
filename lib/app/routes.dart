@@ -14,6 +14,7 @@ class AppRoutes {
   static const String dashboard = '/dashboard';
   static const String dailySchedule = '/daily-schedule';
   static const String assistant = '/assistant';
+  static const studentSelection = '/student-selection';
 
   // Future
   static const String help = '/help';

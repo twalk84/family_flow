@@ -14,6 +14,7 @@
 // - ✅ Subject detail sheet shows which students have assignments in that subject
 // - ✅ Subject rename (edit) flow
 // - ✅ Student streak reset (per-student + reset-all in Manage Students sheet)
+// - ✅ Reward Admin access button
 
 import 'dart:async';
 
@@ -27,6 +28,7 @@ import '../widgets/app_scaffolds.dart';
 import '../widgets/assistant_sheet.dart';
 import 'daily_schedule_screen.dart';
 import 'student_profile_screen.dart';
+import 'reward_admin_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final bool openScheduleOnStart;
@@ -231,7 +233,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     await FirestorePaths.assignmentsCol().doc(assignmentId).delete();
   }
 
-  // Streak reset (safe even if you haven’t added streak to your Student model)
+  // Streak reset (safe even if you haven't added streak to your Student model)
   Future<void> _resetStudentStreak(Student s) async {
     await FirestorePaths.studentsCol().doc(s.id).set(
       {
@@ -1108,7 +1110,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       return a.studentName.toLowerCase().compareTo(b.studentName.toLowerCase());
     });
 
-    // small “upcoming” sample (keeps sheet fast)
+    // small "upcoming" sample (keeps sheet fast)
     final sample = [...subjectAssignments];
     sample.sort((a, b) {
       final ac = a.isCompleted ? 1 : 0;
@@ -1330,6 +1332,13 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  void _openRewardAdmin() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const RewardAdminScreen()),
+    );
+  }
+
   // ============================================================
   // UI pieces
   // ============================================================
@@ -1478,6 +1487,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                         onPressed: () => _showAddAssignmentDialog(students: students, subjects: subjects),
                       ),
                       IconButton(
+                        tooltip: 'Manage Rewards',
+                        icon: const Icon(Icons.card_giftcard),
+                        onPressed: _openRewardAdmin,
+                      ),
+                      IconButton(
                         tooltip: 'Assistant',
                         icon: const Icon(Icons.chat_bubble_outline),
                         onPressed: _openAssistantSheet,
@@ -1510,6 +1524,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                       icon: Icons.add_circle_outline,
                       label: 'Add Assignment',
                       onPressed: () => _showAddAssignmentDialog(students: students, subjects: subjects),
+                    ),
+                    _pillButton(
+                      icon: Icons.card_giftcard,
+                      label: 'Rewards',
+                      onPressed: _openRewardAdmin,
                     ),
                     _pillButton(
                       icon: Icons.chat_bubble_outline,

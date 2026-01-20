@@ -1,6 +1,9 @@
 {
-  "title": "General Chemistry",
+  "id": "general_chemistry_v1",
+  "title": "General Chemistry: Atoms First",
+  "subtitle": "McQuarrie, Rock, Gallogly — 4th Edition",
   "version": 1,
+  "type": "academic",
   "grading": {
     "mode": "points",
     "courseTotalPossible": 2820,
@@ -8,6 +11,7 @@
       "reading_set": { "pointsEach": 10, "countsTowardGrade": true },
       "problem_set": { "pointsEach": 15, "countsTowardGrade": true },
       "worksheet": { "pointsEach": 15, "countsTowardGrade": true },
+      "chapter_quiz": { "pointsEach": 0, "countsTowardGrade": false },
       "topic_test": { "pointsEach": 100, "countsTowardGrade": true }
     }
   },
@@ -15,18 +19,289 @@
     "enabled": true,
     "basePoints": {
       "reading_set": 10,
+      "lecture_notes": 5,
+      "flashcard_session": 5,
       "problem_set": 15,
       "worksheet": 15,
-      "topic_test": 100
+      "chapter_quiz": 0,
+      "topic_test": 100,
+      "daily_practice": 10
     },
-    "multipliers": {
-      "topic_test_mastery": { "minPercent": 95, "multiplier": 1.5 }
+    "multipliers": [
+      {
+      "id": "topic_test_mastery",
+      "when": { "categoryKey": "topic_test", "minGradePercent": 95 },
+      "multiplier": 1.5,
+      "description": "95%+ on Topic Test"
     },
+    {
+      "id": "flashcard_box7",
+      "when": { "categoryKey": "flashcard_session", "achievementKey": "box_7_mastery" },
+      "multiplier": 1.5,
+      "description": "Cards reach Leitner Box 7"
+    }
+  ],
     "streak": {
       "enabled": true,
+      "trackedCategories": ["reading_set", "flashcard_session", "problem_set"],
       "bonusPercentPerDay": 0.01,
+      "bonusSchedule": [
+      { "daysRequired": 5, "bonusPercent": 0.05 },
+      { "daysRequired": 10, "bonusPercent": 0.10 },
+      { "daysRequired": 15, "bonusPercent": 0.15 },
+      { "daysRequired": 20, "bonusPercent": 0.20 },
+      { "daysRequired": 25, "bonusPercent": 0.25 },
+      { "daysRequired": 30, "bonusPercent": 0.30 },
+      { "daysRequired": 50, "bonusPercent": 0.40 },
+      { "daysRequired": 75, "bonusPercent": 0.50 }
+    ],
       "maxBonusPercent": 0.5,
       "resetOnMissedDay": true
+    },
+    "improvementBonus": {
+    "enabled": true,
+    "metric": "wpm",
+    "thresholds": [
+      { "improvement": 5, "points": 25 },
+      { "improvement": 10, "points": 50 },
+      { "improvement": 15, "points": 75 },
+      { "improvement": 20, "points": 100 },
+      { "improvement": 25, "points": 150 }
+    ],
+    "requiresSameOrBetterAccuracy": true
+  }
+},
+"curriculum": {
+  "structure": "modules > units > chapters > sections",
+  "totalModules": 8,
+  "totalChapters": 26,
+  "totalReadingSets": 124,
+  "estimatedHours": 180,
+
+  "modules": [
+    {
+      "id": "foundations",
+      "index": 1,
+      "title": "Foundations",
+      "description": "Scientific method, atoms, periodic table",
+      "chapters": ["ch_1", "ch_2", "ch_3"],
+      "badgeId": "foundations_scholar",
+      "color": "#4A90D9"
+    },
+    {
+      "id": "quantum",
+      "index": 2,
+      "title": "Quantum Theory",
+      "description": "Early quantum theory and atomic structure",
+      "chapters": ["ch_4", "ch_5"],
+      "badgeId": "quantum_master",
+      "color": "#9B59B6"
+    }
+  ],
+
+  "chapters": [
+    {
+      "id": "ch_1",
+      "index": 1,
+      "moduleId": "foundations",
+      "title": "Chemistry and the Scientific Method",
+      "pageRange": "1-40",
+      "sections": [
+        {
+          "id": "ch_1_s_1",
+          "title": "The Study of Chemistry & Scientific Method",
+          "sectionNumbers": "1-1 to 1-2",
+          "pageRange": "1-6"
+        },
+        {
+          "id": "ch_1_s_2",
+          "title": "Quantitative Measurements & Metric System",
+          "sectionNumbers": "1-3 to 1-5",
+          "pageRange": "7-16"
+        },
+        {
+          "id": "ch_1_s_3",
+          "title": "Accuracy, Precision & Significant Figures",
+          "sectionNumbers": "1-6 to 1-8",
+          "pageRange": "17-24"
+        },
+        {
+          "id": "ch_1_s_4",
+          "title": "Dimensional Analysis & Guggenheim Notation",
+          "sectionNumbers": "1-9 to 1-10",
+          "pageRange": "25-40"
+        }
+      ],
+      "assignmentTemplates": [
+        {
+          "categoryKey": "reading_set",
+          "namePattern": "Ch. {chapter} Reading Set {index}: {sectionTitle}",
+          "generatePerSection": true
+        },
+        {
+          "categoryKey": "worksheet",
+          "namePattern": "Ch. {chapter} Worksheet: {chapterTitle}",
+          "generatePerChapter": true
+        },
+        {
+          "categoryKey": "problem_set",
+          "namePattern": "Ch. {chapter} Problem Set: {focusArea}",
+          "generatePerChapter": true,
+          "metadata": {
+            "focusArea": "Unit Conversions & Significant Figures"
+          }
+        },
+        {
+          "categoryKey": "chapter_quiz",
+          "namePattern": "Ch. {chapter} Quiz",
+          "generatePerChapter": true
+        }
+      ]
+    }
+  ],
+
+  "moduleTests": [
+    {
+      "id": "topic_test_1",
+      "moduleId": "foundations",
+      "title": "Topic Test 1: Foundations",
+      "categoryKey": "topic_test",
+      "chapters": ["ch_1", "ch_2", "ch_3"],
+      "masteryThreshold": 95
+    }
+  ]
+},
+"badges": [
+  {
+    "id": "foundations_scholar",
+    "title": "Foundations Scholar",
+    "description": "Master the fundamentals of chemistry",
+    "tier": "gold",
+    "icon": "science",
+    "category": "module_completion",
+    "moduleId": "foundations",
+    "unlockCriteria": {
+      "all": [
+        { "type": "mastery", "condition": "topic_test_95_or_box7", "moduleId": "foundations" },
+        { "type": "completion", "condition": "all_reading_sets", "moduleId": "foundations" },
+        { "type": "capstone", "condition": "capstone_complete", "capstoneId": "foundations_capstone" }
+      ]
+    },
+    "capstone": {
+      "id": "foundations_capstone",
+      "title": "Element Research Project",
+      "description": "Research and present on an element of your choice",
+      "categoryKey": "capstone_project"
+    }
+  },
+  {
+    "id": "dedicated_typist",
+    "title": "Dedicated Typist",
+    "description": "Maintain a 5-day practice streak",
+    "tier": "bronze",
+    "icon": "local_fire_department",
+    "category": "streak",
+    "unlockCriteria": {
+      "type": "streak",
+      "daysRequired": 5
+    }
+  },
+  {
+    "id": "speed_40wpm",
+    "title": "Intermediate Typist",
+    "description": "Reach 40 WPM",
+    "tier": "silver",
+    "icon": "speed",
+    "category": "milestone",
+    "unlockCriteria": {
+      "type": "metric_threshold",
+      "metric": "wpm",
+      "threshold": 40
+    }
+  },
+  {
+    "id": "accuracy_master",
+    "title": "Flawless Typist",
+    "description": "Complete 10 lessons with 100% on end-of-lesson tests",
+    "tier": "platinum",
+    "icon": "verified",
+    "category": "accuracy",
+    "unlockCriteria": {
+      "type": "count_threshold",
+      "condition": "lessons_with_perfect_test",
+      "threshold": 10
+    }
+  },
+  {
+    "id": "keyboard_master",
+    "title": "Keyboard Master",
+    "description": "Complete all 27 lessons",
+    "tier": "diamond",
+    "icon": "emoji_events",
+    "category": "course_completion",
+    "unlockCriteria": {
+      "type": "completion",
+      "condition": "all_lessons"
     }
   }
+],
+"flashcardCategories": [
+  {
+    "id": "vocabulary",
+    "title": "Vocabulary/Definitions",
+    "description": "Key terms and their definitions",
+    "examples": ["Element", "Compound", "Isotope", "Ion", "Molecule"]
+  },
+  {
+    "id": "formulas",
+    "title": "Formulas/Equations",
+    "description": "Mathematical formulas and chemical equations",
+    "examples": ["Density = m/v", "% error formula", "Dimensional analysis"]
+  },
+  {
+    "id": "processes",
+    "title": "Processes/Mechanisms",
+    "description": "Step-by-step processes and reaction mechanisms",
+    "examples": ["Scientific method steps", "Separation techniques"]
+  },
+  {
+    "id": "scientists",
+    "title": "Scientists/Laws",
+    "description": "Key scientists and the laws/principles they discovered",
+    "examples": ["Dalton - Atomic Theory", "Lavoisier - Conservation of Mass"]
+  },
+  {
+    "id": "problem_types",
+    "title": "Problem Types",
+    "description": "Categories of calculation problems",
+    "examples": ["Unit conversion", "Significant figures", "Dimensional analysis"]
+  }
+],
+
+"leitnerSystem": {
+  "boxes": 7,
+  "intervals": [1, 2, 4, 7, 14, 30, "mastered"],
+  "masteryBox": 7,
+  "masteryMultiplier": 1.5,
+  "rules": {
+    "correct": "advance_one_box",
+    "incorrect": "return_to_box_1"
+  }
+},
+"masteryRequirements": {
+  "activities": {
+    "minAccuracyPercent": 95,
+    "description": "All activities require 95%+ accuracy"
+  },
+  "endOfLessonTests": {
+    "minAccuracyPercent": 100,
+    "allowCorrections": true,
+    "description": "100% required (corrections allowed)"
+  },
+  "moduleCompletion": {
+    "requireAllLessons": true,
+    "requireAllActivitiesAtThreshold": true
+  }
 }
+}  
+

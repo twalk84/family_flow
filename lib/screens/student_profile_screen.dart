@@ -4,6 +4,7 @@
 // - Mood tracking
 // - Edit student (name/age/grade/color/PIN/notes)
 // - Delete student (and their assignments)
+// - Wallet preview + link to Rewards Page
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,8 @@ import 'package:flutter/material.dart';
 import '../firestore_paths.dart';
 import '../models.dart';
 import '../widgets/mood_picker.dart';
+import '../services/reward_service.dart';
+import 'rewards_page.dart';
 
 class StudentProfileScreen extends StatefulWidget {
   final Student student;
@@ -400,6 +403,13 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
+                // ========================================
+                // NEW: Wallet Preview Card
+                // ========================================
+                _WalletPreviewCard(student: student),
+
+                const SizedBox(height: 16),
+
                 // Stats row
                 Row(
                   children: [
@@ -583,6 +593,80 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                   );
                 }),
               ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ========================================
+// NEW: Wallet Preview Card
+// ========================================
+
+class _WalletPreviewCard extends StatelessWidget {
+  final Student student;
+
+  const _WalletPreviewCard({required this.student});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<int>(
+      stream: RewardService.instance.streamWalletBalance(student.id),
+      builder: (context, snap) {
+        final balance = snap.data ?? student.walletBalance;
+
+        return Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => RewardsPage(student: student),
+              ),
+            ),
+            child: Ink(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.account_balance_wallet, size: 32, color: Colors.white70),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Wallet Balance',
+                          style: TextStyle(color: Colors.white70, fontSize: 13),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '$balance points',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Text(
+                    'View Rewards →',
+                    style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
             ),
           ),
         );
