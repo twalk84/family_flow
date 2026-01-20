@@ -36,6 +36,7 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
   ];
 
   Color _studentColor(Student s, int index) {
+    if (s.name == 'William') return Colors.green;
     final v = s.colorValue;
     if (v != 0) return Color(v);
     return _fallbackPalette[index % _fallbackPalette.length];
@@ -106,45 +107,48 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
         builder: (context, setDialogState) => AlertDialog(
           backgroundColor: const Color(0xFF1F2937),
           title: const Text('Set Parent PIN'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Create a PIN to protect parent mode.\nThis gives full access to manage students, rewards, and settings.',
-                style: TextStyle(color: Colors.white70),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                maxLength: 6,
-                decoration: const InputDecoration(
-                  labelText: 'PIN (4-6 digits)',
-                  border: OutlineInputBorder(),
-                  counterText: '',
+          // FIX: Added SingleChildScrollView to prevent overflow when keyboard opens
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Create a PIN to protect parent mode.\nThis gives full access to manage students, rewards, and settings.',
+                  style: TextStyle(color: Colors.white70),
                 ),
-                onChanged: (v) => pin = v,
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                obscureText: true,
-                keyboardType: TextInputType.number,
-                maxLength: 6,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm PIN',
-                  border: OutlineInputBorder(),
-                  counterText: '',
+                const SizedBox(height: 16),
+                TextField(
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  maxLength: 6,
+                  decoration: const InputDecoration(
+                    labelText: 'PIN (4-6 digits)',
+                    border: OutlineInputBorder(),
+                    counterText: '',
+                  ),
+                  onChanged: (v) => pin = v,
                 ),
-                onChanged: (v) => confirmPin = v,
-              ),
-              if (errorText != null) ...[
                 const SizedBox(height: 12),
-                Text(
-                  errorText!,
-                  style: const TextStyle(color: Colors.redAccent),
+                TextField(
+                  obscureText: true,
+                  keyboardType: TextInputType.number,
+                  maxLength: 6,
+                  decoration: const InputDecoration(
+                    labelText: 'Confirm PIN',
+                    border: OutlineInputBorder(),
+                    counterText: '',
+                  ),
+                  onChanged: (v) => confirmPin = v,
                 ),
+                if (errorText != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    errorText!,
+                    style: const TextStyle(color: Colors.redAccent),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(
@@ -198,42 +202,45 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
         builder: (context, setDialogState) => AlertDialog(
           backgroundColor: const Color(0xFF1F2937),
           title: Text(title),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _PinInput(
-                onPinChanged: (pin) => enteredPin = pin,
-                onSubmit: () async {
-                  bool valid = false;
+          // FIX: Added SingleChildScrollView for safety on smaller screens
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _PinInput(
+                  onPinChanged: (pin) => enteredPin = pin,
+                  onSubmit: () async {
+                    bool valid = false;
 
-                  if (verifyWithFirestore) {
-                    valid = await RewardService.instance.verifyParentPin(enteredPin);
-                  } else {
-                    // Student PIN - empty PIN means no protection
-                    if (expectedPin == null || expectedPin.isEmpty) {
-                      valid = true;
+                    if (verifyWithFirestore) {
+                      valid = await RewardService.instance.verifyParentPin(enteredPin);
                     } else {
-                      valid = enteredPin == expectedPin;
+                      // Student PIN - empty PIN means no protection
+                      if (expectedPin == null || expectedPin.isEmpty) {
+                        valid = true;
+                      } else {
+                        valid = enteredPin == expectedPin;
+                      }
                     }
-                  }
 
-                  if (valid) {
-                    if (!dialogContext.mounted) return;
-                    Navigator.pop(dialogContext);
-                    onSuccess();
-                  } else {
-                    setDialogState(() => errorText = 'Incorrect PIN');
-                  }
-                },
-              ),
-              if (errorText != null) ...[
-                const SizedBox(height: 12),
-                Text(
-                  errorText!,
-                  style: const TextStyle(color: Colors.redAccent),
+                    if (valid) {
+                      if (!dialogContext.mounted) return;
+                      Navigator.pop(dialogContext);
+                      onSuccess();
+                    } else {
+                      setDialogState(() => errorText = 'Incorrect PIN');
+                    }
+                  },
                 ),
+                if (errorText != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    errorText!,
+                    style: const TextStyle(color: Colors.redAccent),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           actions: [
             TextButton(
@@ -304,10 +311,10 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
           stream: FirestorePaths.assignmentsCol().snapshots(),
           builder: (context, assignmentsSnap) {
             final assignmentDocs = assignmentsSnap.data?.docs ?? [];
-            
+
             // Build lookup maps
             final studentsById = {for (final s in students) s.id: s};
-            
+
             // We need subjects too for Assignment.fromDoc
             return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirestorePaths.subjectsCol().snapshots(),
@@ -324,46 +331,59 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
                         ))
                     .toList();
 
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 0.9,
-                  ),
-                  itemCount: students.length + 1, // +1 for parent mode
-                  itemBuilder: (context, index) {
-                    if (index == students.length) {
-                      // Parent mode card
+                // FIX: Use LayoutBuilder to make grid responsive
+                return LayoutBuilder(builder: (context, constraints) {
+                  // If screen (or container) is narrow (< 450px), use 2 columns.
+                  // Otherwise use 3 columns.
+                  final int crossAxisCount = constraints.maxWidth < 450 ? 2 : 3;
+
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      // FIX: Adjusted aspect ratio to be slightly taller (0.85 instead of 0.9)
+                      // to prevent text overflow on narrower screens.
+                      childAspectRatio: 0.85,
+                    ),
+                    itemCount: students.length + 1, // +1 for parent mode
+                    itemBuilder: (context, index) {
+                      if (index == students.length) {
+                        // Parent mode card
+                        return _ProfileCard(
+                          label: 'Parent Mode',
+                          color: Colors.grey.shade700,
+                          icon: Icons.admin_panel_settings,
+                          hasPin: true,
+                          subtitle: 'Full access',
+                          onTap: _onParentModeTap,
+                        );
+                      }
+
+                      final student = students[index];
+                      final color = _studentColor(student, index);
+                      final hasPin = student.pin.isNotEmpty;
+
+                      // Count assignments for this student
+                      final studentAssignments =
+                          assignments.where((a) => a.studentId == student.id).toList();
+                      final completed =
+                          studentAssignments.where((a) => a.isCompleted).length;
+                      final total = studentAssignments.length;
+
                       return _ProfileCard(
-                        label: 'Parent Mode',
-                        color: Colors.grey.shade700,
-                        icon: Icons.admin_panel_settings,
-                        hasPin: true,
-                        subtitle: 'Full access',
-                        onTap: _onParentModeTap,
+                        label: student.name,
+                        color: color,
+                        icon: Icons.person,
+                        hasPin: hasPin,
+                        subtitle: total > 0
+                            ? '$completed/$total done'
+                            : 'No assignments',
+                        onTap: () => _onStudentTap(student, color, assignments),
                       );
-                    }
-
-                    final student = students[index];
-                    final color = _studentColor(student, index);
-                    final hasPin = student.pin.isNotEmpty;
-
-                    // Count assignments for this student
-                    final studentAssignments = assignments.where((a) => a.studentId == student.id).toList();
-                    final completed = studentAssignments.where((a) => a.isCompleted).length;
-                    final total = studentAssignments.length;
-
-                    return _ProfileCard(
-                      label: student.name,
-                      color: color,
-                      icon: Icons.person,
-                      hasPin: hasPin,
-                      subtitle: total > 0 ? '$completed/$total done' : 'No assignments',
-                      onTap: () => _onStudentTap(student, color, assignments),
-                    );
-                  },
-                );
+                    },
+                  );
+                });
               },
             );
           },
@@ -421,22 +441,32 @@ class _ProfileCard extends StatelessWidget {
                 child: Icon(icon, size: 32, color: color),
               ),
               const SizedBox(height: 12),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
               ),
               if (subtitle != null) ...[
                 const SizedBox(height: 2),
-                Text(
-                  subtitle!,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Colors.white60,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  child: Text(
+                    subtitle!,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.white60,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],

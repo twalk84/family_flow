@@ -1,10 +1,11 @@
 // FILE: lib/screens/rewards_page.dart
 //
 // Student rewards page - wallet hub, reward store, navigation to history.
+// Only shows rewards assigned to the current student.
 
 import 'package:flutter/material.dart';
 
-import '../core/models/models.dart';
+import '../models.dart';
 import '../core/models/reward_models.dart';
 import '../services/reward_service.dart';
 import 'points_history_screen.dart';
@@ -242,19 +243,6 @@ class _WalletCard extends StatelessWidget {
                   color: Colors.white70,
                 ),
               ),
-              const SizedBox(height: 16),
-              // TODO: Add streak indicator here
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const Icon(Icons.local_fire_department, color: Colors.orange, size: 20),
-              //     const SizedBox(width: 6),
-              //     const Text(
-              //       '12-day streak (+10%)',
-              //       style: TextStyle(color: Colors.white70),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         );
@@ -264,7 +252,7 @@ class _WalletCard extends StatelessWidget {
 }
 
 // ========================================
-// Rewards List
+// Rewards List - Filtered for current student
 // ========================================
 
 class _RewardsList extends StatelessWidget {
@@ -283,8 +271,9 @@ class _RewardsList extends StatelessWidget {
       builder: (context, balanceSnap) {
         final balance = balanceSnap.data ?? 0;
 
+        // Use the student-filtered stream
         return StreamBuilder<List<Reward>>(
-          stream: RewardService.instance.streamActiveRewards(),
+          stream: RewardService.instance.streamActiveRewardsForStudent(studentId),
           builder: (context, rewardsSnap) {
             if (rewardsSnap.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

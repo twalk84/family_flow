@@ -1,6 +1,7 @@
 // FILE: lib/core/models/reward_models.dart
 //
 // Models for the reward system: definitions, claims, and tiers.
+// Supports student-specific reward assignments.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'models.dart'; // for asInt, asString, asBool
@@ -104,6 +105,10 @@ enum ClaimStatus {
 // =====================
 /// A reward template created by the parent.
 /// Students can claim this reward if they have enough points.
+/// 
+/// assignedStudentIds:
+/// - Empty list = available to ALL students
+/// - Non-empty list = only available to those specific students
 class Reward {
   final String id;
   final String name;
@@ -112,6 +117,7 @@ class Reward {
   final String description;
   final bool isActive;
   final int timesClaimedTotal;
+  final List<String> assignedStudentIds; // Empty = all students
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -123,13 +129,30 @@ class Reward {
     required this.description,
     required this.isActive,
     required this.timesClaimedTotal,
+    required this.assignedStudentIds,
     this.createdAt,
     this.updatedAt,
   });
 
+  /// Whether this reward is available to all students
+  bool get isForAllStudents => assignedStudentIds.isEmpty;
+
+  /// Check if this reward is available to a specific student
+  bool isAvailableTo(String studentId) {
+    if (assignedStudentIds.isEmpty) return true; // Available to all
+    return assignedStudentIds.contains(studentId);
+  }
+
   factory Reward.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
     final data = doc.data() ?? <String, dynamic>{};
     final pointCost = asInt(data['pointCost'] ?? data['point_cost'], fallback: 0);
+
+    // Parse assignedStudentIds - can be list or null
+    List<String> studentIds = [];
+    final rawIds = data['assignedStudentIds'] ?? data['assigned_student_ids'];
+    if (rawIds is List) {
+      studentIds = rawIds.map((e) => e.toString()).toList();
+    }
 
     return Reward(
       id: doc.id,
@@ -141,6 +164,7 @@ class Reward {
       description: asString(data['description'], fallback: ''),
       isActive: asBool(data['isActive'] ?? data['is_active'], fallback: true),
       timesClaimedTotal: asInt(data['timesClaimedTotal'] ?? data['times_claimed_total'], fallback: 0),
+      assignedStudentIds: studentIds,
       createdAt: _toDateTime(data['createdAt'] ?? data['created_at']),
       updatedAt: _toDateTime(data['updatedAt'] ?? data['updated_at']),
     );
@@ -154,6 +178,7 @@ class Reward {
         'description': description,
         'isActive': isActive,
         'timesClaimedTotal': timesClaimedTotal,
+        'assignedStudentIds': assignedStudentIds,
         'updatedAt': FieldValue.serverTimestamp(),
       };
 
@@ -171,6 +196,7 @@ class Reward {
     String? description,
     bool? isActive,
     int? timesClaimedTotal,
+    List<String>? assignedStudentIds,
   }) =>
       Reward(
         id: id ?? this.id,
@@ -180,6 +206,7 @@ class Reward {
         description: description ?? this.description,
         isActive: isActive ?? this.isActive,
         timesClaimedTotal: timesClaimedTotal ?? this.timesClaimedTotal,
+        assignedStudentIds: assignedStudentIds ?? this.assignedStudentIds,
         createdAt: createdAt,
         updatedAt: updatedAt,
       );

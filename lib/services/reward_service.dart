@@ -1,6 +1,7 @@
 // FILE: lib/services/reward_service.dart
 //
 // Service for managing rewards, claims, and point adjustments.
+// Supports student-specific reward assignments.
 //
 // Handles:
 // - CRUD for reward definitions (parent)
@@ -12,7 +13,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../core/models/models.dart';
 import '../core/models/reward_models.dart';
-import '../core/firestore/firestore_paths.dart';
+import '../firestore_paths.dart';
 
 class RewardService {
   RewardService._();
@@ -23,10 +24,12 @@ class RewardService {
   // ========================================
 
   /// Create a new reward
+  /// assignedStudentIds: empty list = all students, or list of specific student IDs
   Future<Reward> createReward({
     required String name,
     required int pointCost,
     String description = '',
+    List<String> assignedStudentIds = const [],
   }) async {
     final tier = RewardTier.fromPointCost(pointCost);
     final docRef = FirestorePaths.rewardsCol().doc();
@@ -39,6 +42,7 @@ class RewardService {
       description: description,
       isActive: true,
       timesClaimedTotal: 0,
+      assignedStudentIds: assignedStudentIds,
     );
 
     await docRef.set(reward.toCreateMap());
@@ -52,6 +56,7 @@ class RewardService {
     int? pointCost,
     String? description,
     bool? isActive,
+    List<String>? assignedStudentIds,
   }) async {
     final updates = <String, dynamic>{
       'updatedAt': FieldValue.serverTimestamp(),
@@ -67,6 +72,7 @@ class RewardService {
     }
     if (description != null) updates['description'] = description;
     if (isActive != null) updates['isActive'] = isActive;
+    if (assignedStudentIds != null) updates['assignedStudentIds'] = assignedStudentIds;
 
     await FirestorePaths.rewardDoc(rewardId).update(updates);
   }
@@ -93,38 +99,68 @@ class RewardService {
     return Reward.fromDoc(snap);
   }
 
-  /// Get all active rewards
+  /// Get all active rewards (for admin view)
   Future<List<Reward>> getActiveRewards() async {
-    final snap = await FirestorePaths.rewardsCol()
-        .where('isActive', isEqualTo: true)
-        .orderBy('pointCost')
-        .get();
-    return snap.docs.map((d) => Reward.fromDoc(d)).toList();
+    // Simple query - no compound index needed
+    final snap = await FirestorePaths.rewardsCol().get();
+    final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
+    // Filter and sort in memory
+    final active = rewards.where((r) => r.isActive).toList();
+    active.sort((a, b) => a.pointCost.compareTo(b.pointCost));
+    return active;
   }
 
-  /// Get all rewards (including inactive)
+  /// Get active rewards available to a specific student
+  Future<List<Reward>> getActiveRewardsForStudent(String studentId) async {
+    final allRewards = await getActiveRewards();
+    return allRewards.where((r) => r.isAvailableTo(studentId)).toList();
+  }
+
+  /// Get all rewards (including inactive) for admin
   Future<List<Reward>> getAllRewards() async {
-    final snap = await FirestorePaths.rewardsCol()
-        .orderBy('pointCost')
-        .get();
-    return snap.docs.map((d) => Reward.fromDoc(d)).toList();
+    final snap = await FirestorePaths.rewardsCol().get();
+    final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
+    rewards.sort((a, b) => a.pointCost.compareTo(b.pointCost));
+    return rewards;
   }
 
-  /// Stream active rewards
+  /// Stream active rewards (for admin - shows all)
   Stream<List<Reward>> streamActiveRewards() {
+    // Simple stream - filter in memory to avoid index requirement
     return FirestorePaths.rewardsCol()
-        .where('isActive', isEqualTo: true)
-        .orderBy('pointCost')
         .snapshots()
-        .map((snap) => snap.docs.map((d) => Reward.fromDoc(d)).toList());
+        .map((snap) {
+          final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
+          final active = rewards.where((r) => r.isActive).toList();
+          active.sort((a, b) => a.pointCost.compareTo(b.pointCost));
+          return active;
+        });
   }
 
-  /// Stream all rewards
+  /// Stream active rewards available to a specific student
+  Stream<List<Reward>> streamActiveRewardsForStudent(String studentId) {
+    // Simple stream - filter in memory to avoid index requirement
+    return FirestorePaths.rewardsCol()
+        .snapshots()
+        .map((snap) {
+          final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
+          final filtered = rewards
+              .where((r) => r.isActive && r.isAvailableTo(studentId))
+              .toList();
+          filtered.sort((a, b) => a.pointCost.compareTo(b.pointCost));
+          return filtered;
+        });
+  }
+
+  /// Stream all rewards (for admin)
   Stream<List<Reward>> streamAllRewards() {
     return FirestorePaths.rewardsCol()
-        .orderBy('pointCost')
         .snapshots()
-        .map((snap) => snap.docs.map((d) => Reward.fromDoc(d)).toList());
+        .map((snap) {
+          final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
+          rewards.sort((a, b) => a.pointCost.compareTo(b.pointCost));
+          return rewards;
+        });
   }
 
   // ========================================
@@ -132,7 +168,7 @@ class RewardService {
   // ========================================
 
   /// Claim a reward (student self-serve)
-  /// Returns the claim if successful, throws if insufficient balance
+  /// Returns the claim if successful, throws if insufficient balance or not available
   Future<RewardClaim> claimReward({
     required String studentId,
     required String studentName,
@@ -145,6 +181,9 @@ class RewardService {
     }
     if (!reward.isActive) {
       throw Exception('Reward is no longer available');
+    }
+    if (!reward.isAvailableTo(studentId)) {
+      throw Exception('This reward is not available to you');
     }
 
     // Run transaction to ensure atomic balance check + deduction
@@ -232,14 +271,14 @@ class RewardService {
     final allClaims = <RewardClaim>[];
 
     for (final studentDoc in students.docs) {
+      // Simple query without orderBy to avoid index requirement
       final claims = await FirestorePaths.rewardClaimsCol(studentDoc.id)
           .where('status', isEqualTo: ClaimStatus.pending.name)
-          .orderBy('claimedAt', descending: true)
           .get();
       allClaims.addAll(claims.docs.map((d) => RewardClaim.fromDoc(d)));
     }
 
-    // Sort by claimed date (newest first)
+    // Sort by claimed date (newest first) in memory
     allClaims.sort((a, b) {
       final aDate = a.claimedAt ?? DateTime(1970);
       final bDate = b.claimedAt ?? DateTime(1970);
@@ -253,25 +292,43 @@ class RewardService {
   Stream<List<RewardClaim>> streamPendingClaims(String studentId) {
     return FirestorePaths.rewardClaimsCol(studentId)
         .where('status', isEqualTo: ClaimStatus.pending.name)
-        .orderBy('claimedAt', descending: true)
         .snapshots()
-        .map((snap) => snap.docs.map((d) => RewardClaim.fromDoc(d)).toList());
+        .map((snap) {
+          final claims = snap.docs.map((d) => RewardClaim.fromDoc(d)).toList();
+          claims.sort((a, b) {
+            final aDate = a.claimedAt ?? DateTime(1970);
+            final bDate = b.claimedAt ?? DateTime(1970);
+            return bDate.compareTo(aDate);
+          });
+          return claims;
+        });
   }
 
   /// Get claims for a student
   Future<List<RewardClaim>> getClaimsForStudent(String studentId) async {
-    final snap = await FirestorePaths.rewardClaimsCol(studentId)
-        .orderBy('claimedAt', descending: true)
-        .get();
-    return snap.docs.map((d) => RewardClaim.fromDoc(d)).toList();
+    final snap = await FirestorePaths.rewardClaimsCol(studentId).get();
+    final claims = snap.docs.map((d) => RewardClaim.fromDoc(d)).toList();
+    claims.sort((a, b) {
+      final aDate = a.claimedAt ?? DateTime(1970);
+      final bDate = b.claimedAt ?? DateTime(1970);
+      return bDate.compareTo(aDate);
+    });
+    return claims;
   }
 
   /// Stream all claims for a student
   Stream<List<RewardClaim>> streamClaimsForStudent(String studentId) {
     return FirestorePaths.rewardClaimsCol(studentId)
-        .orderBy('claimedAt', descending: true)
         .snapshots()
-        .map((snap) => snap.docs.map((d) => RewardClaim.fromDoc(d)).toList());
+        .map((snap) {
+          final claims = snap.docs.map((d) => RewardClaim.fromDoc(d)).toList();
+          claims.sort((a, b) {
+            final aDate = a.claimedAt ?? DateTime(1970);
+            final bDate = b.claimedAt ?? DateTime(1970);
+            return bDate.compareTo(aDate);
+          });
+          return claims;
+        });
   }
 
   // ========================================
@@ -332,10 +389,16 @@ class RewardService {
     int limit = 50,
   }) async {
     final snap = await FirestorePaths.walletTransactionsCol(studentId)
-        .orderBy('createdAt', descending: true)
         .limit(limit)
         .get();
-    return snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList();
+    final txns = snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList();
+    // Sort in memory
+    txns.sort((a, b) {
+      final aDate = a.createdAt ?? DateTime(1970);
+      final bDate = b.createdAt ?? DateTime(1970);
+      return bDate.compareTo(aDate);
+    });
+    return txns;
   }
 
   /// Stream wallet transaction history for a student
@@ -344,10 +407,17 @@ class RewardService {
     int limit = 50,
   }) {
     return FirestorePaths.walletTransactionsCol(studentId)
-        .orderBy('createdAt', descending: true)
         .limit(limit)
         .snapshots()
-        .map((snap) => snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList());
+        .map((snap) {
+          final txns = snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList();
+          txns.sort((a, b) {
+            final aDate = a.createdAt ?? DateTime(1970);
+            final bDate = b.createdAt ?? DateTime(1970);
+            return bDate.compareTo(aDate);
+          });
+          return txns;
+        });
   }
 
   /// Get wallet transactions for a date range
@@ -356,36 +426,44 @@ class RewardService {
     required DateTime startDate,
     required DateTime endDate,
   }) async {
-    final snap = await FirestorePaths.walletTransactionsCol(studentId)
-        .where('createdAt', isGreaterThanOrEqualTo: Timestamp.fromDate(startDate))
-        .where('createdAt', isLessThanOrEqualTo: Timestamp.fromDate(endDate))
-        .orderBy('createdAt', descending: true)
-        .get();
-    return snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList();
+    final snap = await FirestorePaths.walletTransactionsCol(studentId).get();
+    final txns = snap.docs
+        .map((d) => WalletTransaction.fromDoc(d))
+        .where((t) {
+          if (t.createdAt == null) return false;
+          return t.createdAt!.isAfter(startDate) && t.createdAt!.isBefore(endDate);
+        })
+        .toList();
+    txns.sort((a, b) {
+      final aDate = a.createdAt ?? DateTime(1970);
+      final bDate = b.createdAt ?? DateTime(1970);
+      return bDate.compareTo(aDate);
+    });
+    return txns;
   }
 
   /// Get total points earned (all deposits)
   Future<int> getTotalPointsEarned(String studentId) async {
-    final snap = await FirestorePaths.walletTransactionsCol(studentId)
-        .where('type', isEqualTo: 'deposit')
-        .get();
-
+    final snap = await FirestorePaths.walletTransactionsCol(studentId).get();
     int total = 0;
     for (final doc in snap.docs) {
-      total += asInt(doc.data()['points'], fallback: 0);
+      final type = doc.data()['type']?.toString();
+      if (type == 'deposit') {
+        total += asInt(doc.data()['points'], fallback: 0);
+      }
     }
     return total;
   }
 
   /// Get total points spent (all redemptions)
   Future<int> getTotalPointsSpent(String studentId) async {
-    final snap = await FirestorePaths.walletTransactionsCol(studentId)
-        .where('type', isEqualTo: 'redemption')
-        .get();
-
+    final snap = await FirestorePaths.walletTransactionsCol(studentId).get();
     int total = 0;
     for (final doc in snap.docs) {
-      total += asInt(doc.data()['points'], fallback: 0).abs();
+      final type = doc.data()['type']?.toString();
+      if (type == 'redemption') {
+        total += asInt(doc.data()['points'], fallback: 0).abs();
+      }
     }
     return total;
   }
