@@ -2,28 +2,22 @@
 //
 // Dashboard (FamilyOS)
 //
-// Polished UX updates (kept):
-// - Assignment rows use InkWell ripple + subtle "⋯" actions button
-// - All assignment actions use a smooth bottom sheet (complete, grade, undo, delete)
-// - Add Student/Subject/Assignment use smooth bottom sheets
-// - AppBar actions become text "pill" buttons on wide screens, icon buttons on narrow screens
-//
-// Current features in this version:
-// - ✅ Subjects are a TAB (not a button), alongside Assignments
-// - ✅ Subjects tab shows all subjects + counts + SEARCH BAR
-// - ✅ Subject detail sheet shows which students have assignments in that subject
-// - ✅ Subject rename (edit) flow
-// - ✅ Student streak reset (per-student + reset-all in Manage Students sheet)
-// - ✅ Reward Admin access button
+// UPDATED:
+// - Add Student: initializes currentStreak, longestStreak, lastCompletionDate
+// - Add Assignment: includes pointsBase and gradable fields
+// - Assignment completion: uses AssignmentMutations.setCompleted() for proper points/streak tracking
+// - Shows streak info on student cards
 
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'student_manager_screen.dart';
+import 'curriculum_manager_screen.dart';
 import '../firestore_paths.dart';
 import '../models.dart';
+import '../services/assignment_mutations.dart';
 import '../widgets/app_scaffolds.dart';
 import '../widgets/assistant_sheet.dart';
 import 'daily_schedule_screen.dart';
@@ -126,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   Color _colorForStudent(Student student, int index) {
-    final v = student.colorValue; // matches your models.dart
+    final v = student.colorValue;
     if (v != 0) return Color(v);
     return _defaultStudentPalette[index % _defaultStudentPalette.length];
   }
@@ -211,34 +205,52 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   // ============================================================
-  // Firestore mutations
+  // Firestore mutations - NOW USING AssignmentMutations
   // ============================================================
 
-  Future<void> _toggleAssignmentComplete(
-    String assignmentId, {
-    required bool completed,
-    int? grade,
+  /// UPDATED: Now uses AssignmentMutations for proper points/streak tracking
+  Future<CompletionResult?> _completeAssignment(
+    Assignment a, {
+    required int? grade,
+    String? completionDate,
   }) async {
-    await FirestorePaths.assignmentsCol().doc(assignmentId).set(
-      {
-        'completed': completed,
-        'grade': completed ? grade : null,
-        'updatedAt': FieldValue.serverTimestamp(),
-      },
-      SetOptions(merge: true),
-    );
+    try {
+      final result = await AssignmentMutations.setCompleted(
+        a,
+        completed: true,
+        gradePercent: grade,
+        completionDate: completionDate,
+      );
+      return result;
+    } catch (e) {
+      _snack('Completion failed: $e', color: Colors.red);
+      return null;
+    }
+  }
+
+  /// UPDATED: Now uses AssignmentMutations for proper reversal
+  Future<void> _uncompleteAssignment(Assignment a) async {
+    try {
+      await AssignmentMutations.setCompleted(
+        a,
+        completed: false,
+      );
+    } catch (e) {
+      _snack('Update failed: $e', color: Colors.red);
+    }
   }
 
   Future<void> _deleteAssignment(String assignmentId) async {
     await FirestorePaths.assignmentsCol().doc(assignmentId).delete();
   }
 
-  // Streak reset (safe even if you haven't added streak to your Student model)
+  // Streak reset - UPDATED to use new field names
   Future<void> _resetStudentStreak(Student s) async {
     await FirestorePaths.studentsCol().doc(s.id).set(
       {
-        'streak': 0,
-        'streakUpdatedAt': FieldValue.serverTimestamp(),
+        'currentStreak': 0,
+        'longestStreak': s.longestStreak, // keep longest
+        'lastCompletionDate': '',
         'updatedAt': FieldValue.serverTimestamp(),
       },
       SetOptions(merge: true),
@@ -256,8 +268,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         batch.set(
           r,
           {
-            'streak': 0,
-            'streakUpdatedAt': FieldValue.serverTimestamp(),
+            'currentStreak': 0,
+            'lastCompletionDate': '',
             'updatedAt': FieldValue.serverTimestamp(),
           },
           SetOptions(merge: true),
@@ -419,7 +431,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   Future<void> _batchDeleteDocs(
     List<DocumentReference<Map<String, dynamic>>> refs,
   ) async {
-    const limit = 450; // keep under Firestore 500 write batch limit
+    const limit = 450;
     for (var i = 0; i < refs.length; i += limit) {
       final chunk = refs.sublist(i, (i + limit) > refs.length ? refs.length : (i + limit));
       final batch = FirebaseFirestore.instance.batch();
@@ -434,6 +446,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   // Add flows (smooth sheets)
   // ============================================================
 
+  /// UPDATED: Now initializes streak fields
   Future<void> _showAddStudentDialog() async {
     final nameCtrl = TextEditingController();
     final ageCtrl = TextEditingController();
@@ -548,12 +561,18 @@ class _DashboardScreenState extends State<DashboardScreen>
                           final grade = gradeCtrl.text.trim();
                           final pin = pinCtrl.text.trim();
 
+                          // UPDATED: Include new streak fields
                           final payload = <String, dynamic>{
                             'name': name,
                             'nameLower': name.toLowerCase(),
                             'age': age,
                             'gradeLevel': grade,
                             'color': selectedColorValue,
+                            'walletBalance': 0,
+                            // NEW: Streak fields
+                            'currentStreak': 0,
+                            'longestStreak': 0,
+                            'lastCompletionDate': '',
                             'updatedAt': FieldValue.serverTimestamp(),
                             'createdAt': FieldValue.serverTimestamp(),
                           };
@@ -637,6 +656,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
+  /// UPDATED: Now includes pointsBase and gradable fields
   Future<void> _showAddAssignmentDialog({
     required List<Student> students,
     required List<Subject> subjects,
@@ -655,6 +675,8 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final nameCtrl = TextEditingController();
     final dateCtrl = TextEditingController(text: _todayYmd());
+    final pointsCtrl = TextEditingController(text: '10'); // Default 10 points
+    bool gradable = true; // Default to gradable
 
     await _showSmoothSheet<void>(
       title: 'Add Assignment',
@@ -709,6 +731,76 @@ class _DashboardScreenState extends State<DashboardScreen>
                     border: OutlineInputBorder(),
                   ),
                 ),
+                const SizedBox(height: 16),
+
+                // NEW: Points section
+                const Text('Points & Grading', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: pointsCtrl,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Points',
+                          helperText: 'Base points for completion',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Requires Grade?', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              ChoiceChip(
+                                label: const Text('Yes'),
+                                selected: gradable,
+                                onSelected: (_) => setSheetState(() => gradable = true),
+                                selectedColor: Colors.blue.withOpacity(0.3),
+                              ),
+                              const SizedBox(width: 8),
+                              ChoiceChip(
+                                label: const Text('Pass/Fail'),
+                                selected: !gradable,
+                                onSelected: (_) => setSheetState(() => gradable = false),
+                                selectedColor: Colors.blue.withOpacity(0.3),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.blue.withOpacity(0.2)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.info_outline, size: 16, color: Colors.blue),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          gradable
+                              ? 'Requires 90%+ to earn points'
+                              : 'Earns full points on completion',
+                          style: const TextStyle(fontSize: 12, color: Colors.white70),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 18),
                 Row(
                   children: [
@@ -726,21 +818,22 @@ class _DashboardScreenState extends State<DashboardScreen>
                         onPressed: () async {
                           final name = nameCtrl.text.trim();
                           final due = normalizeDueDate(dateCtrl.text.trim());
+                          final points = int.tryParse(pointsCtrl.text.trim()) ?? 10;
+
                           if (name.isEmpty || due.isEmpty) {
                             _snack('Name and due date are required.', color: Colors.orange);
                             return;
                           }
 
-                          await FirestorePaths.assignmentsCol().add({
-                            'studentId': studentId,
-                            'subjectId': subjectId,
-                            'name': name,
-                            'dueDate': due,
-                            'completed': false,
-                            'grade': null,
-                            'createdAt': FieldValue.serverTimestamp(),
-                            'updatedAt': FieldValue.serverTimestamp(),
-                          });
+                          // Use AssignmentMutations.createAssignment for consistency
+                          await AssignmentMutations.createAssignment(
+                            studentId: studentId,
+                            subjectId: subjectId,
+                            name: name,
+                            dueDate: due,
+                            pointsBase: points,
+                            gradable: gradable,
+                          );
 
                           if (mounted) Navigator.pop(sheetContext);
                           _snack('Assignment added.', color: Colors.green);
@@ -758,174 +851,302 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   // ============================================================
-  // Assignment actions (smooth)
+  // Assignment actions (smooth) - UPDATED with proper completion flow
   // ============================================================
 
   Future<void> _showAssignmentActionsSheet(Assignment a) async {
     final gradeCtrl = TextEditingController(text: a.grade?.toString() ?? '');
+    final completionDateCtrl = TextEditingController(text: _todayYmd());
 
     await _showSmoothSheet<void>(
       title: 'Assignment',
       builder: (sheetContext) {
         final done = a.isCompleted;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              a.name,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              '${a.subjectName} • ${a.studentName}',
-              style: const TextStyle(color: Colors.white60),
-            ),
-            const SizedBox(height: 6),
-            Row(
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.event, size: 18, color: Colors.white70),
-                const SizedBox(width: 8),
                 Text(
-                  a.dueDate.isEmpty ? 'No due date' : a.dueDate,
-                  style: const TextStyle(color: Colors.white70),
+                  a.name,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: done ? Colors.green.withOpacity(0.18) : Colors.white10,
-                    borderRadius: BorderRadius.circular(999),
-                    border: Border.all(
-                      color: done ? Colors.green.withOpacity(0.35) : Colors.white12,
-                    ),
-                  ),
-                  child: Text(
-                    done ? 'Completed' : 'Not completed',
-                    style: TextStyle(
-                      color: done ? Colors.greenAccent : Colors.white70,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
+                const SizedBox(height: 6),
+                Text(
+                  '${a.subjectName} • ${a.studentName}',
+                  style: const TextStyle(color: Colors.white60),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Divider(color: Colors.white12),
-            if (!done) ...[
-              const SizedBox(height: 10),
-              const Text('Complete', style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              TextField(
-                controller: gradeCtrl,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Grade % (optional)',
-                  hintText: 'e.g. 95',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      icon: const Icon(Icons.check),
-                      label: const Text('No Grade'),
-                      onPressed: () async {
-                        try {
-                          await _toggleAssignmentComplete(a.id, completed: true, grade: null);
-                          if (mounted) Navigator.pop(sheetContext);
-                          _snack('Marked complete.', color: Colors.green);
-                        } catch (e) {
-                          _snack('Update failed: $e', color: Colors.red);
-                        }
-                      },
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.event, size: 18, color: Colors.white70),
+                    const SizedBox(width: 8),
+                    Text(
+                      a.dueDate.isEmpty ? 'No due date' : 'Due: ${a.dueDate}',
+                      style: const TextStyle(color: Colors.white70),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.check_circle),
-                      label: const Text('With Grade'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                      onPressed: () async {
-                        final raw = gradeCtrl.text.trim();
-                        final g = raw.isEmpty ? null : int.tryParse(raw);
-
-                        if (raw.isNotEmpty && (g == null || g < 0 || g > 100)) {
-                          _snack('Enter a grade 0–100, or leave blank.', color: Colors.orange);
-                          return;
-                        }
-
-                        try {
-                          await _toggleAssignmentComplete(a.id, completed: true, grade: g);
-                          if (mounted) Navigator.pop(sheetContext);
-                          _snack(g == null ? 'Completed.' : 'Completed • $g%', color: Colors.green);
-                        } catch (e) {
-                          _snack('Update failed: $e', color: Colors.red);
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ] else ...[
-              const SizedBox(height: 10),
-              const Text('Actions', style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              if (a.grade != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.green.withOpacity(0.25)),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.grade, color: Colors.greenAccent),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Grade: ${a.grade}%',
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: done ? Colors.green.withOpacity(0.18) : Colors.white10,
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: done ? Colors.green.withOpacity(0.35) : Colors.white12,
+                        ),
                       ),
+                      child: Text(
+                        done ? 'Completed' : 'Not completed',
+                        style: TextStyle(
+                          color: done ? Colors.greenAccent : Colors.white70,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Show points info
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.stars, size: 16, color: Colors.amber),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${a.pointsBase} base points • ${a.gradable ? 'Graded (90% min)' : 'Pass/Fail'}',
+                      style: const TextStyle(color: Colors.white60, fontSize: 12),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+                const Divider(color: Colors.white12),
+
+                if (!done) ...[
+                  const SizedBox(height: 10),
+                  const Text('Complete', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+
+                  if (a.gradable) ...[
+                    TextField(
+                      controller: gradeCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Grade % (required for points)',
+                        hintText: 'e.g. 95',
+                        helperText: '90% or higher earns points',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+
+                  TextField(
+                    controller: completionDateCtrl,
+                    decoration: const InputDecoration(
+                      labelText: 'Completion Date',
+                      helperText: 'When was this completed?',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  Row(
+                    children: [
+                      if (!a.gradable)
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            icon: const Icon(Icons.check_circle),
+                            label: const Text('Complete'),
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                            onPressed: () async {
+                              final compDate = completionDateCtrl.text.trim();
+                              final result = await _completeAssignment(
+                                a,
+                                grade: null,
+                                completionDate: compDate.isEmpty ? null : compDate,
+                              );
+
+                              if (result != null && mounted) {
+                                Navigator.pop(sheetContext);
+                                _showCompletionFeedback(result, a.pointsBase);
+                              }
+                            },
+                          ),
+                        )
+                      else ...[
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            icon: const Icon(Icons.check),
+                            label: const Text('No Grade'),
+                            onPressed: () async {
+                              final compDate = completionDateCtrl.text.trim();
+                              final result = await _completeAssignment(
+                                a,
+                                grade: null,
+                                completionDate: compDate.isEmpty ? null : compDate,
+                              );
+
+                              if (result != null && mounted) {
+                                Navigator.pop(sheetContext);
+                                _snack('Completed (0 points - no grade)', color: Colors.orange);
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            icon: const Icon(Icons.check_circle),
+                            label: const Text('With Grade'),
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                            onPressed: () async {
+                              final raw = gradeCtrl.text.trim();
+                              final g = raw.isEmpty ? null : int.tryParse(raw);
+
+                              if (raw.isNotEmpty && (g == null || g < 0 || g > 100)) {
+                                _snack('Enter a grade 0–100, or leave blank.', color: Colors.orange);
+                                return;
+                              }
+
+                              final compDate = completionDateCtrl.text.trim();
+                              final result = await _completeAssignment(
+                                a,
+                                grade: g,
+                                completionDate: compDate.isEmpty ? null : compDate,
+                              );
+
+                              if (result != null && mounted) {
+                                Navigator.pop(sheetContext);
+                                _showCompletionFeedback(result, a.pointsBase, grade: g);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ],
                   ),
+                ] else ...[
+                  const SizedBox(height: 10),
+                  const Text('Status', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
+
+                  // Show completion info
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.green.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.green.withOpacity(0.25)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (a.grade != null)
+                          Row(
+                            children: [
+                              const Icon(Icons.grade, color: Colors.greenAccent),
+                              const SizedBox(width: 10),
+                              Text(
+                                'Grade: ${a.grade}%',
+                                style: const TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                              if (a.grade! >= 90) ...[
+                                const Spacer(),
+                                const Icon(Icons.check_circle, color: Colors.green, size: 16),
+                                const SizedBox(width: 4),
+                                const Text('Points earned', style: TextStyle(color: Colors.green, fontSize: 12)),
+                              ],
+                            ],
+                          ),
+                        if (a.completionDate.isNotEmpty) ...[
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(Icons.calendar_today, color: Colors.white54, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Completed: ${a.completionDate}',
+                                style: const TextStyle(color: Colors.white70, fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ],
+                        if (a.pointsEarned > 0) ...[
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              const Icon(Icons.stars, color: Colors.amber, size: 16),
+                              const SizedBox(width: 8),
+                              Text(
+                                '+${a.pointsEarned} points earned',
+                                style: const TextStyle(color: Colors.amber, fontSize: 13, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  OutlinedButton.icon(
+                    icon: const Icon(Icons.undo),
+                    label: const Text('Mark Incomplete'),
+                    onPressed: () async {
+                      await _uncompleteAssignment(a);
+                      if (mounted) Navigator.pop(sheetContext);
+                      _snack('Marked incomplete.', color: Colors.orange);
+                    },
+                  ),
+                ],
+
+                const SizedBox(height: 16),
+                const Divider(color: Colors.white12),
+                const SizedBox(height: 10),
+
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.delete, color: Colors.redAccent),
+                  title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
+                  subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
+                  onTap: () async {
+                    Navigator.pop(sheetContext);
+                    await _showDeleteAssignmentConfirmSheet(a);
+                  },
                 ),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                icon: const Icon(Icons.undo),
-                label: const Text('Mark Incomplete'),
-                onPressed: () async {
-                  try {
-                    await _toggleAssignmentComplete(a.id, completed: false);
-                    if (mounted) Navigator.pop(sheetContext);
-                    _snack('Marked incomplete.', color: Colors.orange);
-                  } catch (e) {
-                    _snack('Update failed: $e', color: Colors.red);
-                  }
-                },
-              ),
-            ],
-            const SizedBox(height: 16),
-            const Divider(color: Colors.white12),
-            const SizedBox(height: 10),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.delete, color: Colors.redAccent),
-              title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
-              subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
-              onTap: () async {
-                Navigator.pop(sheetContext);
-                await _showDeleteAssignmentConfirmSheet(a);
-              },
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
+  }
+
+  /// Show feedback after completing an assignment
+  void _showCompletionFeedback(CompletionResult result, int basePoints, {int? grade}) {
+    final pts = result.pointsAwarded;
+    final streak = result.currentStreak;
+
+    String msg;
+    Color color;
+
+    if (pts > 0) {
+      msg = 'Completed! +$pts points';
+      if (streak > 1) {
+        msg += ' (🔥 $streak day streak)';
+      }
+      color = Colors.green;
+    } else if (grade != null && grade < 90) {
+      msg = 'Completed with $grade% (below 90% - no points)';
+      color = Colors.orange;
+    } else {
+      msg = 'Completed (no points)';
+      color = Colors.blue;
+    }
+
+    _snack(msg, color: color);
   }
 
   Future<void> _showDeleteAssignmentConfirmSheet(Assignment a) async {
@@ -992,6 +1213,38 @@ class _DashboardScreenState extends State<DashboardScreen>
             Text(s.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             Text('Grade ${s.gradeLevel} • Age ${s.age}', style: const TextStyle(color: Colors.white60)),
+
+            // Show streak info
+            if (s.currentStreak > 0) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.orange.withOpacity(0.3)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🔥', style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${s.currentStreak} day streak',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    if (s.streakBonusPercent > 0) ...[
+                      const SizedBox(width: 8),
+                      Text(
+                        '+${(s.streakBonusPercent * 100).round()}% bonus',
+                        style: const TextStyle(color: Colors.orange, fontSize: 12),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+
             const SizedBox(height: 16),
             const Divider(color: Colors.white12),
             const SizedBox(height: 8),
@@ -1106,11 +1359,10 @@ class _DashboardScreenState extends State<DashboardScreen>
     rows.sort((a, b) {
       final ai = a.incomplete;
       final bi = b.incomplete;
-      if (ai != bi) return bi.compareTo(ai); // most incomplete first
+      if (ai != bi) return bi.compareTo(ai);
       return a.studentName.toLowerCase().compareTo(b.studentName.toLowerCase());
     });
 
-    // small "upcoming" sample (keeps sheet fast)
     final sample = [...subjectAssignments];
     sample.sort((a, b) {
       final ac = a.isCompleted ? 1 : 0;
@@ -1314,7 +1566,11 @@ class _DashboardScreenState extends State<DashboardScreen>
         builder: (_) => DailyScheduleScreen(
           students: students,
           assignments: assignments,
-          onComplete: (id, grade) => _toggleAssignmentComplete(id, completed: true, grade: grade),
+          onComplete: (id, grade) async {
+            // Find the assignment and use proper completion
+            final a = assignments.firstWhere((x) => x.id == id);
+            await _completeAssignment(a, grade: grade);
+          },
         ),
       ),
     );
@@ -1496,6 +1752,23 @@ class _DashboardScreenState extends State<DashboardScreen>
                         icon: const Icon(Icons.chat_bubble_outline),
                         onPressed: _openAssistantSheet,
                       ),
+                      // In dashboard_screen.dart, add to buildActions():
+                      IconButton(
+                        tooltip: 'Manage Students',
+                        icon: const Icon(Icons.manage_accounts),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const StudentManagerScreen()),
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: 'Curriculum',
+                        icon: const Icon(Icons.library_books),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const CurriculumManagerScreen()),
+                        ),
+                      ),
                       IconButton(
                         tooltip: 'Sign out',
                         icon: const Icon(Icons.logout),
@@ -1674,7 +1947,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   // ============================================================
-  // Panels
+  // Panels - UPDATED with streak display
   // ============================================================
 
   Widget _studentsPanel(List<Student> students, List<Assignment> assignments) {
@@ -1753,7 +2026,32 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     maxLines: 1,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                // UPDATED: Show streak badge
+                                if (student.currentStreak > 0) ...[
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text('🔥', style: TextStyle(fontSize: 12)),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          '${student.currentStreak}',
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
                                 const Icon(Icons.chevron_right, color: Colors.grey, size: 16),
                               ],
                             ),
@@ -1863,10 +2161,16 @@ class _DashboardScreenState extends State<DashboardScreen>
                               if (a.grade != null)
                                 Text(
                                   '${a.grade}%',
-                                  style: const TextStyle(
-                                    color: Colors.green,
+                                  style: TextStyle(
+                                    color: a.grade! >= 90 ? Colors.green : Colors.orange,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                ),
+                              // Show points
+                              if (a.pointsBase > 0)
+                                Text(
+                                  '${a.pointsBase} pts',
+                                  style: const TextStyle(fontSize: 10, color: Colors.amber),
                                 ),
                             ],
                           ),
@@ -1894,7 +2198,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     required List<Student> students,
     required List<Assignment> assignments,
   }) {
-    // Precompute counts fast.
     final assignmentCountBySubject = <String, int>{};
     final studentSetBySubject = <String, Set<String>>{};
 
@@ -1930,7 +2233,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         ),
         const SizedBox(height: 10),
 
-        // ✅ Search bar (back)
         TextField(
           controller: _subjectSearchCtrl,
           decoration: InputDecoration(

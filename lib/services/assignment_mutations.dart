@@ -2,18 +2,27 @@
 //
 // Assignment completion mutations with wallet and progress tracking.
 //
-// UPDATED: Now integrates with ProgressService for streaks, badges, and metrics.
+// UPDATED: Uses batched writes instead of transactions to avoid
+// Windows-specific Firestore threading crashes.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../core/models/models.dart';
 import '../core/firestore/firestore_paths.dart';
 import 'course_config_service.dart';
-import 'progress_service.dart';
-import '../core/models/progress_models.dart';
+
+/// Minimum grade percentage required to earn points (90%)
+const int kMinGradeForPoints = 90;
+
+/// Streak bonus thresholds
+const Map<int, double> kStreakBonuses = {
+  30: 0.20, // 30+ days = 20%
+  14: 0.15, // 14+ days = 15%
+  7: 0.10,  // 7+ days = 10%
+  3: 0.05,  // 3+ days = 5%
+};
 
 class AssignmentMutations {
   static final _cfg = CourseConfigService.instance;
-  static final _progress = ProgressService.instance;
 
   static Future<String> _resolveCourseConfigId(Assignment a) async {
     if (a.courseConfigId.trim().isNotEmpty) return a.courseConfigId.trim();
@@ -59,23 +68,77 @@ class AssignmentMutations {
     return '';
   }
 
-  /// The ONE place that should mutate completion state + wallet ledger + progress.
-  ///
-  /// - If marking complete and a reward hasn't been applied -> deposits points.
-  /// - If unchecking complete and a reward WAS applied -> reverses points.
-  /// - NEW: Updates progress tracking (streaks, badges, metrics).
-  ///
-  /// Optional parameters for skill courses:
-  /// - [wpm]: Words per minute (for typing)
-  /// - [accuracy]: Accuracy percentage (for typing)
-  /// - [minutesPracticed]: Minutes spent practicing
+  /// Get today's date as "YYYY-MM-DD"
+  static String _todayString() {
+    final now = DateTime.now();
+    final y = now.year.toString().padLeft(4, '0');
+    final m = now.month.toString().padLeft(2, '0');
+    final d = now.day.toString().padLeft(2, '0');
+    return '$y-$m-$d';
+  }
+
+  /// Calculate streak bonus percentage based on current streak days
+  static double _calculateStreakBonus(int streakDays) {
+    for (final entry in kStreakBonuses.entries) {
+      if (streakDays >= entry.key) {
+        return entry.value;
+      }
+    }
+    return 0.0;
+  }
+
+  /// Calculate new streak values based on last completion date
+  /// Returns (newCurrentStreak, newLongestStreak)
+  static (int, int) _calculateNewStreak(String lastCompletionDate, int currentStreak, int longestStreak, String today) {
+    // First completion ever
+    if (lastCompletionDate.isEmpty) {
+      return (1, 1);
+    }
+
+    // Same day — no streak change
+    if (lastCompletionDate == today) {
+      return (currentStreak, longestStreak);
+    }
+
+    final lastDt = DateTime.tryParse(lastCompletionDate);
+    final todayDt = DateTime.tryParse(today);
+
+    if (lastDt == null || todayDt == null) {
+      return (currentStreak, longestStreak);
+    }
+
+    final diff = todayDt.difference(lastDt).inDays;
+
+    int newCurrent;
+    if (diff == 1) {
+      // Consecutive day — increment streak
+      newCurrent = currentStreak + 1;
+    } else if (diff > 1) {
+      // Missed day(s) — reset streak
+      newCurrent = 1;
+    } else {
+      // diff <= 0 (shouldn't happen, but handle it)
+      newCurrent = currentStreak;
+    }
+
+    final newLongest = newCurrent > longestStreak ? newCurrent : longestStreak;
+
+    return (newCurrent, newLongest);
+  }
+
+  /// Complete or uncomplete an assignment.
+  /// 
+  /// Uses batched writes instead of transactions to avoid Windows crashes.
+  /// This is slightly less atomic but much more stable.
   static Future<CompletionResult> setCompleted(
     Assignment a, {
     required bool completed,
     int? gradePercent,
+    String? completionDate,
     int? wpm,
     double? accuracy,
     int? minutesPracticed,
+    bool isRetest = false,
   }) async {
     final assignmentRef = FirestorePaths.assignmentsCol().doc(a.id);
     final studentRef = FirestorePaths.studentsCol().doc(a.studentId);
@@ -83,230 +146,298 @@ class AssignmentMutations {
     final configId = await _resolveCourseConfigId(a);
     final cfg = configId.isEmpty ? null : await _cfg.getConfig(configId);
 
-    // category key (prefer stored, else infer)
+    // Category key (prefer stored, else infer)
     var categoryKey = a.categoryKey.trim();
     categoryKey = categoryKey.isNotEmpty ? categoryKey : _inferCategoryKeyIfMissing(configId, a.name);
 
-    final basePoints = (cfg == null || categoryKey.isEmpty) ? 0 : _cfg.basePointsFor(cfg, categoryKey);
-    final mult = (cfg == null || categoryKey.isEmpty)
-        ? 1.0
-        : _cfg.multiplierFor(cfg, categoryKey: categoryKey, gradePercent: gradePercent);
-    final pointsToAward = (basePoints <= 0) ? 0 : (basePoints * mult).round();
+    // Get base points from config or assignment
+    int basePoints;
+    if (cfg != null && categoryKey.isNotEmpty) {
+      basePoints = _cfg.basePointsFor(cfg, categoryKey);
+    } else if (a.pointsBase > 0) {
+      basePoints = a.pointsBase;
+    } else {
+      basePoints = 0;
+    }
 
-    // Track progress result for return value
-    ProgressUpdateResult? progressResult;
+    final today = _todayString();
+    final effectiveCompletionDate = completionDate?.trim().isNotEmpty == true ? completionDate! : today;
 
-    await FirebaseFirestore.instance.runTransaction((tx) async {
-      final snap = await tx.get(assignmentRef);
-      final data = snap.data() ?? <String, dynamic>{};
+    // Read current state
+    final assignmentSnap = await assignmentRef.get();
+    final studentSnap = await studentRef.get();
+    
+    final assignmentData = assignmentSnap.data() ?? <String, dynamic>{};
+    final studentData = studentSnap.data() ?? <String, dynamic>{};
 
-      final alreadyCompleted = (data['completed'] == true);
-      final rewardTxnId = (data['rewardTxnId'] ?? data['reward_txn_id'] ?? '').toString().trim();
-      final rewardPointsApplied = (() {
-        final v = data['rewardPointsApplied'] ?? data['reward_points_applied'];
-        if (v is int) return v;
-        if (v is num) return v.toInt();
-        return int.tryParse(v?.toString() ?? '') ?? 0;
-      })();
+    final alreadyCompleted = (assignmentData['completed'] == true);
+    final existingRewardTxnId = (assignmentData['rewardTxnId'] ?? assignmentData['reward_txn_id'] ?? '').toString().trim();
+    final existingRewardPointsApplied = (() {
+      final v = assignmentData['rewardPointsApplied'] ?? assignmentData['reward_points_applied'];
+      if (v is int) return v;
+      if (v is num) return v.toInt();
+      return int.tryParse(v?.toString() ?? '') ?? 0;
+    })();
 
-      // Keep assignment metadata updated
-      final baseUpdate = <String, dynamic>{
-        'completed': completed,
+    // Get current student streak info
+    final currentStreak = asInt(studentData['currentStreak'] ?? studentData['current_streak'], fallback: 0);
+    final longestStreak = asInt(studentData['longestStreak'] ?? studentData['longest_streak'], fallback: 0);
+    final lastCompletionDate = (studentData['lastCompletionDate'] ?? studentData['last_completion_date'] ?? '').toString();
+
+    // Determine if assignment is gradable
+    final isGradable = asBool(assignmentData['gradable'], fallback: true);
+
+    int pointsAwarded = 0;
+    int newStreak = currentStreak;
+    int newLongest = longestStreak;
+    double streakBonusPercent = 0.0;
+
+    // =========================================
+    // CASE 1: Marking COMPLETE
+    // =========================================
+    if (completed) {
+      // Calculate streak
+      final (calculatedStreak, calculatedLongest) = _calculateNewStreak(
+        lastCompletionDate,
+        currentStreak,
+        longestStreak,
+        today,
+      );
+      newStreak = calculatedStreak;
+      newLongest = calculatedLongest;
+      streakBonusPercent = _calculateStreakBonus(newStreak);
+
+      // Determine effective grade for points calculation
+      int? effectiveGrade = gradePercent;
+      if (!isGradable) {
+        effectiveGrade = 100; // Pass/fail earns full points
+      }
+
+      // Calculate points
+      bool qualifiesForPoints = false;
+      if (!isGradable) {
+        qualifiesForPoints = true;
+      } else if (effectiveGrade != null && effectiveGrade >= kMinGradeForPoints) {
+        qualifiesForPoints = true;
+      }
+
+      if (qualifiesForPoints && basePoints > 0) {
+        final streakBonus = (basePoints * streakBonusPercent).round();
+        pointsAwarded = basePoints + streakBonus;
+      }
+
+      // Skip if already rewarded and not a retest
+      if (alreadyCompleted && existingRewardTxnId.isNotEmpty && !isRetest) {
+        // Just update metadata
+        await assignmentRef.update({
+          'completed': true,
+          'grade': gradePercent,
+          'completionDate': effectiveCompletionDate,
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+
+        // Update streak if needed
+        if (lastCompletionDate != today) {
+          await studentRef.update({
+            'currentStreak': newStreak,
+            'longestStreak': newLongest,
+            'lastCompletionDate': today,
+            'updatedAt': FieldValue.serverTimestamp(),
+          });
+        }
+
+        return CompletionResult(
+          pointsAwarded: 0,
+          currentStreak: newStreak,
+          streakBonusPercent: streakBonusPercent,
+          meetsGradeThreshold: true,
+        );
+      }
+
+      // Use a batch for atomic-ish writes
+      final batch = FirebaseFirestore.instance.batch();
+
+      // Update assignment
+      batch.update(assignmentRef, {
+        'completed': true,
+        'grade': gradePercent,
+        'completionDate': effectiveCompletionDate,
+        'categoryKey': categoryKey.isNotEmpty ? categoryKey : FieldValue.delete(),
+        'courseConfigId': configId.isNotEmpty ? configId : FieldValue.delete(),
+        'pointsEarned': pointsAwarded,
+        if (wpm != null) 'wpm': wpm,
+        if (accuracy != null) 'accuracy': accuracy,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+      // Update student wallet and streak
+      final studentUpdate = <String, dynamic>{
+        'currentStreak': newStreak,
+        'longestStreak': newLongest,
+        'lastCompletionDate': today,
         'updatedAt': FieldValue.serverTimestamp(),
       };
 
-      // Keep categoryKey if we inferred it
-      if (categoryKey.isNotEmpty && (data['categoryKey'] ?? '').toString().trim().isEmpty) {
-        baseUpdate['categoryKey'] = categoryKey;
-      }
+      if (pointsAwarded > 0) {
+        studentUpdate['walletBalance'] = FieldValue.increment(pointsAwarded);
 
-      // Grade handling
-      if (completed) {
-        baseUpdate['grade'] = gradePercent;
-      } else {
-        baseUpdate['grade'] = null;
-      }
-
-      // Store WPM/accuracy if provided (for typing courses)
-      if (wpm != null) baseUpdate['wpm'] = wpm;
-      if (accuracy != null) baseUpdate['accuracy'] = accuracy;
-
-      // CASE 1: Marking COMPLETE
-      if (completed) {
-        // If it was already rewarded, just update completion/grade and exit.
-        if (alreadyCompleted && rewardTxnId.isNotEmpty) {
-          tx.set(assignmentRef, baseUpdate, SetOptions(merge: true));
-          return;
-        }
-
-        // Apply wallet reward if we can.
-        if (pointsToAward > 0 && a.studentId.trim().isNotEmpty) {
-          final txnId = FirestorePaths.studentsCol()
-              .doc(a.studentId)
-              .collection('walletTransactions')
-              .doc()
-              .id;
-          final txnRef = FirestorePaths.studentsCol()
-              .doc(a.studentId)
-              .collection('walletTransactions')
-              .doc(txnId);
-
-          tx.set(txnRef, <String, dynamic>{
-            'type': 'deposit',
-            'points': pointsToAward,
-            'source': 'assignment_completion',
-            'studentId': a.studentId,
-            'subjectId': a.subjectId,
-            'subjectName': a.subjectName,
-            'assignmentId': a.id,
-            'assignmentName': a.name,
-            'categoryKey': categoryKey,
-            'gradePercent': gradePercent,
-            'courseConfigId': configId,
-            'createdAt': FieldValue.serverTimestamp(),
-          });
-
-          tx.set(studentRef, <String, dynamic>{
-            'walletBalance': FieldValue.increment(pointsToAward),
-            'updatedAt': FieldValue.serverTimestamp(),
-          }, SetOptions(merge: true));
-
-          tx.set(assignmentRef, <String, dynamic>{
-            ...baseUpdate,
-            'rewardTxnId': txnId,
-            'rewardPointsApplied': pointsToAward,
-            'courseConfigId': configId,
-          }, SetOptions(merge: true));
-
-          return;
-        }
-
-        // No points applied — still mark complete.
-        tx.set(assignmentRef, <String, dynamic>{
-          ...baseUpdate,
+        // Create wallet transaction
+        final txnRef = FirestorePaths.walletTransactionsCol(a.studentId).doc();
+        batch.set(txnRef, {
+          'type': 'deposit',
+          'points': pointsAwarded,
+          'source': 'assignment_completion',
+          'studentId': a.studentId,
+          'subjectId': a.subjectId,
+          'subjectName': a.subjectName,
+          'assignmentId': a.id,
+          'assignmentName': a.name,
+          'categoryKey': categoryKey,
+          'gradePercent': gradePercent,
+          'basePoints': basePoints,
+          'streakBonus': (basePoints * streakBonusPercent).round(),
+          'streakDays': newStreak,
           'courseConfigId': configId,
-        }, SetOptions(merge: true));
-        return;
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+
+        // Update assignment with transaction reference
+        batch.update(assignmentRef, {
+          'rewardTxnId': txnRef.id,
+          'rewardPointsApplied': pointsAwarded,
+        });
       }
 
-      // CASE 2: Marking INCOMPLETE (uncheck)
-      if (!completed) {
-        // If a reward was applied before, reverse it.
-        if (rewardTxnId.isNotEmpty && rewardPointsApplied > 0 && a.studentId.trim().isNotEmpty) {
-          final revId = FirestorePaths.studentsCol()
-              .doc(a.studentId)
-              .collection('walletTransactions')
-              .doc()
-              .id;
-          final revRef = FirestorePaths.studentsCol()
-              .doc(a.studentId)
-              .collection('walletTransactions')
-              .doc(revId);
+      batch.update(studentRef, studentUpdate);
 
-          tx.set(revRef, <String, dynamic>{
-            'type': 'reversal',
-            'points': -rewardPointsApplied,
-            'source': 'assignment_uncomplete',
-            'studentId': a.studentId,
-            'subjectId': a.subjectId,
-            'subjectName': a.subjectName,
-            'assignmentId': a.id,
-            'assignmentName': a.name,
-            'categoryKey': categoryKey,
-            'refTxnId': rewardTxnId,
-            'courseConfigId': configId,
-            'createdAt': FieldValue.serverTimestamp(),
-          });
+      await batch.commit();
 
-          tx.set(studentRef, <String, dynamic>{
-            'walletBalance': FieldValue.increment(-rewardPointsApplied),
-            'updatedAt': FieldValue.serverTimestamp(),
-          }, SetOptions(merge: true));
+      return CompletionResult(
+        pointsAwarded: pointsAwarded,
+        currentStreak: newStreak,
+        streakBonusPercent: streakBonusPercent,
+        meetsGradeThreshold: gradePercent == null || gradePercent >= kMinGradeForPoints,
+      );
+    }
 
-          tx.set(assignmentRef, <String, dynamic>{
-            ...baseUpdate,
-            'rewardTxnId': FieldValue.delete(),
-            'rewardPointsApplied': FieldValue.delete(),
-          }, SetOptions(merge: true));
+    // =========================================
+    // CASE 2: Marking INCOMPLETE (uncheck)
+    // =========================================
+    if (!completed) {
+      final batch = FirebaseFirestore.instance.batch();
 
-          return;
-        }
+      // Update assignment
+      batch.update(assignmentRef, {
+        'completed': false,
+        'grade': null,
+        'completionDate': '',
+        'pointsEarned': 0,
+        'rewardTxnId': FieldValue.delete(),
+        'rewardPointsApplied': FieldValue.delete(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
 
-        // No reward to reverse; just update completion/grade.
-        tx.set(assignmentRef, baseUpdate, SetOptions(merge: true));
+      // Reverse wallet if points were applied
+      if (existingRewardTxnId.isNotEmpty && existingRewardPointsApplied > 0 && a.studentId.trim().isNotEmpty) {
+        // Create reversal transaction
+        final revRef = FirestorePaths.walletTransactionsCol(a.studentId).doc();
+        batch.set(revRef, {
+          'type': 'reversal',
+          'points': -existingRewardPointsApplied,
+          'source': 'assignment_uncomplete',
+          'studentId': a.studentId,
+          'subjectId': a.subjectId,
+          'subjectName': a.subjectName,
+          'assignmentId': a.id,
+          'assignmentName': a.name,
+          'categoryKey': categoryKey,
+          'refTxnId': existingRewardTxnId,
+          'courseConfigId': configId,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+
+        // Decrement wallet balance
+        batch.update(studentRef, {
+          'walletBalance': FieldValue.increment(-existingRewardPointsApplied),
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
       }
-    });
 
-    // =====================
-    // NEW: Progress Tracking (outside transaction for simplicity)
-    // =====================
-    if (completed) {
-      // Build an updated assignment with resolved categoryKey
-      final updatedAssignment = Assignment(
-        id: a.id,
-        studentId: a.studentId,
-        subjectId: a.subjectId,
-        name: a.name,
-        dueDate: a.dueDate,
-        isCompleted: true,
-        grade: gradePercent,
-        categoryKey: categoryKey,
-        pointsPossible: a.pointsPossible,
-        weight: a.weight,
-        courseConfigId: configId,
-        rewardTxnId: a.rewardTxnId,
-        rewardPointsApplied: pointsToAward,
-        studentName: a.studentName,
-        subjectName: a.subjectName,
-      );
+      await batch.commit();
 
-      progressResult = await _progress.recordActivity(
-        assignment: updatedAssignment,
-        gradePercent: gradePercent,
-        wpm: wpm,
-        accuracy: accuracy,
-        minutesPracticed: minutesPracticed,
+      return CompletionResult(
+        pointsAwarded: 0,
+        currentStreak: currentStreak,
+        streakBonusPercent: 0.0,
+        meetsGradeThreshold: true,
       );
-    } else {
-      // Reverse progress tracking
-      await _progress.reverseActivity(assignment: a);
     }
 
     return CompletionResult(
-      pointsAwarded: completed ? pointsToAward : 0,
-      progressResult: progressResult,
+      pointsAwarded: 0,
+      currentStreak: currentStreak,
+      streakBonusPercent: 0.0,
+      meetsGradeThreshold: true,
     );
+  }
+
+  /// Create a new assignment with proper defaults
+  static Future<String> createAssignment({
+    required String studentId,
+    required String subjectId,
+    required String name,
+    required String dueDate,
+    int pointsBase = 10,
+    bool gradable = true,
+    String courseConfigId = '',
+    String categoryKey = '',
+    int orderInCourse = 0,
+  }) async {
+    final docRef = FirestorePaths.assignmentsCol().doc();
+    
+    await docRef.set({
+      'studentId': studentId,
+      'subjectId': subjectId,
+      'name': name,
+      'nameLower': name.toLowerCase(),
+      'dueDate': dueDate,
+      'completionDate': '',
+      'completed': false,
+      'grade': null,
+      'courseConfigId': courseConfigId,
+      'categoryKey': categoryKey,
+      'orderInCourse': orderInCourse,
+      'pointsBase': pointsBase,
+      'pointsEarned': 0,
+      'gradable': gradable,
+      'pointsPossible': pointsBase,
+      'weight': 1.0,
+      'attempts': [],
+      'bestGrade': null,
+      'rewardTxnId': '',
+      'rewardPointsApplied': 0,
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+
+    return docRef.id;
   }
 }
 
 /// Result from completing an assignment
 class CompletionResult {
   final int pointsAwarded;
-  final ProgressUpdateResult? progressResult;
+  final int currentStreak;
+  final double streakBonusPercent;
+  final bool meetsGradeThreshold;
 
   const CompletionResult({
     required this.pointsAwarded,
-    this.progressResult,
+    this.currentStreak = 0,
+    this.streakBonusPercent = 0.0,
+    this.meetsGradeThreshold = true,
   });
 
-  /// New badges earned from this completion
-  List<BadgeEarned> get newBadges => progressResult?.newBadges ?? [];
-
-  /// Current streak after this completion
-  int get currentStreak => progressResult?.streakCurrent ?? 0;
-
-  /// Streak bonus percentage
-  double get streakBonusPercent => progressResult?.streakBonusPercent ?? 0.0;
-
-  /// WPM improvement bonus points (for typing)
-  int get improvementBonusPoints => progressResult?.improvementBonusPoints ?? 0;
-
-  /// WPM improvement since baseline (for typing)
-  int get wpmImprovement => progressResult?.wpmImprovement ?? 0;
-
-  /// Whether any badges were earned
-  bool get hasBadges => newBadges.isNotEmpty;
-
-  /// Whether an improvement bonus was earned
-  bool get hasImprovementBonus => improvementBonusPoints > 0;
+  /// Whether the grade was below 90% (no points earned for gradable)
+  bool get gradeWasBelowThreshold => !meetsGradeThreshold;
 }

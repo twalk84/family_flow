@@ -2,6 +2,8 @@
 //
 // Strongly-typed Firestore models + safe coercion helpers.
 // This file intentionally exports normalizeDueDate() for use across the app.
+//
+// UPDATED: Added student-level streak tracking and assignment points/retest fields.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -27,7 +29,8 @@ String normalizeDueDate(dynamic v) {
     // Already yyyy-mm-dd
     final simple = RegExp(r'^\d{4}-\d{2}-\d{2}$');
     if (simple.hasMatch(s)) return s;
-        // Handle yyyy-m-d (not padded) -> yyyy-mm-dd
+    
+    // Handle yyyy-m-d (not padded) -> yyyy-mm-dd
     final loose = RegExp(r'^(\d{4})-(\d{1,2})-(\d{1,2})$').firstMatch(s);
     
     if (loose != null) {
@@ -79,6 +82,43 @@ String asString(dynamic v, {String fallback = ''}) {
 }
 
 // =====================
+// AssignmentAttempt (for retest tracking)
+// =====================
+class AssignmentAttempt {
+  final int grade;
+  final String date; // "YYYY-MM-DD"
+  final DateTime? timestamp;
+
+  const AssignmentAttempt({
+    required this.grade,
+    required this.date,
+    this.timestamp,
+  });
+
+  factory AssignmentAttempt.fromMap(Map<String, dynamic> data) {
+    return AssignmentAttempt(
+      grade: asInt(data['grade'], fallback: 0),
+      date: asString(data['date'], fallback: ''),
+      timestamp: _toDateTime(data['timestamp']),
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'grade': grade,
+        'date': date,
+        'timestamp': timestamp != null ? Timestamp.fromDate(timestamp!) : FieldValue.serverTimestamp(),
+      };
+}
+
+DateTime? _toDateTime(dynamic v) {
+  if (v == null) return null;
+  if (v is Timestamp) return v.toDate();
+  if (v is DateTime) return v;
+  if (v is String) return DateTime.tryParse(v);
+  return null;
+}
+
+// =====================
 // Student
 // =====================
 /// `color` is stored as an ARGB int (same as Flutter's Color.value).
@@ -96,6 +136,11 @@ class Student {
   // Wallet
   final int walletBalance; // points
 
+  // Streak tracking (student-level, across all subjects)
+  final int currentStreak; // consecutive days with at least 1 completion
+  final int longestStreak; // all-time best streak
+  final String lastCompletionDate; // "YYYY-MM-DD" of last completed assignment
+
   const Student({
     required this.id,
     required this.name,
@@ -105,6 +150,9 @@ class Student {
     required this.pin,
     required this.notes,
     required this.walletBalance,
+    required this.currentStreak,
+    required this.longestStreak,
+    required this.lastCompletionDate,
   });
 
   factory Student.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -125,6 +173,9 @@ class Student {
       pin: asString(data['pin'], fallback: ''),
       notes: asString(data['notes'], fallback: ''),
       walletBalance: asInt(data['walletBalance'] ?? data['wallet_balance'], fallback: 0),
+      currentStreak: asInt(data['currentStreak'] ?? data['current_streak'], fallback: 0),
+      longestStreak: asInt(data['longestStreak'] ?? data['longest_streak'], fallback: 0),
+      lastCompletionDate: normalizeDueDate(data['lastCompletionDate'] ?? data['last_completion_date']),
     );
   }
 
@@ -137,7 +188,47 @@ class Student {
         'pin': pin,
         'notes': notes,
         'walletBalance': walletBalance,
+        'currentStreak': currentStreak,
+        'longestStreak': longestStreak,
+        'lastCompletionDate': lastCompletionDate,
       };
+
+  /// Calculate streak bonus percentage based on current streak
+  /// 3 days = 5%, 7 days = 10%, 14 days = 15%, 30 days = 20%
+  double get streakBonusPercent {
+    if (currentStreak >= 30) return 0.20;
+    if (currentStreak >= 14) return 0.15;
+    if (currentStreak >= 7) return 0.10;
+    if (currentStreak >= 3) return 0.05;
+    return 0.0;
+  }
+
+  Student copyWith({
+    String? id,
+    String? name,
+    int? age,
+    String? gradeLevel,
+    int? colorValue,
+    String? pin,
+    String? notes,
+    int? walletBalance,
+    int? currentStreak,
+    int? longestStreak,
+    String? lastCompletionDate,
+  }) =>
+      Student(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        age: age ?? this.age,
+        gradeLevel: gradeLevel ?? this.gradeLevel,
+        colorValue: colorValue ?? this.colorValue,
+        pin: pin ?? this.pin,
+        notes: notes ?? this.notes,
+        walletBalance: walletBalance ?? this.walletBalance,
+        currentStreak: currentStreak ?? this.currentStreak,
+        longestStreak: longestStreak ?? this.longestStreak,
+        lastCompletionDate: lastCompletionDate ?? this.lastCompletionDate,
+      );
 }
 
 // =====================
@@ -184,17 +275,30 @@ class Assignment {
 
   // Core fields
   final String name;
-  final String dueDate; // normalized "YYYY-MM-DD"
+  final String dueDate; // normalized "YYYY-MM-DD" - when it should be done
+  final String completionDate; // normalized "YYYY-MM-DD" - when it was actually done
   final bool isCompleted;
-  final int? grade;
+  final int? grade; // current/best grade (0-100)
 
-  // Chemistry / rubric metadata (safe for other subjects too)
-  final String categoryKey; // e.g. reading_set, problem_set, topic_test
-  final int pointsPossible; // optional, can be 0
+  // Course config link (for curriculum-based assignments)
+  final String courseConfigId; // e.g. "saxon-math-76"
+  final String categoryKey; // e.g. "lesson", "test", "practice"
+  final int orderInCourse; // position in curriculum sequence (1, 2, 3...)
+
+  // Points
+  final int pointsBase; // base points from category or manual entry
+  final int pointsEarned; // actual points after grade multiplier + streak bonus
+  final bool gradable; // does this assignment require a grade?
+
+  // Legacy/compatibility (maps to pointsBase)
+  final int pointsPossible;
   final double weight; // optional (future grading)
-  final String courseConfigId; // optional override on assignment doc
 
-  // Wallet tracking (optional)
+  // Retest tracking
+  final List<AssignmentAttempt> attempts; // history of all attempts
+  final int? bestGrade; // highest grade across all attempts
+
+  // Wallet tracking
   final String rewardTxnId; // deposit txn id (if applied)
   final int rewardPointsApplied; // points actually deposited for this assignment
 
@@ -208,12 +312,19 @@ class Assignment {
     required this.subjectId,
     required this.name,
     required this.dueDate,
+    required this.completionDate,
     required this.isCompleted,
     required this.grade,
+    required this.courseConfigId,
     required this.categoryKey,
+    required this.orderInCourse,
+    required this.pointsBase,
+    required this.pointsEarned,
+    required this.gradable,
     required this.pointsPossible,
     required this.weight,
-    required this.courseConfigId,
+    required this.attempts,
+    required this.bestGrade,
     required this.rewardTxnId,
     required this.rewardPointsApplied,
     required this.studentName,
@@ -237,19 +348,46 @@ class Assignment {
     final resolvedSubjectName = subjectsById?[subid]?.name ??
         asString(data['subjectName'] ?? data['subject_name'], fallback: '');
 
+    // Parse attempts list
+    final attemptsRaw = data['attempts'];
+    final attemptsList = <AssignmentAttempt>[];
+    if (attemptsRaw is List) {
+      for (final a in attemptsRaw) {
+        if (a is Map<String, dynamic>) {
+          attemptsList.add(AssignmentAttempt.fromMap(a));
+        }
+      }
+    }
+
+    // pointsBase: prefer new field, fallback to pointsPossible
+    final pBase = asInt(
+      data['pointsBase'] ?? data['points_base'] ?? data['pointsPossible'] ?? data['points_possible'],
+      fallback: 0,
+    );
+
     return Assignment(
       id: doc.id,
       studentId: sid,
       subjectId: subid,
       name: asString(data['name'] ?? data['title'] ?? data['assignment_name']),
       dueDate: normalizeDueDate(data['dueDate'] ?? data['due_date']),
+      completionDate: normalizeDueDate(data['completionDate'] ?? data['completion_date']),
       isCompleted: asBool(data['completed'] ?? data['isCompleted'] ?? data['is_completed']),
       grade: data['grade'] == null ? null : asInt(data['grade'], fallback: 0),
 
-      categoryKey: asString(data['categoryKey'] ?? data['category_key'], fallback: ''),
-      pointsPossible: asInt(data['pointsPossible'] ?? data['points_possible'], fallback: 0),
-      weight: asDouble(data['weight'], fallback: 1.0),
       courseConfigId: asString(data['courseConfigId'] ?? data['course_config_id'], fallback: ''),
+      categoryKey: asString(data['categoryKey'] ?? data['category_key'], fallback: ''),
+      orderInCourse: asInt(data['orderInCourse'] ?? data['order_in_course'], fallback: 0),
+
+      pointsBase: pBase,
+      pointsEarned: asInt(data['pointsEarned'] ?? data['points_earned'], fallback: 0),
+      gradable: asBool(data['gradable'], fallback: true), // default to gradable
+
+      pointsPossible: pBase, // legacy compatibility
+      weight: asDouble(data['weight'], fallback: 1.0),
+
+      attempts: attemptsList,
+      bestGrade: data['bestGrade'] == null ? null : asInt(data['bestGrade'], fallback: 0),
 
       rewardTxnId: asString(data['rewardTxnId'] ?? data['reward_txn_id'], fallback: ''),
       rewardPointsApplied: asInt(data['rewardPointsApplied'] ?? data['reward_points_applied'], fallback: 0),
@@ -265,15 +403,75 @@ class Assignment {
         'name': name,
         'nameLower': name.toLowerCase(),
         'dueDate': dueDate,
+        'completionDate': completionDate,
         'completed': isCompleted,
         'grade': grade,
 
-        'categoryKey': categoryKey,
-        'pointsPossible': pointsPossible,
-        'weight': weight,
         'courseConfigId': courseConfigId,
+        'categoryKey': categoryKey,
+        'orderInCourse': orderInCourse,
+
+        'pointsBase': pointsBase,
+        'pointsEarned': pointsEarned,
+        'gradable': gradable,
+
+        // Legacy compatibility
+        'pointsPossible': pointsBase,
+        'weight': weight,
+
+        'attempts': attempts.map((a) => a.toMap()).toList(),
+        'bestGrade': bestGrade,
 
         'rewardTxnId': rewardTxnId,
         'rewardPointsApplied': rewardPointsApplied,
       };
+
+  Assignment copyWith({
+    String? id,
+    String? studentId,
+    String? subjectId,
+    String? name,
+    String? dueDate,
+    String? completionDate,
+    bool? isCompleted,
+    int? grade,
+    String? courseConfigId,
+    String? categoryKey,
+    int? orderInCourse,
+    int? pointsBase,
+    int? pointsEarned,
+    bool? gradable,
+    int? pointsPossible,
+    double? weight,
+    List<AssignmentAttempt>? attempts,
+    int? bestGrade,
+    String? rewardTxnId,
+    int? rewardPointsApplied,
+    String? studentName,
+    String? subjectName,
+  }) =>
+      Assignment(
+        id: id ?? this.id,
+        studentId: studentId ?? this.studentId,
+        subjectId: subjectId ?? this.subjectId,
+        name: name ?? this.name,
+        dueDate: dueDate ?? this.dueDate,
+        completionDate: completionDate ?? this.completionDate,
+        isCompleted: isCompleted ?? this.isCompleted,
+        grade: grade ?? this.grade,
+        courseConfigId: courseConfigId ?? this.courseConfigId,
+        categoryKey: categoryKey ?? this.categoryKey,
+        orderInCourse: orderInCourse ?? this.orderInCourse,
+        pointsBase: pointsBase ?? this.pointsBase,
+        pointsEarned: pointsEarned ?? this.pointsEarned,
+        gradable: gradable ?? this.gradable,
+        pointsPossible: pointsPossible ?? this.pointsPossible,
+        weight: weight ?? this.weight,
+        attempts: attempts ?? this.attempts,
+        bestGrade: bestGrade ?? this.bestGrade,
+        rewardTxnId: rewardTxnId ?? this.rewardTxnId,
+        rewardPointsApplied: rewardPointsApplied ?? this.rewardPointsApplied,
+        studentName: studentName ?? this.studentName,
+        subjectName: subjectName ?? this.subjectName,
+      );
 }
