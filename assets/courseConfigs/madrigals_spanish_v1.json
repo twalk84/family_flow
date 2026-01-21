@@ -1,0 +1,5393 @@
+{
+  "id": "madrigals_spanish_v1",
+  "title": "Madrigal's Magic Key to Spanish",
+  "subtitle": "Complete Grading Rubric & Reward Point System",
+  "version": 1,
+  "type": "language",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Complete each component to earn base points",
+      "Streaks can add bonus percentages when enabled",
+      "Mastery achievements can unlock multipliers when configured",
+      "Badges can require: Mastery + Completion + Capstone"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "lecture_attendance": {
+        "label": "Lecture Attendance",
+        "pointsEach": 10.0,
+        "countsTowardGrade": true
+      },
+      "book_exercises": {
+        "label": "Book Exercises",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "supplementary_worksheet": {
+        "label": "Supplementary Worksheet",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_creation_all_types": {
+        "label": "Flashcard Creation (all types)",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "daily_read_aloud": {
+        "label": "Daily Read-Aloud",
+        "pointsEach": 15.0,
+        "countsTowardGrade": true
+      },
+      "conversation_performance": {
+        "label": "Conversation Performance",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "label": "Flashcards (Leitner Review)",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "lecture_attendance": 10,
+      "book_exercises": 40,
+      "supplementary_worksheet": 25,
+      "flashcard_creation_all_types": 25,
+      "daily_read_aloud": 15,
+      "conversation_performance": 40,
+      "flashcard_session": 5
+    },
+    "multipliers": [],
+    "streaks": {}
+  },
+  "curriculum": {
+    "totalLessons": 224,
+    "modules": [
+      {
+        "id": "madrigals_spanish_v1_unit_1",
+        "title": "Unit 1",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_1",
+                "coverage": "1–5",
+                "assessment": "Unit Test 1 (Cognate Foundations)"
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_1"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 3,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_2",
+                "coverage": "1–5",
+                "assessment": "Unit Test 1 (Cognate Foundations)"
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_2"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 5,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_3",
+                "coverage": "1–5",
+                "assessment": "Unit Test 1 (Cognate Foundations)"
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_3"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 7,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_4",
+                "coverage": "1–5",
+                "assessment": "Unit Test 1 (Cognate Foundations)"
+              }
+            }
+          },
+          {
+            "index": 8,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_4"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 9,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_5",
+                "coverage": "1–5",
+                "assessment": "Unit Test 1 (Cognate Foundations)"
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_1",
+                "lessonId": "madrigals_spanish_unit_1_lesson_5"
+              },
+              "deckHint": "Unit 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_2",
+        "title": "Unit 2",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 11,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_6",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_6"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 13,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_7",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_7"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 15,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_8",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_8"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 17,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_9",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_9"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 19,
+            "title": "Lesson 10",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_10",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Flashcards: Lesson 10 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_10"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 21,
+            "title": "Lesson 11",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_11",
+                "coverage": "6–11",
+                "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Flashcards: Lesson 11 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_2",
+                "lessonId": "madrigals_spanish_unit_2_lesson_11"
+              },
+              "deckHint": "Unit 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_3",
+        "title": "Unit 3",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 23,
+            "title": "Lesson 12",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_12",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Flashcards: Lesson 12 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_12"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 25,
+            "title": "Lesson 13",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_13",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Flashcards: Lesson 13 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_13"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 27,
+            "title": "Lesson 14",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_14",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Flashcards: Lesson 14 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_14"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 29,
+            "title": "Lesson 15",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_15",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Flashcards: Lesson 15 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_15"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 31,
+            "title": "Lesson 16",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_16",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Flashcards: Lesson 16 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_16"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 33,
+            "title": "Lesson 17",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_17",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Flashcards: Lesson 17 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_17"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 35,
+            "title": "Lesson 18",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_18",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Flashcards: Lesson 18 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_18"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 37,
+            "title": "Lesson 19",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_19",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Flashcards: Lesson 19 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_19"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 39,
+            "title": "Lesson 20",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_20",
+                "coverage": "12–20",
+                "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+              }
+            }
+          },
+          {
+            "index": 40,
+            "title": "Flashcards: Lesson 20 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_3",
+                "lessonId": "madrigals_spanish_unit_3_lesson_20"
+              },
+              "deckHint": "Unit 3"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_midterm",
+        "title": "MIDTERM",
+        "unit": "MIDTERM",
+        "lessons": [
+          {
+            "index": 41,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_1",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_1"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 43,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_2",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_2"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 45,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_3",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_3"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 47,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_4",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_4"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 49,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_5",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_5"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 51,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_6",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_6"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 53,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_7",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_7"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 55,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_8",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_8"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 57,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_9",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_9"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 59,
+            "title": "Lesson 10",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_10",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Flashcards: Lesson 10 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_10"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 61,
+            "title": "Lesson 11",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_11",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Flashcards: Lesson 11 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_11"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 63,
+            "title": "Lesson 12",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_12",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Flashcards: Lesson 12 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_12"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 65,
+            "title": "Lesson 13",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_13",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Flashcards: Lesson 13 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_13"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 67,
+            "title": "Lesson 14",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_14",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Flashcards: Lesson 14 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_14"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 69,
+            "title": "Lesson 15",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_15",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Flashcards: Lesson 15 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_15"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 71,
+            "title": "Lesson 16",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_16",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Flashcards: Lesson 16 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_16"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 73,
+            "title": "Lesson 17",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_17",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Flashcards: Lesson 17 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_17"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 75,
+            "title": "Lesson 18",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_18",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Flashcards: Lesson 18 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_18"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 77,
+            "title": "Lesson 19",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_19",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Flashcards: Lesson 19 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_19"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 79,
+            "title": "Lesson 20",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_20",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 80,
+            "title": "Flashcards: Lesson 20 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_20"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 81,
+            "title": "Lesson 21",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_21",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 82,
+            "title": "Flashcards: Lesson 21 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_21"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 83,
+            "title": "Lesson 22",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_22",
+                "coverage": "1–22",
+                "assessment": "Midterm Exam (Cumulative through Present Tense)"
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Flashcards: Lesson 22 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_midterm",
+                "lessonId": "madrigals_spanish_midterm_lesson_22"
+              },
+              "deckHint": "MIDTERM"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_4",
+        "title": "Unit 4",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 85,
+            "title": "Lesson 21",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_21",
+                "coverage": "21–25",
+                "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)"
+              }
+            }
+          },
+          {
+            "index": 86,
+            "title": "Flashcards: Lesson 21 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_21"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 87,
+            "title": "Lesson 22",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_22",
+                "coverage": "21–25",
+                "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)"
+              }
+            }
+          },
+          {
+            "index": 88,
+            "title": "Flashcards: Lesson 22 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_22"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 89,
+            "title": "Lesson 23",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_23",
+                "coverage": "21–25",
+                "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)"
+              }
+            }
+          },
+          {
+            "index": 90,
+            "title": "Flashcards: Lesson 23 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_23"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 91,
+            "title": "Lesson 24",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_24",
+                "coverage": "21–25",
+                "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)"
+              }
+            }
+          },
+          {
+            "index": 92,
+            "title": "Flashcards: Lesson 24 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_24"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 93,
+            "title": "Lesson 25",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_25",
+                "coverage": "21–25",
+                "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)"
+              }
+            }
+          },
+          {
+            "index": 94,
+            "title": "Flashcards: Lesson 25 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_4",
+                "lessonId": "madrigals_spanish_unit_4_lesson_25"
+              },
+              "deckHint": "Unit 4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_5",
+        "title": "Unit 5",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 95,
+            "title": "Lesson 26",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_26",
+                "coverage": "26–30",
+                "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+              }
+            }
+          },
+          {
+            "index": 96,
+            "title": "Flashcards: Lesson 26 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_26"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 97,
+            "title": "Lesson 27",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_27",
+                "coverage": "26–30",
+                "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+              }
+            }
+          },
+          {
+            "index": 98,
+            "title": "Flashcards: Lesson 27 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_27"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 99,
+            "title": "Lesson 28",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_28",
+                "coverage": "26–30",
+                "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+              }
+            }
+          },
+          {
+            "index": 100,
+            "title": "Flashcards: Lesson 28 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_28"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 101,
+            "title": "Lesson 29",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_29",
+                "coverage": "26–30",
+                "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+              }
+            }
+          },
+          {
+            "index": 102,
+            "title": "Flashcards: Lesson 29 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_29"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 103,
+            "title": "Lesson 30",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_30",
+                "coverage": "26–30",
+                "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+              }
+            }
+          },
+          {
+            "index": 104,
+            "title": "Flashcards: Lesson 30 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_5",
+                "lessonId": "madrigals_spanish_unit_5_lesson_30"
+              },
+              "deckHint": "Unit 5"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_6",
+        "title": "Unit 6",
+        "unit": "Unit 6",
+        "lessons": [
+          {
+            "index": 105,
+            "title": "Lesson 31",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_31",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 106,
+            "title": "Flashcards: Lesson 31 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_31"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 107,
+            "title": "Lesson 32",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_32",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 108,
+            "title": "Flashcards: Lesson 32 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_32"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 109,
+            "title": "Lesson 33",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_33",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 110,
+            "title": "Flashcards: Lesson 33 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_33"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 111,
+            "title": "Lesson 34",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_34",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 112,
+            "title": "Flashcards: Lesson 34 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_34"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 113,
+            "title": "Lesson 35",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_35",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 114,
+            "title": "Flashcards: Lesson 35 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_35"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 115,
+            "title": "Lesson 36",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_36",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 116,
+            "title": "Flashcards: Lesson 36 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_36"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 117,
+            "title": "Lesson 37",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_37",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 118,
+            "title": "Flashcards: Lesson 37 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_37"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 119,
+            "title": "Lesson 38",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_38",
+                "coverage": "31–38",
+                "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+              }
+            }
+          },
+          {
+            "index": 120,
+            "title": "Flashcards: Lesson 38 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_6",
+                "lessonId": "madrigals_spanish_unit_6_lesson_38"
+              },
+              "deckHint": "Unit 6"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_7",
+        "title": "Unit 7",
+        "unit": "Unit 7",
+        "lessons": [
+          {
+            "index": 121,
+            "title": "Lesson 39",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_7",
+                "lessonId": "madrigals_spanish_unit_7_lesson_39",
+                "coverage": "39–40",
+                "assessment": "Unit Test 7 — Madrigal's \"Test Your Progress\" p.390"
+              }
+            }
+          },
+          {
+            "index": 122,
+            "title": "Flashcards: Lesson 39 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_7",
+                "lessonId": "madrigals_spanish_unit_7_lesson_39"
+              },
+              "deckHint": "Unit 7"
+            }
+          },
+          {
+            "index": 123,
+            "title": "Lesson 40",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_7",
+                "lessonId": "madrigals_spanish_unit_7_lesson_40",
+                "coverage": "39–40",
+                "assessment": "Unit Test 7 — Madrigal's \"Test Your Progress\" p.390"
+              }
+            }
+          },
+          {
+            "index": 124,
+            "title": "Flashcards: Lesson 40 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_7",
+                "lessonId": "madrigals_spanish_unit_7_lesson_40"
+              },
+              "deckHint": "Unit 7"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_unit_8",
+        "title": "Unit 8",
+        "unit": "Unit 8",
+        "lessons": [
+          {
+            "index": 125,
+            "title": "Lesson 41",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_41",
+                "coverage": "41–45",
+                "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)"
+              }
+            }
+          },
+          {
+            "index": 126,
+            "title": "Flashcards: Lesson 41 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_41"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 127,
+            "title": "Lesson 42",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_42",
+                "coverage": "41–45",
+                "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)"
+              }
+            }
+          },
+          {
+            "index": 128,
+            "title": "Flashcards: Lesson 42 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_42"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 129,
+            "title": "Lesson 43",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_43",
+                "coverage": "41–45",
+                "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)"
+              }
+            }
+          },
+          {
+            "index": 130,
+            "title": "Flashcards: Lesson 43 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_43"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 131,
+            "title": "Lesson 44",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_44",
+                "coverage": "41–45",
+                "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)"
+              }
+            }
+          },
+          {
+            "index": 132,
+            "title": "Flashcards: Lesson 44 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_44"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 133,
+            "title": "Lesson 45",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_45",
+                "coverage": "41–45",
+                "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)"
+              }
+            }
+          },
+          {
+            "index": 134,
+            "title": "Flashcards: Lesson 45 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_unit_8",
+                "lessonId": "madrigals_spanish_unit_8_lesson_45"
+              },
+              "deckHint": "Unit 8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "madrigals_spanish_v1_final",
+        "title": "FINAL",
+        "unit": "FINAL",
+        "lessons": [
+          {
+            "index": 135,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_1",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 136,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_1"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 137,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_2",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 138,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_2"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 139,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_3",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 140,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_3"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 141,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_4",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 142,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_4"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 143,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_5",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 144,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_5"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 145,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_6",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 146,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_6"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 147,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_7",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 148,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_7"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 149,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_8",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 150,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_8"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 151,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_9",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 152,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_9"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 153,
+            "title": "Lesson 10",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_10",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 154,
+            "title": "Flashcards: Lesson 10 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_10"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 155,
+            "title": "Lesson 11",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_11",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 156,
+            "title": "Flashcards: Lesson 11 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_11"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 157,
+            "title": "Lesson 12",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_12",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 158,
+            "title": "Flashcards: Lesson 12 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_12"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 159,
+            "title": "Lesson 13",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_13",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 160,
+            "title": "Flashcards: Lesson 13 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_13"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 161,
+            "title": "Lesson 14",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_14",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 162,
+            "title": "Flashcards: Lesson 14 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_14"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 163,
+            "title": "Lesson 15",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_15",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 164,
+            "title": "Flashcards: Lesson 15 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_15"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 165,
+            "title": "Lesson 16",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_16",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 166,
+            "title": "Flashcards: Lesson 16 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_16"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 167,
+            "title": "Lesson 17",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_17",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 168,
+            "title": "Flashcards: Lesson 17 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_17"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 169,
+            "title": "Lesson 18",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_18",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 170,
+            "title": "Flashcards: Lesson 18 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_18"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 171,
+            "title": "Lesson 19",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_19",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 172,
+            "title": "Flashcards: Lesson 19 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_19"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 173,
+            "title": "Lesson 20",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_20",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 174,
+            "title": "Flashcards: Lesson 20 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_20"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 175,
+            "title": "Lesson 21",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_21",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 176,
+            "title": "Flashcards: Lesson 21 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_21"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 177,
+            "title": "Lesson 22",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_22",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 178,
+            "title": "Flashcards: Lesson 22 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_22"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 179,
+            "title": "Lesson 23",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_23",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 180,
+            "title": "Flashcards: Lesson 23 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_23"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 181,
+            "title": "Lesson 24",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_24",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 182,
+            "title": "Flashcards: Lesson 24 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_24"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 183,
+            "title": "Lesson 25",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_25",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 184,
+            "title": "Flashcards: Lesson 25 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_25"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 185,
+            "title": "Lesson 26",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_26",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 186,
+            "title": "Flashcards: Lesson 26 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_26"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 187,
+            "title": "Lesson 27",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_27",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 188,
+            "title": "Flashcards: Lesson 27 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_27"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 189,
+            "title": "Lesson 28",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_28",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 190,
+            "title": "Flashcards: Lesson 28 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_28"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 191,
+            "title": "Lesson 29",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_29",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 192,
+            "title": "Flashcards: Lesson 29 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_29"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 193,
+            "title": "Lesson 30",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_30",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 194,
+            "title": "Flashcards: Lesson 30 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_30"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 195,
+            "title": "Lesson 31",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_31",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 196,
+            "title": "Flashcards: Lesson 31 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_31"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 197,
+            "title": "Lesson 32",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_32",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 198,
+            "title": "Flashcards: Lesson 32 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_32"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 199,
+            "title": "Lesson 33",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_33",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 200,
+            "title": "Flashcards: Lesson 33 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_33"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 201,
+            "title": "Lesson 34",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_34",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 202,
+            "title": "Flashcards: Lesson 34 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_34"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 203,
+            "title": "Lesson 35",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_35",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 204,
+            "title": "Flashcards: Lesson 35 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_35"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 205,
+            "title": "Lesson 36",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_36",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 206,
+            "title": "Flashcards: Lesson 36 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_36"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 207,
+            "title": "Lesson 37",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_37",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 208,
+            "title": "Flashcards: Lesson 37 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_37"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 209,
+            "title": "Lesson 38",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_38",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 210,
+            "title": "Flashcards: Lesson 38 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_38"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 211,
+            "title": "Lesson 39",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_39",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 212,
+            "title": "Flashcards: Lesson 39 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_39"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 213,
+            "title": "Lesson 40",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_40",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 214,
+            "title": "Flashcards: Lesson 40 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_40"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 215,
+            "title": "Lesson 41",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_41",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 216,
+            "title": "Flashcards: Lesson 41 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_41"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 217,
+            "title": "Lesson 42",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_42",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 218,
+            "title": "Flashcards: Lesson 42 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_42"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 219,
+            "title": "Lesson 43",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_43",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 220,
+            "title": "Flashcards: Lesson 43 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_43"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 221,
+            "title": "Lesson 44",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_44",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 222,
+            "title": "Flashcards: Lesson 44 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_44"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 223,
+            "title": "Lesson 45",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_45",
+                "coverage": "1–45",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 224,
+            "title": "Flashcards: Lesson 45 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "madrigals_spanish_final",
+                "lessonId": "madrigals_spanish_final_lesson_45"
+              },
+              "deckHint": "FINAL"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "key": "vocabulary",
+      "label": "Vocabulary"
+    },
+    {
+      "key": "grammar",
+      "label": "Grammar"
+    },
+    {
+      "key": "conjugation",
+      "label": "Conjugations"
+    },
+    {
+      "key": "phrases",
+      "label": "Phrases & Dialog"
+    },
+    {
+      "key": "pronunciation",
+      "label": "Pronunciation"
+    },
+    {
+      "key": "listening",
+      "label": "Listening"
+    },
+    {
+      "key": "speaking",
+      "label": "Speaking"
+    }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewAfterDays": 0
+      },
+      {
+        "box": 2,
+        "reviewAfterDays": 1
+      },
+      {
+        "box": 3,
+        "reviewAfterDays": 3
+      },
+      {
+        "box": 4,
+        "reviewAfterDays": 7
+      },
+      {
+        "box": 5,
+        "reviewAfterDays": 14
+      }
+    ],
+    "masteryBox": 5
+  },
+  "flashcardDecks": [
+    {
+      "unit": "Unit 1",
+      "unitTitle": "Unit 1",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 2",
+      "unitTitle": "Unit 2",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 3",
+      "unitTitle": "Unit 3",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "MIDTERM",
+      "unitTitle": "MIDTERM",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 4",
+      "unitTitle": "Unit 4",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 5",
+      "unitTitle": "Unit 5",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 6",
+      "unitTitle": "Unit 6",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 7",
+      "unitTitle": "Unit 7",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 8",
+      "unitTitle": "Unit 8",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "FINAL",
+      "unitTitle": "FINAL",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    }
+  ],
+  "badges": [],
+  "generatedFrom": {
+    "sourceFile": "madrigals_spanish",
+    "conversion": "doc_grading_system_to_course_config",
+    "generatedOn": "2026-01-21T20:09:15.305300Z"
+  },
+  "source": {
+    "original": {
+      "id": "madrigals_spanish",
+      "title": "Madrigal's Magic Key to Spanish",
+      "subtitle": "Complete Grading Rubric & Reward Point System",
+      "version": 1,
+      "type": "language",
+      "grading": {
+        "mode": "points",
+        "categories": {
+          "lecture_attendance": {
+            "label": "Lecture Attendance",
+            "pointsEach": 10.0,
+            "countsTowardGrade": true
+          },
+          "book_exercises": {
+            "label": "Book Exercises",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          },
+          "supplementary_worksheet": {
+            "label": "Supplementary Worksheet",
+            "pointsEach": 25.0,
+            "countsTowardGrade": true
+          },
+          "flashcard_creation_all_types": {
+            "label": "Flashcard Creation (all types)",
+            "pointsEach": 25.0,
+            "countsTowardGrade": true
+          },
+          "daily_read_aloud": {
+            "label": "Daily Read-Aloud",
+            "pointsEach": 15.0,
+            "countsTowardGrade": true
+          },
+          "conversation_performance": {
+            "label": "Conversation Performance",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          }
+        },
+        "gradeWeightDistribution": {
+          "headers": [
+            "Category",
+            "Weight",
+            "Components Included"
+          ],
+          "rows": [
+            [
+              "Daily Practice (Written)",
+              "20%",
+              "Written Exercises + Worksheets"
+            ],
+            [
+              "Flashcard System",
+              "20%",
+              "All 3 card types: Creation + Box 7"
+            ],
+            [
+              "Speaking Component",
+              "20%",
+              "Read-Aloud + Conversations + Weekly"
+            ],
+            [
+              "Unit Tests (Written)",
+              "20%",
+              "8 Unit Tests"
+            ],
+            [
+              "Cumulative Exams",
+              "20%",
+              "Midterm (8%) + Final (12%)"
+            ],
+            [
+              "TOTAL",
+              "100%",
+              ""
+            ]
+          ]
+        },
+        "gradeScale": {
+          "headers": [
+            "Letter Grade",
+            "Percentage",
+            "GPA Equivalent"
+          ],
+          "rows": [
+            [
+              "A+",
+              "97–100%",
+              "4.0"
+            ],
+            [
+              "A",
+              "93–96%",
+              "4.0"
+            ],
+            [
+              "A-",
+              "90–92%",
+              "3.7"
+            ],
+            [
+              "B+",
+              "87–89%",
+              "3.3"
+            ],
+            [
+              "B",
+              "83–86%",
+              "3.0"
+            ],
+            [
+              "B-",
+              "80–82%",
+              "2.7"
+            ],
+            [
+              "C+",
+              "77–79%",
+              "2.3"
+            ],
+            [
+              "C",
+              "73–76%",
+              "2.0"
+            ],
+            [
+              "C-",
+              "70–72%",
+              "1.7"
+            ],
+            [
+              "D",
+              "60–69%",
+              "1.0"
+            ],
+            [
+              "F",
+              "Below 60%",
+              "0.0"
+            ]
+          ]
+        },
+        "basePointsTable": {
+          "headers": [
+            "Component",
+            "Base Points",
+            "Max Bonus",
+            "Total Possible"
+          ],
+          "rows": [
+            [
+              "Lecture Attendance",
+              "10",
+              "—",
+              "10"
+            ],
+            [
+              "Book Exercises",
+              "40",
+              "+20 (100%)",
+              "60"
+            ],
+            [
+              "Supplementary Worksheet",
+              "25",
+              "+15 (100%)",
+              "40"
+            ],
+            [
+              "Flashcard Creation (all types)",
+              "25",
+              "—",
+              "25"
+            ],
+            [
+              "Daily Read-Aloud",
+              "15",
+              "—",
+              "15"
+            ],
+            [
+              "Conversation Performance",
+              "40",
+              "+20 (16/16)",
+              "60"
+            ],
+            [
+              "Per-Lesson Total",
+              "155",
+              "+55",
+              "210"
+            ]
+          ]
+        },
+        "streakBonusesTable": {
+          "headers": [
+            "Speaking Streak",
+            "Bonus"
+          ],
+          "rows": [
+            [
+              "3 consecutive weeks at 14+/16",
+              "+150 points"
+            ],
+            [
+              "5 consecutive weeks at 14+/16",
+              "+300 points"
+            ],
+            [
+              "3 consecutive weeks at 16/16",
+              "+250 points"
+            ],
+            [
+              "5 consecutive weeks at 16/16",
+              "+500 points"
+            ]
+          ]
+        }
+      },
+      "curriculum": {
+        "totalLessons": 45,
+        "modules": [
+          {
+            "id": "madrigals_spanish_unit_1",
+            "title": "Unit 1",
+            "coverage": "1–5",
+            "assessment": "Unit Test 1 (Cognate Foundations)",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_1_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_1_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_1_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_1_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_1_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_2",
+            "title": "Unit 2",
+            "coverage": "6–11",
+            "assessment": "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_2_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_2_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_2_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_2_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_2_lesson_10",
+                "title": "Lesson 10",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_2_lesson_11",
+                "title": "Lesson 11",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_3",
+            "title": "Unit 3",
+            "coverage": "12–20",
+            "assessment": "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_3_lesson_12",
+                "title": "Lesson 12",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_13",
+                "title": "Lesson 13",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_14",
+                "title": "Lesson 14",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_15",
+                "title": "Lesson 15",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_16",
+                "title": "Lesson 16",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_17",
+                "title": "Lesson 17",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_18",
+                "title": "Lesson 18",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_19",
+                "title": "Lesson 19",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_3_lesson_20",
+                "title": "Lesson 20",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_midterm",
+            "title": "MIDTERM",
+            "coverage": "1–22",
+            "assessment": "Midterm Exam (Cumulative through Present Tense)",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_midterm_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_10",
+                "title": "Lesson 10",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_11",
+                "title": "Lesson 11",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_12",
+                "title": "Lesson 12",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_13",
+                "title": "Lesson 13",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_14",
+                "title": "Lesson 14",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_15",
+                "title": "Lesson 15",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_16",
+                "title": "Lesson 16",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_17",
+                "title": "Lesson 17",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_18",
+                "title": "Lesson 18",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_19",
+                "title": "Lesson 19",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_20",
+                "title": "Lesson 20",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_21",
+                "title": "Lesson 21",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_midterm_lesson_22",
+                "title": "Lesson 22",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_4",
+            "title": "Unit 4",
+            "coverage": "21–25",
+            "assessment": "Unit Test 4 (Present Perfect & Spelling Changes)",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_4_lesson_21",
+                "title": "Lesson 21",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_4_lesson_22",
+                "title": "Lesson 22",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_4_lesson_23",
+                "title": "Lesson 23",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_4_lesson_24",
+                "title": "Lesson 24",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_4_lesson_25",
+                "title": "Lesson 25",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_5",
+            "title": "Unit 5",
+            "coverage": "26–30",
+            "assessment": "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_5_lesson_26",
+                "title": "Lesson 26",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_5_lesson_27",
+                "title": "Lesson 27",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_5_lesson_28",
+                "title": "Lesson 28",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_5_lesson_29",
+                "title": "Lesson 29",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_5_lesson_30",
+                "title": "Lesson 30",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_6",
+            "title": "Unit 6",
+            "coverage": "31–38",
+            "assessment": "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_6_lesson_31",
+                "title": "Lesson 31",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_32",
+                "title": "Lesson 32",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_33",
+                "title": "Lesson 33",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_34",
+                "title": "Lesson 34",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_35",
+                "title": "Lesson 35",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_36",
+                "title": "Lesson 36",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_37",
+                "title": "Lesson 37",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_6_lesson_38",
+                "title": "Lesson 38",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_7",
+            "title": "Unit 7",
+            "coverage": "39–40",
+            "assessment": "Unit Test 7 — Madrigal's \"Test Your Progress\" p.390",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_7_lesson_39",
+                "title": "Lesson 39",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_7_lesson_40",
+                "title": "Lesson 40",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_unit_8",
+            "title": "Unit 8",
+            "coverage": "41–45",
+            "assessment": "Unit Test 8 (Subjunctive & Advanced Grammar)",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_unit_8_lesson_41",
+                "title": "Lesson 41",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_8_lesson_42",
+                "title": "Lesson 42",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_8_lesson_43",
+                "title": "Lesson 43",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_8_lesson_44",
+                "title": "Lesson 44",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_unit_8_lesson_45",
+                "title": "Lesson 45",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "madrigals_spanish_final",
+            "title": "FINAL",
+            "coverage": "1–45",
+            "assessment": "Final Exam (Comprehensive — Written & Oral)",
+            "lessons": [
+              {
+                "id": "madrigals_spanish_final_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_10",
+                "title": "Lesson 10",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_11",
+                "title": "Lesson 11",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_12",
+                "title": "Lesson 12",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_13",
+                "title": "Lesson 13",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_14",
+                "title": "Lesson 14",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_15",
+                "title": "Lesson 15",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_16",
+                "title": "Lesson 16",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_17",
+                "title": "Lesson 17",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_18",
+                "title": "Lesson 18",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_19",
+                "title": "Lesson 19",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_20",
+                "title": "Lesson 20",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_21",
+                "title": "Lesson 21",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_22",
+                "title": "Lesson 22",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_23",
+                "title": "Lesson 23",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_24",
+                "title": "Lesson 24",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_25",
+                "title": "Lesson 25",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_26",
+                "title": "Lesson 26",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_27",
+                "title": "Lesson 27",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_28",
+                "title": "Lesson 28",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_29",
+                "title": "Lesson 29",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_30",
+                "title": "Lesson 30",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_31",
+                "title": "Lesson 31",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_32",
+                "title": "Lesson 32",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_33",
+                "title": "Lesson 33",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_34",
+                "title": "Lesson 34",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_35",
+                "title": "Lesson 35",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_36",
+                "title": "Lesson 36",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_37",
+                "title": "Lesson 37",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_38",
+                "title": "Lesson 38",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_39",
+                "title": "Lesson 39",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_40",
+                "title": "Lesson 40",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_41",
+                "title": "Lesson 41",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_42",
+                "title": "Lesson 42",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_43",
+                "title": "Lesson 43",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_44",
+                "title": "Lesson 44",
+                "category": "lesson"
+              },
+              {
+                "id": "madrigals_spanish_final_lesson_45",
+                "title": "Lesson 45",
+                "category": "lesson"
+              }
+            ]
+          }
+        ]
+      },
+      "source": {
+        "sections": [
+          {
+            "heading": "",
+            "content": [
+              "Madrigal's Magic Key to Spanish",
+              "Complete Grading Rubric & Reward Point System",
+              "1. Grading Philosophy",
+              "This system follows the principle: \"Process Earns, Mastery Multiplies.\"",
+              "Students earn steady base points for completing daily work consistently. Bonus multipliers and thematic mastery badges reward demonstrated understanding and long-term retention.",
+              "For Spanish, speaking ability is weighted equally with written work, reflecting the reality that language is primarily a spoken skill. The system balances vocabulary acquisition, grammar patterns, and oral fluency.",
+              "2. Course Structure",
+              "Madrigal's Magic Key to Spanish contains 45 lessons (Lecciones) organized into 8 units with cumulative assessments. The course uses Madrigal's 5 built-in \"Test Your Progress\" sections plus 3 additional checkpoints."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "2.1 Unit Breakdown",
+            "content": [
+              "3. Per-Lesson Components",
+              "Each of the 45 lessons includes the following graded components:",
+              "4. Grade Weight Distribution",
+              "The course grade is calculated from five categories, with speaking elevated to equal status with written work."
+            ],
+            "tables": [
+              [
+                [
+                  "Unit",
+                  "Lessons",
+                  "Assessment"
+                ],
+                [
+                  "Unit 1",
+                  "1–5",
+                  "Unit Test 1 (Cognate Foundations)"
+                ],
+                [
+                  "Unit 2",
+                  "6–11",
+                  "Unit Test 2 — Madrigal's \"Test Your Progress\" p.82"
+                ],
+                [
+                  "Unit 3",
+                  "12–20",
+                  "Unit Test 3 — Madrigal's \"Test Your Progress\" p.153"
+                ],
+                [
+                  "MIDTERM",
+                  "1–22",
+                  "Midterm Exam (Cumulative through Present Tense)"
+                ],
+                [
+                  "Unit 4",
+                  "21–25",
+                  "Unit Test 4 (Present Perfect & Spelling Changes)"
+                ],
+                [
+                  "Unit 5",
+                  "26–30",
+                  "Unit Test 5 — Madrigal's \"Test Your Progress\" p.256"
+                ],
+                [
+                  "Unit 6",
+                  "31–38",
+                  "Unit Test 6 — Madrigal's \"Test Your Progress\" p.362"
+                ],
+                [
+                  "Unit 7",
+                  "39–40",
+                  "Unit Test 7 — Madrigal's \"Test Your Progress\" p.390"
+                ],
+                [
+                  "Unit 8",
+                  "41–45",
+                  "Unit Test 8 (Subjunctive & Advanced Grammar)"
+                ],
+                [
+                  "FINAL",
+                  "1–45",
+                  "Final Exam (Comprehensive — Written & Oral)"
+                ]
+              ],
+              [
+                [
+                  "Component",
+                  "Description",
+                  "Grading Type"
+                ],
+                [
+                  "Lecture Attendance",
+                  "Present and engaged during instruction",
+                  "Completion (Pass/Fail)"
+                ],
+                [
+                  "Written Exercises",
+                  "Book exercises + supplementary worksheet",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Vocabulary Flashcards",
+                  "Word ↔ translation (tested both directions)",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Pattern Flashcards",
+                  "Cognate conversion rules",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Conjugation Flashcards",
+                  "Verb forms by tense/person",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "Pronunciation practice with recording",
+                  "Completion + Self-Check"
+                ],
+                [
+                  "Conversation Performance",
+                  "Lesson dialogue performed orally",
+                  "Rubric (4 categories)"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.1 Base Grade Components (100%)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Weight",
+                  "Components Included"
+                ],
+                [
+                  "Daily Practice (Written)",
+                  "20%",
+                  "Written Exercises + Worksheets"
+                ],
+                [
+                  "Flashcard System",
+                  "20%",
+                  "All 3 card types: Creation + Box 7"
+                ],
+                [
+                  "Speaking Component",
+                  "20%",
+                  "Read-Aloud + Conversations + Weekly"
+                ],
+                [
+                  "Unit Tests (Written)",
+                  "20%",
+                  "8 Unit Tests"
+                ],
+                [
+                  "Cumulative Exams",
+                  "20%",
+                  "Midterm (8%) + Final (12%)"
+                ],
+                [
+                  "TOTAL",
+                  "100%",
+                  ""
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.2 Detailed Breakdown",
+            "content": [
+              "Daily Practice — Written (20%)",
+              "Book Exercises: 12% of total grade (accuracy-based)",
+              "Supplementary Worksheet: 8% of total grade (accuracy-based)",
+              "Flashcard System (20%)",
+              "Flashcard Creation (all 3 types): 8% of total grade",
+              "Flashcard Mastery (Box 7): 12% of total grade",
+              "Speaking Component (20%)",
+              "Daily Read-Aloud: 5% of total grade (completion + self-check)",
+              "Lesson Conversation Performance: 10% of total grade (rubric-based)",
+              "Weekly Speaking Assessment: 5% of total grade (cumulative rubric)",
+              "Unit Tests (20%)",
+              "Each of the 8 unit tests: 2.5% of total grade",
+              "Cumulative Exams (20%)",
+              "Midterm Exam: 8% of total grade",
+              "Final Exam: 12% of total grade (includes oral component)",
+              "5. Speaking Assessment System",
+              "Speaking is assessed through three complementary methods to develop comprehensive oral fluency."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.1 Daily Read-Aloud",
+            "content": [
+              "For each lesson, the student:",
+              "Records themselves reading the lesson vocabulary and example sentences",
+              "Compares their recording to reference audio (native speaker or quality resource)",
+              "Self-assesses and notes areas for improvement",
+              "Parent spot-checks periodically (at least 2× per week)",
+              "Grading: Completion-based. Full points for completing recording + self-check. Parent spot-check can adjust if effort is lacking."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.2 Lesson Conversation Performance",
+            "content": [
+              "Each lesson's \"Conversation using...\" section is performed orally with a partner (parent, sibling, or recorded dialogue). Scored using the Speaking Rubric below."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.3 Weekly Speaking Assessment",
+            "content": [
+              "At the end of each week, a cumulative conversation assessment combines material from all lessons covered that week. This is a more formal evaluation demonstrating integrated speaking ability."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.4 Speaking Rubric (4-Point Scale)",
+            "content": [
+              "Each speaking performance is scored across four categories. Maximum score = 16 points.",
+              "Score Calculation: (Total Points / 16) × Points Available = Earned Points",
+              "6. Reward Point Values",
+              "Points are earned for each completed component. These points feed directly into the reward system."
+            ],
+            "tables": [
+              [
+                [
+                  "Score",
+                  "Pronunciation",
+                  "Fluency",
+                  "Accuracy",
+                  "Comprehension"
+                ],
+                [
+                  "4",
+                  "Native-like clarity, correct stress patterns",
+                  "Smooth, natural pace, no unnatural pauses",
+                  "No grammatical or vocabulary errors",
+                  "Responds appropriately, understands fully"
+                ],
+                [
+                  "3",
+                  "Minor accent but easily understood",
+                  "Occasional hesitation, mostly smooth",
+                  "1-2 minor errors, meaning preserved",
+                  "Mostly appropriate responses"
+                ],
+                [
+                  "2",
+                  "Noticeable errors but still understood",
+                  "Frequent pauses, choppy delivery",
+                  "Several errors affecting clarity",
+                  "Partial understanding shown"
+                ],
+                [
+                  "1",
+                  "Difficult to understand",
+                  "Very halting, long pauses",
+                  "Many errors, meaning unclear",
+                  "Little understanding demonstrated"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.1 Per-Lesson Point Values",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Base Points",
+                  "Max Bonus",
+                  "Total Possible"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "—",
+                  "10"
+                ],
+                [
+                  "Book Exercises",
+                  "40",
+                  "+20 (100%)",
+                  "60"
+                ],
+                [
+                  "Supplementary Worksheet",
+                  "25",
+                  "+15 (100%)",
+                  "40"
+                ],
+                [
+                  "Flashcard Creation (all types)",
+                  "25",
+                  "—",
+                  "25"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "15",
+                  "—",
+                  "15"
+                ],
+                [
+                  "Conversation Performance",
+                  "40",
+                  "+20 (16/16)",
+                  "60"
+                ],
+                [
+                  "Per-Lesson Total",
+                  "155",
+                  "+55",
+                  "210"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.2 Weekly Speaking Assessment Points",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Performance Level",
+                  "Points"
+                ],
+                [
+                  "Perfect Score (16/16)",
+                  "100 points"
+                ],
+                [
+                  "Excellent (14-15/16)",
+                  "85 points"
+                ],
+                [
+                  "Good (12-13/16)",
+                  "70 points"
+                ],
+                [
+                  "Satisfactory (9-11/16)",
+                  "50 points"
+                ],
+                [
+                  "Needs Improvement (below 9/16)",
+                  "25 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.3 Flashcard Mastery Points",
+            "content": [
+              "Each flashcard that reaches Leitner Box 7 earns a one-time graduation bonus, permanently locked once achieved.",
+              "Note: Vocabulary cards tested in both directions (Spanish→English and English→Spanish) count as separate cards for mastery purposes."
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Box 7 Graduation Bonus"
+                ],
+                [
+                  "Vocabulary Card (word ↔ translation)",
+                  "10 points per card"
+                ],
+                [
+                  "Pattern Card (cognate conversion rule)",
+                  "20 points per card"
+                ],
+                [
+                  "Conjugation Card (verb form)",
+                  "15 points per card"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.4 Assessment Point Values",
+            "content": [
+              "7. Bonuses & Multipliers"
+            ],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Base Points",
+                  "Perfect Score",
+                  "Max Total"
+                ],
+                [
+                  "Unit Test (each of 8)",
+                  "200",
+                  "+100",
+                  "300"
+                ],
+                [
+                  "Midterm Exam",
+                  "400",
+                  "+200",
+                  "600"
+                ],
+                [
+                  "Final Exam (Written)",
+                  "500",
+                  "+250",
+                  "750"
+                ],
+                [
+                  "Final Exam (Oral)",
+                  "300",
+                  "+200",
+                  "500"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.1 Streak Bonuses",
+            "content": [
+              "Completing lessons on consecutive days earns streak multipliers applied to daily practice points.",
+              "Note: Missing a day resets the streak to Day 1. Weekends and scheduled breaks do not break streaks."
+            ],
+            "tables": [
+              [
+                [
+                  "Streak Length",
+                  "Multiplier",
+                  "Example (155 base)"
+                ],
+                [
+                  "Days 1–4",
+                  "1.0× (no bonus)",
+                  "155 points"
+                ],
+                [
+                  "Days 5–9",
+                  "1.1× bonus",
+                  "171 points"
+                ],
+                [
+                  "Days 10–19",
+                  "1.25× bonus",
+                  "194 points"
+                ],
+                [
+                  "Days 20–29",
+                  "1.5× bonus",
+                  "233 points"
+                ],
+                [
+                  "Days 30+",
+                  "2.0× bonus",
+                  "310 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.2 Test Improvement Bonus",
+            "content": [
+              "Scoring higher than your previous unit test earns an improvement bonus."
+            ],
+            "tables": [
+              [
+                [
+                  "Improvement",
+                  "Bonus Points"
+                ],
+                [
+                  "1–5 percentage points higher",
+                  "+25 points"
+                ],
+                [
+                  "6–10 percentage points higher",
+                  "+50 points"
+                ],
+                [
+                  "11–20 percentage points higher",
+                  "+100 points"
+                ],
+                [
+                  "21+ percentage points higher",
+                  "+200 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.3 Speaking Streak Bonus",
+            "content": [
+              "Consecutive perfect or excellent weekly speaking assessments earn additional bonuses."
+            ],
+            "tables": [
+              [
+                [
+                  "Speaking Streak",
+                  "Bonus"
+                ],
+                [
+                  "3 consecutive weeks at 14+/16",
+                  "+150 points"
+                ],
+                [
+                  "5 consecutive weeks at 14+/16",
+                  "+300 points"
+                ],
+                [
+                  "3 consecutive weeks at 16/16",
+                  "+250 points"
+                ],
+                [
+                  "5 consecutive weeks at 16/16",
+                  "+500 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.4 Milestone Bonuses",
+            "content": [
+              "8. Thematic Mastery Badges",
+              "Each lesson is tagged by linguistic theme. Completing all lessons in a theme AND graduating all associated flashcards to Box 7 earns a Mastery Badge with significant bonus points."
+            ],
+            "tables": [
+              [
+                [
+                  "Milestone",
+                  "Bonus"
+                ],
+                [
+                  "Complete Lesson 22 (Midterm point)",
+                  "+400 points"
+                ],
+                [
+                  "Complete all 45 lessons",
+                  "+1,000 points"
+                ],
+                [
+                  "Pass Final Exam (70%+ on both written & oral)",
+                  "+500 points"
+                ],
+                [
+                  "Complete course in under 60 days",
+                  "+750 points"
+                ],
+                [
+                  "Maintain 90%+ course average",
+                  "+1,500 points"
+                ],
+                [
+                  "Perfect score on Final Oral Exam",
+                  "+1,000 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.1 Badge Categories",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Badge",
+                  "Requirement",
+                  "Bonus"
+                ],
+                [
+                  "🗣️ Cognate Master",
+                  "All cognate pattern lessons + pattern cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "⏪ Past Tense Master",
+                  "All past tense lessons + conjugation cards to Box 7",
+                  "600 points"
+                ],
+                [
+                  "⏺️ Present Tense Master",
+                  "All present tense lessons + conjugation cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "⏩ Future Tense Master",
+                  "All future tense lessons + conjugation cards to Box 7",
+                  "400 points"
+                ],
+                [
+                  "👤 Pronoun Master",
+                  "All pronoun lessons + cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🔀 Irregular Verb Master",
+                  "All irregular/stem-changing lessons + cards to Box 7",
+                  "750 points"
+                ],
+                [
+                  "🎭 Subjunctive Master",
+                  "Lessons 41-42 + all subjunctive cards to Box 7",
+                  "600 points"
+                ],
+                [
+                  "💬 Conversation Master",
+                  "90%+ average on all speaking assessments",
+                  "1,000 points"
+                ],
+                [
+                  "📚 Vocabulary Master",
+                  "All vocabulary cards (both directions) to Box 7",
+                  "750 points"
+                ],
+                [
+                  "🏆 Spanish Scholar",
+                  "All 9 badges earned",
+                  "+2,000 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.2 Badge Requirements",
+            "content": [
+              "To earn a Mastery Badge (except Conversation Master), a student must:",
+              "Complete all lessons tagged with that theme (lecture + exercises + worksheet)",
+              "Create all flashcards for those lessons",
+              "Graduate ALL associated flashcards to Leitner Box 7",
+              "Score 80%+ average on unit tests covering those lessons",
+              "9. Lesson-to-Theme Mapping",
+              "Below is the complete mapping of all 45 lessons to their thematic tags. Lessons may have multiple tags."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.1 Cognates (COG)",
+            "content": [
+              "Lessons: 1, 2, 3, 4, 5, 7, 10, 11, 16, 19, 20, 21",
+              "Patterns: -al, -ble, -ic, -ent, -ant, -ist, -ous, -ion, -ty, -ry, -em, -in, -ine, -ive, -ce, -cy, -cle, -y, -ct, -ure, -ute, -ing"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.2 Past Tense (PAST)",
+            "content": [
+              "Lessons: 4, 5, 7, 8, 10, 14, 17, 18, 25, 26, 27, 28, 29, 39, 42",
+              "Includes: Preterite singular/plural, irregular pasts (tuve, estuve, hice, vine), present perfect with haber, imperfect (I used to)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.3 Present Tense (PRES)",
+            "content": [
+              "Lessons: 22, 23, 24, 29, 30, 31, 36, 37, 43",
+              "Includes: Present tense singular/plural for -ar/-er/-ir verbs, stem-changing verbs, gustar construction"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.4 Future Tense (FUT)",
+            "content": [
+              "Lessons: 11, 12, 13",
+              "Includes: Future expressions with -ar/-er/-ir verbs"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.5 Pronouns (PRO)",
+            "content": [
+              "Lessons: 32, 33, 34, 35, 38, 45",
+              "Includes: Direct objects (him, her, you), indirect objects (to him, to her), reflexives (me, myself, se, yourself), possessives, combining pronouns"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.6 Irregular Verbs (IRR)",
+            "content": [
+              "Lessons: 25, 26, 27, 30, 31, 36, 37, 43, 44",
+              "Includes: Stem-changing verbs (I, II, III), -cer verbs, -uir verbs, irregular past participles, verbs with spelling changes"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.7 Subjunctive (SUBJ)",
+            "content": [
+              "Lessons: 41, 42",
+              "Includes: Expressing hope, fear, doubt, desire in present and past subjunctive"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.8 Conversation & Expressions (CONV)",
+            "content": [
+              "Lessons: 9, 15, 19, 20, 33, 36, 40",
+              "Includes: Greetings (¿Cómo está?), commands, common expressions, practical dialogues"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.9 Vocabulary Themes (VOC)",
+            "content": [
+              "Lessons: 12, 18, 28, 37, 45",
+              "Includes: Days of the week, months of the year, numbers, menu vocabulary, diminutives"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.10 Grammar & Structure (GRAM)",
+            "content": [
+              "Lessons: 3, 6, 8, 13, 14, 15, 23, 44, 45",
+              "Includes: Question formation, noun plurals, adjectives, adverbs, passive voice, double negatives, stresses and accents",
+              "10. Maximum Point Totals",
+              "The following summarizes the maximum possible points a student can earn in Madrigal's Spanish."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "10.1 Daily Work (45 lessons)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Per Lesson",
+                  "Total (×45)"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "450"
+                ],
+                [
+                  "Book Exercises (max)",
+                  "60",
+                  "2,700"
+                ],
+                [
+                  "Supplementary Worksheet (max)",
+                  "40",
+                  "1,800"
+                ],
+                [
+                  "Flashcard Creation",
+                  "25",
+                  "1,125"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "15",
+                  "675"
+                ],
+                [
+                  "Conversation Performance (max)",
+                  "60",
+                  "2,700"
+                ],
+                [
+                  "Daily Work Subtotal",
+                  "210",
+                  "9,450"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.2 Weekly Speaking Assessments",
+            "content": [
+              "Assuming ~9 weeks to complete the course:"
+            ],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Per Week",
+                  "Total (×9)"
+                ],
+                [
+                  "Weekly Speaking Assessment (max)",
+                  "100",
+                  "900"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.3 Assessments",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Max Each",
+                  "Total"
+                ],
+                [
+                  "Unit Tests (8 × 300)",
+                  "300",
+                  "2,400"
+                ],
+                [
+                  "Midterm Exam",
+                  "600",
+                  "600"
+                ],
+                [
+                  "Final Exam (Written)",
+                  "750",
+                  "750"
+                ],
+                [
+                  "Final Exam (Oral)",
+                  "500",
+                  "500"
+                ],
+                [
+                  "Assessment Subtotal",
+                  "—",
+                  "4,250"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.4 Flashcard Mastery (estimated)",
+            "content": [
+              "Assuming ~20 vocabulary cards, ~2 pattern cards, and ~4 conjugation cards per lesson:"
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Est. Cards",
+                  "Max Points"
+                ],
+                [
+                  "Vocabulary Cards (45 × 20 × 2 directions × 10)",
+                  "1,800",
+                  "18,000"
+                ],
+                [
+                  "Pattern Cards (45 × 2 × 20)",
+                  "90",
+                  "1,800"
+                ],
+                [
+                  "Conjugation Cards (45 × 4 × 15)",
+                  "180",
+                  "2,700"
+                ],
+                [
+                  "Flashcard Mastery Subtotal",
+                  "2,070",
+                  "22,500"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.5 Bonuses",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Bonus Category",
+                  "Max Points"
+                ],
+                [
+                  "Thematic Mastery Badges (all 9 + completion bonus)",
+                  "7,600"
+                ],
+                [
+                  "Milestone Bonuses (all)",
+                  "5,150"
+                ],
+                [
+                  "Streak Bonuses (estimated, varies)",
+                  "~4,000+"
+                ],
+                [
+                  "Speaking Streak Bonuses",
+                  "~1,200+"
+                ],
+                [
+                  "Test Improvement Bonuses (varies)",
+                  "~800+"
+                ],
+                [
+                  "Bonus Subtotal (estimated)",
+                  "~18,750+"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.6 Grand Total",
+            "content": [
+              "Note: Actual totals will vary based on streak length, speaking performance patterns, and exact flashcard counts per lesson.",
+              "11. Grade Scale",
+              "The following letter grade scale applies to the weighted course average (not reward points):",
+              "12. Implementation Notes"
+            ],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Points"
+                ],
+                [
+                  "Daily Work",
+                  "9,450"
+                ],
+                [
+                  "Weekly Speaking Assessments",
+                  "900"
+                ],
+                [
+                  "Assessments",
+                  "4,250"
+                ],
+                [
+                  "Flashcard Mastery",
+                  "22,500"
+                ],
+                [
+                  "Bonuses",
+                  "~18,750"
+                ],
+                [
+                  "MAXIMUM POSSIBLE",
+                  "~55,850 points"
+                ]
+              ],
+              [
+                [
+                  "Letter Grade",
+                  "Percentage",
+                  "GPA Equivalent"
+                ],
+                [
+                  "A+",
+                  "97–100%",
+                  "4.0"
+                ],
+                [
+                  "A",
+                  "93–96%",
+                  "4.0"
+                ],
+                [
+                  "A-",
+                  "90–92%",
+                  "3.7"
+                ],
+                [
+                  "B+",
+                  "87–89%",
+                  "3.3"
+                ],
+                [
+                  "B",
+                  "83–86%",
+                  "3.0"
+                ],
+                [
+                  "B-",
+                  "80–82%",
+                  "2.7"
+                ],
+                [
+                  "C+",
+                  "77–79%",
+                  "2.3"
+                ],
+                [
+                  "C",
+                  "73–76%",
+                  "2.0"
+                ],
+                [
+                  "C-",
+                  "70–72%",
+                  "1.7"
+                ],
+                [
+                  "D",
+                  "60–69%",
+                  "1.0"
+                ],
+                [
+                  "F",
+                  "Below 60%",
+                  "0.0"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "12.1 Grading Daily Work",
+            "content": [
+              "Book Exercises and Worksheets are graded on accuracy (% correct × base points)",
+              "Perfect scores (100%) earn the accuracy bonus automatically",
+              "Lecture attendance is binary: present and engaged = full points, absent = 0"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.2 Flashcard System",
+            "content": [
+              "Students must create Vocabulary, Pattern, AND Conjugation cards for applicable lessons",
+              "Vocabulary cards must be practiced in BOTH directions (Spanish→English and English→Spanish)",
+              "Box 7 graduation is tracked per-card; bonus awarded once per card lifetime",
+              "Cards that fall back from Box 7 do not lose their graduation bonus"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.3 Speaking Assessment",
+            "content": [
+              "Daily Read-Aloud recordings should be saved for reference and progress tracking",
+              "Conversation Performances can be done with parent, sibling, or as recorded dialogues",
+              "Weekly Speaking Assessments should cumulate that week's vocabulary and structures",
+              "Parent spot-checks of Daily Read-Aloud recommended at least 2× per week"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.4 Test Retakes",
+            "content": [
+              "Unit tests may be retaken once after additional review (higher score kept)",
+              "Retake scores are capped at 90% to incentivize first-attempt preparation",
+              "Midterm and Final exams cannot be retaken"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.5 Reference Audio Sources",
+            "content": [
+              "Recommended sources for pronunciation reference:",
+              "SpanishDict.com (free audio for individual words)",
+              "Forvo.com (native speaker recordings)",
+              "Google Translate audio (acceptable for sentences)",
+              "YouTube native speaker content for conversational practice",
+              "— End of Document —"
+            ],
+            "tables": []
+          }
+        ]
+      }
+    }
+  }
+}

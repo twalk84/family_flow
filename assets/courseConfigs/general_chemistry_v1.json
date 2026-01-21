@@ -1,18 +1,44 @@
 {
   "id": "general_chemistry_v1",
-  "title": "General Chemistry: Atoms First",
+  "title": "General Chemistry",
   "subtitle": "McQuarrie, Rock, Gallogly — 4th Edition",
   "version": 1,
   "type": "academic",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": []
+  },
   "grading": {
     "mode": "points",
-    "courseTotalPossible": 2820,
     "categories": {
-      "reading_set": { "pointsEach": 10, "countsTowardGrade": true },
-      "problem_set": { "pointsEach": 15, "countsTowardGrade": true },
-      "worksheet": { "pointsEach": 15, "countsTowardGrade": true },
-      "chapter_quiz": { "pointsEach": 0, "countsTowardGrade": false },
-      "topic_test": { "pointsEach": 100, "countsTowardGrade": true }
+      "reading_set": {
+        "pointsEach": 10,
+        "countsTowardGrade": true
+      },
+      "lecture_notes": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "worksheet": {
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "problem_set": {
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "chapter_quiz": {
+        "pointsEach": 0,
+        "countsTowardGrade": false
+      },
+      "topic_test": {
+        "pointsEach": 100,
+        "countsTowardGrade": true
+      }
     }
   },
   "rewards": {
@@ -21,287 +47,4245 @@
       "reading_set": 10,
       "lecture_notes": 5,
       "flashcard_session": 5,
-      "problem_set": 15,
       "worksheet": 15,
-      "chapter_quiz": 0,
-      "topic_test": 100,
-      "daily_practice": 10
+      "problem_set": 15,
+      "topic_test": 100
     },
     "multipliers": [
       {
-      "id": "topic_test_mastery",
-      "when": { "categoryKey": "topic_test", "minGradePercent": 95 },
-      "multiplier": 1.5,
-      "description": "95%+ on Topic Test"
-    },
-    {
-      "id": "flashcard_box7",
-      "when": { "categoryKey": "flashcard_session", "achievementKey": "box_7_mastery" },
-      "multiplier": 1.5,
-      "description": "Cards reach Leitner Box 7"
-    }
-  ],
-    "streak": {
-      "enabled": true,
-      "trackedCategories": ["reading_set", "flashcard_session", "problem_set"],
-      "bonusPercentPerDay": 0.01,
-      "bonusSchedule": [
-      { "daysRequired": 5, "bonusPercent": 0.05 },
-      { "daysRequired": 10, "bonusPercent": 0.10 },
-      { "daysRequired": 15, "bonusPercent": 0.15 },
-      { "daysRequired": 20, "bonusPercent": 0.20 },
-      { "daysRequired": 25, "bonusPercent": 0.25 },
-      { "daysRequired": 30, "bonusPercent": 0.30 },
-      { "daysRequired": 50, "bonusPercent": 0.40 },
-      { "daysRequired": 75, "bonusPercent": 0.50 }
+        "id": "topic_test_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "minGradePercent": 95,
+          "categoryKey": "topic_test"
+        },
+        "appliesTo": "all_topic_points"
+      },
+      {
+        "id": "flashcard_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "leitnerBox": 7
+        },
+        "appliesTo": "category_points"
+      }
     ],
-      "maxBonusPercent": 0.5,
-      "resetOnMissedDay": true
-    },
-    "improvementBonus": {
-    "enabled": true,
-    "metric": "wpm",
-    "thresholds": [
-      { "improvement": 5, "points": 25 },
-      { "improvement": 10, "points": 50 },
-      { "improvement": 15, "points": 75 },
-      { "improvement": 20, "points": 100 },
-      { "improvement": 25, "points": 150 }
-    ],
-    "requiresSameOrBetterAccuracy": true
-  }
-},
-"curriculum": {
-  "structure": "modules > units > chapters > sections",
-  "totalModules": 8,
-  "totalChapters": 26,
-  "totalReadingSets": 124,
-  "estimatedHours": 180,
-
-  "modules": [
-    {
-      "id": "foundations",
-      "index": 1,
-      "title": "Foundations",
-      "description": "Scientific method, atoms, periodic table",
-      "chapters": ["ch_1", "ch_2", "ch_3"],
-      "badgeId": "foundations_scholar",
-      "color": "#4A90D9"
-    },
-    {
-      "id": "quantum",
-      "index": 2,
-      "title": "Quantum Theory",
-      "description": "Early quantum theory and atomic structure",
-      "chapters": ["ch_4", "ch_5"],
-      "badgeId": "quantum_master",
-      "color": "#9B59B6"
+    "streaks": {
+      "reading": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      },
+      "flashcards": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      }
     }
-  ],
-
-  "chapters": [
-    {
-      "id": "ch_1",
-      "index": 1,
-      "moduleId": "foundations",
-      "title": "Chemistry and the Scientific Method",
-      "pageRange": "1-40",
-      "sections": [
-        {
-          "id": "ch_1_s_1",
-          "title": "The Study of Chemistry & Scientific Method",
-          "sectionNumbers": "1-1 to 1-2",
-          "pageRange": "1-6"
-        },
-        {
-          "id": "ch_1_s_2",
-          "title": "Quantitative Measurements & Metric System",
-          "sectionNumbers": "1-3 to 1-5",
-          "pageRange": "7-16"
-        },
-        {
-          "id": "ch_1_s_3",
-          "title": "Accuracy, Precision & Significant Figures",
-          "sectionNumbers": "1-6 to 1-8",
-          "pageRange": "17-24"
-        },
-        {
-          "id": "ch_1_s_4",
-          "title": "Dimensional Analysis & Guggenheim Notation",
-          "sectionNumbers": "1-9 to 1-10",
-          "pageRange": "25-40"
-        }
-      ],
-      "assignmentTemplates": [
-        {
-          "categoryKey": "reading_set",
-          "namePattern": "Ch. {chapter} Reading Set {index}: {sectionTitle}",
-          "generatePerSection": true
-        },
-        {
-          "categoryKey": "worksheet",
-          "namePattern": "Ch. {chapter} Worksheet: {chapterTitle}",
-          "generatePerChapter": true
-        },
-        {
-          "categoryKey": "problem_set",
-          "namePattern": "Ch. {chapter} Problem Set: {focusArea}",
-          "generatePerChapter": true,
-          "metadata": {
-            "focusArea": "Unit Conversions & Significant Figures"
+  },
+  "curriculum": {
+    "totalLessons": 270,
+    "modules": [
+      {
+        "id": "chem_topic_1",
+        "title": "Topic 1: Foundations",
+        "unit": "Topic 1",
+        "topicKey": "Foundations",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Reading Set 1: The Study of Chemistry & Scientific Method",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "sectionsCovered": "1-1 to 1-2",
+              "pages": "1-6",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 1
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Reading Set 2: Quantitative Measurements & Metric System",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "sectionsCovered": "1-3 to 1-5",
+              "pages": "7-16",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 2
+              }
+            }
+          },
+          {
+            "index": 3,
+            "title": "Reading Set 3: Accuracy, Precision & Significant Figures",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "sectionsCovered": "1-6 to 1-8",
+              "pages": "17-24",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 3
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Reading Set 4: Dimensional Analysis & Guggenheim Notation",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "sectionsCovered": "1-9 to 1-10",
+              "pages": "25-40",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 4
+              }
+            }
+          },
+          {
+            "index": 5,
+            "title": "Lecture Notes: Ch. 1 — Chemistry and the Scientific Method",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Worksheet 1: Ch. 1 — Chemistry and the Scientific Method",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 7,
+            "title": "Problem Set 1: Ch. 1 — Unit Conversions & Significant Figures",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "problems": "Dimensional analysis, sig figs",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 8,
+            "title": "Chapter 1 Quiz: Chemistry and the Scientific Method",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 1
+              }
+            }
+          },
+          {
+            "index": 9,
+            "title": "Flashcards: Ch. 1 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 1,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Reading Set 5: Elements, Symbols & States of Matter",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "sectionsCovered": "2-1 to 2-2",
+              "pages": "41-48",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 5
+              }
+            }
+          },
+          {
+            "index": 11,
+            "title": "Reading Set 6: Separation & Law of Constant Composition",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "sectionsCovered": "2-3 to 2-4",
+              "pages": "45-52",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 6
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Reading Set 7: Dalton's Theory & Molecules",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "sectionsCovered": "2-5 to 2-6",
+              "pages": "51-57",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 7
+              }
+            }
+          },
+          {
+            "index": 13,
+            "title": "Reading Set 8: Nomenclature & Atomic/Molecular Mass",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "sectionsCovered": "2-7 to 2-8",
+              "pages": "55-61",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 8
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Reading Set 9: The Nucleus, Isotopes & Ions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "sectionsCovered": "2-9 to 2-12",
+              "pages": "59-78",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 9
+              }
+            }
+          },
+          {
+            "index": 15,
+            "title": "Lecture Notes: Ch. 2 — Atoms and Molecules",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Worksheet 2: Ch. 2 — Atoms and Molecules",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 17,
+            "title": "Problem Set 2: Ch. 2 — Atomic Mass & Isotope Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "problems": "Atomic mass, % abundance",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Chapter 2 Quiz: Atoms and Molecules",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 2
+              }
+            }
+          },
+          {
+            "index": 19,
+            "title": "Flashcards: Ch. 2 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 2,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Reading Set 10: Chemical Reactions & Equations",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "sectionsCovered": "3-1 to 3-2",
+              "pages": "79-84",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 10
+              }
+            }
+          },
+          {
+            "index": 21,
+            "title": "Reading Set 11: Group Properties & Periodicity",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "sectionsCovered": "3-3 to 3-4",
+              "pages": "85-91",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 11
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Reading Set 12: Groups of Elements & Classification",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "sectionsCovered": "3-5 to 3-6",
+              "pages": "90-96",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 12
+              }
+            }
+          },
+          {
+            "index": 23,
+            "title": "Reading Set 13: Periodic Trends",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "sectionsCovered": "3-7",
+              "pages": "97-104",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 13
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Lecture Notes: Ch. 3 — The Periodic Table and Chemical Periodicity",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 25,
+            "title": "Worksheet 3: Ch. 3 — The Periodic Table and Chemical Periodicity",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Problem Set 3: Ch. 3 — Periodic Trends & Predictions",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "problems": "Trend analysis, element properties",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 27,
+            "title": "Chapter 3 Quiz: The Periodic Table and Chemical Periodicity",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 3
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Flashcards: Ch. 3 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Foundations",
+              "chapter": 3,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 29,
+            "title": "Flashcards: Topic 1 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Foundations",
+              "chapters": "Ch. 1-3",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Topic 1 Test: Foundations",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Foundations",
+              "chapters": "Ch. 1-3",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
           }
-        },
-        {
-          "categoryKey": "chapter_quiz",
-          "namePattern": "Ch. {chapter} Quiz",
-          "generatePerChapter": true
-        }
-      ]
+        ]
+      },
+      {
+        "id": "chem_topic_2",
+        "title": "Topic 2: Quantum Theory",
+        "unit": "Topic 2",
+        "topicKey": "Quantum",
+        "lessons": [
+          {
+            "index": 31,
+            "title": "Reading Set 14: First Ionization Energies & Periodicity",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "sectionsCovered": "4-1 to 4-2",
+              "pages": "105-113",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 14
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Reading Set 15: Electromagnetic Spectrum & Line Spectra",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "sectionsCovered": "4-3 to 4-4",
+              "pages": "111-119",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 15
+              }
+            }
+          },
+          {
+            "index": 33,
+            "title": "Reading Set 16: Photons & de Broglie Wavelength",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "sectionsCovered": "4-5 to 4-6",
+              "pages": "116-123",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 16
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Reading Set 17: Wave-Particle Duality & Quantization",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "sectionsCovered": "4-7 to 4-8",
+              "pages": "121-127",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 17
+              }
+            }
+          },
+          {
+            "index": 35,
+            "title": "Reading Set 18: Electronic Transitions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "sectionsCovered": "4-9",
+              "pages": "124-136",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 18
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Lecture Notes: Ch. 4 — Early Quantum Theory",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 37,
+            "title": "Worksheet 4: Ch. 4 — Early Quantum Theory",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Problem Set 4: Ch. 4 — Quantum Energy Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "problems": "E = hν, wavelength, transitions",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 39,
+            "title": "Chapter 4 Quiz: Early Quantum Theory",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 4
+              }
+            }
+          },
+          {
+            "index": 40,
+            "title": "Flashcards: Ch. 4 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 4,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 41,
+            "title": "Reading Set 19: Quantum Theory & Quantum Numbers",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "sectionsCovered": "5-1 to 5-3",
+              "pages": "137-148",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 19
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Reading Set 20: Electron Spin & Atomic Energy States",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "sectionsCovered": "5-4 to 5-5",
+              "pages": "145-153",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 20
+              }
+            }
+          },
+          {
+            "index": 43,
+            "title": "Reading Set 21: Pauli Exclusion & Electron Configurations",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "sectionsCovered": "5-6 to 5-7",
+              "pages": "151-157",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 21
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Reading Set 22: Hund's Rule & Excited States",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "sectionsCovered": "5-8 to 5-9",
+              "pages": "154-159",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 22
+              }
+            }
+          },
+          {
+            "index": 45,
+            "title": "Reading Set 23: Configurations, Periodicity & Orbitals",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "sectionsCovered": "5-10 to 5-12",
+              "pages": "157-170",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 23
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Lecture Notes: Ch. 5 — Quantum Theory and Atomic Structure",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 47,
+            "title": "Worksheet 5: Ch. 5 — Quantum Theory and Atomic Structure",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Problem Set 5: Ch. 5 — Electron Configurations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "problems": "Writing configs, quantum numbers",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 49,
+            "title": "Chapter 5 Quiz: Quantum Theory and Atomic Structure",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 5
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Flashcards: Ch. 5 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapter": 5,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 51,
+            "title": "Flashcards: Topic 2 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapters": "Ch. 4-5",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Topic 2 Test: Quantum Theory",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Quantum Theory",
+              "chapters": "Ch. 4-5",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_3",
+        "title": "Topic 3: Chemical Bonding",
+        "unit": "Topic 3",
+        "topicKey": "Bonding",
+        "lessons": [
+          {
+            "index": 53,
+            "title": "Reading Set 24: Ionic Bonds & Chemical Formulas",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "sectionsCovered": "6-1 to 6-2",
+              "pages": "171-180",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 24
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Reading Set 25: Transition Metal Ions & Nomenclature",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "sectionsCovered": "6-3 to 6-4",
+              "pages": "177-183",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 25
+              }
+            }
+          },
+          {
+            "index": 55,
+            "title": "Reading Set 26: Ground State Configurations & Ion Sizes",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "sectionsCovered": "6-5 to 6-6",
+              "pages": "181-187",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 26
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Reading Set 27: Ionic Bond Energies",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "sectionsCovered": "6-7",
+              "pages": "185-196",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 27
+              }
+            }
+          },
+          {
+            "index": 57,
+            "title": "Lecture Notes: Ch. 6 — Ionic Bonds and Compounds",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Worksheet 6: Ch. 6 — Ionic Bonds and Compounds",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 59,
+            "title": "Problem Set 6: Ch. 6 — Ionic Compound Formulas & Bond Energy",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "problems": "Formula writing, lattice energy",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Chapter 6 Quiz: Ionic Bonds and Compounds",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 6
+              }
+            }
+          },
+          {
+            "index": 61,
+            "title": "Flashcards: Ch. 6 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 6,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Reading Set 28: Covalent Bonds & Octet Rule",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "sectionsCovered": "7-1 to 7-2",
+              "pages": "197-204",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 28
+              }
+            }
+          },
+          {
+            "index": 63,
+            "title": "Reading Set 29: Hydrogen & Formal Charges",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "sectionsCovered": "7-3 to 7-4",
+              "pages": "202-211",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 29
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Reading Set 30: Multiple Bonds & Resonance Hybrids",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "sectionsCovered": "7-5 to 7-6",
+              "pages": "209-218",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 30
+              }
+            }
+          },
+          {
+            "index": 65,
+            "title": "Reading Set 31: Free Radicals & Expanded Valence",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "sectionsCovered": "7-7 to 7-8",
+              "pages": "216-224",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 31
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Reading Set 32: Electronegativity, Polar Bonds & Dipoles",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "sectionsCovered": "7-9 to 7-11",
+              "pages": "222-234",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 32
+              }
+            }
+          },
+          {
+            "index": 67,
+            "title": "Lecture Notes: Ch. 7 — Lewis Formulas",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Worksheet 7: Ch. 7 — Lewis Formulas",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 7
+              }
+            }
+          },
+          {
+            "index": 69,
+            "title": "Problem Set 7: Ch. 7 — Lewis Structures & Formal Charge",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "problems": "Drawing structures, resonance",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 7
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Chapter 7 Quiz: Lewis Formulas",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 7
+              }
+            }
+          },
+          {
+            "index": 71,
+            "title": "Flashcards: Ch. 7 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 7,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Reading Set 33: Molecular Shape & Tetrahedron",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "sectionsCovered": "8-1 to 8-2",
+              "pages": "235-241",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 33
+              }
+            }
+          },
+          {
+            "index": 73,
+            "title": "Reading Set 34: VSEPR Theory & Geometry Prediction",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "sectionsCovered": "8-3 to 8-4",
+              "pages": "237-245",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 34
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Reading Set 35: Lone Pairs & Multiple Bonds",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "sectionsCovered": "8-5 to 8-6",
+              "pages": "242-250",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 35
+              }
+            }
+          },
+          {
+            "index": 75,
+            "title": "Reading Set 36: Complex Geometries & Dipole Moments",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "sectionsCovered": "8-7 to 8-9",
+              "pages": "249-258",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 36
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Reading Set 37: Optical Isomers",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "sectionsCovered": "8-10",
+              "pages": "255-266",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 37
+              }
+            }
+          },
+          {
+            "index": 77,
+            "title": "Lecture Notes: Ch. 8 — Prediction of Molecular Geometries",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Worksheet 8: Ch. 8 — Prediction of Molecular Geometries",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 8
+              }
+            }
+          },
+          {
+            "index": 79,
+            "title": "Problem Set 8: Ch. 8 — VSEPR & Molecular Geometry",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "problems": "Predicting shapes, angles",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 8
+              }
+            }
+          },
+          {
+            "index": 80,
+            "title": "Chapter 8 Quiz: Prediction of Molecular Geometries",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 8
+              }
+            }
+          },
+          {
+            "index": 81,
+            "title": "Flashcards: Ch. 8 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 8,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 82,
+            "title": "Reading Set 38: Molecular Orbitals & H₂",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-1 to 9-2",
+              "pages": "267-273",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 38
+              }
+            }
+          },
+          {
+            "index": 83,
+            "title": "Reading Set 39: Bond Order & Electron Configurations",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-3 to 9-4",
+              "pages": "274-280",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 39
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Reading Set 40: sp Localized Bond Orbitals",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-5 to 9-6",
+              "pages": "279-287",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 40
+              }
+            }
+          },
+          {
+            "index": 85,
+            "title": "Reading Set 41: sp² and sp³ Orbitals & Lone Pairs",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-7 to 9-8",
+              "pages": "283-292",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 41
+              }
+            }
+          },
+          {
+            "index": 86,
+            "title": "Reading Set 42: Hybrid d Orbitals & Double/Triple Bonds",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-9 to 9-12",
+              "pages": "289-298",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 42
+              }
+            }
+          },
+          {
+            "index": 87,
+            "title": "Reading Set 43: Delocalized π Electrons & Benzene",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "sectionsCovered": "9-13",
+              "pages": "296-306",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 43
+              }
+            }
+          },
+          {
+            "index": 88,
+            "title": "Lecture Notes: Ch. 9 — Covalent Bonding",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 89,
+            "title": "Worksheet 9: Ch. 9 — Covalent Bonding",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 9
+              }
+            }
+          },
+          {
+            "index": 90,
+            "title": "Problem Set 9: Ch. 9 — Molecular Orbital Diagrams",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "problems": "MO diagrams, bond order",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 9
+              }
+            }
+          },
+          {
+            "index": 91,
+            "title": "Chapter 9 Quiz: Covalent Bonding",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 9
+              }
+            }
+          },
+          {
+            "index": 92,
+            "title": "Flashcards: Ch. 9 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapter": 9,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 93,
+            "title": "Flashcards: Topic 3 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapters": "Ch. 6-9",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 94,
+            "title": "Topic 3 Test: Chemical Bonding",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Chemical Bonding",
+              "chapters": "Ch. 6-9",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_4",
+        "title": "Topic 4: Reactions & Calculations",
+        "unit": "Topic 4",
+        "topicKey": "Reactions",
+        "lessons": [
+          {
+            "index": 95,
+            "title": "Reading Set 44: Combination & Decomposition Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "sectionsCovered": "10-1 to 10-4",
+              "pages": "307-325",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 44
+              }
+            }
+          },
+          {
+            "index": 96,
+            "title": "Reading Set 45: Hydrates & Single-Replacement",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "sectionsCovered": "10-5 to 10-6",
+              "pages": "322-329",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 45
+              }
+            }
+          },
+          {
+            "index": 97,
+            "title": "Reading Set 46: Activity Series of Metals & Halogens",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "sectionsCovered": "10-6 to 10-7",
+              "pages": "324-331",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 46
+              }
+            }
+          },
+          {
+            "index": 98,
+            "title": "Reading Set 47: Double-Replacement & Acid-Base",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "sectionsCovered": "10-8 to 10-10",
+              "pages": "328-338",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 47
+              }
+            }
+          },
+          {
+            "index": 99,
+            "title": "Reading Set 48: Oxidation-Reduction Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "sectionsCovered": "10-11",
+              "pages": "335-348",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 48
+              }
+            }
+          },
+          {
+            "index": 100,
+            "title": "Lecture Notes: Ch. 10 — Chemical Reactivity",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 101,
+            "title": "Worksheet 10: Ch. 10 — Chemical Reactivity",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 10
+              }
+            }
+          },
+          {
+            "index": 102,
+            "title": "Problem Set 10: Ch. 10 — Reaction Types & Predictions",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "problems": "Classifying reactions",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 10
+              }
+            }
+          },
+          {
+            "index": 103,
+            "title": "Chapter 10 Quiz: Chemical Reactivity",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 10
+              }
+            }
+          },
+          {
+            "index": 104,
+            "title": "Flashcards: Ch. 10 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 10,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 105,
+            "title": "Reading Set 49: The Mole & Avogadro's Number",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "sectionsCovered": "11-1 to 11-2",
+              "pages": "349-358",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 49
+              }
+            }
+          },
+          {
+            "index": 106,
+            "title": "Reading Set 50: Simplest & Molecular Formulas",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "sectionsCovered": "11-3 to 11-5",
+              "pages": "356-367",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 50
+              }
+            }
+          },
+          {
+            "index": 107,
+            "title": "Reading Set 51: Combustion Analysis & Coefficients",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "sectionsCovered": "11-6 to 11-7",
+              "pages": "363-375",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 51
+              }
+            }
+          },
+          {
+            "index": 108,
+            "title": "Reading Set 52: Stoichiometry & Limiting Reactant",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "sectionsCovered": "11-8 to 11-10",
+              "pages": "372-383",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 52
+              }
+            }
+          },
+          {
+            "index": 109,
+            "title": "Reading Set 53: Percentage Yield",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "sectionsCovered": "11-11",
+              "pages": "380-392",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 53
+              }
+            }
+          },
+          {
+            "index": 110,
+            "title": "Lecture Notes: Ch. 11 — Chemical Calculations",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 111,
+            "title": "Worksheet 11: Ch. 11 — Chemical Calculations",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 11
+              }
+            }
+          },
+          {
+            "index": 112,
+            "title": "Problem Set 11: Ch. 11 — Mole Calculations & Stoichiometry",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "problems": "Molar mass, limiting reagent",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 11
+              }
+            }
+          },
+          {
+            "index": 113,
+            "title": "Chapter 11 Quiz: Chemical Calculations",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 11
+              }
+            }
+          },
+          {
+            "index": 114,
+            "title": "Flashcards: Ch. 11 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 11,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 115,
+            "title": "Reading Set 54: Solutions & Molarity",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "sectionsCovered": "12-1 to 12-2",
+              "pages": "393-402",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 54
+              }
+            }
+          },
+          {
+            "index": 116,
+            "title": "Reading Set 55: Electrolytes & Reactions in Solution",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "sectionsCovered": "12-3 to 12-4",
+              "pages": "399-408",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 55
+              }
+            }
+          },
+          {
+            "index": 117,
+            "title": "Reading Set 56: Precipitation & Acid-Base Titrations",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "sectionsCovered": "12-5 to 12-6",
+              "pages": "405-413",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 56
+              }
+            }
+          },
+          {
+            "index": 118,
+            "title": "Reading Set 57: Formula Mass from Titration Data",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "sectionsCovered": "12-7",
+              "pages": "410-420",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 57
+              }
+            }
+          },
+          {
+            "index": 119,
+            "title": "Lecture Notes: Ch. 12 — Chemical Calculations for Solutions",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 120,
+            "title": "Worksheet 12: Ch. 12 — Chemical Calculations for Solutions",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 12
+              }
+            }
+          },
+          {
+            "index": 121,
+            "title": "Problem Set 12: Ch. 12 — Solution Stoichiometry",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "problems": "Molarity, dilution, titration",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 12
+              }
+            }
+          },
+          {
+            "index": 122,
+            "title": "Chapter 12 Quiz: Chemical Calculations for Solutions",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 12
+              }
+            }
+          },
+          {
+            "index": 123,
+            "title": "Flashcards: Ch. 12 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapter": 12,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 124,
+            "title": "Flashcards: Topic 4 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapters": "Ch. 10-12",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 125,
+            "title": "Topic 4 Test: Reactions & Calculations",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Reactions & Calculations",
+              "chapters": "Ch. 10-12",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_5",
+        "title": "Topic 5: States of Matter",
+        "unit": "Topic 5",
+        "topicKey": "States",
+        "lessons": [
+          {
+            "index": 126,
+            "title": "Reading Set 58: Gases & Measurement of Pressure",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-1 to 13-2",
+              "pages": "421-427",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 58
+              }
+            }
+          },
+          {
+            "index": 127,
+            "title": "Reading Set 59: Atmospheric Pressure & Gas Laws",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-3 to 13-4",
+              "pages": "424-433",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 59
+              }
+            }
+          },
+          {
+            "index": 128,
+            "title": "Reading Set 60: Avogadro's Law & Ideal Gas Equation",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-5 to 13-6",
+              "pages": "431-441",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 60
+              }
+            }
+          },
+          {
+            "index": 129,
+            "title": "Reading Set 61: Molar Masses & Partial Pressures",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-7 to 13-8",
+              "pages": "439-450",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 61
+              }
+            }
+          },
+          {
+            "index": 130,
+            "title": "Reading Set 62: Maxwell-Boltzmann & Kinetic Theory",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-9 to 13-10",
+              "pages": "448-456",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 62
+              }
+            }
+          },
+          {
+            "index": 131,
+            "title": "Reading Set 63: Graham's Law, Mean Free Path & Van der Waals",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "sectionsCovered": "13-11 to 13-13",
+              "pages": "453-468",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 63
+              }
+            }
+          },
+          {
+            "index": 132,
+            "title": "Lecture Notes: Ch. 13 — Properties of Gases",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 133,
+            "title": "Worksheet 13: Ch. 13 — Properties of Gases",
+            "category": "worksheet",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 13
+              }
+            }
+          },
+          {
+            "index": 134,
+            "title": "Problem Set 13: Ch. 13 — Gas Law Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "problems": "PV=nRT, partial pressures",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 13
+              }
+            }
+          },
+          {
+            "index": 135,
+            "title": "Chapter 13 Quiz: Properties of Gases",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 13
+              }
+            }
+          },
+          {
+            "index": 136,
+            "title": "Flashcards: Ch. 13 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 13,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 137,
+            "title": "Reading Set 64: Energy, Work, Heat & Enthalpy",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "sectionsCovered": "14-1 to 14-2",
+              "pages": "469-478",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 64
+              }
+            }
+          },
+          {
+            "index": 138,
+            "title": "Reading Set 65: ΔH and Enthalpy Changes",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "sectionsCovered": "14-3 to 14-4",
+              "pages": "477-485",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 65
+              }
+            }
+          },
+          {
+            "index": 139,
+            "title": "Reading Set 66: Molar Enthalpy & Bond Enthalpies",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "sectionsCovered": "14-5 to 14-6",
+              "pages": "484-497",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 66
+              }
+            }
+          },
+          {
+            "index": 140,
+            "title": "Reading Set 67: Heat Capacity & Calorimetry",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "sectionsCovered": "14-7 to 14-9",
+              "pages": "496-508",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 67
+              }
+            }
+          },
+          {
+            "index": 141,
+            "title": "Reading Set 68: Molecular Basis of Heat Capacity",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "sectionsCovered": "14-10",
+              "pages": "505-518",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 68
+              }
+            }
+          },
+          {
+            "index": 142,
+            "title": "Lecture Notes: Ch. 14 — Thermochemistry",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 143,
+            "title": "Worksheet 14: Ch. 14 — Thermochemistry",
+            "category": "worksheet",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 14
+              }
+            }
+          },
+          {
+            "index": 144,
+            "title": "Problem Set 14: Ch. 14 — Enthalpy & Calorimetry",
+            "category": "problem_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "problems": "ΔH, q=mcΔT, Hess's Law",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 14
+              }
+            }
+          },
+          {
+            "index": 145,
+            "title": "Chapter 14 Quiz: Thermochemistry",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 14
+              }
+            }
+          },
+          {
+            "index": 146,
+            "title": "Flashcards: Ch. 14 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 14,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 147,
+            "title": "Reading Set 69: Molecules in Liquids/Solids & Heating Curves",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-1 to 15-2",
+              "pages": "519-526",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 69
+              }
+            }
+          },
+          {
+            "index": 148,
+            "title": "Reading Set 70: Fusion, Vaporization & Intermolecular Forces",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-3 to 15-4",
+              "pages": "522-535",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 70
+              }
+            }
+          },
+          {
+            "index": 149,
+            "title": "Reading Set 71: Properties of Liquids & Vapor Pressure",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-5 to 15-6",
+              "pages": "533-542",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 71
+              }
+            }
+          },
+          {
+            "index": 150,
+            "title": "Reading Set 72: Relative Humidity & Phase Diagrams",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-7 to 15-8",
+              "pages": "540-550",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 72
+              }
+            }
+          },
+          {
+            "index": 151,
+            "title": "Reading Set 73: Crystal Structures & Forces",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-9 to 15-10",
+              "pages": "545-556",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 73
+              }
+            }
+          },
+          {
+            "index": 152,
+            "title": "Reading Set 74: Electrons in Metals, Liquid Crystals & Colloids",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "sectionsCovered": "15-11 to 15-13",
+              "pages": "554-568",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 74
+              }
+            }
+          },
+          {
+            "index": 153,
+            "title": "Lecture Notes: Ch. 15 — Liquids and Solids",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 154,
+            "title": "Worksheet 15: Ch. 15 — Liquids and Solids",
+            "category": "worksheet",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 15
+              }
+            }
+          },
+          {
+            "index": 155,
+            "title": "Problem Set 15: Ch. 15 — Phase Changes & Intermolecular Forces",
+            "category": "problem_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "problems": "Heating curves, IMF",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 15
+              }
+            }
+          },
+          {
+            "index": 156,
+            "title": "Chapter 15 Quiz: Liquids and Solids",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 15
+              }
+            }
+          },
+          {
+            "index": 157,
+            "title": "Flashcards: Ch. 15 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 15,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 158,
+            "title": "Reading Set 75: Molality, Mole Fraction & Raoult's Law",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "sectionsCovered": "16-1 to 16-2",
+              "pages": "569-578",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 75
+              }
+            }
+          },
+          {
+            "index": 159,
+            "title": "Reading Set 76: Boiling Point & Freezing Point Changes",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "sectionsCovered": "16-3 to 16-4",
+              "pages": "576-585",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 76
+              }
+            }
+          },
+          {
+            "index": 160,
+            "title": "Reading Set 77: Osmotic Pressure, Ideal Solutions & Henry's Law",
+            "category": "reading_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "sectionsCovered": "16-5 to 16-7",
+              "pages": "583-600",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 77
+              }
+            }
+          },
+          {
+            "index": 161,
+            "title": "Lecture Notes: Ch. 16 — Colligative Properties of Solutions",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 162,
+            "title": "Worksheet 16: Ch. 16 — Colligative Properties of Solutions",
+            "category": "worksheet",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 16
+              }
+            }
+          },
+          {
+            "index": 163,
+            "title": "Problem Set 16: Ch. 16 — Colligative Property Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "problems": "ΔTb, ΔTf, osmotic pressure",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 16
+              }
+            }
+          },
+          {
+            "index": 164,
+            "title": "Chapter 16 Quiz: Colligative Properties of Solutions",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 16
+              }
+            }
+          },
+          {
+            "index": 165,
+            "title": "Flashcards: Ch. 16 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "States of Matter",
+              "chapter": 16,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 166,
+            "title": "Flashcards: Topic 5 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "States of Matter",
+              "chapters": "Ch. 13-16",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 167,
+            "title": "Topic 5 Test: States of Matter",
+            "category": "topic_test",
+            "meta": {
+              "topic": "States of Matter",
+              "chapters": "Ch. 13-16",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_6",
+        "title": "Topic 6: Kinetics & Equilibrium",
+        "unit": "Topic 6",
+        "topicKey": "Kinetics",
+        "lessons": [
+          {
+            "index": 168,
+            "title": "Reading Set 78: Reaction Rates & Time",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "sectionsCovered": "17-1 to 17-2",
+              "pages": "601-612",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 78
+              }
+            }
+          },
+          {
+            "index": 169,
+            "title": "Reading Set 79: Initial Rates & First-Order Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "sectionsCovered": "17-3 to 17-4",
+              "pages": "610-622",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 79
+              }
+            }
+          },
+          {
+            "index": 170,
+            "title": "Reading Set 80: Half-Life & Radioactive Decay",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "sectionsCovered": "17-5 to 17-6",
+              "pages": "620-629",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 80
+              }
+            }
+          },
+          {
+            "index": 171,
+            "title": "Reading Set 81: Carbon-14 Dating & Second-Order Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "sectionsCovered": "17-7 to 17-9",
+              "pages": "628-648",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 81
+              }
+            }
+          },
+          {
+            "index": 172,
+            "title": "Lecture Notes: Ch. 17 — Chemical Kinetics: Rate Laws",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 173,
+            "title": "Worksheet 17: Ch. 17 — Chemical Kinetics: Rate Laws",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 17
+              }
+            }
+          },
+          {
+            "index": 174,
+            "title": "Problem Set 17: Ch. 17 — Rate Law & Half-Life",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "problems": "Rate expressions, t½",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 17
+              }
+            }
+          },
+          {
+            "index": 175,
+            "title": "Chapter 17 Quiz: Chemical Kinetics: Rate Laws",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 17
+              }
+            }
+          },
+          {
+            "index": 176,
+            "title": "Flashcards: Ch. 17 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 17,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 177,
+            "title": "Reading Set 82: Mechanisms & Activation Energy",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "sectionsCovered": "18-1 to 18-2",
+              "pages": "649-658",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 82
+              }
+            }
+          },
+          {
+            "index": 178,
+            "title": "Reading Set 83: Arrhenius Equation & Rate-Determining Step",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "sectionsCovered": "18-3 to 18-4",
+              "pages": "657-665",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 83
+              }
+            }
+          },
+          {
+            "index": 179,
+            "title": "Reading Set 84: Reversible Reactions & Catalysis",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "sectionsCovered": "18-5 to 18-6",
+              "pages": "660-670",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 84
+              }
+            }
+          },
+          {
+            "index": 180,
+            "title": "Reading Set 85: Enzyme Kinetics",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "sectionsCovered": "18-7",
+              "pages": "668-684",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 85
+              }
+            }
+          },
+          {
+            "index": 181,
+            "title": "Lecture Notes: Ch. 18 — Chemical Kinetics: Mechanisms",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 182,
+            "title": "Worksheet 18: Ch. 18 — Chemical Kinetics: Mechanisms",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 18
+              }
+            }
+          },
+          {
+            "index": 183,
+            "title": "Problem Set 18: Ch. 18 — Arrhenius & Mechanisms",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "problems": "Ea calculations, rate-determining",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 18
+              }
+            }
+          },
+          {
+            "index": 184,
+            "title": "Chapter 18 Quiz: Chemical Kinetics: Mechanisms",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 18
+              }
+            }
+          },
+          {
+            "index": 185,
+            "title": "Flashcards: Ch. 18 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 18,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 186,
+            "title": "Reading Set 86: Dynamic Equilibrium & Attainment",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "sectionsCovered": "19-1 to 19-2",
+              "pages": "685-693",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 86
+              }
+            }
+          },
+          {
+            "index": 187,
+            "title": "Reading Set 87: Equilibrium Expressions & Constants",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "sectionsCovered": "19-3 to 19-4",
+              "pages": "689-702",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 87
+              }
+            }
+          },
+          {
+            "index": 188,
+            "title": "Reading Set 88: Equilibrium Calculations & Properties",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "sectionsCovered": "19-5 to 19-6",
+              "pages": "697-710",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 88
+              }
+            }
+          },
+          {
+            "index": 189,
+            "title": "Reading Set 89: Le Châtelier's Principle & Applications",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "sectionsCovered": "19-7 to 19-8",
+              "pages": "705-718",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 89
+              }
+            }
+          },
+          {
+            "index": 190,
+            "title": "Reading Set 90: Approach to Equilibrium",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "sectionsCovered": "19-9",
+              "pages": "715-728",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 90
+              }
+            }
+          },
+          {
+            "index": 191,
+            "title": "Lecture Notes: Ch. 19 — Chemical Equilibrium",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 192,
+            "title": "Worksheet 19: Ch. 19 — Chemical Equilibrium",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 19
+              }
+            }
+          },
+          {
+            "index": 193,
+            "title": "Problem Set 19: Ch. 19 — Equilibrium Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "problems": "K expressions, ICE tables",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 19
+              }
+            }
+          },
+          {
+            "index": 194,
+            "title": "Chapter 19 Quiz: Chemical Equilibrium",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 19
+              }
+            }
+          },
+          {
+            "index": 195,
+            "title": "Flashcards: Ch. 19 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapter": 19,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 196,
+            "title": "Flashcards: Topic 6 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapters": "Ch. 17-19",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 197,
+            "title": "Topic 6 Test: Kinetics & Equilibrium",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Kinetics & Equilibrium",
+              "chapters": "Ch. 17-19",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_7",
+        "title": "Topic 7: Acids, Bases & Solubility",
+        "unit": "Topic 7",
+        "topicKey": "Acids/Bases",
+        "lessons": [
+          {
+            "index": 198,
+            "title": "Reading Set 91: Acids, Bases & Ion-Product Constant",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-1 to 20-2",
+              "pages": "729-737",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 91
+              }
+            }
+          },
+          {
+            "index": 199,
+            "title": "Reading Set 92: Strong Acids/Bases & Carboxylic Acids",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-3 to 20-4",
+              "pages": "732-742",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 92
+              }
+            }
+          },
+          {
+            "index": 200,
+            "title": "Reading Set 93: pH, Acidity & Weak Acids",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-5 to 20-6",
+              "pages": "738-748",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 93
+              }
+            }
+          },
+          {
+            "index": 201,
+            "title": "Reading Set 94: Ka, Kb & Successive Approximations",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-7 to 20-8",
+              "pages": "743-755",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 94
+              }
+            }
+          },
+          {
+            "index": 202,
+            "title": "Reading Set 95: Base Strength, Conjugate Pairs & Salt Solutions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-9 to 20-11",
+              "pages": "751-764",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 95
+              }
+            }
+          },
+          {
+            "index": 203,
+            "title": "Reading Set 96: Polyprotic Acids",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "sectionsCovered": "20-12",
+              "pages": "764-776",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 96
+              }
+            }
+          },
+          {
+            "index": 204,
+            "title": "Lecture Notes: Ch. 20 — The Properties of Acids and Bases",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 205,
+            "title": "Worksheet 20: Ch. 20 — The Properties of Acids and Bases",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 20
+              }
+            }
+          },
+          {
+            "index": 206,
+            "title": "Problem Set 20: Ch. 20 — pH & Weak Acid/Base",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "problems": "pH, Ka, Kb calculations",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 20
+              }
+            }
+          },
+          {
+            "index": 207,
+            "title": "Chapter 20 Quiz: The Properties of Acids and Bases",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 20
+              }
+            }
+          },
+          {
+            "index": 208,
+            "title": "Flashcards: Ch. 20 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 20,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 209,
+            "title": "Reading Set 97: Henderson-Hasselbalch & Buffers",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "sectionsCovered": "21-1 to 21-2",
+              "pages": "777-790",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 97
+              }
+            }
+          },
+          {
+            "index": 210,
+            "title": "Reading Set 98: Indicators & Strong Acid-Base Titration",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "sectionsCovered": "21-3 to 21-4",
+              "pages": "786-800",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 98
+              }
+            }
+          },
+          {
+            "index": 211,
+            "title": "Reading Set 99: Weak Acid/Base Titrations & pH at Midpoint",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "sectionsCovered": "21-5 to 21-6",
+              "pages": "794-802",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 99
+              }
+            }
+          },
+          {
+            "index": 212,
+            "title": "Reading Set 100: Weak Base-Strong Acid Titration",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "sectionsCovered": "21-7",
+              "pages": "802-814",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 100
+              }
+            }
+          },
+          {
+            "index": 213,
+            "title": "Lecture Notes: Ch. 21 — Buffers and Titration of Acids and Bases",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 214,
+            "title": "Worksheet 21: Ch. 21 — Buffers and Titration of Acids and Bases",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 21
+              }
+            }
+          },
+          {
+            "index": 215,
+            "title": "Problem Set 21: Ch. 21 — Buffer & Titration Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "problems": "Henderson-Hasselbalch, curves",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 21
+              }
+            }
+          },
+          {
+            "index": 216,
+            "title": "Chapter 21 Quiz: Buffers and Titration of Acids and Bases",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 21
+              }
+            }
+          },
+          {
+            "index": 217,
+            "title": "Flashcards: Ch. 21 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 21,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 218,
+            "title": "Reading Set 101: Solubility-Product Constants & Common Ion",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "sectionsCovered": "22-1 to 22-2",
+              "pages": "815-827",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 101
+              }
+            }
+          },
+          {
+            "index": 219,
+            "title": "Reading Set 102: Formation of Complexes & Solubility",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "sectionsCovered": "22-3 to 22-4",
+              "pages": "823-833",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 102
+              }
+            }
+          },
+          {
+            "index": 220,
+            "title": "Reading Set 103: Precipitation Criteria & Selective Precipitation",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "sectionsCovered": "22-5 to 22-6",
+              "pages": "830-840",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 103
+              }
+            }
+          },
+          {
+            "index": 221,
+            "title": "Reading Set 104: Amphoteric Hydroxides & Qualitative Analysis",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "sectionsCovered": "22-7 to 22-8",
+              "pages": "835-852",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 104
+              }
+            }
+          },
+          {
+            "index": 222,
+            "title": "Lecture Notes: Ch. 22 — Solubility and Precipitation Reactions",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 223,
+            "title": "Worksheet 22: Ch. 22 — Solubility and Precipitation Reactions",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 22
+              }
+            }
+          },
+          {
+            "index": 224,
+            "title": "Problem Set 22: Ch. 22 — Solubility & Ksp",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "problems": "Ksp, common ion, precipitation",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 22
+              }
+            }
+          },
+          {
+            "index": 225,
+            "title": "Chapter 22 Quiz: Solubility and Precipitation Reactions",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 22
+              }
+            }
+          },
+          {
+            "index": 226,
+            "title": "Flashcards: Ch. 22 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapter": 22,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 227,
+            "title": "Flashcards: Topic 7 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapters": "Ch. 20-22",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 228,
+            "title": "Topic 7 Test: Acids, Bases & Solubility",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Acids, Bases & Solubility",
+              "chapters": "Ch. 20-22",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "chem_topic_8",
+        "title": "Topic 8: Advanced Chemistry",
+        "unit": "Topic 8",
+        "topicKey": "Advanced",
+        "lessons": [
+          {
+            "index": 229,
+            "title": "Reading Set 105: Spontaneity & Second Law",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-1 to 23-2",
+              "pages": "853-865",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 105
+              }
+            }
+          },
+          {
+            "index": 230,
+            "title": "Reading Set 106: Entropy, Disorder & Molecular Structure",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-3 to 23-4",
+              "pages": "860-872",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 106
+              }
+            }
+          },
+          {
+            "index": 231,
+            "title": "Reading Set 107: Entropy Changes for Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-5 to 23-6",
+              "pages": "868-876",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 107
+              }
+            }
+          },
+          {
+            "index": 232,
+            "title": "Reading Set 108: ΔG and the Reaction Quotient",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-6 to 23-7",
+              "pages": "869-880",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 108
+              }
+            }
+          },
+          {
+            "index": 233,
+            "title": "Reading Set 109: Relation of ΔG Values & Gibbs Energies",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-8 to 23-9",
+              "pages": "875-886",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 109
+              }
+            }
+          },
+          {
+            "index": 234,
+            "title": "Reading Set 110: The van't Hoff Equation",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "sectionsCovered": "23-10",
+              "pages": "883-898",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 110
+              }
+            }
+          },
+          {
+            "index": 235,
+            "title": "Lecture Notes: Ch. 23 — Chemical Thermodynamics",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 236,
+            "title": "Worksheet 23: Ch. 23 — Chemical Thermodynamics",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 23
+              }
+            }
+          },
+          {
+            "index": 237,
+            "title": "Problem Set 23: Ch. 23 — Thermodynamics Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "problems": "ΔG, ΔS, spontaneity",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 23
+              }
+            }
+          },
+          {
+            "index": 238,
+            "title": "Chapter 23 Quiz: Chemical Thermodynamics",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 23
+              }
+            }
+          },
+          {
+            "index": 239,
+            "title": "Flashcards: Ch. 23 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 23,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 240,
+            "title": "Reading Set 111: Oxidation States & Redox Reactions",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "sectionsCovered": "24-1 to 24-2",
+              "pages": "899-911",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 111
+              }
+            }
+          },
+          {
+            "index": 241,
+            "title": "Reading Set 112: Half Reactions & Balancing in Acidic",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "sectionsCovered": "24-3 to 24-4",
+              "pages": "908-918",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 112
+              }
+            }
+          },
+          {
+            "index": 242,
+            "title": "Reading Set 113: Balancing in Basic Solutions & Analysis",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "sectionsCovered": "24-5 to 24-6",
+              "pages": "914-922",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 113
+              }
+            }
+          },
+          {
+            "index": 243,
+            "title": "Reading Set 114: Corrosion",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "sectionsCovered": "24-7",
+              "pages": "920-930",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 114
+              }
+            }
+          },
+          {
+            "index": 244,
+            "title": "Lecture Notes: Ch. 24 — Oxidation-Reduction Reactions",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 245,
+            "title": "Worksheet 24: Ch. 24 — Oxidation-Reduction Reactions",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 24
+              }
+            }
+          },
+          {
+            "index": 246,
+            "title": "Problem Set 24: Ch. 24 — Redox Balancing",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "problems": "Half-reaction method",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 24
+              }
+            }
+          },
+          {
+            "index": 247,
+            "title": "Chapter 24 Quiz: Oxidation-Reduction Reactions",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 24
+              }
+            }
+          },
+          {
+            "index": 248,
+            "title": "Flashcards: Ch. 24 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 24,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 249,
+            "title": "Reading Set 115: Chemical Reactions & Electric Current",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "sectionsCovered": "25-1 to 25-2",
+              "pages": "931-942",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 115
+              }
+            }
+          },
+          {
+            "index": 250,
+            "title": "Reading Set 116: Cell Diagrams & Nernst Equation",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "sectionsCovered": "25-3 to 25-4",
+              "pages": "938-950",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 116
+              }
+            }
+          },
+          {
+            "index": 251,
+            "title": "Reading Set 117: Half-Reaction E° & Standard Reduction",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "sectionsCovered": "25-5 to 25-6",
+              "pages": "946-958",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 117
+              }
+            }
+          },
+          {
+            "index": 252,
+            "title": "Reading Set 118: ΔG, Work & Faraday's Laws",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "sectionsCovered": "25-7 to 25-8",
+              "pages": "957-968",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 118
+              }
+            }
+          },
+          {
+            "index": 253,
+            "title": "Reading Set 119: Industrial Electrolysis",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "sectionsCovered": "25-9",
+              "pages": "964-978",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 119
+              }
+            }
+          },
+          {
+            "index": 254,
+            "title": "Lecture Notes: Ch. 25 — Electrochemistry",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 255,
+            "title": "Worksheet 25: Ch. 25 — Electrochemistry",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 25
+              }
+            }
+          },
+          {
+            "index": 256,
+            "title": "Problem Set 25: Ch. 25 — Electrochemistry Calculations",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "problems": "E°cell, Nernst, Faraday",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 25
+              }
+            }
+          },
+          {
+            "index": 257,
+            "title": "Chapter 25 Quiz: Electrochemistry",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 25
+              }
+            }
+          },
+          {
+            "index": 258,
+            "title": "Flashcards: Ch. 25 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 25,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 259,
+            "title": "Reading Set 120: Oxidation States & Chromium/Manganese",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "sectionsCovered": "26-1 to 26-2",
+              "pages": "979-989",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 120
+              }
+            }
+          },
+          {
+            "index": 260,
+            "title": "Reading Set 121: The Blast Furnace & Coinage Metals",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "sectionsCovered": "26-3 to 26-5",
+              "pages": "986-998",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 121
+              }
+            }
+          },
+          {
+            "index": 261,
+            "title": "Reading Set 122: d-Block Series & Complexes",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "sectionsCovered": "26-6 to 26-7",
+              "pages": "995-1004",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 122
+              }
+            }
+          },
+          {
+            "index": 262,
+            "title": "Reading Set 123: Nomenclature & Polydentate Ligands",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "sectionsCovered": "26-8 to 26-9",
+              "pages": "1000-1008",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 123
+              }
+            }
+          },
+          {
+            "index": 263,
+            "title": "Reading Set 124: Isomers, d-Orbital Splittings & Spectrochemical Series",
+            "category": "reading_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "sectionsCovered": "26-10 to 26-13",
+              "pages": "1005-1015",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 124
+              }
+            }
+          },
+          {
+            "index": 264,
+            "title": "Lecture Notes: Ch. 26 — The Chemistry of the Transition Metals",
+            "category": "lecture_notes",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 265,
+            "title": "Worksheet 26: Ch. 26 — The Chemistry of the Transition Metals",
+            "category": "worksheet",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 26
+              }
+            }
+          },
+          {
+            "index": 266,
+            "title": "Problem Set 26: Ch. 26 — Transition Metal Chemistry",
+            "category": "problem_set",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "problems": "Nomenclature, d-orbital splitting",
+              "source": {
+                "sheet": "Problem Sets",
+                "rowNumber": 26
+              }
+            }
+          },
+          {
+            "index": 267,
+            "title": "Chapter 26 Quiz: The Chemistry of the Transition Metals",
+            "category": "chapter_quiz",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 26
+              }
+            }
+          },
+          {
+            "index": 268,
+            "title": "Flashcards: Ch. 26 — Concepts, Equations, and Problem Types (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapter": 26,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 269,
+            "title": "Flashcards: Topic 8 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapters": "Ch. 23-26",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 270,
+            "title": "Topic 8 Test: Advanced Chemistry",
+            "category": "topic_test",
+            "meta": {
+              "topic": "Advanced Chemistry",
+              "chapters": "Ch. 23-26",
+              "source": {
+                "sheet": "Topic Tests"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "id": "vocabulary",
+      "label": "Vocabulary",
+      "focus": "Vocabulary"
+    },
+    {
+      "id": "formulas",
+      "label": "Formulas/Equations",
+      "focus": "Formulas/Equations"
+    },
+    {
+      "id": "processes",
+      "label": "Processes",
+      "focus": "Processes"
+    },
+    {
+      "id": "scientists_laws",
+      "label": "Scientists/Laws",
+      "focus": "Scientists/Laws"
+    },
+    {
+      "id": "problem_types",
+      "label": "Problem Types",
+      "focus": "Problem Types"
     }
   ],
-
-  "moduleTests": [
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewIntervalDays": 1,
+        "correctTo": 2,
+        "incorrectTo": 1
+      },
+      {
+        "box": 2,
+        "reviewIntervalDays": 2,
+        "correctTo": 3,
+        "incorrectTo": 1
+      },
+      {
+        "box": 3,
+        "reviewIntervalDays": 4,
+        "correctTo": 4,
+        "incorrectTo": 1
+      },
+      {
+        "box": 4,
+        "reviewIntervalDays": 7,
+        "correctTo": 5,
+        "incorrectTo": 1
+      },
+      {
+        "box": 5,
+        "reviewIntervalDays": 14,
+        "correctTo": 6,
+        "incorrectTo": 1
+      },
+      {
+        "box": 6,
+        "reviewIntervalDays": 30,
+        "correctTo": 7,
+        "incorrectTo": 1
+      },
+      {
+        "box": 7,
+        "reviewIntervalDays": 1,
+        "correctTo": 7,
+        "incorrectTo": 1
+      }
+    ],
+    "masteryBox": 7
+  },
+  "flashcardDecks": [
     {
-      "id": "topic_test_1",
-      "moduleId": "foundations",
-      "title": "Topic Test 1: Foundations",
-      "categoryKey": "topic_test",
-      "chapters": ["ch_1", "ch_2", "ch_3"],
-      "masteryThreshold": 95
-    }
-  ]
-},
-"badges": [
-  {
-    "id": "foundations_scholar",
-    "title": "Foundations Scholar",
-    "description": "Master the fundamentals of chemistry",
-    "tier": "gold",
-    "icon": "science",
-    "category": "module_completion",
-    "moduleId": "foundations",
-    "unlockCriteria": {
-      "all": [
-        { "type": "mastery", "condition": "topic_test_95_or_box7", "moduleId": "foundations" },
-        { "type": "completion", "condition": "all_reading_sets", "moduleId": "foundations" },
-        { "type": "capstone", "condition": "capstone_complete", "capstoneId": "foundations_capstone" }
-      ]
+      "topic": "Foundations (Ch. 1-3)",
+      "categories": {
+        "vocabulary": [
+          "Element",
+          "compound",
+          "isotope",
+          "ion",
+          "molecule"
+        ],
+        "formulas": [
+          "Density",
+          "% error",
+          "dimensional analysis"
+        ],
+        "processes": [
+          "Scientific method",
+          "separation"
+        ],
+        "scientists_laws": [
+          "Dalton",
+          "Lavoisier"
+        ],
+        "problem_types": [
+          "Unit conversion",
+          "sig figs"
+        ]
+      }
     },
-    "capstone": {
-      "id": "foundations_capstone",
-      "title": "Element Research Project",
-      "description": "Research and present on an element of your choice",
-      "categoryKey": "capstone_project"
+    {
+      "topic": "Quantum (Ch. 4-5)",
+      "categories": {
+        "vocabulary": [
+          "Photon",
+          "orbital",
+          "quantum number",
+          "spin"
+        ],
+        "formulas": [
+          "E=hν",
+          "λ=h/mv",
+          "Rydberg"
+        ],
+        "processes": [
+          "Electron transitions",
+          "ionization"
+        ],
+        "scientists_laws": [
+          "Planck",
+          "Bohr",
+          "Heisenberg",
+          "Schrödinger"
+        ],
+        "problem_types": [
+          "Config writing",
+          "quantum #s"
+        ]
+      }
+    },
+    {
+      "topic": "Bonding (Ch. 6-9)",
+      "categories": {
+        "vocabulary": [
+          "Ionic",
+          "covalent",
+          "polar",
+          "electronegativity"
+        ],
+        "formulas": [
+          "Formal charge",
+          "bond order",
+          "dipole"
+        ],
+        "processes": [
+          "Hybridization",
+          "MO formation"
+        ],
+        "scientists_laws": [
+          "Lewis",
+          "Pauling",
+          "VSEPR"
+        ],
+        "problem_types": [
+          "Lewis structures",
+          "geometry"
+        ]
+      }
+    },
+    {
+      "topic": "Reactions (Ch. 10-12)",
+      "categories": {
+        "vocabulary": [
+          "Mole",
+          "molarity",
+          "stoichiometry",
+          "yield"
+        ],
+        "formulas": [
+          "n=m/M",
+          "M=mol/L",
+          "% yield"
+        ],
+        "processes": [
+          "Precipitation",
+          "neutralization"
+        ],
+        "scientists_laws": [
+          "Avogadro"
+        ],
+        "problem_types": [
+          "Limiting reagent",
+          "titration"
+        ]
+      }
+    },
+    {
+      "topic": "States (Ch. 13-16)",
+      "categories": {
+        "vocabulary": [
+          "Pressure",
+          "enthalpy",
+          "entropy",
+          "phase"
+        ],
+        "formulas": [
+          "PV=nRT",
+          "q=mcΔT",
+          "Clausius-Clapeyron"
+        ],
+        "processes": [
+          "Vaporization",
+          "fusion",
+          "sublimation"
+        ],
+        "scientists_laws": [
+          "Boyle",
+          "Charles",
+          "Avogadro",
+          "Hess"
+        ],
+        "problem_types": [
+          "Gas laws",
+          "calorimetry"
+        ]
+      }
+    },
+    {
+      "topic": "Kinetics (Ch. 17-19)",
+      "categories": {
+        "vocabulary": [
+          "Rate",
+          "order",
+          "catalyst",
+          "equilibrium"
+        ],
+        "formulas": [
+          "Rate law",
+          "Arrhenius",
+          "K expressions"
+        ],
+        "processes": [
+          "Mechanisms",
+          "approach to equilibrium"
+        ],
+        "scientists_laws": [
+          "Arrhenius",
+          "Le Châtelier"
+        ],
+        "problem_types": [
+          "Rate law",
+          "ICE tables"
+        ]
+      }
+    },
+    {
+      "topic": "Acids/Bases (Ch. 20-22)",
+      "categories": {
+        "vocabulary": [
+          "Acid",
+          "base",
+          "buffer",
+          "Ksp",
+          "conjugate"
+        ],
+        "formulas": [
+          "pH",
+          "Ka",
+          "Kb",
+          "Henderson-Hasselbalch"
+        ],
+        "processes": [
+          "Neutralization",
+          "hydrolysis",
+          "precipitation"
+        ],
+        "scientists_laws": [
+          "Arrhenius",
+          "Brønsted-Lowry"
+        ],
+        "problem_types": [
+          "pH calculations",
+          "buffers"
+        ]
+      }
+    },
+    {
+      "topic": "Advanced (Ch. 23-26)",
+      "categories": {
+        "vocabulary": [
+          "Spontaneous",
+          "entropy",
+          "oxidation",
+          "reduction"
+        ],
+        "formulas": [
+          "ΔG=ΔH-TΔS",
+          "E°cell",
+          "Nernst"
+        ],
+        "processes": [
+          "Galvanic/electrolytic cells",
+          "corrosion"
+        ],
+        "scientists_laws": [
+          "Gibbs",
+          "Faraday",
+          "Nernst"
+        ],
+        "problem_types": [
+          "ΔG",
+          "E°cell",
+          "redox balance"
+        ]
+      }
     }
-  },
-  {
-    "id": "dedicated_typist",
-    "title": "Dedicated Typist",
-    "description": "Maintain a 5-day practice streak",
-    "tier": "bronze",
-    "icon": "local_fire_department",
-    "category": "streak",
-    "unlockCriteria": {
-      "type": "streak",
-      "daysRequired": 5
+  ],
+  "badges": [
+    {
+      "id": "foundations_scholar",
+      "title": "Foundations Scholar",
+      "chapters": "Ch. 1-3",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 1-13",
+        "capstone": "Element research project"
+      }
+    },
+    {
+      "id": "quantum_master",
+      "title": "Quantum Master",
+      "chapters": "Ch. 4-5",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 14-23",
+        "capstone": "Atomic model history essay"
+      }
+    },
+    {
+      "id": "bonding_expert",
+      "title": "Bonding Expert",
+      "chapters": "Ch. 6-9",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 24-43",
+        "capstone": "Molecular modeling project"
+      }
+    },
+    {
+      "id": "reactions_scholar",
+      "title": "Reactions Scholar",
+      "chapters": "Ch. 10-12",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 44-57",
+        "capstone": "Stoichiometry lab report"
+      }
+    },
+    {
+      "id": "states_of_matter_master",
+      "title": "States of Matter Master",
+      "chapters": "Ch. 13-16",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 58-77",
+        "capstone": "Phase diagram analysis"
+      }
+    },
+    {
+      "id": "kinetics_equilibrium_expert",
+      "title": "Kinetics & Equilibrium Expert",
+      "chapters": "Ch. 17-19",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 78-90",
+        "capstone": "Reaction rate investigation"
+      }
+    },
+    {
+      "id": "acids_bases_scholar",
+      "title": "Acids & Bases Scholar",
+      "chapters": "Ch. 20-22",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 91-104",
+        "capstone": "Titration lab project"
+      }
+    },
+    {
+      "id": "advanced_chemistry_master",
+      "title": "Advanced Chemistry Master",
+      "chapters": "Ch. 23-26",
+      "requirements": {
+        "mastery": "95% Topic Test OR Box 7",
+        "completion": "Reading Sets 105-124",
+        "capstone": "Electrochemistry application essay"
+      }
     }
-  },
-  {
-    "id": "speed_40wpm",
-    "title": "Intermediate Typist",
-    "description": "Reach 40 WPM",
-    "tier": "silver",
-    "icon": "speed",
-    "category": "milestone",
-    "unlockCriteria": {
-      "type": "metric_threshold",
-      "metric": "wpm",
-      "threshold": 40
-    }
-  },
-  {
-    "id": "accuracy_master",
-    "title": "Flawless Typist",
-    "description": "Complete 10 lessons with 100% on end-of-lesson tests",
-    "tier": "platinum",
-    "icon": "verified",
-    "category": "accuracy",
-    "unlockCriteria": {
-      "type": "count_threshold",
-      "condition": "lessons_with_perfect_test",
-      "threshold": 10
-    }
-  },
-  {
-    "id": "keyboard_master",
-    "title": "Keyboard Master",
-    "description": "Complete all 27 lessons",
-    "tier": "diamond",
-    "icon": "emoji_events",
-    "category": "course_completion",
-    "unlockCriteria": {
-      "type": "completion",
-      "condition": "all_lessons"
-    }
-  }
-],
-"flashcardCategories": [
-  {
-    "id": "vocabulary",
-    "title": "Vocabulary/Definitions",
-    "description": "Key terms and their definitions",
-    "examples": ["Element", "Compound", "Isotope", "Ion", "Molecule"]
-  },
-  {
-    "id": "formulas",
-    "title": "Formulas/Equations",
-    "description": "Mathematical formulas and chemical equations",
-    "examples": ["Density = m/v", "% error formula", "Dimensional analysis"]
-  },
-  {
-    "id": "processes",
-    "title": "Processes/Mechanisms",
-    "description": "Step-by-step processes and reaction mechanisms",
-    "examples": ["Scientific method steps", "Separation techniques"]
-  },
-  {
-    "id": "scientists",
-    "title": "Scientists/Laws",
-    "description": "Key scientists and the laws/principles they discovered",
-    "examples": ["Dalton - Atomic Theory", "Lavoisier - Conservation of Mass"]
-  },
-  {
-    "id": "problem_types",
-    "title": "Problem Types",
-    "description": "Categories of calculation problems",
-    "examples": ["Unit conversion", "Significant figures", "Dimensional analysis"]
-  }
-],
-
-"leitnerSystem": {
-  "boxes": 7,
-  "intervals": [1, 2, 4, 7, 14, 30, "mastered"],
-  "masteryBox": 7,
-  "masteryMultiplier": 1.5,
-  "rules": {
-    "correct": "advance_one_box",
-    "incorrect": "return_to_box_1"
-  }
-},
-"masteryRequirements": {
-  "activities": {
-    "minAccuracyPercent": 95,
-    "description": "All activities require 95%+ accuracy"
-  },
-  "endOfLessonTests": {
-    "minAccuracyPercent": 100,
-    "allowCorrections": true,
-    "description": "100% required (corrections allowed)"
-  },
-  "moduleCompletion": {
-    "requireAllLessons": true,
-    "requireAllActivitiesAtThreshold": true
+  ],
+  "generatedFrom": {
+    "sourceWorkbook": "general_chemistry_life_os.xlsx"
   }
 }
-}  
-

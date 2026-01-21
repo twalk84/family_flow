@@ -657,6 +657,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   /// UPDATED: Now includes pointsBase and gradable fields
+  /// Opens the Add Assignment sheet with the narrowed points input.
   Future<void> _showAddAssignmentDialog({
     required List<Student> students,
     required List<Subject> subjects,
@@ -675,8 +676,8 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final nameCtrl = TextEditingController();
     final dateCtrl = TextEditingController(text: _todayYmd());
-    final pointsCtrl = TextEditingController(text: '10'); // Default 10 points
-    bool gradable = true; // Default to gradable
+    final pointsCtrl = TextEditingController(text: '10');
+    bool gradable = true;
 
     await _showSmoothSheet<void>(
       title: 'Add Assignment',
@@ -733,30 +734,39 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
                 const SizedBox(height: 16),
 
-                // NEW: Points section
+                // START: Points & Grading Section (Optimized for Android)
                 const Text('Points & Grading', style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
+                      flex: 1, // Narrows the points box to ~33% width
                       child: TextField(
                         controller: pointsCtrl,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: 'Points',
-                          helperText: 'Base points for completion',
+                          helperText: 'Base pts',
                           border: OutlineInputBorder(),
                         ),
                       ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
+                      flex: 2, // Gives the grading section ~66% width
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Requires Grade?', style: TextStyle(fontSize: 12, color: Colors.white70)),
+                          const Text(
+                            'Requires Grade?',
+                            style: TextStyle(fontSize: 12, color: Colors.white70),
+                          ),
                           const SizedBox(height: 4),
-                          Row(
+                          // Wrap ensures ChoiceChips don't cause pixel overflow
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
                             children: [
                               ChoiceChip(
                                 label: const Text('Yes'),
@@ -764,7 +774,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 onSelected: (_) => setSheetState(() => gradable = true),
                                 selectedColor: Colors.blue.withOpacity(0.3),
                               ),
-                              const SizedBox(width: 8),
                               ChoiceChip(
                                 label: const Text('Pass/Fail'),
                                 selected: !gradable,
@@ -778,7 +787,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                // END: Points & Grading Section
+
+                const SizedBox(height: 12),
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -817,7 +828,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                         label: const Text('Add'),
                         onPressed: () async {
                           final name = nameCtrl.text.trim();
-                          final due = normalizeDueDate(dateCtrl.text.trim());
+                          final due = dateCtrl.text.trim();
                           final points = int.tryParse(pointsCtrl.text.trim()) ?? 10;
 
                           if (name.isEmpty || due.isEmpty) {
@@ -825,7 +836,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                             return;
                           }
 
-                          // Use AssignmentMutations.createAssignment for consistency
                           await AssignmentMutations.createAssignment(
                             studentId: studentId,
                             subjectId: subjectId,
@@ -849,7 +859,6 @@ class _DashboardScreenState extends State<DashboardScreen>
       },
     );
   }
-
   // ============================================================
   // Assignment actions (smooth) - UPDATED with proper completion flow
   // ============================================================
@@ -1722,11 +1731,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 List<Widget> buildActions() {
                   if (isNarrow) {
                     return [
-                      IconButton(
-                        tooltip: 'Add Student',
-                        icon: const Icon(Icons.person_add_alt_1),
-                        onPressed: _showAddStudentDialog,
-                      ),
+                    
                       IconButton(
                         tooltip: 'Add Subject',
                         icon: const Icon(Icons.bookmark_add),

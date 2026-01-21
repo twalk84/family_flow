@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart'; // Required for rootBundle
 
 class CourseConfigService {
   CourseConfigService._();
@@ -6,20 +7,23 @@ class CourseConfigService {
 
   final _cache = <String, Map<String, dynamic>>{};
 
-  /// Loads: courseConfigs/{configId}
+  /// Loads curriculum from assets/courseConfigs/{configId}.json
   Future<Map<String, dynamic>?> getConfig(String configId) async {
     final key = configId.trim();
     if (key.isEmpty) return null;
 
-    final cached = _cache[key];
-    if (cached != null) return cached;
+    if (_cache.containsKey(key)) return _cache[key];
 
-    final snap = await FirebaseFirestore.instance.collection('courseConfigs').doc(key).get();
-    final data = snap.data();
-    if (data == null) return null;
+    try {
+      // Load the local JSON file
+      final String jsonString = await rootBundle.loadString('assets/courseConfigs/$key.json');
+      final Map<String, dynamic> data = json.decode(jsonString);
 
-    _cache[key] = data;
-    return data;
+      _cache[key] = data;
+      return data;
+    } catch (e) {
+      return null;
+    }
   }
 
   int basePointsFor(Map<String, dynamic> cfg, String categoryKey) {

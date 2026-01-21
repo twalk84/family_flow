@@ -1,12 +1,4 @@
 // FILE: lib/screens/curriculum_manager_screen.dart
-//
-// Parent-only screen for managing curricula:
-// - View available course configs (from JSON)
-// - Enroll students in curricula
-// - Assign lessons one-at-a-time or in batches
-// - Track progress per student per curriculum
-//
-// Access: Parent PIN required (enforced by caller)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,30 +17,48 @@ class CurriculumManagerScreen extends StatefulWidget {
 
 class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   final _configService = CourseConfigService.instance;
-  
+
   List<Map<String, dynamic>> _availableConfigs = [];
   bool _loading = true;
+
+  // SENIOR FIX: Define streams as members to prevent recreation during build cycles
+  late Stream<QuerySnapshot<Map<String, dynamic>>> _studentsStream;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> _subjectsStream;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> _assignmentsStream;
+  late Stream<QuerySnapshot<Map<String, dynamic>>> _progressStream;
 
   @override
   void initState() {
     super.initState();
+    // Initialize all connections ONCE to prevent "flashing" resets
+    _studentsStream = FirestorePaths.studentsCol().snapshots();
+    _subjectsStream = FirestorePaths.subjectsCol().snapshots();
+    _assignmentsStream = FirestorePaths.assignmentsCol().snapshots();
+    _progressStream = FirebaseFirestore.instance.collectionGroup('subjectProgress').snapshots();
+
     _loadConfigs();
   }
 
   Future<void> _loadConfigs() async {
     setState(() => _loading = true);
-    
+
     try {
-      // Load available configs from service
-      // For now, we'll use a hardcoded list - you can expand this
-      // to scan assets or Firestore for available configs
+      // These must match file names in: assets/courseConfigs/{id}.json
       final configIds = [
+        // Core
         'general_chemistry_v1',
-        'touch_typing_v1',
         'biological_science_v1',
         'british_literature_v1',
+        'touch_typing_v1',
+
+        // Math
         'saxon_math_76',
-        'wheelocks_latin',
+
+        // Languages
+        'deutsche_sprachlehre_v1',
+        'madrigals_spanish_v1',
+        'russian_in_exercises_v1',
+        'wheelocks_latin_v1',
       ];
 
       final configs = <Map<String, dynamic>>[];
@@ -112,6 +122,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
       builder: (sheetContext) {
         final viewInsets = MediaQuery.of(sheetContext).viewInsets.bottom;
         final size = MediaQuery.of(sheetContext).size;
+        final availableHeight = size.height - viewInsets - 40;
         final targetW = size.width > 720 ? 640.0 : size.width;
 
         return SafeArea(
@@ -123,11 +134,12 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   maxWidth: targetW,
-                  maxHeight: size.height * 0.88,
+                  maxHeight: size.height * 0.88 > availableHeight ? availableHeight : size.height * 0.88,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 18),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Container(
                         width: 44,
@@ -157,7 +169,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Expanded(
+                      Flexible(
                         child: SingleChildScrollView(
                           child: builder(sheetContext),
                         ),
@@ -178,32 +190,37 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   // ============================================================
 
   String _getConfigName(Map<String, dynamic> config) {
-    return config['name']?.toString() ?? config['id']?.toString() ?? 'Unknown';
+    return config['title']?.toString() ?? config['name']?.toString() ?? 'Unknown';
   }
 
   String _getConfigDescription(Map<String, dynamic> config) {
-    return config['description']?.toString() ?? '';
+    return config['subtitle']?.toString() ?? config['description']?.toString() ?? '';
   }
 
   int _getTotalLessons(Map<String, dynamic> config) {
+    final curriculum = config['curriculum'];
+    if (curriculum is Map) {
+      return curriculum['totalLessons'] as int? ?? 0;
+    }
     final assignments = config['assignments'];
     if (assignments is List) return assignments.length;
-    
-    final totalLessons = config['totalLessons'];
-    if (totalLessons is int) return totalLessons;
-    
     return 0;
   }
 
   String _getConfigIcon(String configId) {
-    if (configId.contains('math')) return '📐';
-    if (configId.contains('chem')) return '🧪';
-    if (configId.contains('bio')) return '🧬';
-    if (configId.contains('latin')) return '🏛️';
-    if (configId.contains('lit')) return '📚';
-    if (configId.contains('typing')) return '⌨️';
-    if (configId.contains('spanish')) return '🇪🇸';
-    if (configId.contains('german')) return '🇩🇪';
+    final id = configId.toLowerCase();
+
+    if (id.contains('saxon') || id.contains('math')) return '🧮';
+    if (id.contains('chem')) return '🧪';
+    if (id.contains('bio')) return '🧬';
+    if (id.contains('wheelocks') || id.contains('latin')) return '🏛️';
+    if (id.contains('lit')) return '📚';
+    if (id.contains('typing')) return '⌨️';
+
+    if (id.contains('deutsche') || id.contains('german')) return '🇩🇪';
+    if (id.contains('madrigals') || id.contains('spanish')) return '🇪🇸';
+    if (id.contains('russian')) return '🇷🇺';
+
     return '📖';
   }
 
@@ -215,7 +232,6 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     final configId = configData['id'] as String;
     final config = configData['config'] as Map<String, dynamic>;
     final configName = _getConfigName(config);
-
     final selectedStudents = <String>{};
 
     await _showSmoothSheet<void>(
@@ -226,22 +242,8 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  _getConfigDescription(config),
-                  style: const TextStyle(color: Colors.white60),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${_getTotalLessons(config)} total lessons',
-                  style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 16),
-                const Divider(color: Colors.white12),
-                const SizedBox(height: 12),
-
                 const Text('Select Students', style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
-
                 if (students.isEmpty)
                   const Text('No students available.', style: TextStyle(color: Colors.white60))
                 else
@@ -264,33 +266,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                       contentPadding: EdgeInsets.zero,
                     );
                   }),
-
-                const SizedBox(height: 16),
-
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.blue.withOpacity(0.3)),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.info_outline, size: 18, color: Colors.blue),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Enrolling creates a link between the student and curriculum. '
-                          'Use "Manage" to assign individual lessons.',
-                          style: TextStyle(color: Colors.blue.shade200, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
                 const SizedBox(height: 18),
-
                 Row(
                   children: [
                     Expanded(
@@ -333,15 +309,14 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   }) async {
     try {
       for (final studentId in studentIds) {
-        // Create or update enrollment record
         await FirestorePaths.subjectProgressCol(studentId).doc(configId).set({
           'courseConfigId': configId,
+          'studentId': studentId, // Required for filtering logic
           'enrolledAt': FieldValue.serverTimestamp(),
           'updatedAt': FieldValue.serverTimestamp(),
         }, SetOptions(merge: true));
       }
-
-      _snack('Enrolled ${studentIds.length} student(s) in $configName', color: Colors.green);
+      _snack('Enrolled successfully in $configName', color: Colors.green);
     } catch (e) {
       _snack('Enrollment failed: $e', color: Colors.red);
     }
@@ -361,208 +336,79 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     final config = configData['config'] as Map<String, dynamic>;
     final configName = _getConfigName(config);
 
-    // Get assignments defined in config
-    final configAssignments = (config['assignments'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    
-    // Get categories for point values
-    final categories = (config['categories'] as Map?)?.cast<String, dynamic>() ?? {};
+    final curriculum = config['curriculum'];
+    List configAssignments = [];
+    if (curriculum is Map && curriculum['modules'] is List) {
+      for (var module in curriculum['modules']) {
+        if (module['lessons'] is List) {
+          configAssignments.addAll(module['lessons']);
+        }
+      }
+    } else {
+      configAssignments = (config['assignments'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    }
 
-    // Find which lessons are already assigned
-    final assignedOrders = existingAssignments
-        .where((a) => a.courseConfigId == configId)
-        .map((a) => a.orderInCourse)
-        .toSet();
+    final categories = (config['categories'] as Map?)?.cast<String, dynamic>() ??
+        (config['grading']?['categories'] as Map?)?.cast<String, dynamic>() ??
+        {};
 
-    // Find next unassigned
-    final unassigned = configAssignments
-        .where((a) {
-          final order = a['order'] as int? ?? 0;
-          return !assignedOrders.contains(order);
-        })
-        .toList();
+    final assignedOrders = existingAssignments.where((a) => a.courseConfigId == configId).map((a) => a.orderInCourse).toSet();
+
+    final unassigned = configAssignments.where((a) {
+      final order = a['index'] as int? ?? a['order'] as int? ?? 0;
+      return !assignedOrders.contains(order);
+    }).toList();
 
     await _showSmoothSheet<void>(
       title: '$configName - ${student.name}',
       builder: (sheetContext) {
         return StatefulBuilder(
           builder: (context, setSheetState) {
-            final completed = existingAssignments
-                .where((a) => a.courseConfigId == configId && a.isCompleted)
-                .length;
-            final total = configAssignments.length;
-            final assigned = assignedOrders.length;
+            final completed =
+                existingAssignments.where((a) => a.courseConfigId == configId && a.isCompleted).length;
+            final assignedCount = assignedOrders.length;
+            final totalCount = configAssignments.length;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Progress
-                Text(
-                  'Progress: $completed completed / $assigned assigned / $total total',
-                  style: const TextStyle(color: Colors.white70),
-                ),
-                const SizedBox(height: 8),
-                LinearProgressIndicator(
-                  value: total > 0 ? assigned / total : 0,
-                  backgroundColor: Colors.white12,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
-                ),
-                const SizedBox(height: 4),
-                LinearProgressIndicator(
-                  value: total > 0 ? completed / total : 0,
-                  backgroundColor: Colors.transparent,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
-                ),
+                Text('Progress: $completed completed / $assignedCount assigned / $totalCount total'),
                 const SizedBox(height: 16),
-
-                // Quick assign buttons
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    ElevatedButton.icon(
-                      icon: const Icon(Icons.add, size: 18),
-                      label: const Text('Assign Next'),
-                      onPressed: unassigned.isEmpty
-                          ? null
-                          : () async {
-                              await _assignLesson(
-                                student: student,
-                                configId: configId,
-                                lessonData: unassigned.first,
-                                categories: categories,
-                                linkedSubject: linkedSubject,
-                              );
-                              Navigator.pop(sheetContext);
-                            },
-                    ),
-                    OutlinedButton.icon(
-                      icon: const Icon(Icons.playlist_add, size: 18),
-                      label: const Text('Assign Next 5'),
-                      onPressed: unassigned.isEmpty
-                          ? null
-                          : () async {
-                              final toAssign = unassigned.take(5).toList();
-                              for (final lesson in toAssign) {
-                                await _assignLesson(
-                                  student: student,
-                                  configId: configId,
-                                  lessonData: lesson,
-                                  categories: categories,
-                                  linkedSubject: linkedSubject,
-                                );
-                              }
-                              Navigator.pop(sheetContext);
-                              _snack('Assigned ${toAssign.length} lessons', color: Colors.green);
-                            },
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-                const Divider(color: Colors.white12),
-                const SizedBox(height: 12),
-
-                // Unassigned lessons
-                Row(
-                  children: [
-                    const Text('Upcoming', style: TextStyle(fontWeight: FontWeight.bold)),
-                    const Spacer(),
-                    Text(
-                      '${unassigned.length} remaining',
-                      style: const TextStyle(color: Colors.white60, fontSize: 12),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-
-                if (unassigned.isEmpty)
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.green.withOpacity(0.3)),
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.check_circle, color: Colors.green),
-                        SizedBox(width: 10),
-                        Text('All lessons assigned!', style: TextStyle(color: Colors.green)),
-                      ],
-                    ),
-                  )
-                else
-                  ...unassigned.take(10).map((lesson) {
-                    final order = lesson['order'] as int? ?? 0;
-                    final name = lesson['name']?.toString() ?? 'Lesson $order';
-                    final categoryKey = lesson['category']?.toString() ?? 'lesson';
-                    final categoryData = categories[categoryKey] as Map<String, dynamic>? ?? {};
-                    final points = categoryData['pointsBase'] as int? ?? 10;
-
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.white10,
-                        child: Text('$order', style: const TextStyle(fontSize: 12)),
-                      ),
-                      title: Text(name, style: const TextStyle(fontSize: 14)),
-                      subtitle: Text('$points pts • $categoryKey'),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.add_circle_outline, color: Colors.blue),
-                        onPressed: () async {
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.add),
+                  label: const Text('Assign Next'),
+                  onPressed: unassigned.isEmpty
+                      ? null
+                      : () async {
                           await _assignLesson(
                             student: student,
                             configId: configId,
-                            lessonData: lesson,
+                            lessonData: unassigned.first,
                             categories: categories,
                             linkedSubject: linkedSubject,
                           );
                           Navigator.pop(sheetContext);
                         },
-                      ),
-                    );
-                  }),
-
-                if (unassigned.length > 10)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      '+ ${unassigned.length - 10} more...',
-                      style: const TextStyle(color: Colors.white60),
-                    ),
-                  ),
-
+                ),
                 const SizedBox(height: 16),
                 const Divider(color: Colors.white12),
-                const SizedBox(height: 12),
-
-                // Assigned lessons
-                const Text('Assigned', style: TextStyle(fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-
-                ...existingAssignments
-                    .where((a) => a.courseConfigId == configId)
-                    .take(10)
-                    .map((a) {
+                const Text('Upcoming', style: TextStyle(fontWeight: FontWeight.bold)),
+                ...unassigned.take(5).map((lesson) {
+                  final order = lesson['index'] as int? ?? lesson['order'] as int? ?? 0;
                   return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: Icon(
-                      a.isCompleted ? Icons.check_circle : Icons.circle_outlined,
-                      color: a.isCompleted ? Colors.green : Colors.white38,
-                    ),
-                    title: Text(
-                      a.name,
-                      style: TextStyle(
-                        fontSize: 14,
-                        decoration: a.isCompleted ? TextDecoration.lineThrough : null,
-                        color: a.isCompleted ? Colors.white54 : null,
-                      ),
-                    ),
-                    subtitle: Text(
-                      a.isCompleted
-                          ? 'Completed${a.grade != null ? ' • ${a.grade}%' : ''}'
-                          : 'Due: ${a.dueDate}',
-                      style: const TextStyle(fontSize: 12),
+                    title: Text(lesson['title']?.toString() ?? lesson['name']?.toString() ?? 'Lesson $order'),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.add_circle, color: Colors.blue),
+                      onPressed: () async {
+                        await _assignLesson(
+                          student: student,
+                          configId: configId,
+                          lessonData: lesson,
+                          categories: categories,
+                          linkedSubject: linkedSubject,
+                        );
+                        Navigator.pop(sheetContext);
+                      },
                     ),
                   );
                 }),
@@ -577,16 +423,18 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   Future<void> _assignLesson({
     required Student student,
     required String configId,
-    required Map<String, dynamic> lessonData,
+    required dynamic lessonData,
     required Map<String, dynamic> categories,
     required Subject? linkedSubject,
   }) async {
-    final order = lessonData['order'] as int? ?? 0;
-    final name = lessonData['name']?.toString() ?? 'Lesson $order';
+    final order = lessonData['index'] as int? ?? lessonData['order'] as int? ?? 0;
+    final name = lessonData['title']?.toString() ?? lessonData['name']?.toString() ?? 'Lesson $order';
     final categoryKey = lessonData['category']?.toString() ?? 'lesson';
-    final categoryData = categories[categoryKey] as Map<String, dynamic>? ?? {};
-    final points = categoryData['pointsBase'] as int? ?? 10;
-    final gradable = categoryData['gradable'] as bool? ?? true;
+
+    int points = 10;
+    if (categories.containsKey(categoryKey)) {
+      points = categories[categoryKey]['pointsEach'] ?? categories[categoryKey]['pointsBase'] ?? 10;
+    }
 
     try {
       await AssignmentMutations.createAssignment(
@@ -595,12 +443,11 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         name: name,
         dueDate: _todayYmd(),
         pointsBase: points,
-        gradable: gradable,
+        gradable: true,
         courseConfigId: configId,
         categoryKey: categoryKey,
         orderInCourse: order,
       );
-
       _snack('Assigned: $name', color: Colors.green);
     } catch (e) {
       _snack('Failed to assign: $e', color: Colors.red);
@@ -608,7 +455,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   }
 
   // ============================================================
-  // Build
+  // Build (Stabilized Nested Streams)
   // ============================================================
 
   @override
@@ -627,157 +474,138 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirestorePaths.studentsCol().snapshots(),
+              stream: _studentsStream,
               builder: (context, studentsSnap) {
                 final students = studentsSnap.data?.docs.map(Student.fromDoc).toList() ?? [];
 
                 return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirestorePaths.subjectsCol().snapshots(),
+                  stream: _subjectsStream,
                   builder: (context, subjectsSnap) {
                     final subjects = subjectsSnap.data?.docs.map(Subject.fromDoc).toList() ?? [];
 
                     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: FirestorePaths.assignmentsCol().snapshots(),
+                      stream: _assignmentsStream,
                       builder: (context, assignmentsSnap) {
-                        final assignments = assignmentsSnap.data?.docs
-                                .map((d) => Assignment.fromDoc(d))
-                                .toList() ??
-                            [];
+                        final assignments = assignmentsSnap.data?.docs.map((d) => Assignment.fromDoc(d)).toList() ?? [];
 
-                        if (_availableConfigs.isEmpty) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.library_books_outlined, size: 64, color: Colors.white24),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  'No curricula available',
-                                  style: TextStyle(fontSize: 18, color: Colors.white60),
+                        return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream: _progressStream,
+                          builder: (context, progressSnap) {
+                            // GATEKEEPER: Prevent the list from clearing while streams are fetching data
+                            if (progressSnap.connectionState == ConnectionState.waiting && students.isNotEmpty) {
+                              return const Center(child: CircularProgressIndicator());
+                            }
+
+                            if (progressSnap.hasError) {
+                              return Center(
+                                child: Text(
+                                  'Stream Error: ${progressSnap.error}',
+                                  style: const TextStyle(color: Colors.red),
                                 ),
-                                const SizedBox(height: 8),
-                                const Text(
-                                  'Add course config JSON files to get started.',
-                                  style: TextStyle(color: Colors.white38),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
+                              );
+                            }
 
-                        return ListView.builder(
-                          padding: const EdgeInsets.all(16),
-                          itemCount: _availableConfigs.length,
-                          itemBuilder: (context, index) {
-                            final configData = _availableConfigs[index];
-                            final configId = configData['id'] as String;
-                            final config = configData['config'] as Map<String, dynamic>;
-                            final configName = _getConfigName(config);
-                            final icon = _getConfigIcon(configId);
-                            final totalLessons = _getTotalLessons(config);
+                            final progressDocs = progressSnap.data?.docs ?? [];
 
-                            // Find enrolled students
-                            final enrolledStudents = students.where((s) {
-                              return assignments.any((a) =>
-                                  a.studentId == s.id && a.courseConfigId == configId);
-                            }).toList();
+                            return ListView.builder(
+                              padding: const EdgeInsets.all(16),
+                              itemCount: _availableConfigs.length,
+                              itemBuilder: (context, index) {
+                                final configData = _availableConfigs[index];
+                                final configId = configData['id'] as String;
+                                final config = configData['config'] as Map<String, dynamic>;
+                                final configName = _getConfigName(config);
+                                final icon = _getConfigIcon(configId);
+                                final totalLessons = _getTotalLessons(config);
 
-                            // Find linked subject
-                            final linkedSubject = subjects.cast<Subject?>().firstWhere(
-                              (s) => s?.courseConfigId == configId,
-                              orElse: () => null,
-                            );
+                                // Stability Fix: Safer enrolled student matching logic
+                                final enrolledStudents = students.where((s) {
+                                  return progressDocs.any((p) {
+                                    final data = p.data();
+                                    // Match student using the fields we ensure exist during enrollment
+                                    final pStudentId = data['studentId']?.toString() ?? '';
+                                    final pConfigId = data['courseConfigId']?.toString() ?? '';
+                                    return pStudentId == s.id && pConfigId == configId;
+                                  });
+                                }).toList();
 
-                            return Card(
-                              color: const Color(0xFF1F2937),
-                              margin: const EdgeInsets.only(bottom: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14),
-                                side: const BorderSide(color: Colors.white12),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
+                                final Subject? matchedSubject = subjects.cast<Subject?>().firstWhere(
+                                      (s) => s?.courseConfigId == configId,
+                                      orElse: () => null,
+                                    );
+
+                                return Card(
+                                  color: const Color(0xFF1F2937),
+                                  margin: const EdgeInsets.only(bottom: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                    side: const BorderSide(color: Colors.white12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(icon, style: const TextStyle(fontSize: 28)),
-                                        const SizedBox(width: 12),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                configName,
-                                                style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
+                                        Row(
+                                          children: [
+                                            Text(icon, style: const TextStyle(fontSize: 28)),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(configName,
+                                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                  Text('$totalLessons lessons',
+                                                      style: const TextStyle(color: Colors.white60, fontSize: 13)),
+                                                  if (_getConfigDescription(config).isNotEmpty)
+                                                    Text(
+                                                      _getConfigDescription(config),
+                                                      style: const TextStyle(color: Colors.white54, fontSize: 12),
+                                                      maxLines: 2,
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
+                                            OutlinedButton(
+                                              onPressed: () => _showEnrollSheet(configData, students),
+                                              child: const Text('Enroll'),
+                                            ),
+                                          ],
+                                        ),
+                                        if (enrolledStudents.isNotEmpty) ...[
+                                          const SizedBox(height: 12),
+                                          const Divider(color: Colors.white12),
+                                          const Text('Enrolled Students', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+                                          const SizedBox(height: 8),
+                                          ...enrolledStudents.map((s) {
+                                            final studentAssignments =
+                                                assignments.where((a) => a.studentId == s.id && a.courseConfigId == configId).toList();
+                                            final completed = studentAssignments.where((a) => a.isCompleted).length;
+
+                                            return ListTile(
+                                              contentPadding: EdgeInsets.zero,
+                                              leading: CircleAvatar(child: Text(s.name.isNotEmpty ? s.name[0] : '?')),
+                                              title: Text(s.name),
+                                              subtitle: Text('$completed assigned lessons'),
+                                              trailing: TextButton(
+                                                onPressed: () => _showManageCurriculumSheet(
+                                                  configData: configData,
+                                                  student: s,
+                                                  existingAssignments: studentAssignments,
+                                                  linkedSubject: matchedSubject,
                                                 ),
+                                                child: const Text('Manage'),
                                               ),
-                                              Text(
-                                                '$totalLessons lessons',
-                                                style: const TextStyle(color: Colors.white60, fontSize: 13),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () => _showEnrollSheet(configData, students),
-                                          child: const Text('Enroll'),
-                                        ),
+                                            );
+                                          }),
+                                        ],
                                       ],
                                     ),
-
-                                    if (enrolledStudents.isNotEmpty) ...[
-                                      const SizedBox(height: 12),
-                                      const Divider(color: Colors.white12),
-                                      const SizedBox(height: 8),
-                                      const Text(
-                                        'Enrolled Students',
-                                        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      ...enrolledStudents.map((s) {
-                                        final studentAssignments = assignments
-                                            .where((a) =>
-                                                a.studentId == s.id &&
-                                                a.courseConfigId == configId)
-                                            .toList();
-                                        final completed = studentAssignments
-                                            .where((a) => a.isCompleted)
-                                            .length;
-                                        final assigned = studentAssignments.length;
-
-                                        return ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          leading: CircleAvatar(
-                                            backgroundColor: Colors.blue.withOpacity(0.2),
-                                            child: Text(
-                                              s.name.isNotEmpty ? s.name[0] : '?',
-                                              style: const TextStyle(fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          title: Text(s.name),
-                                          subtitle: Text(
-                                            '$completed/$assigned assigned (${totalLessons - assigned} remaining)',
-                                            style: const TextStyle(fontSize: 12),
-                                          ),
-                                          trailing: TextButton(
-                                            onPressed: () => _showManageCurriculumSheet(
-                                              configData: configData,
-                                              student: s,
-                                              existingAssignments: studentAssignments,
-                                              linkedSubject: linkedSubject,
-                                            ),
-                                            child: const Text('Manage'),
-                                          ),
-                                        );
-                                      }),
-                                    ],
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             );
                           },
                         );

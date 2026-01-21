@@ -1,0 +1,3028 @@
+{
+  "id": "deutsche_sprachlehre_v1",
+  "title": "Deutsche Sprachlehre für Ausländer",
+  "subtitle": "Schulz-Griesbach • Grundstufe 1. Teil",
+  "version": 1,
+  "type": "language",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Complete each component to earn base points",
+      "Streaks can add bonus percentages when enabled",
+      "Mastery achievements can unlock multipliers when configured",
+      "Badges can require: Mastery + Completion + Capstone"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "lecture_attendance": {
+        "label": "Lecture Attendance",
+        "pointsEach": 10.0,
+        "countsTowardGrade": true
+      },
+      "texte_exercises": {
+        "label": "Texte Exercises",
+        "pointsEach": 30.0,
+        "countsTowardGrade": true
+      },
+      "sprachstoff_exercises": {
+        "label": "Sprachstoff Exercises",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "supplementary_worksheet": {
+        "label": "Supplementary Worksheet",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_creation_all_4_types": {
+        "label": "Flashcard Creation (all 4 types)",
+        "pointsEach": 30.0,
+        "countsTowardGrade": true
+      },
+      "daily_read_aloud": {
+        "label": "Daily Read-Aloud",
+        "pointsEach": 15.0,
+        "countsTowardGrade": true
+      },
+      "conversation_performance": {
+        "label": "Conversation Performance",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "label": "Flashcards (Leitner Review)",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "lecture_attendance": 10,
+      "texte_exercises": 30,
+      "sprachstoff_exercises": 40,
+      "supplementary_worksheet": 25,
+      "flashcard_creation_all_4_types": 30,
+      "daily_read_aloud": 15,
+      "conversation_performance": 40,
+      "flashcard_session": 5
+    },
+    "multipliers": [],
+    "streaks": {}
+  },
+  "curriculum": {
+    "totalLessons": 78,
+    "modules": [
+      {
+        "id": "deutsche_sprachlehre_v1_unit_1",
+        "title": "Unit 1",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_1",
+                "coverage": "1–3",
+                "assessment": "Unit Test 1: Foundations (Articles, Present Tense, Nouns, Accusative, Numbers)"
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_1"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 3,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_2",
+                "coverage": "1–3",
+                "assessment": "Unit Test 1: Foundations (Articles, Present Tense, Nouns, Accusative, Numbers)"
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_2"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 5,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_3",
+                "coverage": "1–3",
+                "assessment": "Unit Test 1: Foundations (Articles, Present Tense, Nouns, Accusative, Numbers)"
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_1",
+                "lessonId": "deutsche_sprachlehre_unit_1_lesson_3"
+              },
+              "deckHint": "Unit 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_unit_2",
+        "title": "Unit 2",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 7,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_4",
+                "coverage": "4–6",
+                "assessment": "Unit Test 2: Building Blocks (Strong Verbs, Prepositions, Dative, Possessives)"
+              }
+            }
+          },
+          {
+            "index": 8,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_4"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 9,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_5",
+                "coverage": "4–6",
+                "assessment": "Unit Test 2: Building Blocks (Strong Verbs, Prepositions, Dative, Possessives)"
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_5"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 11,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_6",
+                "coverage": "4–6",
+                "assessment": "Unit Test 2: Building Blocks (Strong Verbs, Prepositions, Dative, Possessives)"
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_2",
+                "lessonId": "deutsche_sprachlehre_unit_2_lesson_6"
+              },
+              "deckHint": "Unit 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_unit_3",
+        "title": "Unit 3",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 13,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_7",
+                "coverage": "7–9",
+                "assessment": "Unit Test 3: Intermediate (Modal Verbs, Genitive, Präteritum)"
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_7"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 15,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_8",
+                "coverage": "7–9",
+                "assessment": "Unit Test 3: Intermediate (Modal Verbs, Genitive, Präteritum)"
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_8"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 17,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_9",
+                "coverage": "7–9",
+                "assessment": "Unit Test 3: Intermediate (Modal Verbs, Genitive, Präteritum)"
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_3",
+                "lessonId": "deutsche_sprachlehre_unit_3_lesson_9"
+              },
+              "deckHint": "Unit 3"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_midterm",
+        "title": "MIDTERM",
+        "unit": "MIDTERM",
+        "lessons": [
+          {
+            "index": 19,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_1",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_1"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 21,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_2",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_2"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 23,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_3",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_3"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 25,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_4",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_4"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 27,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_5",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_5"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 29,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_6",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_6"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 31,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_7",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_7"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 33,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_8",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_8"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 35,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_9",
+                "coverage": "1–9",
+                "assessment": "Midterm Exam (Cumulative through Abschnitt 9)"
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_midterm",
+                "lessonId": "deutsche_sprachlehre_midterm_lesson_9"
+              },
+              "deckHint": "MIDTERM"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_unit_4",
+        "title": "Unit 4",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 37,
+            "title": "Lesson 10",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_10",
+                "coverage": "10–12",
+                "assessment": "Unit Test 4: Advanced (Perfekt, Reflexives, Position Verbs, Genitive Prep.)"
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Flashcards: Lesson 10 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_10"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 39,
+            "title": "Lesson 11",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_11",
+                "coverage": "10–12",
+                "assessment": "Unit Test 4: Advanced (Perfekt, Reflexives, Position Verbs, Genitive Prep.)"
+              }
+            }
+          },
+          {
+            "index": 40,
+            "title": "Flashcards: Lesson 11 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_11"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 41,
+            "title": "Lesson 12",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_12",
+                "coverage": "10–12",
+                "assessment": "Unit Test 4: Advanced (Perfekt, Reflexives, Position Verbs, Genitive Prep.)"
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Flashcards: Lesson 12 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_4",
+                "lessonId": "deutsche_sprachlehre_unit_4_lesson_12"
+              },
+              "deckHint": "Unit 4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_unit_5",
+        "title": "Unit 5",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 43,
+            "title": "Lesson 13",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_13",
+                "coverage": "13–15",
+                "assessment": "Unit Test 5: Mastery (Adjective Declension, Plusquamperfekt, Subordinate Clauses)"
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Flashcards: Lesson 13 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_13"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 45,
+            "title": "Lesson 14",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_14",
+                "coverage": "13–15",
+                "assessment": "Unit Test 5: Mastery (Adjective Declension, Plusquamperfekt, Subordinate Clauses)"
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Flashcards: Lesson 14 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_14"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 47,
+            "title": "Lesson 15",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_15",
+                "coverage": "13–15",
+                "assessment": "Unit Test 5: Mastery (Adjective Declension, Plusquamperfekt, Subordinate Clauses)"
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Flashcards: Lesson 15 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_unit_5",
+                "lessonId": "deutsche_sprachlehre_unit_5_lesson_15"
+              },
+              "deckHint": "Unit 5"
+            }
+          }
+        ]
+      },
+      {
+        "id": "deutsche_sprachlehre_v1_final",
+        "title": "FINAL",
+        "unit": "FINAL",
+        "lessons": [
+          {
+            "index": 49,
+            "title": "Lesson 1",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_1",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Flashcards: Lesson 1 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_1"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 51,
+            "title": "Lesson 2",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_2",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Flashcards: Lesson 2 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_2"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 53,
+            "title": "Lesson 3",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_3",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Flashcards: Lesson 3 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_3"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 55,
+            "title": "Lesson 4",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_4",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Flashcards: Lesson 4 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_4"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 57,
+            "title": "Lesson 5",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_5",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Flashcards: Lesson 5 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_5"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 59,
+            "title": "Lesson 6",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_6",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Flashcards: Lesson 6 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_6"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 61,
+            "title": "Lesson 7",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_7",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Flashcards: Lesson 7 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_7"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 63,
+            "title": "Lesson 8",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_8",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Flashcards: Lesson 8 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_8"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 65,
+            "title": "Lesson 9",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_9",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Flashcards: Lesson 9 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_9"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 67,
+            "title": "Lesson 10",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_10",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Flashcards: Lesson 10 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_10"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 69,
+            "title": "Lesson 11",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_11",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Flashcards: Lesson 11 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_11"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 71,
+            "title": "Lesson 12",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_12",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Flashcards: Lesson 12 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_12"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 73,
+            "title": "Lesson 13",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_13",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Flashcards: Lesson 13 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_13"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 75,
+            "title": "Lesson 14",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_14",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Flashcards: Lesson 14 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_14"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 77,
+            "title": "Lesson 15",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_15",
+                "coverage": "1–15",
+                "assessment": "Final Exam (Comprehensive — Written & Oral)"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Flashcards: Lesson 15 (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "deutsche_sprachlehre_final",
+                "lessonId": "deutsche_sprachlehre_final_lesson_15"
+              },
+              "deckHint": "FINAL"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "key": "vocabulary",
+      "label": "Vocabulary"
+    },
+    {
+      "key": "grammar",
+      "label": "Grammar"
+    },
+    {
+      "key": "conjugation",
+      "label": "Conjugations"
+    },
+    {
+      "key": "phrases",
+      "label": "Phrases & Dialog"
+    },
+    {
+      "key": "pronunciation",
+      "label": "Pronunciation"
+    },
+    {
+      "key": "listening",
+      "label": "Listening"
+    },
+    {
+      "key": "speaking",
+      "label": "Speaking"
+    }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewAfterDays": 0
+      },
+      {
+        "box": 2,
+        "reviewAfterDays": 1
+      },
+      {
+        "box": 3,
+        "reviewAfterDays": 3
+      },
+      {
+        "box": 4,
+        "reviewAfterDays": 7
+      },
+      {
+        "box": 5,
+        "reviewAfterDays": 14
+      }
+    ],
+    "masteryBox": 5
+  },
+  "flashcardDecks": [
+    {
+      "unit": "Unit 1",
+      "unitTitle": "Unit 1",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 2",
+      "unitTitle": "Unit 2",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 3",
+      "unitTitle": "Unit 3",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "MIDTERM",
+      "unitTitle": "MIDTERM",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 4",
+      "unitTitle": "Unit 4",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 5",
+      "unitTitle": "Unit 5",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "FINAL",
+      "unitTitle": "FINAL",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    }
+  ],
+  "badges": [],
+  "generatedFrom": {
+    "sourceFile": "deutsche_sprachlehre",
+    "conversion": "doc_grading_system_to_course_config",
+    "generatedOn": "2026-01-21T20:09:15.298283Z"
+  },
+  "source": {
+    "original": {
+      "id": "deutsche_sprachlehre",
+      "title": "Deutsche Sprachlehre für Ausländer",
+      "subtitle": "Schulz-Griesbach • Grundstufe 1. Teil",
+      "version": 1,
+      "type": "language",
+      "grading": {
+        "mode": "points",
+        "categories": {
+          "lecture_attendance": {
+            "label": "Lecture Attendance",
+            "pointsEach": 10.0,
+            "countsTowardGrade": true
+          },
+          "texte_exercises": {
+            "label": "Texte Exercises",
+            "pointsEach": 30.0,
+            "countsTowardGrade": true
+          },
+          "sprachstoff_exercises": {
+            "label": "Sprachstoff Exercises",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          },
+          "supplementary_worksheet": {
+            "label": "Supplementary Worksheet",
+            "pointsEach": 25.0,
+            "countsTowardGrade": true
+          },
+          "flashcard_creation_all_4_types": {
+            "label": "Flashcard Creation (all 4 types)",
+            "pointsEach": 30.0,
+            "countsTowardGrade": true
+          },
+          "daily_read_aloud": {
+            "label": "Daily Read-Aloud",
+            "pointsEach": 15.0,
+            "countsTowardGrade": true
+          },
+          "conversation_performance": {
+            "label": "Conversation Performance",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          }
+        },
+        "gradeWeightDistribution": {
+          "headers": [
+            "Category",
+            "Weight",
+            "Components Included"
+          ],
+          "rows": [
+            [
+              "Daily Practice (Written)",
+              "20%",
+              "Texte + Sprachstoff + Worksheet"
+            ],
+            [
+              "Flashcard System",
+              "20%",
+              "All 4 card types: Creation + Box 7"
+            ],
+            [
+              "Speaking Component",
+              "20%",
+              "Read-Aloud + Conversations + Weekly"
+            ],
+            [
+              "Unit Tests (Written)",
+              "20%",
+              "5 Unit Tests"
+            ],
+            [
+              "Cumulative Exams",
+              "20%",
+              "Midterm (8%) + Final (12%)"
+            ],
+            [
+              "TOTAL",
+              "100%",
+              ""
+            ]
+          ]
+        },
+        "gradeScale": {
+          "headers": [
+            "Letter Grade",
+            "Percentage",
+            "GPA Equivalent"
+          ],
+          "rows": [
+            [
+              "A+",
+              "97–100%",
+              "4.0"
+            ],
+            [
+              "A",
+              "93–96%",
+              "4.0"
+            ],
+            [
+              "A-",
+              "90–92%",
+              "3.7"
+            ],
+            [
+              "B+",
+              "87–89%",
+              "3.3"
+            ],
+            [
+              "B",
+              "83–86%",
+              "3.0"
+            ],
+            [
+              "B-",
+              "80–82%",
+              "2.7"
+            ],
+            [
+              "C+",
+              "77–79%",
+              "2.3"
+            ],
+            [
+              "C",
+              "73–76%",
+              "2.0"
+            ],
+            [
+              "C-",
+              "70–72%",
+              "1.7"
+            ],
+            [
+              "D",
+              "60–69%",
+              "1.0"
+            ],
+            [
+              "F",
+              "Below 60%",
+              "0.0"
+            ]
+          ]
+        },
+        "basePointsTable": {
+          "headers": [
+            "Component",
+            "Base Points",
+            "Max Bonus",
+            "Total Possible"
+          ],
+          "rows": [
+            [
+              "Lecture Attendance",
+              "10",
+              "—",
+              "10"
+            ],
+            [
+              "Texte Exercises",
+              "30",
+              "+15 (100%)",
+              "45"
+            ],
+            [
+              "Sprachstoff Exercises",
+              "40",
+              "+20 (100%)",
+              "60"
+            ],
+            [
+              "Supplementary Worksheet",
+              "25",
+              "+15 (100%)",
+              "40"
+            ],
+            [
+              "Flashcard Creation (all 4 types)",
+              "30",
+              "—",
+              "30"
+            ],
+            [
+              "Daily Read-Aloud",
+              "15",
+              "—",
+              "15"
+            ],
+            [
+              "Conversation Performance",
+              "40",
+              "+20 (16/16)",
+              "60"
+            ],
+            [
+              "Per-Abschnitt Total",
+              "190",
+              "+70",
+              "260"
+            ]
+          ]
+        },
+        "streakBonusesTable": {
+          "headers": [
+            "Speaking Streak",
+            "Bonus"
+          ],
+          "rows": [
+            [
+              "3 consecutive weeks at 14+/16",
+              "+150 points"
+            ],
+            [
+              "5 consecutive weeks at 14+/16",
+              "+300 points"
+            ],
+            [
+              "3 consecutive weeks at 16/16",
+              "+250 points"
+            ],
+            [
+              "5 consecutive weeks at 16/16",
+              "+500 points"
+            ]
+          ]
+        }
+      },
+      "curriculum": {
+        "totalLessons": 15,
+        "modules": [
+          {
+            "id": "deutsche_sprachlehre_unit_1",
+            "title": "Unit 1",
+            "coverage": "1–3",
+            "assessment": "Unit Test 1: Foundations (Articles, Present Tense, Nouns, Accusative, Numbers)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_unit_1_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_1_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_1_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_unit_2",
+            "title": "Unit 2",
+            "coverage": "4–6",
+            "assessment": "Unit Test 2: Building Blocks (Strong Verbs, Prepositions, Dative, Possessives)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_unit_2_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_2_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_2_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_unit_3",
+            "title": "Unit 3",
+            "coverage": "7–9",
+            "assessment": "Unit Test 3: Intermediate (Modal Verbs, Genitive, Präteritum)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_unit_3_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_3_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_3_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_midterm",
+            "title": "MIDTERM",
+            "coverage": "1–9",
+            "assessment": "Midterm Exam (Cumulative through Abschnitt 9)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_midterm_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_unit_4",
+            "title": "Unit 4",
+            "coverage": "10–12",
+            "assessment": "Unit Test 4: Advanced (Perfekt, Reflexives, Position Verbs, Genitive Prep.)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_unit_4_lesson_10",
+                "title": "Lesson 10",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_4_lesson_11",
+                "title": "Lesson 11",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_4_lesson_12",
+                "title": "Lesson 12",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_unit_5",
+            "title": "Unit 5",
+            "coverage": "13–15",
+            "assessment": "Unit Test 5: Mastery (Adjective Declension, Plusquamperfekt, Subordinate Clauses)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_unit_5_lesson_13",
+                "title": "Lesson 13",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_5_lesson_14",
+                "title": "Lesson 14",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_unit_5_lesson_15",
+                "title": "Lesson 15",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "deutsche_sprachlehre_final",
+            "title": "FINAL",
+            "coverage": "1–15",
+            "assessment": "Final Exam (Comprehensive — Written & Oral)",
+            "lessons": [
+              {
+                "id": "deutsche_sprachlehre_final_lesson_1",
+                "title": "Lesson 1",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_2",
+                "title": "Lesson 2",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_3",
+                "title": "Lesson 3",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_4",
+                "title": "Lesson 4",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_5",
+                "title": "Lesson 5",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_6",
+                "title": "Lesson 6",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_7",
+                "title": "Lesson 7",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_8",
+                "title": "Lesson 8",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_9",
+                "title": "Lesson 9",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_10",
+                "title": "Lesson 10",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_11",
+                "title": "Lesson 11",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_12",
+                "title": "Lesson 12",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_13",
+                "title": "Lesson 13",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_14",
+                "title": "Lesson 14",
+                "category": "lesson"
+              },
+              {
+                "id": "deutsche_sprachlehre_final_lesson_15",
+                "title": "Lesson 15",
+                "category": "lesson"
+              }
+            ]
+          }
+        ]
+      },
+      "source": {
+        "sections": [
+          {
+            "heading": "",
+            "content": [
+              "Deutsche Sprachlehre für Ausländer",
+              "Schulz-Griesbach • Grundstufe 1. Teil",
+              "Complete Grading Rubric & Reward Point System",
+              "1. Grading Philosophy",
+              "This system follows the principle: \"Process Earns, Mastery Multiplies.\"",
+              "Students earn steady base points for completing daily work consistently. Bonus multipliers and thematic mastery badges reward demonstrated understanding and long-term retention.",
+              "German requires mastery of grammatical cases, noun genders, verb conjugations, and complex sentence structures. The flashcard system includes four specialized card types to address these challenges, with speaking weighted equally to reflect the importance of oral fluency.",
+              "2. Course Structure",
+              "Deutsche Sprachlehre für Ausländer (Grundstufe 1) contains 15 Abschnitte (Sections), each with parallel Texte (reading passages) and Sprachstoff (grammar material). The course is organized into 5 units of 3 Abschnitte each."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "2.1 Unit Breakdown",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Unit",
+                  "Abschnitte",
+                  "Assessment"
+                ],
+                [
+                  "Unit 1",
+                  "1–3",
+                  "Unit Test 1: Foundations (Articles, Present Tense, Nouns, Accusative, Numbers)"
+                ],
+                [
+                  "Unit 2",
+                  "4–6",
+                  "Unit Test 2: Building Blocks (Strong Verbs, Prepositions, Dative, Possessives)"
+                ],
+                [
+                  "Unit 3",
+                  "7–9",
+                  "Unit Test 3: Intermediate (Modal Verbs, Genitive, Präteritum)"
+                ],
+                [
+                  "MIDTERM",
+                  "1–9",
+                  "Midterm Exam (Cumulative through Abschnitt 9)"
+                ],
+                [
+                  "Unit 4",
+                  "10–12",
+                  "Unit Test 4: Advanced (Perfekt, Reflexives, Position Verbs, Genitive Prep.)"
+                ],
+                [
+                  "Unit 5",
+                  "13–15",
+                  "Unit Test 5: Mastery (Adjective Declension, Plusquamperfekt, Subordinate Clauses)"
+                ],
+                [
+                  "FINAL",
+                  "1–15",
+                  "Final Exam (Comprehensive — Written & Oral)"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "2.2 Abschnitt Content Overview",
+            "content": [
+              "Each Abschnitt contains two parallel tracks that must both be completed:",
+              "3. Per-Abschnitt Components",
+              "Each of the 15 Abschnitte includes the following graded components:",
+              "4. Grade Weight Distribution",
+              "The course grade is calculated from five categories, with speaking elevated to equal status with written work."
+            ],
+            "tables": [
+              [
+                [
+                  "Abschnitt",
+                  "Texte (Reading/Dialogue)",
+                  "Sprachstoff (Grammar)"
+                ],
+                [
+                  "1",
+                  "In der Schule, Wir lernen Deutsch",
+                  "Articles, Present tense, sein, Personal pronouns"
+                ],
+                [
+                  "2",
+                  "Im Klassenzimmer, Der Unterricht, Alphabet",
+                  "Nouns (sing/pl), Accusative, haben, Imperative"
+                ],
+                [
+                  "3",
+                  "Haben Sie genug Geld?, Die Zahlen, Die Zeit",
+                  "Sentence structure, Numbers"
+                ],
+                [
+                  "4",
+                  "Eine Bahnfahrt, Eine Reise, Tag-Monat-Jahr",
+                  "Strong verbs, Prefixes, Word order, Prepositions, Negation"
+                ],
+                [
+                  "5",
+                  "Herr und Frau Braun haben Besuch, Unsere Familie",
+                  "Dative case, wem?, Possessive pronouns"
+                ],
+                [
+                  "6",
+                  "Zwei Studenten in München, Die Mahlzeiten",
+                  "Prepositions + Dat/Akk, Time adverbs, Word order"
+                ],
+                [
+                  "7",
+                  "Alltagsgespräche, Herr Müller hat Geburtstag",
+                  "Modal verbs, Word order, Personal pronouns, Time"
+                ],
+                [
+                  "8",
+                  "Wohin gehen wir jetzt?, Unser Haus",
+                  "Demonstratives, Question adverbs, Position verbs"
+                ],
+                [
+                  "9",
+                  "Das Fernsehen in Heimhausen, Georg als Detektiv",
+                  "Genitive, wissen/werden, Präteritum (Imperfect)"
+                ],
+                [
+                  "10",
+                  "Was hast du heute gemacht?, Freundinnen",
+                  "Reflexive pronouns, dürfen, Perfekt, Strong verbs"
+                ],
+                [
+                  "11",
+                  "Urlaub auf dem Bauernhof",
+                  "Declension review (Wiederholung)"
+                ],
+                [
+                  "12",
+                  "Auf dem Flughafen, Robert und Erich kaufen ein",
+                  "Genitive prep., Position verbs, hin/her, Indefinites"
+                ],
+                [
+                  "13",
+                  "Kleines Städte-Quiz, Auf dem Einwohnermeldeamt",
+                  "Adjective declension, welcher/was für ein"
+                ],
+                [
+                  "14",
+                  "Der Straßenverkehr, Aus der Zeitung",
+                  "Plusquamperfekt, Subordinate clauses (weil, dass)"
+                ],
+                [
+                  "15",
+                  "Zimmersuche, Urlaubspläne, Briefe",
+                  "Adjective decl. with articles, Relative pronouns"
+                ]
+              ],
+              [
+                [
+                  "Component",
+                  "Description",
+                  "Grading Type"
+                ],
+                [
+                  "Lecture Attendance",
+                  "Present and engaged during instruction",
+                  "Completion (Pass/Fail)"
+                ],
+                [
+                  "Texte Exercises",
+                  "Reading comprehension, dialogue practice",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Sprachstoff Exercises",
+                  "Grammar drills and written exercises",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Supplementary Worksheet",
+                  "Additional practice problems",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Vocabulary Flashcards",
+                  "Word ↔ translation WITH gender (der/die/das)",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Grammar Pattern Flashcards",
+                  "Case endings, adjective declension charts",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Conjugation Flashcards",
+                  "Verb forms across tenses and persons",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Sentence Structure Flashcards",
+                  "Word order rules, clause patterns",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "Pronunciation practice with recording",
+                  "Completion + Self-Check"
+                ],
+                [
+                  "Conversation Performance",
+                  "Dialogue from Texte performed orally",
+                  "Rubric (4 categories)"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.1 Base Grade Components (100%)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Weight",
+                  "Components Included"
+                ],
+                [
+                  "Daily Practice (Written)",
+                  "20%",
+                  "Texte + Sprachstoff + Worksheet"
+                ],
+                [
+                  "Flashcard System",
+                  "20%",
+                  "All 4 card types: Creation + Box 7"
+                ],
+                [
+                  "Speaking Component",
+                  "20%",
+                  "Read-Aloud + Conversations + Weekly"
+                ],
+                [
+                  "Unit Tests (Written)",
+                  "20%",
+                  "5 Unit Tests"
+                ],
+                [
+                  "Cumulative Exams",
+                  "20%",
+                  "Midterm (8%) + Final (12%)"
+                ],
+                [
+                  "TOTAL",
+                  "100%",
+                  ""
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.2 Detailed Breakdown",
+            "content": [
+              "Daily Practice — Written (20%)",
+              "Texte Exercises: 7% of total grade (accuracy-based)",
+              "Sprachstoff Exercises: 8% of total grade (accuracy-based)",
+              "Supplementary Worksheet: 5% of total grade (accuracy-based)",
+              "Flashcard System (20%)",
+              "Flashcard Creation (all 4 types): 8% of total grade",
+              "Flashcard Mastery (Box 7): 12% of total grade",
+              "Speaking Component (20%)",
+              "Daily Read-Aloud: 5% of total grade (completion + self-check)",
+              "Abschnitt Conversation Performance: 10% of total grade (rubric-based)",
+              "Weekly Speaking Assessment: 5% of total grade (cumulative rubric)",
+              "Unit Tests (20%)",
+              "Each of the 5 unit tests: 4% of total grade",
+              "Cumulative Exams (20%)",
+              "Midterm Exam: 8% of total grade",
+              "Final Exam: 12% of total grade (includes oral component)",
+              "5. Speaking Assessment System",
+              "Speaking is assessed through three complementary methods. German pronunciation requires particular attention to umlauts (ä, ö, ü), the 'ch' sounds, and proper stress patterns."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.1 Daily Read-Aloud",
+            "content": [
+              "For each Abschnitt, the student:",
+              "Records themselves reading the Texte passages and vocabulary lists",
+              "Compares their recording to reference audio (native speaker resources)",
+              "Self-assesses focusing on: umlauts, 'ch' sounds, word stress, sentence intonation",
+              "Parent spot-checks periodically (at least 2× per week)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.2 Abschnitt Conversation Performance",
+            "content": [
+              "Each Abschnitt's dialogue from the Texte section is performed orally with a partner (parent, sibling, or recorded). Scored using the Speaking Rubric below."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.3 Weekly Speaking Assessment",
+            "content": [
+              "At the end of each week, a cumulative conversation assessment combines material from all Abschnitte covered that week, including grammar structures practiced orally."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.4 Speaking Rubric (4-Point Scale)",
+            "content": [
+              "Each speaking performance is scored across four categories. Maximum score = 16 points.",
+              "German-Specific Pronunciation Focus:",
+              "Umlauts: ä (like 'e' in bed), ö (like 'u' in burn), ü (like 'ew' with rounded lips)",
+              "'ch' sounds: ich-Laut (soft, after e/i) vs. ach-Laut (guttural, after a/o/u)",
+              "Final consonant devoicing: 'Tag' sounds like 'Tak', 'Hund' sounds like 'Hunt'",
+              "Word stress: Usually on first syllable, except for prefixes (be-, ge-, ver-, er-)",
+              "6. Reward Point Values",
+              "Points are earned for each completed component. These points feed directly into the reward system."
+            ],
+            "tables": [
+              [
+                [
+                  "Score",
+                  "Pronunciation",
+                  "Fluency",
+                  "Accuracy",
+                  "Comprehension"
+                ],
+                [
+                  "4",
+                  "Native-like; correct umlauts, 'ch', stress",
+                  "Smooth, natural pace",
+                  "No grammatical errors",
+                  "Responds appropriately"
+                ],
+                [
+                  "3",
+                  "Minor accent, umlauts mostly correct",
+                  "Occasional hesitation",
+                  "1-2 minor errors",
+                  "Mostly appropriate"
+                ],
+                [
+                  "2",
+                  "Noticeable errors but understood",
+                  "Frequent pauses",
+                  "Several errors",
+                  "Partial understanding"
+                ],
+                [
+                  "1",
+                  "Difficult to understand",
+                  "Very halting",
+                  "Many errors",
+                  "Little understanding"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.1 Per-Abschnitt Point Values",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Base Points",
+                  "Max Bonus",
+                  "Total Possible"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "—",
+                  "10"
+                ],
+                [
+                  "Texte Exercises",
+                  "30",
+                  "+15 (100%)",
+                  "45"
+                ],
+                [
+                  "Sprachstoff Exercises",
+                  "40",
+                  "+20 (100%)",
+                  "60"
+                ],
+                [
+                  "Supplementary Worksheet",
+                  "25",
+                  "+15 (100%)",
+                  "40"
+                ],
+                [
+                  "Flashcard Creation (all 4 types)",
+                  "30",
+                  "—",
+                  "30"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "15",
+                  "—",
+                  "15"
+                ],
+                [
+                  "Conversation Performance",
+                  "40",
+                  "+20 (16/16)",
+                  "60"
+                ],
+                [
+                  "Per-Abschnitt Total",
+                  "190",
+                  "+70",
+                  "260"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.2 Weekly Speaking Assessment Points",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Performance Level",
+                  "Points"
+                ],
+                [
+                  "Perfect Score (16/16)",
+                  "100 points"
+                ],
+                [
+                  "Excellent (14-15/16)",
+                  "85 points"
+                ],
+                [
+                  "Good (12-13/16)",
+                  "70 points"
+                ],
+                [
+                  "Satisfactory (9-11/16)",
+                  "50 points"
+                ],
+                [
+                  "Needs Improvement (below 9/16)",
+                  "25 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.3 Flashcard Mastery Points",
+            "content": [
+              "Each flashcard that reaches Leitner Box 7 earns a one-time graduation bonus, permanently locked once achieved. German uses four card types to address its grammatical complexity.",
+              "Note: Vocabulary cards MUST include grammatical gender (der/die/das) to earn full points. Cards without gender marked earn only 5 points."
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Box 7 Graduation Bonus"
+                ],
+                [
+                  "Vocabulary Card (word + gender ↔ translation)",
+                  "10 points per card"
+                ],
+                [
+                  "Grammar Pattern Card (case endings, declension charts)",
+                  "25 points per card"
+                ],
+                [
+                  "Conjugation Card (verb forms across tenses)",
+                  "15 points per card"
+                ],
+                [
+                  "Sentence Structure Card (word order rules, clause patterns)",
+                  "20 points per card"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.4 Assessment Point Values",
+            "content": [
+              "7. Bonuses & Multipliers"
+            ],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Base Points",
+                  "Perfect Score",
+                  "Max Total"
+                ],
+                [
+                  "Unit Test (each of 5)",
+                  "250",
+                  "+125",
+                  "375"
+                ],
+                [
+                  "Midterm Exam",
+                  "400",
+                  "+200",
+                  "600"
+                ],
+                [
+                  "Final Exam (Written)",
+                  "500",
+                  "+250",
+                  "750"
+                ],
+                [
+                  "Final Exam (Oral)",
+                  "300",
+                  "+200",
+                  "500"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.1 Streak Bonuses",
+            "content": [
+              "Completing Abschnitte work on consecutive days earns streak multipliers applied to daily practice points."
+            ],
+            "tables": [
+              [
+                [
+                  "Streak Length",
+                  "Multiplier",
+                  "Example (190 base)"
+                ],
+                [
+                  "Days 1–4",
+                  "1.0× (no bonus)",
+                  "190 points"
+                ],
+                [
+                  "Days 5–9",
+                  "1.1× bonus",
+                  "209 points"
+                ],
+                [
+                  "Days 10–19",
+                  "1.25× bonus",
+                  "238 points"
+                ],
+                [
+                  "Days 20–29",
+                  "1.5× bonus",
+                  "285 points"
+                ],
+                [
+                  "Days 30+",
+                  "2.0× bonus",
+                  "380 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.2 Test Improvement Bonus",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Improvement",
+                  "Bonus Points"
+                ],
+                [
+                  "1–5 percentage points higher",
+                  "+25 points"
+                ],
+                [
+                  "6–10 percentage points higher",
+                  "+50 points"
+                ],
+                [
+                  "11–20 percentage points higher",
+                  "+100 points"
+                ],
+                [
+                  "21+ percentage points higher",
+                  "+200 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.3 Speaking Streak Bonus",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Speaking Streak",
+                  "Bonus"
+                ],
+                [
+                  "3 consecutive weeks at 14+/16",
+                  "+150 points"
+                ],
+                [
+                  "5 consecutive weeks at 14+/16",
+                  "+300 points"
+                ],
+                [
+                  "3 consecutive weeks at 16/16",
+                  "+250 points"
+                ],
+                [
+                  "5 consecutive weeks at 16/16",
+                  "+500 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.4 Milestone Bonuses",
+            "content": [
+              "8. Thematic Mastery Badges",
+              "Each Abschnitt is tagged by linguistic theme. Completing all Abschnitte in a theme AND graduating all associated flashcards to Box 7 earns a Mastery Badge."
+            ],
+            "tables": [
+              [
+                [
+                  "Milestone",
+                  "Bonus"
+                ],
+                [
+                  "Complete Abschnitt 9 (Midterm point)",
+                  "+400 points"
+                ],
+                [
+                  "Complete all 15 Abschnitte",
+                  "+1,000 points"
+                ],
+                [
+                  "Pass Final Exam (70%+ on both written & oral)",
+                  "+500 points"
+                ],
+                [
+                  "Complete course in under 45 days",
+                  "+750 points"
+                ],
+                [
+                  "Maintain 90%+ course average",
+                  "+1,500 points"
+                ],
+                [
+                  "Perfect score on Final Oral Exam",
+                  "+1,000 points"
+                ],
+                [
+                  "Master all 4 German cases (all case cards to Box 7)",
+                  "+500 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.1 Badge Categories",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Badge",
+                  "Requirement",
+                  "Bonus"
+                ],
+                [
+                  "📝 Article Master",
+                  "All der/die/das vocabulary cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🔤 Case Master",
+                  "All 4 cases (Nom/Akk/Dat/Gen) pattern cards to Box 7",
+                  "750 points"
+                ],
+                [
+                  "⚡ Verb Master",
+                  "All conjugation cards (weak + strong verbs) to Box 7",
+                  "600 points"
+                ],
+                [
+                  "🕐 Tense Master",
+                  "Präsens, Perfekt, Präteritum, Plusquamperfekt cards to Box 7",
+                  "600 points"
+                ],
+                [
+                  "🔀 Word Order Master",
+                  "All sentence structure cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "📍 Preposition Master",
+                  "All preposition + case pattern cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🎭 Modal Verb Master",
+                  "All modal verb conjugation cards to Box 7",
+                  "400 points"
+                ],
+                [
+                  "✨ Adjective Master",
+                  "All adjective declension pattern cards to Box 7",
+                  "600 points"
+                ],
+                [
+                  "💬 Conversation Master",
+                  "90%+ average on all speaking assessments",
+                  "1,000 points"
+                ],
+                [
+                  "🏆 German Scholar",
+                  "All 9 badges earned",
+                  "+2,000 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.2 Badge Requirements",
+            "content": [
+              "To earn a Mastery Badge (except Conversation Master), a student must:",
+              "Complete all Abschnitte containing that theme (Texte + Sprachstoff + worksheet)",
+              "Create all flashcards for those Abschnitte",
+              "Graduate ALL associated flashcards to Leitner Box 7",
+              "Score 80%+ average on unit tests covering those Abschnitte",
+              "9. Abschnitt-to-Theme Mapping",
+              "Below is the complete mapping of all 15 Abschnitte to their thematic tags. Abschnitte may have multiple tags."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.1 Articles & Gender (ART)",
+            "content": [
+              "Abschnitte: 1, 2 (all vocabulary throughout course)",
+              "Focus: der/die/das assignment, plural forms, gender patterns"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.2 Cases (CASE)",
+            "content": [
+              "Abschnitte: 1 (Nom), 2 (Akk), 5 (Dat), 9 (Gen), 11 (Review), 12 (Gen prep)",
+              "Focus: Nominative, Accusative, Dative, Genitive case endings and usage"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.3 Verbs & Conjugation (VERB)",
+            "content": [
+              "Abschnitte: 1, 2, 4, 7, 8, 9, 10, 14, 15",
+              "Focus: sein, haben, weak verbs, strong verbs, modal verbs, position verbs (legen/liegen, etc.)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.4 Tenses (TENSE)",
+            "content": [
+              "Abschnitte: 1 (Präsens), 9 (Präteritum), 10 (Perfekt), 14 (Plusquamperfekt)",
+              "Focus: Present, Simple Past (Imperfect), Present Perfect, Past Perfect"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.5 Word Order (ORDER)",
+            "content": [
+              "Abschnitte: 3, 4, 6, 7, 12, 14",
+              "Focus: V2 rule, inversion, subordinate clause word order (verb-final), time-manner-place"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.6 Prepositions (PREP)",
+            "content": [
+              "Abschnitte: 4, 6, 8, 12",
+              "Focus: Accusative prepositions, Dative prepositions, Two-way prepositions (Wechselpräpositionen), Genitive prepositions"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.7 Modal Verbs (MODAL)",
+            "content": [
+              "Abschnitte: 7, 10",
+              "Focus: können, müssen, wollen, sollen, dürfen, mögen/möchten"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.8 Adjective Declension (ADJ)",
+            "content": [
+              "Abschnitte: 13, 15",
+              "Focus: Adjective endings after definite articles, indefinite articles, and without articles"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.9 Pronouns (PRO)",
+            "content": [
+              "Abschnitte: 1, 2, 5, 7, 8, 10, 12, 15",
+              "Focus: Personal, Possessive, Demonstrative, Reflexive, Relative, Indefinite pronouns"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.10 Subordinate Clauses (SUB)",
+            "content": [
+              "Abschnitte: 14, 15",
+              "Focus: Nebensätze with weil, dass, ob; Relative clauses (Relativsätze)",
+              "10. Maximum Point Totals",
+              "The following summarizes the maximum possible points a student can earn in Deutsche Sprachlehre."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "10.1 Daily Work (15 Abschnitte)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Per Abschnitt",
+                  "Total (×15)"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "150"
+                ],
+                [
+                  "Texte Exercises (max)",
+                  "45",
+                  "675"
+                ],
+                [
+                  "Sprachstoff Exercises (max)",
+                  "60",
+                  "900"
+                ],
+                [
+                  "Supplementary Worksheet (max)",
+                  "40",
+                  "600"
+                ],
+                [
+                  "Flashcard Creation",
+                  "30",
+                  "450"
+                ],
+                [
+                  "Daily Read-Aloud",
+                  "15",
+                  "225"
+                ],
+                [
+                  "Conversation Performance (max)",
+                  "60",
+                  "900"
+                ],
+                [
+                  "Daily Work Subtotal",
+                  "260",
+                  "3,900"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.2 Weekly Speaking Assessments",
+            "content": [
+              "Assuming ~5 weeks to complete the course:"
+            ],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Per Week",
+                  "Total (×5)"
+                ],
+                [
+                  "Weekly Speaking Assessment (max)",
+                  "100",
+                  "500"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.3 Assessments",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Max Each",
+                  "Total"
+                ],
+                [
+                  "Unit Tests (5 × 375)",
+                  "375",
+                  "1,875"
+                ],
+                [
+                  "Midterm Exam",
+                  "600",
+                  "600"
+                ],
+                [
+                  "Final Exam (Written)",
+                  "750",
+                  "750"
+                ],
+                [
+                  "Final Exam (Oral)",
+                  "500",
+                  "500"
+                ],
+                [
+                  "Assessment Subtotal",
+                  "—",
+                  "3,725"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.4 Flashcard Mastery (estimated)",
+            "content": [
+              "Assuming ~25 vocab cards, ~3 grammar pattern cards, ~4 conjugation cards, and ~2 sentence structure cards per Abschnitt:"
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Est. Cards",
+                  "Max Points"
+                ],
+                [
+                  "Vocabulary Cards (15 × 25 × 2 dir × 10)",
+                  "750",
+                  "7,500"
+                ],
+                [
+                  "Grammar Pattern Cards (15 × 3 × 25)",
+                  "45",
+                  "1,125"
+                ],
+                [
+                  "Conjugation Cards (15 × 4 × 15)",
+                  "60",
+                  "900"
+                ],
+                [
+                  "Sentence Structure Cards (15 × 2 × 20)",
+                  "30",
+                  "600"
+                ],
+                [
+                  "Flashcard Mastery Subtotal",
+                  "885",
+                  "10,125"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.5 Bonuses",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Bonus Category",
+                  "Max Points"
+                ],
+                [
+                  "Thematic Mastery Badges (all 9 + completion bonus)",
+                  "7,450"
+                ],
+                [
+                  "Milestone Bonuses (all)",
+                  "5,650"
+                ],
+                [
+                  "Streak Bonuses (estimated)",
+                  "~2,000+"
+                ],
+                [
+                  "Speaking Streak Bonuses",
+                  "~1,200+"
+                ],
+                [
+                  "Test Improvement Bonuses (varies)",
+                  "~600+"
+                ],
+                [
+                  "Bonus Subtotal (estimated)",
+                  "~16,900+"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.6 Grand Total",
+            "content": [
+              "Note: This is Grundstufe 1. Teil only. Total points are lower than Spanish/Math due to the shorter course length (15 Abschnitte vs. 45/137 lessons).",
+              "11. Grade Scale",
+              "The following letter grade scale applies to the weighted course average (not reward points):",
+              "12. Implementation Notes"
+            ],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Points"
+                ],
+                [
+                  "Daily Work",
+                  "3,900"
+                ],
+                [
+                  "Weekly Speaking Assessments",
+                  "500"
+                ],
+                [
+                  "Assessments",
+                  "3,725"
+                ],
+                [
+                  "Flashcard Mastery",
+                  "10,125"
+                ],
+                [
+                  "Bonuses",
+                  "~16,900"
+                ],
+                [
+                  "MAXIMUM POSSIBLE",
+                  "~35,150 points"
+                ]
+              ],
+              [
+                [
+                  "Letter Grade",
+                  "Percentage",
+                  "GPA Equivalent"
+                ],
+                [
+                  "A+",
+                  "97–100%",
+                  "4.0"
+                ],
+                [
+                  "A",
+                  "93–96%",
+                  "4.0"
+                ],
+                [
+                  "A-",
+                  "90–92%",
+                  "3.7"
+                ],
+                [
+                  "B+",
+                  "87–89%",
+                  "3.3"
+                ],
+                [
+                  "B",
+                  "83–86%",
+                  "3.0"
+                ],
+                [
+                  "B-",
+                  "80–82%",
+                  "2.7"
+                ],
+                [
+                  "C+",
+                  "77–79%",
+                  "2.3"
+                ],
+                [
+                  "C",
+                  "73–76%",
+                  "2.0"
+                ],
+                [
+                  "C-",
+                  "70–72%",
+                  "1.7"
+                ],
+                [
+                  "D",
+                  "60–69%",
+                  "1.0"
+                ],
+                [
+                  "F",
+                  "Below 60%",
+                  "0.0"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "12.1 Grading Daily Work",
+            "content": [
+              "Both Texte and Sprachstoff exercises must be completed for full credit",
+              "Sprachstoff (grammar) exercises weighted slightly higher due to complexity",
+              "Perfect scores (100%) earn the accuracy bonus automatically"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.2 German-Specific Flashcard Rules",
+            "content": [
+              "Vocabulary cards MUST include grammatical gender (der/die/das) — cards without gender earn only half points",
+              "Vocabulary cards tested in BOTH directions (German→English and English→German)",
+              "Grammar Pattern cards should include full declension tables where applicable",
+              "Conjugation cards should include all persons (ich, du, er/sie/es, wir, ihr, sie/Sie)",
+              "Sentence Structure cards should include example sentences demonstrating the rule"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.3 Speaking Assessment — German Focus",
+            "content": [
+              "Special attention to umlaut pronunciation (ä, ö, ü)",
+              "Distinguish between ich-Laut and ach-Laut for 'ch' sounds",
+              "Practice final consonant devoicing (Tag→Tak, Hund→Hunt)",
+              "Emphasize correct word stress patterns"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.4 Reference Audio Sources",
+            "content": [
+              "dict.cc (free audio for individual words)",
+              "Forvo.com (native speaker recordings)",
+              "Deutsche Welle (DW) Learn German resources",
+              "YouTube: Easy German channel for conversational practice"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.5 Continuation to Grundstufe 2",
+            "content": [
+              "Upon completion of Grundstufe 1. Teil, students proceed to Grundstufe 2. Teil. Points and badges carry over; a separate grading document will be created for the second volume.",
+              "— End of Document —"
+            ],
+            "tables": []
+          }
+        ]
+      }
+    }
+  }
+}

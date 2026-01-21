@@ -1,0 +1,5137 @@
+{
+  "id": "wheelocks_latin_v1",
+  "title": "Wheelock's Latin",
+  "subtitle": "7th Edition • with Workbook (3rd Edition Revised)",
+  "version": 1,
+  "type": "language",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Complete each component to earn base points",
+      "Streaks can add bonus percentages when enabled",
+      "Mastery achievements can unlock multipliers when configured",
+      "Badges can require: Mastery + Completion + Capstone"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "lecture_attendance": {
+        "label": "Lecture Attendance",
+        "pointsEach": 10.0,
+        "countsTowardGrade": true
+      },
+      "textbook_exercises": {
+        "label": "Textbook Exercises",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "workbook_exercises": {
+        "label": "Workbook Exercises",
+        "pointsEach": 40.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_creation_all_4_types": {
+        "label": "Flashcard Creation (all 4 types)",
+        "pointsEach": 30.0,
+        "countsTowardGrade": true
+      },
+      "read_aloud_practice": {
+        "label": "Read-Aloud Practice",
+        "pointsEach": 20.0,
+        "countsTowardGrade": true
+      },
+      "per_chapter_total": {
+        "label": "Per-Chapter Total",
+        "pointsEach": 140.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "label": "Flashcards (Leitner Review)",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "lecture_attendance": 10,
+      "textbook_exercises": 40,
+      "workbook_exercises": 40,
+      "flashcard_creation_all_4_types": 30,
+      "read_aloud_practice": 20,
+      "per_chapter_total": 140,
+      "flashcard_session": 5
+    },
+    "multipliers": [],
+    "streaks": {}
+  },
+  "curriculum": {
+    "totalLessons": 200,
+    "modules": [
+      {
+        "id": "wheelocks_latin_v1_unit_1",
+        "title": "Unit 1",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Caput I",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_I",
+                "coverage": "I–IV",
+                "assessment": "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives"
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Flashcards: Caput I (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_I"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 3,
+            "title": "Caput II",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_II",
+                "coverage": "I–IV",
+                "assessment": "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives"
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Flashcards: Caput II (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_II"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 5,
+            "title": "Caput III",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_III",
+                "coverage": "I–IV",
+                "assessment": "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives"
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Flashcards: Caput III (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_III"
+              },
+              "deckHint": "Unit 1"
+            }
+          },
+          {
+            "index": 7,
+            "title": "Caput IV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_IV",
+                "coverage": "I–IV",
+                "assessment": "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives"
+              }
+            }
+          },
+          {
+            "index": 8,
+            "title": "Flashcards: Caput IV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_1",
+                "lessonId": "wheelocks_latin_unit_1_caput_IV"
+              },
+              "deckHint": "Unit 1"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_2",
+        "title": "Unit 2",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 9,
+            "title": "Caput V",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_V",
+                "coverage": "V–VIII",
+                "assessment": "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present"
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Flashcards: Caput V (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_V"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 11,
+            "title": "Caput VI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VI",
+                "coverage": "V–VIII",
+                "assessment": "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present"
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Flashcards: Caput VI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VI"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 13,
+            "title": "Caput VII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VII",
+                "coverage": "V–VIII",
+                "assessment": "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present"
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Flashcards: Caput VII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VII"
+              },
+              "deckHint": "Unit 2"
+            }
+          },
+          {
+            "index": 15,
+            "title": "Caput VIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VIII",
+                "coverage": "V–VIII",
+                "assessment": "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present"
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Flashcards: Caput VIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_2",
+                "lessonId": "wheelocks_latin_unit_2_caput_VIII"
+              },
+              "deckHint": "Unit 2"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_3",
+        "title": "Unit 3",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 17,
+            "title": "Caput IX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_IX",
+                "coverage": "IX–XII",
+                "assessment": "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System"
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Flashcards: Caput IX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_IX"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 19,
+            "title": "Caput X",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_X",
+                "coverage": "IX–XII",
+                "assessment": "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System"
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Flashcards: Caput X (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_X"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 21,
+            "title": "Caput XI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_XI",
+                "coverage": "IX–XII",
+                "assessment": "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System"
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Flashcards: Caput XI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_XI"
+              },
+              "deckHint": "Unit 3"
+            }
+          },
+          {
+            "index": 23,
+            "title": "Caput XII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_XII",
+                "coverage": "IX–XII",
+                "assessment": "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System"
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Flashcards: Caput XII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_3",
+                "lessonId": "wheelocks_latin_unit_3_caput_XII"
+              },
+              "deckHint": "Unit 3"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_4",
+        "title": "Unit 4",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 25,
+            "title": "Caput XIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XIII",
+                "coverage": "XIII–XVI",
+                "assessment": "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives"
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Flashcards: Caput XIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XIII"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 27,
+            "title": "Caput XIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XIV",
+                "coverage": "XIII–XVI",
+                "assessment": "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives"
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Flashcards: Caput XIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XIV"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 29,
+            "title": "Caput XV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XV",
+                "coverage": "XIII–XVI",
+                "assessment": "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives"
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Flashcards: Caput XV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XV"
+              },
+              "deckHint": "Unit 4"
+            }
+          },
+          {
+            "index": 31,
+            "title": "Caput XVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XVI",
+                "coverage": "XIII–XVI",
+                "assessment": "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives"
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Flashcards: Caput XVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_4",
+                "lessonId": "wheelocks_latin_unit_4_caput_XVI"
+              },
+              "deckHint": "Unit 4"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_5",
+        "title": "Unit 5",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 33,
+            "title": "Caput XVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XVII",
+                "coverage": "XVII–XX",
+                "assessment": "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension"
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Flashcards: Caput XVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XVII"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 35,
+            "title": "Caput XVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XVIII",
+                "coverage": "XVII–XX",
+                "assessment": "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension"
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Flashcards: Caput XVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XVIII"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 37,
+            "title": "Caput XIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XIX",
+                "coverage": "XVII–XX",
+                "assessment": "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension"
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Flashcards: Caput XIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XIX"
+              },
+              "deckHint": "Unit 5"
+            }
+          },
+          {
+            "index": 39,
+            "title": "Caput XX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XX",
+                "coverage": "XVII–XX",
+                "assessment": "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension"
+              }
+            }
+          },
+          {
+            "index": 40,
+            "title": "Flashcards: Caput XX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_5",
+                "lessonId": "wheelocks_latin_unit_5_caput_XX"
+              },
+              "deckHint": "Unit 5"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_midterm",
+        "title": "MIDTERM",
+        "unit": "MIDTERM",
+        "lessons": [
+          {
+            "index": 41,
+            "title": "Caput I",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_I",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Flashcards: Caput I (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_I"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 43,
+            "title": "Caput II",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_II",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Flashcards: Caput II (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_II"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 45,
+            "title": "Caput III",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_III",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Flashcards: Caput III (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_III"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 47,
+            "title": "Caput IV",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_IV",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Flashcards: Caput IV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_IV"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 49,
+            "title": "Caput V",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_V",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Flashcards: Caput V (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_V"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 51,
+            "title": "Caput VI",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VI",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Flashcards: Caput VI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VI"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 53,
+            "title": "Caput VII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Flashcards: Caput VII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 55,
+            "title": "Caput VIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VIII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Flashcards: Caput VIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_VIII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 57,
+            "title": "Caput IX",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_IX",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Flashcards: Caput IX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_IX"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 59,
+            "title": "Caput X",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_X",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Flashcards: Caput X (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_X"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 61,
+            "title": "Caput XI",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XI",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Flashcards: Caput XI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XI"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 63,
+            "title": "Caput XII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Flashcards: Caput XII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 65,
+            "title": "Caput XIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Flashcards: Caput XIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 67,
+            "title": "Caput XIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIV",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Flashcards: Caput XIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIV"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 69,
+            "title": "Caput XV",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XV",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Flashcards: Caput XV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XV"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 71,
+            "title": "Caput XVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVI",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Flashcards: Caput XVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVI"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 73,
+            "title": "Caput XVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Flashcards: Caput XVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 75,
+            "title": "Caput XVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVIII",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Flashcards: Caput XVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XVIII"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 77,
+            "title": "Caput XIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIX",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Flashcards: Caput XIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XIX"
+              },
+              "deckHint": "MIDTERM"
+            }
+          },
+          {
+            "index": 79,
+            "title": "Caput XX",
+            "category": "lesson",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XX",
+                "coverage": "I–XX",
+                "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+              }
+            }
+          },
+          {
+            "index": 80,
+            "title": "Flashcards: Caput XX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "MIDTERM",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_midterm",
+                "lessonId": "wheelocks_latin_midterm_caput_XX"
+              },
+              "deckHint": "MIDTERM"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_6",
+        "title": "Unit 6",
+        "unit": "Unit 6",
+        "lessons": [
+          {
+            "index": 81,
+            "title": "Caput XXI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXI",
+                "coverage": "XXI–XXIV",
+                "assessment": "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute"
+              }
+            }
+          },
+          {
+            "index": 82,
+            "title": "Flashcards: Caput XXI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXI"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 83,
+            "title": "Caput XXII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXII",
+                "coverage": "XXI–XXIV",
+                "assessment": "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute"
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Flashcards: Caput XXII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXII"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 85,
+            "title": "Caput XXIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXIII",
+                "coverage": "XXI–XXIV",
+                "assessment": "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute"
+              }
+            }
+          },
+          {
+            "index": 86,
+            "title": "Flashcards: Caput XXIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXIII"
+              },
+              "deckHint": "Unit 6"
+            }
+          },
+          {
+            "index": 87,
+            "title": "Caput XXIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXIV",
+                "coverage": "XXI–XXIV",
+                "assessment": "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute"
+              }
+            }
+          },
+          {
+            "index": 88,
+            "title": "Flashcards: Caput XXIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_6",
+                "lessonId": "wheelocks_latin_unit_6_caput_XXIV"
+              },
+              "deckHint": "Unit 6"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_7",
+        "title": "Unit 7",
+        "unit": "Unit 7",
+        "lessons": [
+          {
+            "index": 89,
+            "title": "Caput XXV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXV",
+                "coverage": "XXV–XXVIII",
+                "assessment": "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction"
+              }
+            }
+          },
+          {
+            "index": 90,
+            "title": "Flashcards: Caput XXV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXV"
+              },
+              "deckHint": "Unit 7"
+            }
+          },
+          {
+            "index": 91,
+            "title": "Caput XXVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVI",
+                "coverage": "XXV–XXVIII",
+                "assessment": "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction"
+              }
+            }
+          },
+          {
+            "index": 92,
+            "title": "Flashcards: Caput XXVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVI"
+              },
+              "deckHint": "Unit 7"
+            }
+          },
+          {
+            "index": 93,
+            "title": "Caput XXVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVII",
+                "coverage": "XXV–XXVIII",
+                "assessment": "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction"
+              }
+            }
+          },
+          {
+            "index": 94,
+            "title": "Flashcards: Caput XXVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVII"
+              },
+              "deckHint": "Unit 7"
+            }
+          },
+          {
+            "index": 95,
+            "title": "Caput XXVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVIII",
+                "coverage": "XXV–XXVIII",
+                "assessment": "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction"
+              }
+            }
+          },
+          {
+            "index": 96,
+            "title": "Flashcards: Caput XXVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_7",
+                "lessonId": "wheelocks_latin_unit_7_caput_XXVIII"
+              },
+              "deckHint": "Unit 7"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_8",
+        "title": "Unit 8",
+        "unit": "Unit 8",
+        "lessons": [
+          {
+            "index": 97,
+            "title": "Caput XXIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXIX",
+                "coverage": "XXIX–XXXII",
+                "assessment": "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs"
+              }
+            }
+          },
+          {
+            "index": 98,
+            "title": "Flashcards: Caput XXIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXIX"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 99,
+            "title": "Caput XXX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXX",
+                "coverage": "XXIX–XXXII",
+                "assessment": "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs"
+              }
+            }
+          },
+          {
+            "index": 100,
+            "title": "Flashcards: Caput XXX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXX"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 101,
+            "title": "Caput XXXI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXXI",
+                "coverage": "XXIX–XXXII",
+                "assessment": "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs"
+              }
+            }
+          },
+          {
+            "index": 102,
+            "title": "Flashcards: Caput XXXI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXXI"
+              },
+              "deckHint": "Unit 8"
+            }
+          },
+          {
+            "index": 103,
+            "title": "Caput XXXII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXXII",
+                "coverage": "XXIX–XXXII",
+                "assessment": "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs"
+              }
+            }
+          },
+          {
+            "index": 104,
+            "title": "Flashcards: Caput XXXII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_8",
+                "lessonId": "wheelocks_latin_unit_8_caput_XXXII"
+              },
+              "deckHint": "Unit 8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_9",
+        "title": "Unit 9",
+        "unit": "Unit 9",
+        "lessons": [
+          {
+            "index": 105,
+            "title": "Caput XXXIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXIII",
+                "coverage": "XXXIII–XXXVI",
+                "assessment": "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō"
+              }
+            }
+          },
+          {
+            "index": 106,
+            "title": "Flashcards: Caput XXXIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXIII"
+              },
+              "deckHint": "Unit 9"
+            }
+          },
+          {
+            "index": 107,
+            "title": "Caput XXXIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXIV",
+                "coverage": "XXXIII–XXXVI",
+                "assessment": "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō"
+              }
+            }
+          },
+          {
+            "index": 108,
+            "title": "Flashcards: Caput XXXIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXIV"
+              },
+              "deckHint": "Unit 9"
+            }
+          },
+          {
+            "index": 109,
+            "title": "Caput XXXV",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXV",
+                "coverage": "XXXIII–XXXVI",
+                "assessment": "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō"
+              }
+            }
+          },
+          {
+            "index": 110,
+            "title": "Flashcards: Caput XXXV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXV"
+              },
+              "deckHint": "Unit 9"
+            }
+          },
+          {
+            "index": 111,
+            "title": "Caput XXXVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXVI",
+                "coverage": "XXXIII–XXXVI",
+                "assessment": "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō"
+              }
+            }
+          },
+          {
+            "index": 112,
+            "title": "Flashcards: Caput XXXVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_9",
+                "lessonId": "wheelocks_latin_unit_9_caput_XXXVI"
+              },
+              "deckHint": "Unit 9"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_unit_10",
+        "title": "Unit 10",
+        "unit": "Unit 10",
+        "lessons": [
+          {
+            "index": 113,
+            "title": "Caput XXXVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXVII",
+                "coverage": "XXXVII–XL",
+                "assessment": "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses"
+              }
+            }
+          },
+          {
+            "index": 114,
+            "title": "Flashcards: Caput XXXVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXVII"
+              },
+              "deckHint": "Unit 10"
+            }
+          },
+          {
+            "index": 115,
+            "title": "Caput XXXVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXVIII",
+                "coverage": "XXXVII–XL",
+                "assessment": "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses"
+              }
+            }
+          },
+          {
+            "index": 116,
+            "title": "Flashcards: Caput XXXVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXVIII"
+              },
+              "deckHint": "Unit 10"
+            }
+          },
+          {
+            "index": 117,
+            "title": "Caput XXXIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXIX",
+                "coverage": "XXXVII–XL",
+                "assessment": "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses"
+              }
+            }
+          },
+          {
+            "index": 118,
+            "title": "Flashcards: Caput XXXIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XXXIX"
+              },
+              "deckHint": "Unit 10"
+            }
+          },
+          {
+            "index": 119,
+            "title": "Caput XL",
+            "category": "lesson",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XL",
+                "coverage": "XXXVII–XL",
+                "assessment": "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses"
+              }
+            }
+          },
+          {
+            "index": 120,
+            "title": "Flashcards: Caput XL (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 10",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_unit_10",
+                "lessonId": "wheelocks_latin_unit_10_caput_XL"
+              },
+              "deckHint": "Unit 10"
+            }
+          }
+        ]
+      },
+      {
+        "id": "wheelocks_latin_v1_final",
+        "title": "FINAL",
+        "unit": "FINAL",
+        "lessons": [
+          {
+            "index": 121,
+            "title": "Caput I",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_I",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 122,
+            "title": "Flashcards: Caput I (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_I"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 123,
+            "title": "Caput II",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_II",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 124,
+            "title": "Flashcards: Caput II (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_II"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 125,
+            "title": "Caput III",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_III",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 126,
+            "title": "Flashcards: Caput III (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_III"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 127,
+            "title": "Caput IV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_IV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 128,
+            "title": "Flashcards: Caput IV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_IV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 129,
+            "title": "Caput V",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_V",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 130,
+            "title": "Flashcards: Caput V (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_V"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 131,
+            "title": "Caput VI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 132,
+            "title": "Flashcards: Caput VI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 133,
+            "title": "Caput VII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 134,
+            "title": "Flashcards: Caput VII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 135,
+            "title": "Caput VIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 136,
+            "title": "Flashcards: Caput VIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_VIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 137,
+            "title": "Caput IX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_IX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 138,
+            "title": "Flashcards: Caput IX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_IX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 139,
+            "title": "Caput X",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_X",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 140,
+            "title": "Flashcards: Caput X (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_X"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 141,
+            "title": "Caput XI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 142,
+            "title": "Flashcards: Caput XI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 143,
+            "title": "Caput XII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 144,
+            "title": "Flashcards: Caput XII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 145,
+            "title": "Caput XIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 146,
+            "title": "Flashcards: Caput XIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 147,
+            "title": "Caput XIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 148,
+            "title": "Flashcards: Caput XIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 149,
+            "title": "Caput XV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 150,
+            "title": "Flashcards: Caput XV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 151,
+            "title": "Caput XVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 152,
+            "title": "Flashcards: Caput XVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 153,
+            "title": "Caput XVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 154,
+            "title": "Flashcards: Caput XVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 155,
+            "title": "Caput XVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 156,
+            "title": "Flashcards: Caput XVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XVIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 157,
+            "title": "Caput XIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 158,
+            "title": "Flashcards: Caput XIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XIX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 159,
+            "title": "Caput XX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 160,
+            "title": "Flashcards: Caput XX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 161,
+            "title": "Caput XXI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 162,
+            "title": "Flashcards: Caput XXI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 163,
+            "title": "Caput XXII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 164,
+            "title": "Flashcards: Caput XXII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 165,
+            "title": "Caput XXIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 166,
+            "title": "Flashcards: Caput XXIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 167,
+            "title": "Caput XXIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 168,
+            "title": "Flashcards: Caput XXIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 169,
+            "title": "Caput XXV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 170,
+            "title": "Flashcards: Caput XXV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 171,
+            "title": "Caput XXVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 172,
+            "title": "Flashcards: Caput XXVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 173,
+            "title": "Caput XXVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 174,
+            "title": "Flashcards: Caput XXVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 175,
+            "title": "Caput XXVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 176,
+            "title": "Flashcards: Caput XXVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXVIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 177,
+            "title": "Caput XXIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 178,
+            "title": "Flashcards: Caput XXIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXIX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 179,
+            "title": "Caput XXX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 180,
+            "title": "Flashcards: Caput XXX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 181,
+            "title": "Caput XXXI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 182,
+            "title": "Flashcards: Caput XXXI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 183,
+            "title": "Caput XXXII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 184,
+            "title": "Flashcards: Caput XXXII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 185,
+            "title": "Caput XXXIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 186,
+            "title": "Flashcards: Caput XXXIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 187,
+            "title": "Caput XXXIV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 188,
+            "title": "Flashcards: Caput XXXIV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 189,
+            "title": "Caput XXXV",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXV",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 190,
+            "title": "Flashcards: Caput XXXV (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXV"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 191,
+            "title": "Caput XXXVI",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVI",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 192,
+            "title": "Flashcards: Caput XXXVI (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVI"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 193,
+            "title": "Caput XXXVII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 194,
+            "title": "Flashcards: Caput XXXVII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 195,
+            "title": "Caput XXXVIII",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVIII",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 196,
+            "title": "Flashcards: Caput XXXVIII (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXVIII"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 197,
+            "title": "Caput XXXIX",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIX",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 198,
+            "title": "Flashcards: Caput XXXIX (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XXXIX"
+              },
+              "deckHint": "FINAL"
+            }
+          },
+          {
+            "index": 199,
+            "title": "Caput XL",
+            "category": "lesson",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XL",
+                "coverage": "I–XL",
+                "assessment": "Final Exam: Comprehensive"
+              }
+            }
+          },
+          {
+            "index": 200,
+            "title": "Flashcards: Caput XL (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "FINAL",
+              "source": {
+                "reason": "auto_generated_after_lesson",
+                "moduleId": "wheelocks_latin_final",
+                "lessonId": "wheelocks_latin_final_caput_XL"
+              },
+              "deckHint": "FINAL"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "key": "vocabulary",
+      "label": "Vocabulary"
+    },
+    {
+      "key": "grammar",
+      "label": "Grammar"
+    },
+    {
+      "key": "conjugation",
+      "label": "Conjugations"
+    },
+    {
+      "key": "phrases",
+      "label": "Phrases & Dialog"
+    },
+    {
+      "key": "pronunciation",
+      "label": "Pronunciation"
+    },
+    {
+      "key": "listening",
+      "label": "Listening"
+    },
+    {
+      "key": "speaking",
+      "label": "Speaking"
+    }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewAfterDays": 0
+      },
+      {
+        "box": 2,
+        "reviewAfterDays": 1
+      },
+      {
+        "box": 3,
+        "reviewAfterDays": 3
+      },
+      {
+        "box": 4,
+        "reviewAfterDays": 7
+      },
+      {
+        "box": 5,
+        "reviewAfterDays": 14
+      }
+    ],
+    "masteryBox": 5
+  },
+  "flashcardDecks": [
+    {
+      "unit": "Unit 1",
+      "unitTitle": "Unit 1",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 2",
+      "unitTitle": "Unit 2",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 3",
+      "unitTitle": "Unit 3",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 4",
+      "unitTitle": "Unit 4",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 5",
+      "unitTitle": "Unit 5",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "MIDTERM",
+      "unitTitle": "MIDTERM",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 6",
+      "unitTitle": "Unit 6",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 7",
+      "unitTitle": "Unit 7",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 8",
+      "unitTitle": "Unit 8",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 9",
+      "unitTitle": "Unit 9",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "Unit 10",
+      "unitTitle": "Unit 10",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    },
+    {
+      "unit": "FINAL",
+      "unitTitle": "FINAL",
+      "categories": {
+        "vocabulary": [],
+        "grammar": [],
+        "conjugation": [],
+        "phrases": [],
+        "pronunciation": [],
+        "listening": [],
+        "speaking": []
+      }
+    }
+  ],
+  "badges": [],
+  "generatedFrom": {
+    "sourceFile": "wheelocks_latin",
+    "conversion": "doc_grading_system_to_course_config",
+    "generatedOn": "2026-01-21T20:09:15.327038Z"
+  },
+  "source": {
+    "original": {
+      "id": "wheelocks_latin",
+      "title": "Wheelock's Latin",
+      "subtitle": "7th Edition • with Workbook (3rd Edition Revised)",
+      "version": 1,
+      "type": "language",
+      "grading": {
+        "mode": "points",
+        "categories": {
+          "lecture_attendance": {
+            "label": "Lecture Attendance",
+            "pointsEach": 10.0,
+            "countsTowardGrade": true
+          },
+          "textbook_exercises": {
+            "label": "Textbook Exercises",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          },
+          "workbook_exercises": {
+            "label": "Workbook Exercises",
+            "pointsEach": 40.0,
+            "countsTowardGrade": true
+          },
+          "flashcard_creation_all_4_types": {
+            "label": "Flashcard Creation (all 4 types)",
+            "pointsEach": 30.0,
+            "countsTowardGrade": true
+          },
+          "read_aloud_practice": {
+            "label": "Read-Aloud Practice",
+            "pointsEach": 20.0,
+            "countsTowardGrade": true
+          },
+          "per_chapter_total": {
+            "label": "Per-Chapter Total",
+            "pointsEach": 140.0,
+            "countsTowardGrade": true
+          }
+        },
+        "gradeWeightDistribution": {
+          "headers": [
+            "Category",
+            "Weight",
+            "Components Included"
+          ],
+          "rows": [
+            [
+              "Daily Practice (Written)",
+              "25%",
+              "Textbook (12.5%) + Workbook (12.5%)"
+            ],
+            [
+              "Flashcard System",
+              "25%",
+              "All 4 card types: Creation + Box 7"
+            ],
+            [
+              "Pronunciation/Reading",
+              "10%",
+              "Read-Aloud practice only"
+            ],
+            [
+              "Unit Tests (Written)",
+              "20%",
+              "10 Unit Tests"
+            ],
+            [
+              "Cumulative Exams",
+              "20%",
+              "Midterm (8%) + Final (12%)"
+            ],
+            [
+              "TOTAL",
+              "100%",
+              ""
+            ]
+          ]
+        },
+        "gradeScale": {
+          "headers": [
+            "Letter Grade",
+            "Percentage",
+            "GPA Equivalent"
+          ],
+          "rows": [
+            [
+              "A+",
+              "97–100%",
+              "4.0"
+            ],
+            [
+              "A",
+              "93–96%",
+              "4.0"
+            ],
+            [
+              "A-",
+              "90–92%",
+              "3.7"
+            ],
+            [
+              "B+",
+              "87–89%",
+              "3.3"
+            ],
+            [
+              "B",
+              "83–86%",
+              "3.0"
+            ],
+            [
+              "B-",
+              "80–82%",
+              "2.7"
+            ],
+            [
+              "C+",
+              "77–79%",
+              "2.3"
+            ],
+            [
+              "C",
+              "73–76%",
+              "2.0"
+            ],
+            [
+              "C-",
+              "70–72%",
+              "1.7"
+            ],
+            [
+              "D",
+              "60–69%",
+              "1.0"
+            ],
+            [
+              "F",
+              "Below 60%",
+              "0.0"
+            ]
+          ]
+        },
+        "basePointsTable": {
+          "headers": [
+            "Component",
+            "Base Points",
+            "Max Bonus",
+            "Total Possible"
+          ],
+          "rows": [
+            [
+              "Lecture Attendance",
+              "10",
+              "—",
+              "10"
+            ],
+            [
+              "Textbook Exercises",
+              "40",
+              "+20 (100%)",
+              "60"
+            ],
+            [
+              "Workbook Exercises",
+              "40",
+              "+20 (100%)",
+              "60"
+            ],
+            [
+              "Flashcard Creation (all 4 types)",
+              "30",
+              "—",
+              "30"
+            ],
+            [
+              "Read-Aloud Practice",
+              "20",
+              "—",
+              "20"
+            ],
+            [
+              "Per-Chapter Total",
+              "140",
+              "+40",
+              "180"
+            ]
+          ]
+        },
+        "streakBonusesTable": {
+          "headers": [
+            "Streak Length",
+            "Multiplier",
+            "Example (140 base)"
+          ],
+          "rows": [
+            [
+              "Days 1–4",
+              "1.0× (no bonus)",
+              "140 points"
+            ],
+            [
+              "Days 5–9",
+              "1.1× bonus",
+              "154 points"
+            ],
+            [
+              "Days 10–19",
+              "1.25× bonus",
+              "175 points"
+            ],
+            [
+              "Days 20–29",
+              "1.5× bonus",
+              "210 points"
+            ],
+            [
+              "Days 30+",
+              "2.0× bonus",
+              "280 points"
+            ]
+          ]
+        }
+      },
+      "curriculum": {
+        "totalLessons": null,
+        "modules": [
+          {
+            "id": "wheelocks_latin_unit_1",
+            "title": "Unit 1",
+            "coverage": "I–IV",
+            "assessment": "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_1_caput_I",
+                "title": "Caput I",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_1_caput_II",
+                "title": "Caput II",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_1_caput_III",
+                "title": "Caput III",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_1_caput_IV",
+                "title": "Caput IV",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_2",
+            "title": "Unit 2",
+            "coverage": "V–VIII",
+            "assessment": "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_2_caput_V",
+                "title": "Caput V",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_2_caput_VI",
+                "title": "Caput VI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_2_caput_VII",
+                "title": "Caput VII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_2_caput_VIII",
+                "title": "Caput VIII",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_3",
+            "title": "Unit 3",
+            "coverage": "IX–XII",
+            "assessment": "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_3_caput_IX",
+                "title": "Caput IX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_3_caput_X",
+                "title": "Caput X",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_3_caput_XI",
+                "title": "Caput XI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_3_caput_XII",
+                "title": "Caput XII",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_4",
+            "title": "Unit 4",
+            "coverage": "XIII–XVI",
+            "assessment": "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_4_caput_XIII",
+                "title": "Caput XIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_4_caput_XIV",
+                "title": "Caput XIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_4_caput_XV",
+                "title": "Caput XV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_4_caput_XVI",
+                "title": "Caput XVI",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_5",
+            "title": "Unit 5",
+            "coverage": "XVII–XX",
+            "assessment": "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_5_caput_XVII",
+                "title": "Caput XVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_5_caput_XVIII",
+                "title": "Caput XVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_5_caput_XIX",
+                "title": "Caput XIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_5_caput_XX",
+                "title": "Caput XX",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_midterm",
+            "title": "MIDTERM",
+            "coverage": "I–XX",
+            "assessment": "Midterm: All 5 Declensions + Complete Active/Passive Voice System",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_midterm_caput_I",
+                "title": "Caput I",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_II",
+                "title": "Caput II",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_III",
+                "title": "Caput III",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_IV",
+                "title": "Caput IV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_V",
+                "title": "Caput V",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_VI",
+                "title": "Caput VI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_VII",
+                "title": "Caput VII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_VIII",
+                "title": "Caput VIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_IX",
+                "title": "Caput IX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_X",
+                "title": "Caput X",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XI",
+                "title": "Caput XI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XII",
+                "title": "Caput XII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XIII",
+                "title": "Caput XIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XIV",
+                "title": "Caput XIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XV",
+                "title": "Caput XV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XVI",
+                "title": "Caput XVI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XVII",
+                "title": "Caput XVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XVIII",
+                "title": "Caput XVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XIX",
+                "title": "Caput XIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_midterm_caput_XX",
+                "title": "Caput XX",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_6",
+            "title": "Unit 6",
+            "coverage": "XXI–XXIV",
+            "assessment": "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_6_caput_XXI",
+                "title": "Caput XXI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_6_caput_XXII",
+                "title": "Caput XXII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_6_caput_XXIII",
+                "title": "Caput XXIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_6_caput_XXIV",
+                "title": "Caput XXIV",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_7",
+            "title": "Unit 7",
+            "coverage": "XXV–XXVIII",
+            "assessment": "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_7_caput_XXV",
+                "title": "Caput XXV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_7_caput_XXVI",
+                "title": "Caput XXVI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_7_caput_XXVII",
+                "title": "Caput XXVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_7_caput_XXVIII",
+                "title": "Caput XXVIII",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_8",
+            "title": "Unit 8",
+            "coverage": "XXIX–XXXII",
+            "assessment": "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_8_caput_XXIX",
+                "title": "Caput XXIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_8_caput_XXX",
+                "title": "Caput XXX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_8_caput_XXXI",
+                "title": "Caput XXXI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_8_caput_XXXII",
+                "title": "Caput XXXII",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_9",
+            "title": "Unit 9",
+            "coverage": "XXXIII–XXXVI",
+            "assessment": "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_9_caput_XXXIII",
+                "title": "Caput XXXIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_9_caput_XXXIV",
+                "title": "Caput XXXIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_9_caput_XXXV",
+                "title": "Caput XXXV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_9_caput_XXXVI",
+                "title": "Caput XXXVI",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_unit_10",
+            "title": "Unit 10",
+            "coverage": "XXXVII–XL",
+            "assessment": "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_unit_10_caput_XXXVII",
+                "title": "Caput XXXVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_10_caput_XXXVIII",
+                "title": "Caput XXXVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_10_caput_XXXIX",
+                "title": "Caput XXXIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_unit_10_caput_XL",
+                "title": "Caput XL",
+                "category": "lesson"
+              }
+            ]
+          },
+          {
+            "id": "wheelocks_latin_final",
+            "title": "FINAL",
+            "coverage": "I–XL",
+            "assessment": "Final Exam: Comprehensive",
+            "lessons": [
+              {
+                "id": "wheelocks_latin_final_caput_I",
+                "title": "Caput I",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_II",
+                "title": "Caput II",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_III",
+                "title": "Caput III",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_IV",
+                "title": "Caput IV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_V",
+                "title": "Caput V",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_VI",
+                "title": "Caput VI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_VII",
+                "title": "Caput VII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_VIII",
+                "title": "Caput VIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_IX",
+                "title": "Caput IX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_X",
+                "title": "Caput X",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XI",
+                "title": "Caput XI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XII",
+                "title": "Caput XII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XIII",
+                "title": "Caput XIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XIV",
+                "title": "Caput XIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XV",
+                "title": "Caput XV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XVI",
+                "title": "Caput XVI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XVII",
+                "title": "Caput XVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XVIII",
+                "title": "Caput XVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XIX",
+                "title": "Caput XIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XX",
+                "title": "Caput XX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXI",
+                "title": "Caput XXI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXII",
+                "title": "Caput XXII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXIII",
+                "title": "Caput XXIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXIV",
+                "title": "Caput XXIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXV",
+                "title": "Caput XXV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXVI",
+                "title": "Caput XXVI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXVII",
+                "title": "Caput XXVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXVIII",
+                "title": "Caput XXVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXIX",
+                "title": "Caput XXIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXX",
+                "title": "Caput XXX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXI",
+                "title": "Caput XXXI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXII",
+                "title": "Caput XXXII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXIII",
+                "title": "Caput XXXIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXIV",
+                "title": "Caput XXXIV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXV",
+                "title": "Caput XXXV",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXVI",
+                "title": "Caput XXXVI",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXVII",
+                "title": "Caput XXXVII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXVIII",
+                "title": "Caput XXXVIII",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XXXIX",
+                "title": "Caput XXXIX",
+                "category": "lesson"
+              },
+              {
+                "id": "wheelocks_latin_final_caput_XL",
+                "title": "Caput XL",
+                "category": "lesson"
+              }
+            ]
+          }
+        ]
+      },
+      "source": {
+        "sections": [
+          {
+            "heading": "",
+            "content": [
+              "Wheelock's Latin",
+              "7th Edition • with Workbook (3rd Edition Revised)",
+              "Complete Grading Rubric & Reward Point System",
+              "1. Grading Philosophy",
+              "This system follows the principle: \"Process Earns, Mastery Multiplies.\"",
+              "Students earn steady base points for completing daily work consistently. Bonus multipliers and thematic mastery badges reward demonstrated understanding and long-term retention.",
+              "Latin is traditionally taught as a reading language rather than a conversational one. Accordingly, the speaking component is reduced to pronunciation and reading aloud (10%), with the freed weight redistributed to daily practice and flashcard mastery. Reading authentic Latin texts from the Locī Antīquī earns bonus points.",
+              "2. Course Structure",
+              "Wheelock's Latin contains 40 chapters (Capita) covering comprehensive Latin grammar from basic verb conjugations through advanced subjunctive constructions. The course uses both the main textbook and the companion Workbook, weighted equally."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "2.1 Unit Breakdown",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Unit",
+                  "Capita",
+                  "Content & Assessment"
+                ],
+                [
+                  "Unit 1",
+                  "I–IV",
+                  "1st/2nd Conjugations; 1st/2nd Declensions; Sum; Predicate Nominatives"
+                ],
+                [
+                  "Unit 2",
+                  "V–VIII",
+                  "Future/Imperfect; Possum; 3rd Declension Nouns; 3rd Conjugation Present"
+                ],
+                [
+                  "Unit 3",
+                  "IX–XII",
+                  "Demonstratives (Hic, Ille, Iste, Is); 4th Conjugation; Perfect Active System"
+                ],
+                [
+                  "Unit 4",
+                  "XIII–XVI",
+                  "Reflexives; i-Stem Nouns; Numerals; 3rd Declension Adjectives"
+                ],
+                [
+                  "Unit 5",
+                  "XVII–XX",
+                  "Relative Pronoun; Present Passive; Perfect Passive; 4th Declension"
+                ],
+                [
+                  "MIDTERM",
+                  "I–XX",
+                  "Midterm: All 5 Declensions + Complete Active/Passive Voice System"
+                ],
+                [
+                  "Unit 6",
+                  "XXI–XXIV",
+                  "3rd/4th Conj. Passive; 5th Declension; Participles; Ablative Absolute"
+                ],
+                [
+                  "Unit 7",
+                  "XXV–XXVIII",
+                  "Infinitives; Indirect Statement; Comparison; Subjunctive Introduction"
+                ],
+                [
+                  "Unit 8",
+                  "XXIX–XXXII",
+                  "Subjunctive Uses; Cum Clauses; Ferō; Volō, Mālō, Nōlō; Adverbs"
+                ],
+                [
+                  "Unit 9",
+                  "XXXIII–XXXVI",
+                  "Conditions; Deponent Verbs; Dative Uses; Jussive Noun Clauses; Fīō"
+                ],
+                [
+                  "Unit 10",
+                  "XXXVII–XL",
+                  "Eō; Place/Time; Relative Characteristic; Gerund/Gerundive; Fear Clauses"
+                ],
+                [
+                  "FINAL",
+                  "I–XL",
+                  "Final Exam: Comprehensive"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "2.2 Chapter Content Overview",
+            "content": [
+              "Each of the 40 chapters covers specific grammatical concepts with vocabulary, paradigms, and practice sentences.",
+              "3. Per-Chapter Components",
+              "Each of the 40 chapters includes the following graded components:",
+              "4. Grade Weight Distribution",
+              "The course grade is calculated from five categories. Because Latin is primarily a reading language, the speaking component is reduced to 10% (pronunciation/reading aloud only)."
+            ],
+            "tables": [
+              [
+                [
+                  "Cap.",
+                  "Content"
+                ],
+                [
+                  "I",
+                  "Verbs: 1st & 2nd Conjugations; Adverbs; Reading and Translating"
+                ],
+                [
+                  "II",
+                  "1st Declension Nouns & Adjectives; Prepositions; Conjunctions; Interjections"
+                ],
+                [
+                  "III",
+                  "2nd Declension Masculine Nouns & Adjectives; Apposition; Word Order"
+                ],
+                [
+                  "IV",
+                  "2nd Declension Neuters; Adjectives; Present of Sum; Predicate Nominatives"
+                ],
+                [
+                  "V",
+                  "1st & 2nd Conjugations: Future and Imperfect; Adjectives in -er"
+                ],
+                [
+                  "VI",
+                  "Sum and Possum; Complementary Infinitive"
+                ],
+                [
+                  "VII",
+                  "3rd Declension Nouns"
+                ],
+                [
+                  "VIII",
+                  "3rd Conjugation: Present System"
+                ],
+                [
+                  "IX",
+                  "Demonstratives Hic, Ille, Iste; Special -īus Adjectives"
+                ],
+                [
+                  "X",
+                  "4th Conjugation and -iō Verbs of the 3rd"
+                ],
+                [
+                  "XI",
+                  "Personal Pronouns Ego, Tū, Is; Demonstratives Is and Idem"
+                ],
+                [
+                  "XII",
+                  "The Perfect Active System; Synopsis"
+                ],
+                [
+                  "XIII",
+                  "Reflexive Pronouns and Possessives; Intensive Pronoun"
+                ],
+                [
+                  "XIV",
+                  "i-Stem Nouns (3rd Decl.); Ablatives of Means, Accompaniment, Manner"
+                ],
+                [
+                  "XV",
+                  "Numerals; Genitive of the Whole; Ablative with Numerals and Time"
+                ],
+                [
+                  "XVI",
+                  "3rd Declension Adjectives"
+                ],
+                [
+                  "XVII",
+                  "The Relative Pronoun"
+                ],
+                [
+                  "XVIII",
+                  "1st & 2nd Conjugations: Present System Passive; Ablative of Agent"
+                ],
+                [
+                  "XIX",
+                  "Perfect Passive System; Interrogative Pronouns and Adjectives"
+                ],
+                [
+                  "XX",
+                  "4th Declension; Ablatives of Place from Which and Separation"
+                ]
+              ],
+              [
+                [
+                  "Cap.",
+                  "Content"
+                ],
+                [
+                  "XXI",
+                  "3rd & 4th Conjugations: Present System Passive"
+                ],
+                [
+                  "XXII",
+                  "5th Declension; Ablative of Place Where; Summary of Ablative Uses"
+                ],
+                [
+                  "XXIII",
+                  "Participles"
+                ],
+                [
+                  "XXIV",
+                  "Ablative Absolute; Passive Periphrastic; Dative of Agent"
+                ],
+                [
+                  "XXV",
+                  "Infinitives; Indirect Statement"
+                ],
+                [
+                  "XXVI",
+                  "Comparison of Adjectives; Ablative of Comparison"
+                ],
+                [
+                  "XXVII",
+                  "Irregular Comparison of Adjectives"
+                ],
+                [
+                  "XXVIII",
+                  "Subjunctive Mood; Present Subjunctive; Jussive and Purpose Clauses"
+                ],
+                [
+                  "XXIX",
+                  "Imperfect Subjunctive; Present/Imperfect Subjunctive of Sum/Possum; Result Clauses"
+                ],
+                [
+                  "XXX",
+                  "Perfect & Pluperfect Subjunctive; Indirect Questions; Sequence of Tenses"
+                ],
+                [
+                  "XXXI",
+                  "Cum Clauses; Ferō"
+                ],
+                [
+                  "XXXII",
+                  "Formation & Comparison of Adverbs; Volō, Mālō, Nōlō; Proviso Clauses"
+                ],
+                [
+                  "XXXIII",
+                  "Conditions (Simple, Contrary-to-Fact)"
+                ],
+                [
+                  "XXXIV",
+                  "Deponent Verbs; Ablative with Special Deponents"
+                ],
+                [
+                  "XXXV",
+                  "Dative with Adjectives, Special Verbs, and Compounds"
+                ],
+                [
+                  "XXXVI",
+                  "Jussive Noun Clauses; Fīō"
+                ],
+                [
+                  "XXXVII",
+                  "Conjugation of Eō; Place and Time Constructions"
+                ],
+                [
+                  "XXXVIII",
+                  "Relative Clauses of Characteristic; Dative of Reference; Supines"
+                ],
+                [
+                  "XXXIX",
+                  "Gerund and Gerundive"
+                ],
+                [
+                  "XL",
+                  "-Ne, Num, Nōnne in Direct Questions; Fear Clauses; Genitive/Ablative of Description"
+                ]
+              ],
+              [
+                [
+                  "Component",
+                  "Description",
+                  "Grading Type"
+                ],
+                [
+                  "Lecture Attendance",
+                  "Present and engaged during instruction",
+                  "Completion (Pass/Fail)"
+                ],
+                [
+                  "Textbook Exercises",
+                  "Exercitationes and Sententiae Antīquae",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Workbook Exercises",
+                  "Companion workbook chapter exercises",
+                  "Accuracy (% Correct)"
+                ],
+                [
+                  "Vocabulary Flashcards",
+                  "Latin entry + forms ↔ English meaning",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Declension Flashcards",
+                  "Full paradigm tables by declension",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Conjugation Flashcards",
+                  "Full paradigm tables by conjugation/tense",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Syntax Pattern Flashcards",
+                  "Ablative uses, subjunctive constructions, etc.",
+                  "Creation + Box 7"
+                ],
+                [
+                  "Pronunciation/Read-Aloud",
+                  "Reading Latin text with proper pronunciation",
+                  "Completion + Self-Check"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.1 Base Grade Components (100%)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Weight",
+                  "Components Included"
+                ],
+                [
+                  "Daily Practice (Written)",
+                  "25%",
+                  "Textbook (12.5%) + Workbook (12.5%)"
+                ],
+                [
+                  "Flashcard System",
+                  "25%",
+                  "All 4 card types: Creation + Box 7"
+                ],
+                [
+                  "Pronunciation/Reading",
+                  "10%",
+                  "Read-Aloud practice only"
+                ],
+                [
+                  "Unit Tests (Written)",
+                  "20%",
+                  "10 Unit Tests"
+                ],
+                [
+                  "Cumulative Exams",
+                  "20%",
+                  "Midterm (8%) + Final (12%)"
+                ],
+                [
+                  "TOTAL",
+                  "100%",
+                  ""
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "4.2 Detailed Breakdown",
+            "content": [
+              "Daily Practice — Written (25%)",
+              "Textbook Exercises (Exercitationes, Sententiae Antīquae): 12.5% of total grade",
+              "Workbook Exercises: 12.5% of total grade",
+              "Flashcard System (25%)",
+              "Flashcard Creation (all 4 types): 10% of total grade",
+              "Flashcard Mastery (Box 7): 15% of total grade",
+              "Pronunciation/Reading (10%)",
+              "Daily Read-Aloud practice: 10% of total grade (completion + self-check)",
+              "Note: There is no conversation component for Latin. This category focuses on accurate pronunciation of Latin text using either Classical or Ecclesiastical pronunciation.",
+              "Unit Tests (20%)",
+              "Each of the 10 unit tests: 2% of total grade",
+              "Cumulative Exams (20%)",
+              "Midterm Exam (Capita I–XX): 8% of total grade",
+              "Final Exam (Capita I–XL): 12% of total grade",
+              "5. Pronunciation & Reading Component",
+              "Latin pronunciation is assessed through reading aloud rather than conversation. Students should choose either Classical or Ecclesiastical pronunciation and maintain consistency."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.1 Daily Read-Aloud",
+            "content": [
+              "For each chapter, the student:",
+              "Records themselves reading the chapter vocabulary and practice sentences",
+              "Compares their recording to reference audio (see sources below)",
+              "Self-assesses focusing on: vowel quantity, consonant sounds, stress patterns",
+              "Parent spot-checks periodically"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "5.2 Pronunciation Systems",
+            "content": [
+              "Classical Pronunciation (Restored)",
+              "C always hard (like K): Cicero = \"Kikero\"",
+              "G always hard (like in \"go\"): genus = \"genus\" (not \"jenus\")",
+              "V pronounced as W: vīnum = \"weenum\"",
+              "AE and OE as diphthongs: puellae = \"poo-EL-lai\"",
+              "Ecclesiastical Pronunciation (Church Latin)",
+              "C soft before E, I, AE, OE (like CH): Cicero = \"Chichero\"",
+              "G soft before E, I (like J): genus = \"jenus\"",
+              "V pronounced as V: vīnum = \"veenum\"",
+              "AE and OE as \"ay\": puellae = \"poo-EL-lay\"",
+              "6. Reward Point Values",
+              "Points are earned for each completed component. These points feed directly into the reward system."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "6.1 Per-Chapter Point Values",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Base Points",
+                  "Max Bonus",
+                  "Total Possible"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "—",
+                  "10"
+                ],
+                [
+                  "Textbook Exercises",
+                  "40",
+                  "+20 (100%)",
+                  "60"
+                ],
+                [
+                  "Workbook Exercises",
+                  "40",
+                  "+20 (100%)",
+                  "60"
+                ],
+                [
+                  "Flashcard Creation (all 4 types)",
+                  "30",
+                  "—",
+                  "30"
+                ],
+                [
+                  "Read-Aloud Practice",
+                  "20",
+                  "—",
+                  "20"
+                ],
+                [
+                  "Per-Chapter Total",
+                  "140",
+                  "+40",
+                  "180"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.2 Flashcard Mastery Points",
+            "content": [
+              "Each flashcard that reaches Leitner Box 7 earns a one-time graduation bonus. Latin uses four specialized card types.",
+              "Note: Vocabulary cards MUST include the full dictionary entry (e.g., puella, -ae, f. = girl) to earn full points. Cards with incomplete entries earn only 5 points."
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Box 7 Graduation Bonus"
+                ],
+                [
+                  "Vocabulary Card (full dictionary entry ↔ meaning)",
+                  "10 points per card"
+                ],
+                [
+                  "Declension Card (full paradigm table)",
+                  "25 points per card"
+                ],
+                [
+                  "Conjugation Card (full paradigm by tense/voice)",
+                  "20 points per card"
+                ],
+                [
+                  "Syntax Pattern Card (construction rules)",
+                  "20 points per card"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.3 Assessment Point Values",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Base Points",
+                  "Perfect Score",
+                  "Max Total"
+                ],
+                [
+                  "Unit Test (each of 10)",
+                  "200",
+                  "+100",
+                  "300"
+                ],
+                [
+                  "Midterm Exam",
+                  "500",
+                  "+250",
+                  "750"
+                ],
+                [
+                  "Final Exam",
+                  "750",
+                  "+500",
+                  "1,250"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "6.4 Locī Antīquī Bonus Points",
+            "content": [
+              "Reading authentic Latin texts from the Locī Antīquī and Locī Immūtātī sections earns bonus points. These are optional but highly encouraged.",
+              "7. Bonuses & Multipliers"
+            ],
+            "tables": [
+              [
+                [
+                  "Reading Level",
+                  "Points Each",
+                  "Requirement"
+                ],
+                [
+                  "Locī Antīquī (Guided)",
+                  "50 pts",
+                  "Accurate translation"
+                ],
+                [
+                  "Locī Antīquī (Independent)",
+                  "100 pts",
+                  "Translation + parse key forms"
+                ],
+                [
+                  "Locī Immūtātī (Unadapted)",
+                  "150 pts",
+                  "Full translation + grammatical analysis"
+                ],
+                [
+                  "Complete all Locī Antīquī",
+                  "+500 pts",
+                  "Bonus for completing entire section"
+                ],
+                [
+                  "Complete all Locī Immūtātī",
+                  "+1,000 pts",
+                  "Bonus for completing entire section"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.1 Streak Bonuses",
+            "content": [
+              "Completing chapter work on consecutive days earns streak multipliers applied to daily practice points."
+            ],
+            "tables": [
+              [
+                [
+                  "Streak Length",
+                  "Multiplier",
+                  "Example (140 base)"
+                ],
+                [
+                  "Days 1–4",
+                  "1.0× (no bonus)",
+                  "140 points"
+                ],
+                [
+                  "Days 5–9",
+                  "1.1× bonus",
+                  "154 points"
+                ],
+                [
+                  "Days 10–19",
+                  "1.25× bonus",
+                  "175 points"
+                ],
+                [
+                  "Days 20–29",
+                  "1.5× bonus",
+                  "210 points"
+                ],
+                [
+                  "Days 30+",
+                  "2.0× bonus",
+                  "280 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.2 Test Improvement Bonus",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Improvement",
+                  "Bonus Points"
+                ],
+                [
+                  "1–5 percentage points higher",
+                  "+25 points"
+                ],
+                [
+                  "6–10 percentage points higher",
+                  "+50 points"
+                ],
+                [
+                  "11–20 percentage points higher",
+                  "+100 points"
+                ],
+                [
+                  "21+ percentage points higher",
+                  "+200 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "7.3 Milestone Bonuses",
+            "content": [
+              "8. Thematic Mastery Badges",
+              "Each chapter is tagged by grammatical theme. Completing all chapters in a theme AND graduating all associated flashcards to Box 7 earns a Mastery Badge."
+            ],
+            "tables": [
+              [
+                [
+                  "Milestone",
+                  "Bonus"
+                ],
+                [
+                  "Complete Chapter XX (Midterm point)",
+                  "+400 points"
+                ],
+                [
+                  "Master all 5 Declensions (through Ch. XXII)",
+                  "+500 points"
+                ],
+                [
+                  "Master all 4 Conjugations (through Ch. XXI)",
+                  "+500 points"
+                ],
+                [
+                  "Complete all 40 chapters",
+                  "+1,000 points"
+                ],
+                [
+                  "Pass Final Exam (70%+)",
+                  "+500 points"
+                ],
+                [
+                  "Complete course in under 120 days",
+                  "+750 points"
+                ],
+                [
+                  "Maintain 90%+ course average",
+                  "+1,500 points"
+                ],
+                [
+                  "Translate 10 Locī Antīquī passages",
+                  "+300 points"
+                ],
+                [
+                  "Translate 5 Locī Immūtātī passages",
+                  "+500 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.1 Badge Categories",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Badge",
+                  "Requirement",
+                  "Bonus"
+                ],
+                [
+                  "📜 1st Declension Master",
+                  "All 1st decl. content + cards to Box 7",
+                  "300 points"
+                ],
+                [
+                  "📜 2nd Declension Master",
+                  "All 2nd decl. content + cards to Box 7",
+                  "300 points"
+                ],
+                [
+                  "📜 3rd Declension Master",
+                  "All 3rd decl. content + cards to Box 7",
+                  "400 points"
+                ],
+                [
+                  "📜 4th Declension Master",
+                  "All 4th decl. content + cards to Box 7",
+                  "300 points"
+                ],
+                [
+                  "📜 5th Declension Master",
+                  "All 5th decl. content + cards to Box 7",
+                  "300 points"
+                ],
+                [
+                  "⚔️ Active Voice Master",
+                  "All active tenses + cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🛡️ Passive Voice Master",
+                  "All passive tenses + cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🎭 Subjunctive Master",
+                  "All subjunctive content (Cap. XXVIII–XXXVI) + cards to Box 7",
+                  "750 points"
+                ],
+                [
+                  "📖 Participle Master",
+                  "All participle/gerund content + cards to Box 7",
+                  "500 points"
+                ],
+                [
+                  "🔗 Syntax Master",
+                  "All syntax pattern cards to Box 7",
+                  "600 points"
+                ],
+                [
+                  "📚 Translation Master",
+                  "Complete 20+ Locī Antīquī passages",
+                  "750 points"
+                ],
+                [
+                  "🏆 Latin Scholar",
+                  "All 11 badges earned",
+                  "+2,000 points"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "8.2 Badge Requirements",
+            "content": [
+              "To earn a Mastery Badge (except Translation Master), a student must:",
+              "Complete all chapters containing that theme",
+              "Create all flashcards for those chapters",
+              "Graduate ALL associated flashcards to Leitner Box 7",
+              "Score 80%+ average on unit tests covering those chapters",
+              "9. Chapter-to-Theme Mapping",
+              "Below is the mapping of all 40 chapters to their thematic tags. Chapters may have multiple tags."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.1 Declensions",
+            "content": [
+              "1st Declension: Chapters II, XVI (adjectives)",
+              "2nd Declension: Chapters III (masc.), IV (neuters), XVI (adjectives)",
+              "3rd Declension: Chapters VII, XIV (i-stems), XVI (adjectives)",
+              "4th Declension: Chapter XX",
+              "5th Declension: Chapter XXII"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.2 Conjugations & Tenses",
+            "content": [
+              "1st/2nd Conjugation: Chapters I, V, XVIII, XXI",
+              "3rd Conjugation: Chapters VIII, X, XXI",
+              "4th Conjugation: Chapters X, XXI",
+              "Perfect Active: Chapter XII",
+              "Passive Voice: Chapters XVIII, XIX, XXI",
+              "Irregular Verbs: Sum (IV, VI), Possum (VI), Ferō (XXXI), Volō/Mālō/Nōlō (XXXII), Fīō (XXXVI), Eō (XXXVII)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.3 Subjunctive",
+            "content": [
+              "Present Subjunctive: Chapter XXVIII",
+              "Imperfect Subjunctive: Chapter XXIX",
+              "Perfect/Pluperfect Subjunctive: Chapter XXX",
+              "Subjunctive Uses: Chapters XXVIII–XXX (Purpose, Result, Indirect Questions), XXXI (Cum), XXXIII (Conditions), XXXVI (Jussive Noun), XL (Fear)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.4 Participles & Verbal Nouns",
+            "content": [
+              "Participles: Chapter XXIII",
+              "Ablative Absolute: Chapter XXIV",
+              "Infinitives: Chapter XXV",
+              "Gerund/Gerundive: Chapter XXXIX",
+              "Supines: Chapter XXXVIII"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "9.5 Syntax Patterns",
+            "content": [
+              "Ablative Uses: Chapters XIV (Means, Accompaniment, Manner), XVIII (Agent), XX (Place, Separation), XXII (Summary), XXVI (Comparison)",
+              "Dative Uses: Chapters XXIV (Agent with Passive Periphrastic), XXXV (with Adjectives/Verbs/Compounds), XXXVIII (Reference)",
+              "Genitive Uses: Chapters XV (Whole), XL (Description)",
+              "Indirect Statement: Chapter XXV",
+              "10. Maximum Point Totals",
+              "The following summarizes the maximum possible points a student can earn in Wheelock's Latin."
+            ],
+            "tables": []
+          },
+          {
+            "heading": "10.1 Daily Work (40 Chapters)",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Component",
+                  "Per Chapter",
+                  "Total (×40)"
+                ],
+                [
+                  "Lecture Attendance",
+                  "10",
+                  "400"
+                ],
+                [
+                  "Textbook Exercises (max)",
+                  "60",
+                  "2,400"
+                ],
+                [
+                  "Workbook Exercises (max)",
+                  "60",
+                  "2,400"
+                ],
+                [
+                  "Flashcard Creation",
+                  "30",
+                  "1,200"
+                ],
+                [
+                  "Read-Aloud Practice",
+                  "20",
+                  "800"
+                ],
+                [
+                  "Daily Work Subtotal",
+                  "180",
+                  "7,200"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.2 Assessments",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Assessment",
+                  "Max Each",
+                  "Total"
+                ],
+                [
+                  "Unit Tests (10 × 300)",
+                  "300",
+                  "3,000"
+                ],
+                [
+                  "Midterm Exam",
+                  "750",
+                  "750"
+                ],
+                [
+                  "Final Exam",
+                  "1,250",
+                  "1,250"
+                ],
+                [
+                  "Assessment Subtotal",
+                  "—",
+                  "5,000"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.3 Flashcard Mastery (estimated)",
+            "content": [
+              "Estimated cards: ~25 vocab/chapter, ~2 declension paradigms, ~3 conjugation paradigms, ~2 syntax patterns"
+            ],
+            "tables": [
+              [
+                [
+                  "Card Type",
+                  "Est. Cards",
+                  "Max Points"
+                ],
+                [
+                  "Vocabulary Cards (40 × 25 × 10)",
+                  "1,000",
+                  "10,000"
+                ],
+                [
+                  "Declension Cards (~80 paradigms × 25)",
+                  "80",
+                  "2,000"
+                ],
+                [
+                  "Conjugation Cards (~120 paradigms × 20)",
+                  "120",
+                  "2,400"
+                ],
+                [
+                  "Syntax Pattern Cards (~80 patterns × 20)",
+                  "80",
+                  "1,600"
+                ],
+                [
+                  "Flashcard Mastery Subtotal",
+                  "1,280",
+                  "16,000"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.4 Bonuses",
+            "content": [],
+            "tables": [
+              [
+                [
+                  "Bonus Category",
+                  "Max Points"
+                ],
+                [
+                  "Thematic Mastery Badges (all 11 + completion bonus)",
+                  "7,200"
+                ],
+                [
+                  "Milestone Bonuses (all)",
+                  "5,950"
+                ],
+                [
+                  "Streak Bonuses (estimated)",
+                  "~5,000+"
+                ],
+                [
+                  "Test Improvement Bonuses (varies)",
+                  "~1,000+"
+                ],
+                [
+                  "Locī Antīquī Bonuses (all passages + completion)",
+                  "~4,000+"
+                ],
+                [
+                  "Bonus Subtotal (estimated)",
+                  "~23,150+"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "10.5 Grand Total",
+            "content": [
+              "11. Grade Scale",
+              "12. Implementation Notes"
+            ],
+            "tables": [
+              [
+                [
+                  "Category",
+                  "Points"
+                ],
+                [
+                  "Daily Work",
+                  "7,200"
+                ],
+                [
+                  "Assessments",
+                  "5,000"
+                ],
+                [
+                  "Flashcard Mastery",
+                  "16,000"
+                ],
+                [
+                  "Bonuses",
+                  "~23,150"
+                ],
+                [
+                  "MAXIMUM POSSIBLE",
+                  "~51,350 points"
+                ]
+              ],
+              [
+                [
+                  "Letter Grade",
+                  "Percentage",
+                  "GPA Equivalent"
+                ],
+                [
+                  "A+",
+                  "97–100%",
+                  "4.0"
+                ],
+                [
+                  "A",
+                  "93–96%",
+                  "4.0"
+                ],
+                [
+                  "A-",
+                  "90–92%",
+                  "3.7"
+                ],
+                [
+                  "B+",
+                  "87–89%",
+                  "3.3"
+                ],
+                [
+                  "B",
+                  "83–86%",
+                  "3.0"
+                ],
+                [
+                  "B-",
+                  "80–82%",
+                  "2.7"
+                ],
+                [
+                  "C+",
+                  "77–79%",
+                  "2.3"
+                ],
+                [
+                  "C",
+                  "73–76%",
+                  "2.0"
+                ],
+                [
+                  "C-",
+                  "70–72%",
+                  "1.7"
+                ],
+                [
+                  "D",
+                  "60–69%",
+                  "1.0"
+                ],
+                [
+                  "F",
+                  "Below 60%",
+                  "0.0"
+                ]
+              ]
+            ]
+          },
+          {
+            "heading": "12.1 Textbook + Workbook Integration",
+            "content": [
+              "Both textbook and workbook exercises must be completed for each chapter",
+              "Textbook and Workbook are weighted equally (12.5% each of total grade)",
+              "Self-Tutorial Exercises (p. 412) can be used for additional practice"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.2 Latin-Specific Flashcard Rules",
+            "content": [
+              "Vocabulary cards MUST include full dictionary entry: puella, -ae, f. (not just \"puella\")",
+              "Verb entries must include all principal parts: amō, amāre, amāvī, amātum",
+              "Declension cards should show full paradigm (all cases, singular and plural)",
+              "Conjugation cards should show full paradigm for the specific tense/voice",
+              "Macrons (long marks) should be included: ā, ē, ī, ō, ū"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.3 Pronunciation Practice",
+            "content": [
+              "Choose either Classical or Ecclesiastical pronunciation and maintain consistency",
+              "Focus on vowel quantity (long vs. short) and proper stress placement",
+              "Record readings for self-assessment and parent review"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.4 Reference Audio Sources",
+            "content": [
+              "Wheelock's Latin audio companion (if available)",
+              "Latinitium.com (Classical pronunciation resources)",
+              "YouTube: ScorpioMartianus, Latina Vivit (spoken Latin content)",
+              "Vatican website (for Ecclesiastical pronunciation)"
+            ],
+            "tables": []
+          },
+          {
+            "heading": "12.5 Locī Antīquī Integration",
+            "content": [
+              "Locī Antīquī passages are OPTIONAL but earn significant bonus points",
+              "Begin with guided readings (vocabulary help provided)",
+              "Progress to independent readings as skills develop",
+              "Locī Immūtātī (unadapted) readings should be attempted after completing the textbook or alongside later chapters",
+              "— Fīnis —"
+            ],
+            "tables": []
+          }
+        ]
+      }
+    }
+  }
+}

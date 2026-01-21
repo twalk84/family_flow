@@ -1,0 +1,5562 @@
+{
+  "id": "biological_science_v1",
+  "title": "Biological Science",
+  "subtitle": "Freeman, Quillin, Allison — 5th Edition",
+  "version": 1,
+  "type": "academic",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Complete each component to earn base points",
+      "Daily streaks add bonus percentages (+1%/day, max +50%)",
+      "Mastery achievements unlock 1.5x multipliers",
+      "Badges require: Mastery + Completion + Capstone"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "reading_set": {
+        "pointsEach": 10,
+        "countsTowardGrade": true
+      },
+      "lecture_notes": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "worksheet": {
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "chapter_quiz": {
+        "pointsEach": 0,
+        "countsTowardGrade": false
+      },
+      "unit_test": {
+        "pointsEach": 100,
+        "countsTowardGrade": true
+      }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "reading_set": 10,
+      "lecture_notes": 5,
+      "flashcard_session": 5,
+      "worksheet": 15,
+      "unit_test": 100
+    },
+    "multipliers": [
+      {
+        "id": "unit_test_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "minGradePercent": 95,
+          "categoryKey": "unit_test"
+        },
+        "appliesTo": "all_unit_points"
+      },
+      {
+        "id": "flashcard_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "leitnerBox": 7
+        },
+        "appliesTo": "category_points"
+      }
+    ],
+    "streaks": {
+      "reading": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      },
+      "flashcards": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      }
+    }
+  },
+  "curriculum": {
+    "totalLessons": 367,
+    "modules": [
+      {
+        "id": "biology_intro",
+        "title": "Intro: Foundations of Biology",
+        "unit": "Intro",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Reading Set 1: What Does It Mean to Say That Something Is Alive?",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "sectionsCovered": "1.1-1.2",
+              "pages": "1-5",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 1
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Reading Set 2: The Cell Theory & Tree of Life",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "sectionsCovered": "1.3-1.4",
+              "pages": "6-12",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 2
+              }
+            }
+          },
+          {
+            "index": 3,
+            "title": "Reading Set 3: Doing Biology & Chapter Review",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "sectionsCovered": "1.5-Review",
+              "pages": "13-17",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 3
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Lecture Notes: Ch. 1 — Biology and the Tree of Life",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 5,
+            "title": "Worksheet 1: Ch. 1 — Biology and the Tree of Life",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Chapter 1 Quiz: Biology and the Tree of Life",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 1
+              }
+            }
+          },
+          {
+            "index": 7,
+            "title": "Flashcards: Ch. 1 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Intro",
+              "chapter": 1,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_1",
+        "title": "Unit 1: The Molecular Origin and Evolution of Life",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 8,
+            "title": "Reading Set 4: Water and Carbon: Atoms & Chemical Bonds",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "sectionsCovered": "2.1-2.2",
+              "pages": "18-28",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 4
+              }
+            }
+          },
+          {
+            "index": 9,
+            "title": "Reading Set 5: Water Properties & Carbon Chemistry",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "sectionsCovered": "2.3-2.5",
+              "pages": "29-40",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 5
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Lecture Notes: Ch. 2 — Water and Carbon: The Chemical Basis of Life",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 11,
+            "title": "Worksheet 2: Ch. 2 — Water and Carbon: The Chemical Basis of Life",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Chapter 2 Quiz: Water and Carbon: The Chemical Basis of Life",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 2
+              }
+            }
+          },
+          {
+            "index": 13,
+            "title": "Flashcards: Ch. 2 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 2,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Reading Set 6: Amino Acids & Protein Structure",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "sectionsCovered": "3.1-3.2",
+              "pages": "41-50",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 6
+              }
+            }
+          },
+          {
+            "index": 15,
+            "title": "Reading Set 7: Protein Folding & Function",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "sectionsCovered": "3.3-3.4",
+              "pages": "51-56",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 7
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Lecture Notes: Ch. 3 — Protein Structure and Function",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 17,
+            "title": "Worksheet 3: Ch. 3 — Protein Structure and Function",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Chapter 3 Quiz: Protein Structure and Function",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 3
+              }
+            }
+          },
+          {
+            "index": 19,
+            "title": "Flashcards: Ch. 3 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 3,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Reading Set 8: Nucleotide Structure & DNA/RNA",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "sectionsCovered": "4.1-4.2",
+              "pages": "57-65",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 8
+              }
+            }
+          },
+          {
+            "index": 21,
+            "title": "Reading Set 9: RNA World Hypothesis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "sectionsCovered": "4.3-4.4",
+              "pages": "66-71",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 9
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Lecture Notes: Ch. 4 — Nucleic Acids and the RNA World",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 23,
+            "title": "Worksheet 4: Ch. 4 — Nucleic Acids and the RNA World",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Chapter 4 Quiz: Nucleic Acids and the RNA World",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 4
+              }
+            }
+          },
+          {
+            "index": 25,
+            "title": "Flashcards: Ch. 4 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 4,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Reading Set 10: Sugars & Carbohydrate Structure",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "sectionsCovered": "5.1-5.2",
+              "pages": "72-78",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 10
+              }
+            }
+          },
+          {
+            "index": 27,
+            "title": "Reading Set 11: Carbohydrate Function",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "sectionsCovered": "5.3",
+              "pages": "79-83",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 11
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Lecture Notes: Ch. 5 — An Introduction to Carbohydrates",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 29,
+            "title": "Worksheet 5: Ch. 5 — An Introduction to Carbohydrates",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Chapter 5 Quiz: An Introduction to Carbohydrates",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 5
+              }
+            }
+          },
+          {
+            "index": 31,
+            "title": "Flashcards: Ch. 5 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 5,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Reading Set 12: Lipid Structure & Membranes",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "sectionsCovered": "6.1-6.2",
+              "pages": "84-92",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 12
+              }
+            }
+          },
+          {
+            "index": 33,
+            "title": "Reading Set 13: First Cells & Chapter Review",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "sectionsCovered": "6.3-Review",
+              "pages": "93-105",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 13
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Lecture Notes: Ch. 6 — Lipids, Membranes, and the First Cells",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 35,
+            "title": "Worksheet 6: Ch. 6 — Lipids, Membranes, and the First Cells",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Chapter 6 Quiz: Lipids, Membranes, and the First Cells",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 6
+              }
+            }
+          },
+          {
+            "index": 37,
+            "title": "Flashcards: Ch. 6 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapter": 6,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Flashcards: Unit 1 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "chapters": "Ch. 2-6",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 39,
+            "title": "Unit 1 Test: The Molecular Origin and Evolution of Life",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 1",
+              "chapters": "Ch. 2-6",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_2",
+        "title": "Unit 2: Cell Structure and Function",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 40,
+            "title": "Reading Set 14: Inside the Cell: Prokaryotic & Eukaryotic",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "sectionsCovered": "7.1-7.2",
+              "pages": "106-114",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 14
+              }
+            }
+          },
+          {
+            "index": 41,
+            "title": "Reading Set 15: Organelles & Endomembrane System",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "sectionsCovered": "7.3-7.4",
+              "pages": "115-122",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 15
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Reading Set 16: Cytoskeleton & Whole-Cell View",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "sectionsCovered": "7.5-7.6",
+              "pages": "123-131",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 16
+              }
+            }
+          },
+          {
+            "index": 43,
+            "title": "Lecture Notes: Ch. 7 — Inside the Cell",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Worksheet 7: Ch. 7 — Inside the Cell",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 7
+              }
+            }
+          },
+          {
+            "index": 45,
+            "title": "Chapter 7 Quiz: Inside the Cell",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 7
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Flashcards: Ch. 7 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 7,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 47,
+            "title": "Reading Set 17: Energy & Enzymes: Chemical Reactions",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "sectionsCovered": "8.1-8.2",
+              "pages": "136-144",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 17
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Reading Set 18: How Enzymes Work & Regulation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "sectionsCovered": "8.3-8.4",
+              "pages": "145-149",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 18
+              }
+            }
+          },
+          {
+            "index": 49,
+            "title": "Lecture Notes: Ch. 8 — Energy and Enzymes: An Introduction to Metabolic Pathways",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Worksheet 8: Ch. 8 — Energy and Enzymes: An Introduction to Metabolic Pathways",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 8
+              }
+            }
+          },
+          {
+            "index": 51,
+            "title": "Chapter 8 Quiz: Energy and Enzymes: An Introduction to Metabolic Pathways",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 8
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Flashcards: Ch. 8 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 8,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 53,
+            "title": "Reading Set 19: Cellular Respiration Overview & Glycolysis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "sectionsCovered": "9.1-9.2",
+              "pages": "154-161",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 19
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Reading Set 20: Citric Acid Cycle & Electron Transport",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "sectionsCovered": "9.3-9.5",
+              "pages": "162-170",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 20
+              }
+            }
+          },
+          {
+            "index": 55,
+            "title": "Reading Set 21: Fermentation & Integration",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "sectionsCovered": "9.6-9.7",
+              "pages": "171-175",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 21
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Lecture Notes: Ch. 9 — Cellular Respiration and Fermentation",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 57,
+            "title": "Worksheet 9: Ch. 9 — Cellular Respiration and Fermentation",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 9
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Chapter 9 Quiz: Cellular Respiration and Fermentation",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 9
+              }
+            }
+          },
+          {
+            "index": 59,
+            "title": "Flashcards: Ch. 9 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 9,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Reading Set 22: Photosynthesis Overview & Light Reactions",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "sectionsCovered": "10.1-10.2",
+              "pages": "176-185",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 22
+              }
+            }
+          },
+          {
+            "index": 61,
+            "title": "Reading Set 23: Calvin Cycle & How It Works",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "sectionsCovered": "10.3",
+              "pages": "186-193",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 23
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Lecture Notes: Ch. 10 — Photosynthesis",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 63,
+            "title": "Worksheet 10: Ch. 10 — Photosynthesis",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 10
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Chapter 10 Quiz: Photosynthesis",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 10
+              }
+            }
+          },
+          {
+            "index": 65,
+            "title": "Flashcards: Ch. 10 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 10,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Reading Set 24: Cell-Cell Interactions: Extracellular Layer",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "sectionsCovered": "11.1-11.2",
+              "pages": "200-207",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 24
+              }
+            }
+          },
+          {
+            "index": 67,
+            "title": "Reading Set 25: Cell-Cell Communication & Signaling",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "sectionsCovered": "11.3-11.4",
+              "pages": "208-217",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 25
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Lecture Notes: Ch. 11 — Cell-Cell Interactions",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 69,
+            "title": "Worksheet 11: Ch. 11 — Cell-Cell Interactions",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 11
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Chapter 11 Quiz: Cell-Cell Interactions",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 11
+              }
+            }
+          },
+          {
+            "index": 71,
+            "title": "Flashcards: Ch. 11 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 11,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Reading Set 26: Cell Cycle: How Cells Replicate",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "sectionsCovered": "12.1-12.2",
+              "pages": "219-227",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 26
+              }
+            }
+          },
+          {
+            "index": 73,
+            "title": "Reading Set 27: M Phase & Cell Cycle Control",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "sectionsCovered": "12.3-12.4",
+              "pages": "228-235",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 27
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Lecture Notes: Ch. 12 — The Cell Cycle",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 75,
+            "title": "Worksheet 12: Ch. 12 — The Cell Cycle",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 12
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Chapter 12 Quiz: The Cell Cycle",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 12
+              }
+            }
+          },
+          {
+            "index": 77,
+            "title": "Flashcards: Ch. 12 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapter": 12,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Flashcards: Unit 2 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "chapters": "Ch. 7-12",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 79,
+            "title": "Unit 2 Test: Cell Structure and Function",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 2",
+              "chapters": "Ch. 7-12",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_3",
+        "title": "Unit 3: Gene Structure and Expression",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 80,
+            "title": "Reading Set 28: Meiosis: Reduction Division",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "sectionsCovered": "13.1-13.2",
+              "pages": "237-246",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 28
+              }
+            }
+          },
+          {
+            "index": 81,
+            "title": "Reading Set 29: Meiosis Errors & Advantages",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "sectionsCovered": "13.3-13.4",
+              "pages": "247-255",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 29
+              }
+            }
+          },
+          {
+            "index": 82,
+            "title": "Lecture Notes: Ch. 13 — Meiosis",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 83,
+            "title": "Worksheet 13: Ch. 13 — Meiosis",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 13
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Chapter 13 Quiz: Meiosis",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 13
+              }
+            }
+          },
+          {
+            "index": 85,
+            "title": "Flashcards: Ch. 13 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 13,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 86,
+            "title": "Reading Set 30: Mendel and the Gene: Experiments",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "sectionsCovered": "14.1-14.2",
+              "pages": "256-265",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 30
+              }
+            }
+          },
+          {
+            "index": 87,
+            "title": "Reading Set 31: Extensions to Mendel & Linkage",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "sectionsCovered": "14.3-14.5",
+              "pages": "266-275",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 31
+              }
+            }
+          },
+          {
+            "index": 88,
+            "title": "Reading Set 32: Human Genetics & Pedigrees",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "sectionsCovered": "14.6",
+              "pages": "276-283",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 32
+              }
+            }
+          },
+          {
+            "index": 89,
+            "title": "Lecture Notes: Ch. 14 — Mendel and the Gene",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 90,
+            "title": "Worksheet 14: Ch. 14 — Mendel and the Gene",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 14
+              }
+            }
+          },
+          {
+            "index": 91,
+            "title": "Chapter 14 Quiz: Mendel and the Gene",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 14
+              }
+            }
+          },
+          {
+            "index": 92,
+            "title": "Flashcards: Ch. 14 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 14,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 93,
+            "title": "Reading Set 33: DNA Synthesis: Model & Mechanism",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "sectionsCovered": "15.1-15.3",
+              "pages": "284-295",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 33
+              }
+            }
+          },
+          {
+            "index": 94,
+            "title": "Reading Set 34: DNA Repair & Replication",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "sectionsCovered": "15.4-15.5",
+              "pages": "296-303",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 34
+              }
+            }
+          },
+          {
+            "index": 95,
+            "title": "Lecture Notes: Ch. 15 — DNA and the Gene: Synthesis and Repair",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 96,
+            "title": "Worksheet 15: Ch. 15 — DNA and the Gene: Synthesis and Repair",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 15
+              }
+            }
+          },
+          {
+            "index": 97,
+            "title": "Chapter 15 Quiz: DNA and the Gene: Synthesis and Repair",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 15
+              }
+            }
+          },
+          {
+            "index": 98,
+            "title": "Flashcards: Ch. 15 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 15,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 99,
+            "title": "Reading Set 35: How Genes Work: Hypothesis & Evidence",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "sectionsCovered": "16.1-16.2",
+              "pages": "304-310",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 35
+              }
+            }
+          },
+          {
+            "index": 100,
+            "title": "Reading Set 36: Genetic Code & Central Dogma",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "sectionsCovered": "16.3-16.4",
+              "pages": "311-316",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 36
+              }
+            }
+          },
+          {
+            "index": 101,
+            "title": "Lecture Notes: Ch. 16 — How Genes Work",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 102,
+            "title": "Worksheet 16: Ch. 16 — How Genes Work",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 16
+              }
+            }
+          },
+          {
+            "index": 103,
+            "title": "Chapter 16 Quiz: How Genes Work",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 16
+              }
+            }
+          },
+          {
+            "index": 104,
+            "title": "Flashcards: Ch. 16 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 16,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 105,
+            "title": "Reading Set 37: Transcription Overview",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "sectionsCovered": "17.1-17.2",
+              "pages": "317-324",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 37
+              }
+            }
+          },
+          {
+            "index": 106,
+            "title": "Reading Set 38: RNA Structure & Translation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "sectionsCovered": "17.3-17.5",
+              "pages": "325-333",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 38
+              }
+            }
+          },
+          {
+            "index": 107,
+            "title": "Lecture Notes: Ch. 17 — Transcription, RNA Processing, and Translation",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 108,
+            "title": "Worksheet 17: Ch. 17 — Transcription, RNA Processing, and Translation",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 17
+              }
+            }
+          },
+          {
+            "index": 109,
+            "title": "Chapter 17 Quiz: Transcription, RNA Processing, and Translation",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 17
+              }
+            }
+          },
+          {
+            "index": 110,
+            "title": "Flashcards: Ch. 17 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 17,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 111,
+            "title": "Reading Set 39: Gene Expression in Bacteria: Regulation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "sectionsCovered": "18.1-18.3",
+              "pages": "336-343",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 39
+              }
+            }
+          },
+          {
+            "index": 112,
+            "title": "Reading Set 40: Positive Control & Global Regulation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "sectionsCovered": "18.4-18.5",
+              "pages": "344-347",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 40
+              }
+            }
+          },
+          {
+            "index": 113,
+            "title": "Lecture Notes: Ch. 18 — Control of Gene Expression in Bacteria",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 114,
+            "title": "Worksheet 18: Ch. 18 — Control of Gene Expression in Bacteria",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 18
+              }
+            }
+          },
+          {
+            "index": 115,
+            "title": "Chapter 18 Quiz: Control of Gene Expression in Bacteria",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 18
+              }
+            }
+          },
+          {
+            "index": 116,
+            "title": "Flashcards: Ch. 18 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 18,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 117,
+            "title": "Reading Set 41: Gene Expression in Eukaryotes: Overview",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "sectionsCovered": "19.1-19.2",
+              "pages": "348-358",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 41
+              }
+            }
+          },
+          {
+            "index": 118,
+            "title": "Reading Set 42: Post-Transcriptional Control",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "sectionsCovered": "19.3-19.5",
+              "pages": "359-367",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 42
+              }
+            }
+          },
+          {
+            "index": 119,
+            "title": "Lecture Notes: Ch. 19 — Control of Gene Expression in Eukaryotes",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 120,
+            "title": "Worksheet 19: Ch. 19 — Control of Gene Expression in Eukaryotes",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 19
+              }
+            }
+          },
+          {
+            "index": 121,
+            "title": "Chapter 19 Quiz: Control of Gene Expression in Eukaryotes",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 19
+              }
+            }
+          },
+          {
+            "index": 122,
+            "title": "Flashcards: Ch. 19 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 19,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 123,
+            "title": "Reading Set 43: Analyzing & Engineering Genes: Tools",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "sectionsCovered": "20.1-20.2",
+              "pages": "368-377",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 43
+              }
+            }
+          },
+          {
+            "index": 124,
+            "title": "Reading Set 44: Case Studies & Applications",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "sectionsCovered": "20.3-20.6",
+              "pages": "378-387",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 44
+              }
+            }
+          },
+          {
+            "index": 125,
+            "title": "Lecture Notes: Ch. 20 — Analyzing and Engineering Genes",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 126,
+            "title": "Worksheet 20: Ch. 20 — Analyzing and Engineering Genes",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 20
+              }
+            }
+          },
+          {
+            "index": 127,
+            "title": "Chapter 20 Quiz: Analyzing and Engineering Genes",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 20
+              }
+            }
+          },
+          {
+            "index": 128,
+            "title": "Flashcards: Ch. 20 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 20,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 129,
+            "title": "Reading Set 45: Genomics: Whole-Genome Sequencing",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "sectionsCovered": "21.1-21.2",
+              "pages": "389-397",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 45
+              }
+            }
+          },
+          {
+            "index": 130,
+            "title": "Reading Set 46: Functional Genomics & Systems Biology",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "sectionsCovered": "21.3-21.4",
+              "pages": "398-404",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 46
+              }
+            }
+          },
+          {
+            "index": 131,
+            "title": "Lecture Notes: Ch. 21 — Genomics and Beyond",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 132,
+            "title": "Worksheet 21: Ch. 21 — Genomics and Beyond",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 21
+              }
+            }
+          },
+          {
+            "index": 133,
+            "title": "Chapter 21 Quiz: Genomics and Beyond",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 21
+              }
+            }
+          },
+          {
+            "index": 134,
+            "title": "Flashcards: Ch. 21 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapter": 21,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 135,
+            "title": "Flashcards: Unit 3 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "chapters": "Ch. 13-21",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 136,
+            "title": "Unit 3 Test: Gene Structure and Expression",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 3",
+              "chapters": "Ch. 13-21",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_4",
+        "title": "Unit 4: Developmental Biology",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 137,
+            "title": "Reading Set 47: Principles of Development: Differentiation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "sectionsCovered": "22.1-22.2",
+              "pages": "405-413",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 47
+              }
+            }
+          },
+          {
+            "index": 138,
+            "title": "Reading Set 48: Chemical Signals & Gene Expression",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "sectionsCovered": "22.3",
+              "pages": "414-418",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 48
+              }
+            }
+          },
+          {
+            "index": 139,
+            "title": "Lecture Notes: Ch. 22 — Principles of Development",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 140,
+            "title": "Worksheet 22: Ch. 22 — Principles of Development",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 22
+              }
+            }
+          },
+          {
+            "index": 141,
+            "title": "Chapter 22 Quiz: Principles of Development",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 22
+              }
+            }
+          },
+          {
+            "index": 142,
+            "title": "Flashcards: Ch. 22 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 22,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 143,
+            "title": "Reading Set 49: Animal Development: Fertilization",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "sectionsCovered": "23.1-23.2",
+              "pages": "419-426",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 49
+              }
+            }
+          },
+          {
+            "index": 144,
+            "title": "Reading Set 50: Gastrulation & Organogenesis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "sectionsCovered": "23.3-23.4",
+              "pages": "427-431",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 50
+              }
+            }
+          },
+          {
+            "index": 145,
+            "title": "Lecture Notes: Ch. 23 — An Introduction to Animal Development",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 146,
+            "title": "Worksheet 23: Ch. 23 — An Introduction to Animal Development",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 23
+              }
+            }
+          },
+          {
+            "index": 147,
+            "title": "Chapter 23 Quiz: An Introduction to Animal Development",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 23
+              }
+            }
+          },
+          {
+            "index": 148,
+            "title": "Flashcards: Ch. 23 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 23,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 149,
+            "title": "Reading Set 51: Plant Development: Embryogenesis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "sectionsCovered": "24.1-24.2",
+              "pages": "432-438",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 51
+              }
+            }
+          },
+          {
+            "index": 150,
+            "title": "Reading Set 52: Reproductive Development",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "sectionsCovered": "24.3",
+              "pages": "439-443",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 52
+              }
+            }
+          },
+          {
+            "index": 151,
+            "title": "Lecture Notes: Ch. 24 — An Introduction to Plant Development",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 152,
+            "title": "Worksheet 24: Ch. 24 — An Introduction to Plant Development",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 24
+              }
+            }
+          },
+          {
+            "index": 153,
+            "title": "Chapter 24 Quiz: An Introduction to Plant Development",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 24
+              }
+            }
+          },
+          {
+            "index": 154,
+            "title": "Flashcards: Ch. 24 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "chapter": 24,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 155,
+            "title": "Flashcards: Unit 4 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "chapters": "Ch. 22-24",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 156,
+            "title": "Unit 4 Test: Developmental Biology",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 4",
+              "chapters": "Ch. 22-24",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_5",
+        "title": "Unit 5: Evolutionary Processes and Patterns",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 157,
+            "title": "Reading Set 53: Evolution by Natural Selection: Theory",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "sectionsCovered": "25.1-25.2",
+              "pages": "444-450",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 53
+              }
+            }
+          },
+          {
+            "index": 158,
+            "title": "Reading Set 54: Process & Evidence of Evolution",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "sectionsCovered": "25.3-25.4",
+              "pages": "451-458",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 54
+              }
+            }
+          },
+          {
+            "index": 159,
+            "title": "Reading Set 55: Common Misconceptions",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "sectionsCovered": "25.5",
+              "pages": "459-463",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 55
+              }
+            }
+          },
+          {
+            "index": 160,
+            "title": "Lecture Notes: Ch. 25 — Evolution by Natural Selection",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 161,
+            "title": "Worksheet 25: Ch. 25 — Evolution by Natural Selection",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 25
+              }
+            }
+          },
+          {
+            "index": 162,
+            "title": "Chapter 25 Quiz: Evolution by Natural Selection",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 25
+              }
+            }
+          },
+          {
+            "index": 163,
+            "title": "Flashcards: Ch. 25 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 25,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 164,
+            "title": "Reading Set 56: Evolutionary Processes: Hardy-Weinberg",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "sectionsCovered": "26.1-26.2",
+              "pages": "465-473",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 56
+              }
+            }
+          },
+          {
+            "index": 165,
+            "title": "Reading Set 57: Natural Selection & Genetic Drift",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "sectionsCovered": "26.3-26.4",
+              "pages": "474-481",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 57
+              }
+            }
+          },
+          {
+            "index": 166,
+            "title": "Reading Set 58: Gene Flow & Mutation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "sectionsCovered": "26.5-26.6",
+              "pages": "482-488",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 58
+              }
+            }
+          },
+          {
+            "index": 167,
+            "title": "Lecture Notes: Ch. 26 — Evolutionary Processes",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 168,
+            "title": "Worksheet 26: Ch. 26 — Evolutionary Processes",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 26
+              }
+            }
+          },
+          {
+            "index": 169,
+            "title": "Chapter 26 Quiz: Evolutionary Processes",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 26
+              }
+            }
+          },
+          {
+            "index": 170,
+            "title": "Flashcards: Ch. 26 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 26,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 171,
+            "title": "Reading Set 59: Speciation: Definition & Isolation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "sectionsCovered": "27.1-27.2",
+              "pages": "489-497",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 59
+              }
+            }
+          },
+          {
+            "index": 172,
+            "title": "Reading Set 60: Secondary Contact & Polyploidy",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "sectionsCovered": "27.3-27.4",
+              "pages": "498-502",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 60
+              }
+            }
+          },
+          {
+            "index": 173,
+            "title": "Lecture Notes: Ch. 27 — Speciation",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 174,
+            "title": "Worksheet 27: Ch. 27 — Speciation",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 27
+              }
+            }
+          },
+          {
+            "index": 175,
+            "title": "Chapter 27 Quiz: Speciation",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 27
+              }
+            }
+          },
+          {
+            "index": 176,
+            "title": "Flashcards: Ch. 27 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 27,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 177,
+            "title": "Reading Set 61: Phylogenies: Tree of Life",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "sectionsCovered": "28.1-28.2",
+              "pages": "505-515",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 61
+              }
+            }
+          },
+          {
+            "index": 178,
+            "title": "Reading Set 62: Adaptive Radiation & Mass Extinction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "sectionsCovered": "28.3-28.4",
+              "pages": "516-527",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 62
+              }
+            }
+          },
+          {
+            "index": 179,
+            "title": "Lecture Notes: Ch. 28 — Phylogenies and the History of Life",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 180,
+            "title": "Worksheet 28: Ch. 28 — Phylogenies and the History of Life",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 28
+              }
+            }
+          },
+          {
+            "index": 181,
+            "title": "Chapter 28 Quiz: Phylogenies and the History of Life",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 28
+              }
+            }
+          },
+          {
+            "index": 182,
+            "title": "Flashcards: Ch. 28 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "chapter": 28,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 183,
+            "title": "Flashcards: Unit 5 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "chapters": "Ch. 25-28",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 184,
+            "title": "Unit 5 Test: Evolutionary Processes and Patterns",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 5",
+              "chapters": "Ch. 25-28",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_6",
+        "title": "Unit 6: The Diversification of Life",
+        "unit": "Unit 6",
+        "lessons": [
+          {
+            "index": 185,
+            "title": "Reading Set 63: Bacteria and Archaea: Diversity",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "sectionsCovered": "29.1-29.2",
+              "pages": "528-540",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 63
+              }
+            }
+          },
+          {
+            "index": 186,
+            "title": "Reading Set 64: Metabolism & Ecology",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "sectionsCovered": "29.3-29.4",
+              "pages": "541-551",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 64
+              }
+            }
+          },
+          {
+            "index": 187,
+            "title": "Lecture Notes: Ch. 29 — Bacteria and Archaea",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 188,
+            "title": "Worksheet 29: Ch. 29 — Bacteria and Archaea",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 29
+              }
+            }
+          },
+          {
+            "index": 189,
+            "title": "Chapter 29 Quiz: Bacteria and Archaea",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 29
+              }
+            }
+          },
+          {
+            "index": 190,
+            "title": "Flashcards: Ch. 29 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 29,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 191,
+            "title": "Reading Set 65: Protists: Diversity & Phylogeny",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "sectionsCovered": "30.1-30.2",
+              "pages": "552-565",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 65
+              }
+            }
+          },
+          {
+            "index": 192,
+            "title": "Reading Set 66: Themes in Protist Diversification",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "sectionsCovered": "30.3-30.4",
+              "pages": "566-575",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 66
+              }
+            }
+          },
+          {
+            "index": 193,
+            "title": "Lecture Notes: Ch. 30 — Protists",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 194,
+            "title": "Worksheet 30: Ch. 30 — Protists",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 30
+              }
+            }
+          },
+          {
+            "index": 195,
+            "title": "Chapter 30 Quiz: Protists",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 30
+              }
+            }
+          },
+          {
+            "index": 196,
+            "title": "Flashcards: Ch. 30 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 30,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 197,
+            "title": "Reading Set 67: Green Algae and Land Plants: Origin",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "sectionsCovered": "31.1-31.2",
+              "pages": "577-590",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 67
+              }
+            }
+          },
+          {
+            "index": 198,
+            "title": "Reading Set 68: Plant Diversification",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "sectionsCovered": "31.3-31.4",
+              "pages": "591-611",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 68
+              }
+            }
+          },
+          {
+            "index": 199,
+            "title": "Lecture Notes: Ch. 31 — Green Algae and Land Plants",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 200,
+            "title": "Worksheet 31: Ch. 31 — Green Algae and Land Plants",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 31
+              }
+            }
+          },
+          {
+            "index": 201,
+            "title": "Chapter 31 Quiz: Green Algae and Land Plants",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 31
+              }
+            }
+          },
+          {
+            "index": 202,
+            "title": "Flashcards: Ch. 31 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 31,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 203,
+            "title": "Reading Set 69: Fungi: Structure & Phylogeny",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "sectionsCovered": "32.1-32.2",
+              "pages": "612-621",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 69
+              }
+            }
+          },
+          {
+            "index": 204,
+            "title": "Reading Set 70: Fungi Diversity & Ecology",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "sectionsCovered": "32.3-32.4",
+              "pages": "622-633",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 70
+              }
+            }
+          },
+          {
+            "index": 205,
+            "title": "Lecture Notes: Ch. 32 — Fungi",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 206,
+            "title": "Worksheet 32: Ch. 32 — Fungi",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 32
+              }
+            }
+          },
+          {
+            "index": 207,
+            "title": "Chapter 32 Quiz: Fungi",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 32
+              }
+            }
+          },
+          {
+            "index": 208,
+            "title": "Flashcards: Ch. 32 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 32,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 209,
+            "title": "Reading Set 71: Introduction to Animals: Origins",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "sectionsCovered": "33.1-33.2",
+              "pages": "636-642",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 71
+              }
+            }
+          },
+          {
+            "index": 210,
+            "title": "Reading Set 72: Animal Diversification & Body Plans",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "sectionsCovered": "33.3-33.4",
+              "pages": "643-655",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 72
+              }
+            }
+          },
+          {
+            "index": 211,
+            "title": "Lecture Notes: Ch. 33 — An Introduction to Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 212,
+            "title": "Worksheet 33: Ch. 33 — An Introduction to Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 33
+              }
+            }
+          },
+          {
+            "index": 213,
+            "title": "Chapter 33 Quiz: An Introduction to Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 33
+              }
+            }
+          },
+          {
+            "index": 214,
+            "title": "Flashcards: Ch. 33 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 33,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 215,
+            "title": "Reading Set 73: Protostome Animals: Diversity",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "sectionsCovered": "34.1-34.2",
+              "pages": "657-670",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 73
+              }
+            }
+          },
+          {
+            "index": 216,
+            "title": "Reading Set 74: Ecdysozoans & Key Lineages",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "sectionsCovered": "34.3",
+              "pages": "671-680",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 74
+              }
+            }
+          },
+          {
+            "index": 217,
+            "title": "Lecture Notes: Ch. 34 — Protostome Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 218,
+            "title": "Worksheet 34: Ch. 34 — Protostome Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 34
+              }
+            }
+          },
+          {
+            "index": 219,
+            "title": "Chapter 34 Quiz: Protostome Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 34
+              }
+            }
+          },
+          {
+            "index": 220,
+            "title": "Flashcards: Ch. 34 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 34,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 221,
+            "title": "Reading Set 75: Deuterostome Animals: Echinoderms",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "sectionsCovered": "35.1-35.2",
+              "pages": "681-695",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 75
+              }
+            }
+          },
+          {
+            "index": 222,
+            "title": "Reading Set 76: Chordates & Vertebrates",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "sectionsCovered": "35.3",
+              "pages": "696-710",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 76
+              }
+            }
+          },
+          {
+            "index": 223,
+            "title": "Lecture Notes: Ch. 35 — Deuterostome Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 224,
+            "title": "Worksheet 35: Ch. 35 — Deuterostome Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 35
+              }
+            }
+          },
+          {
+            "index": 225,
+            "title": "Chapter 35 Quiz: Deuterostome Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 35
+              }
+            }
+          },
+          {
+            "index": 226,
+            "title": "Flashcards: Ch. 35 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 35,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 227,
+            "title": "Reading Set 77: Viruses: Structure & Diversity",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "sectionsCovered": "36.1-36.2",
+              "pages": "711-720",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 77
+              }
+            }
+          },
+          {
+            "index": 228,
+            "title": "Reading Set 78: Viral Replication & Disease",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "sectionsCovered": "36.3-36.4",
+              "pages": "721-730",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 78
+              }
+            }
+          },
+          {
+            "index": 229,
+            "title": "Lecture Notes: Ch. 36 — Viruses",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 230,
+            "title": "Worksheet 36: Ch. 36 — Viruses",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 36
+              }
+            }
+          },
+          {
+            "index": 231,
+            "title": "Chapter 36 Quiz: Viruses",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 36
+              }
+            }
+          },
+          {
+            "index": 232,
+            "title": "Flashcards: Ch. 36 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapter": 36,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 233,
+            "title": "Flashcards: Unit 6 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "chapters": "Ch. 29-36",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 234,
+            "title": "Unit 6 Test: The Diversification of Life",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 6",
+              "chapters": "Ch. 29-36",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_7",
+        "title": "Unit 7: How Plants Work",
+        "unit": "Unit 7",
+        "lessons": [
+          {
+            "index": 235,
+            "title": "Reading Set 79: Plant Form and Function: Structure",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "sectionsCovered": "37.1-37.2",
+              "pages": "731-742",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 79
+              }
+            }
+          },
+          {
+            "index": 236,
+            "title": "Reading Set 80: Primary & Secondary Growth",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "sectionsCovered": "37.3-37.4",
+              "pages": "743-753",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 80
+              }
+            }
+          },
+          {
+            "index": 237,
+            "title": "Lecture Notes: Ch. 37 — Plant Form and Function",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 238,
+            "title": "Worksheet 37: Ch. 37 — Plant Form and Function",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 37
+              }
+            }
+          },
+          {
+            "index": 239,
+            "title": "Chapter 37 Quiz: Plant Form and Function",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 37
+              }
+            }
+          },
+          {
+            "index": 240,
+            "title": "Flashcards: Ch. 37 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 37,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 241,
+            "title": "Reading Set 81: Water and Sugar Transport: Movement",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "sectionsCovered": "38.1-38.2",
+              "pages": "754-763",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 81
+              }
+            }
+          },
+          {
+            "index": 242,
+            "title": "Reading Set 82: Sugar Translocation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "sectionsCovered": "38.3-38.4",
+              "pages": "764-774",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 82
+              }
+            }
+          },
+          {
+            "index": 243,
+            "title": "Lecture Notes: Ch. 38 — Water and Sugar Transport in Plants",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 244,
+            "title": "Worksheet 38: Ch. 38 — Water and Sugar Transport in Plants",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 38
+              }
+            }
+          },
+          {
+            "index": 245,
+            "title": "Chapter 38 Quiz: Water and Sugar Transport in Plants",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 38
+              }
+            }
+          },
+          {
+            "index": 246,
+            "title": "Flashcards: Ch. 38 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 38,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 247,
+            "title": "Reading Set 83: Plant Nutrition: Requirements",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "sectionsCovered": "39.1-39.2",
+              "pages": "775-783",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 83
+              }
+            }
+          },
+          {
+            "index": 248,
+            "title": "Reading Set 84: Nutrient Uptake & Symbioses",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "sectionsCovered": "39.3-39.4",
+              "pages": "784-791",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 84
+              }
+            }
+          },
+          {
+            "index": 249,
+            "title": "Lecture Notes: Ch. 39 — Plant Nutrition",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 250,
+            "title": "Worksheet 39: Ch. 39 — Plant Nutrition",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 39
+              }
+            }
+          },
+          {
+            "index": 251,
+            "title": "Chapter 39 Quiz: Plant Nutrition",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 39
+              }
+            }
+          },
+          {
+            "index": 252,
+            "title": "Flashcards: Ch. 39 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 39,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 253,
+            "title": "Reading Set 85: Plant Sensory Systems: Information",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "sectionsCovered": "40.1-40.2",
+              "pages": "793-802",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 85
+              }
+            }
+          },
+          {
+            "index": 254,
+            "title": "Reading Set 86: Plant Responses & Hormones",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "sectionsCovered": "40.3-40.6",
+              "pages": "803-817",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 86
+              }
+            }
+          },
+          {
+            "index": 255,
+            "title": "Lecture Notes: Ch. 40 — Plant Sensory Systems, Signals, and Responses",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 256,
+            "title": "Worksheet 40: Ch. 40 — Plant Sensory Systems, Signals, and Responses",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 40
+              }
+            }
+          },
+          {
+            "index": 257,
+            "title": "Chapter 40 Quiz: Plant Sensory Systems, Signals, and Responses",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 40
+              }
+            }
+          },
+          {
+            "index": 258,
+            "title": "Flashcards: Ch. 40 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 40,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 259,
+            "title": "Reading Set 87: Plant Reproduction: Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "sectionsCovered": "41.1-41.2",
+              "pages": "822-830",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 87
+              }
+            }
+          },
+          {
+            "index": 260,
+            "title": "Reading Set 88: Seeds & Fruit Development",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "sectionsCovered": "41.3-41.4",
+              "pages": "831-841",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 88
+              }
+            }
+          },
+          {
+            "index": 261,
+            "title": "Lecture Notes: Ch. 41 — Plant Reproduction",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 262,
+            "title": "Worksheet 41: Ch. 41 — Plant Reproduction",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 41
+              }
+            }
+          },
+          {
+            "index": 263,
+            "title": "Chapter 41 Quiz: Plant Reproduction",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 41
+              }
+            }
+          },
+          {
+            "index": 264,
+            "title": "Flashcards: Ch. 41 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapter": 41,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 265,
+            "title": "Flashcards: Unit 7 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 7",
+              "chapters": "Ch. 37-41",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 266,
+            "title": "Unit 7 Test: How Plants Work",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 7",
+              "chapters": "Ch. 37-41",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_8",
+        "title": "Unit 8: How Animals Work",
+        "unit": "Unit 8",
+        "lessons": [
+          {
+            "index": 267,
+            "title": "Reading Set 89: Animal Form and Function: Tissues",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "sectionsCovered": "42.1-42.2",
+              "pages": "842-851",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 89
+              }
+            }
+          },
+          {
+            "index": 268,
+            "title": "Reading Set 90: Body Size & Homeostasis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "sectionsCovered": "42.3-42.5",
+              "pages": "852-859",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 90
+              }
+            }
+          },
+          {
+            "index": 269,
+            "title": "Lecture Notes: Ch. 42 — Animal Form and Function",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 270,
+            "title": "Worksheet 42: Ch. 42 — Animal Form and Function",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 42
+              }
+            }
+          },
+          {
+            "index": 271,
+            "title": "Chapter 42 Quiz: Animal Form and Function",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 42
+              }
+            }
+          },
+          {
+            "index": 272,
+            "title": "Flashcards: Ch. 42 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 42,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 273,
+            "title": "Reading Set 91: Water and Electrolyte Balance",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "sectionsCovered": "43.1-43.3",
+              "pages": "861-874",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 91
+              }
+            }
+          },
+          {
+            "index": 274,
+            "title": "Reading Set 92: Nitrogenous Waste & Kidney",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "sectionsCovered": "43.4-43.5",
+              "pages": "875-881",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 92
+              }
+            }
+          },
+          {
+            "index": 275,
+            "title": "Lecture Notes: Ch. 43 — Water and Electrolyte Balance in Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 276,
+            "title": "Worksheet 43: Ch. 43 — Water and Electrolyte Balance in Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 43
+              }
+            }
+          },
+          {
+            "index": 277,
+            "title": "Chapter 43 Quiz: Water and Electrolyte Balance in Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 43
+              }
+            }
+          },
+          {
+            "index": 278,
+            "title": "Flashcards: Ch. 43 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 43,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 279,
+            "title": "Reading Set 93: Animal Nutrition: Requirements",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "sectionsCovered": "44.1-44.2",
+              "pages": "882-892",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 93
+              }
+            }
+          },
+          {
+            "index": 280,
+            "title": "Reading Set 94: Digestive System",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "sectionsCovered": "44.3-44.4",
+              "pages": "893-901",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 94
+              }
+            }
+          },
+          {
+            "index": 281,
+            "title": "Lecture Notes: Ch. 44 — Animal Nutrition",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 282,
+            "title": "Worksheet 44: Ch. 44 — Animal Nutrition",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 44
+              }
+            }
+          },
+          {
+            "index": 283,
+            "title": "Chapter 44 Quiz: Animal Nutrition",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 44
+              }
+            }
+          },
+          {
+            "index": 284,
+            "title": "Flashcards: Ch. 44 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 44,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 285,
+            "title": "Reading Set 95: Gas Exchange: Overview",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "sectionsCovered": "45.1-45.2",
+              "pages": "902-912",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 95
+              }
+            }
+          },
+          {
+            "index": 286,
+            "title": "Reading Set 96: Respiratory Systems",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "sectionsCovered": "45.3-45.4",
+              "pages": "913-921",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 96
+              }
+            }
+          },
+          {
+            "index": 287,
+            "title": "Lecture Notes: Ch. 45 — Gas Exchange and Circulation",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 288,
+            "title": "Worksheet 45: Ch. 45 — Gas Exchange and Circulation",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 45
+              }
+            }
+          },
+          {
+            "index": 289,
+            "title": "Chapter 45 Quiz: Gas Exchange and Circulation",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 45
+              }
+            }
+          },
+          {
+            "index": 290,
+            "title": "Flashcards: Ch. 45 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 45,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 291,
+            "title": "Reading Set 97: Animal Nervous Systems: Principles",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "sectionsCovered": "46.1-46.2",
+              "pages": "928-940",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 97
+              }
+            }
+          },
+          {
+            "index": 292,
+            "title": "Reading Set 98: Synapse & Nervous System",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "sectionsCovered": "46.3-46.4",
+              "pages": "941-951",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 98
+              }
+            }
+          },
+          {
+            "index": 293,
+            "title": "Lecture Notes: Ch. 46 — Animal Nervous Systems",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 294,
+            "title": "Worksheet 46: Ch. 46 — Animal Nervous Systems",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 46
+              }
+            }
+          },
+          {
+            "index": 295,
+            "title": "Chapter 46 Quiz: Animal Nervous Systems",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 46
+              }
+            }
+          },
+          {
+            "index": 296,
+            "title": "Flashcards: Ch. 46 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 46,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 297,
+            "title": "Reading Set 99: Animal Sensory Systems: Mechanoreception",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "sectionsCovered": "47.1-47.2",
+              "pages": "952-961",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 99
+              }
+            }
+          },
+          {
+            "index": 298,
+            "title": "Reading Set 100: Photoreception & Other Senses",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "sectionsCovered": "47.3-47.5",
+              "pages": "962-971",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 100
+              }
+            }
+          },
+          {
+            "index": 299,
+            "title": "Lecture Notes: Ch. 47 — Animal Sensory Systems",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 300,
+            "title": "Worksheet 47: Ch. 47 — Animal Sensory Systems",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 47
+              }
+            }
+          },
+          {
+            "index": 301,
+            "title": "Chapter 47 Quiz: Animal Sensory Systems",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 47
+              }
+            }
+          },
+          {
+            "index": 302,
+            "title": "Flashcards: Ch. 47 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 47,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 303,
+            "title": "Reading Set 101: Animal Movement: Muscles",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "sectionsCovered": "48.1-48.2",
+              "pages": "972-982",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 101
+              }
+            }
+          },
+          {
+            "index": 304,
+            "title": "Reading Set 102: Skeletal Systems & Locomotion",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "sectionsCovered": "48.3-48.4",
+              "pages": "983-990",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 102
+              }
+            }
+          },
+          {
+            "index": 305,
+            "title": "Lecture Notes: Ch. 48 — Animal Movement",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 306,
+            "title": "Worksheet 48: Ch. 48 — Animal Movement",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 48
+              }
+            }
+          },
+          {
+            "index": 307,
+            "title": "Chapter 48 Quiz: Animal Movement",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 48
+              }
+            }
+          },
+          {
+            "index": 308,
+            "title": "Flashcards: Ch. 48 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 48,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 309,
+            "title": "Reading Set 103: Chemical Signals: Cell-to-Cell",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "sectionsCovered": "49.1-49.2",
+              "pages": "991-1000",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 103
+              }
+            }
+          },
+          {
+            "index": 310,
+            "title": "Reading Set 104: Hormones & Homeostasis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "sectionsCovered": "49.3-49.4",
+              "pages": "1001-1012",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 104
+              }
+            }
+          },
+          {
+            "index": 311,
+            "title": "Lecture Notes: Ch. 49 — Chemical Signals in Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 312,
+            "title": "Worksheet 49: Ch. 49 — Chemical Signals in Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 49
+              }
+            }
+          },
+          {
+            "index": 313,
+            "title": "Chapter 49 Quiz: Chemical Signals in Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 49
+              }
+            }
+          },
+          {
+            "index": 314,
+            "title": "Flashcards: Ch. 49 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 49,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 315,
+            "title": "Reading Set 105: Animal Reproduction: Sexual",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "sectionsCovered": "50.1-50.2",
+              "pages": "1013-1022",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 105
+              }
+            }
+          },
+          {
+            "index": 316,
+            "title": "Reading Set 106: Hormones & Pregnancy",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "sectionsCovered": "50.3-50.4",
+              "pages": "1023-1036",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 106
+              }
+            }
+          },
+          {
+            "index": 317,
+            "title": "Lecture Notes: Ch. 50 — Animal Reproduction",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 318,
+            "title": "Worksheet 50: Ch. 50 — Animal Reproduction",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 50
+              }
+            }
+          },
+          {
+            "index": 319,
+            "title": "Chapter 50 Quiz: Animal Reproduction",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 50
+              }
+            }
+          },
+          {
+            "index": 320,
+            "title": "Flashcards: Ch. 50 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 50,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 321,
+            "title": "Reading Set 107: Immune System: Innate Immunity",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "sectionsCovered": "51.1-51.2",
+              "pages": "1037-1047",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 107
+              }
+            }
+          },
+          {
+            "index": 322,
+            "title": "Reading Set 108: Adaptive Immunity",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "sectionsCovered": "51.3-51.4",
+              "pages": "1048-1058",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 108
+              }
+            }
+          },
+          {
+            "index": 323,
+            "title": "Lecture Notes: Ch. 51 — The Immune System in Animals",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 324,
+            "title": "Worksheet 51: Ch. 51 — The Immune System in Animals",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 51
+              }
+            }
+          },
+          {
+            "index": 325,
+            "title": "Chapter 51 Quiz: The Immune System in Animals",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 51
+              }
+            }
+          },
+          {
+            "index": 326,
+            "title": "Flashcards: Ch. 51 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapter": 51,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 327,
+            "title": "Flashcards: Unit 8 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 8",
+              "chapters": "Ch. 42-51",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 328,
+            "title": "Unit 8 Test: How Animals Work",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 8",
+              "chapters": "Ch. 42-51",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "biology_unit_9",
+        "title": "Unit 9: Ecology",
+        "unit": "Unit 9",
+        "lessons": [
+          {
+            "index": 329,
+            "title": "Reading Set 109: Introduction to Ecology: Climate",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "sectionsCovered": "52.1-52.2",
+              "pages": "1059-1068",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 109
+              }
+            }
+          },
+          {
+            "index": 330,
+            "title": "Reading Set 110: Biomes & Biogeography",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "sectionsCovered": "52.3-52.4",
+              "pages": "1069-1081",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 110
+              }
+            }
+          },
+          {
+            "index": 331,
+            "title": "Lecture Notes: Ch. 52 — An Introduction to Ecology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 332,
+            "title": "Worksheet 52: Ch. 52 — An Introduction to Ecology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 52
+              }
+            }
+          },
+          {
+            "index": 333,
+            "title": "Chapter 52 Quiz: An Introduction to Ecology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 52
+              }
+            }
+          },
+          {
+            "index": 334,
+            "title": "Flashcards: Ch. 52 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 52,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 335,
+            "title": "Reading Set 111: Behavioral Ecology: Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "sectionsCovered": "53.1-53.2",
+              "pages": "1082-1092",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 111
+              }
+            }
+          },
+          {
+            "index": 336,
+            "title": "Reading Set 112: Communication & Cooperation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "sectionsCovered": "53.3-53.6",
+              "pages": "1093-1100",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 112
+              }
+            }
+          },
+          {
+            "index": 337,
+            "title": "Lecture Notes: Ch. 53 — Behavioral Ecology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 338,
+            "title": "Worksheet 53: Ch. 53 — Behavioral Ecology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 53
+              }
+            }
+          },
+          {
+            "index": 339,
+            "title": "Chapter 53 Quiz: Behavioral Ecology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 53
+              }
+            }
+          },
+          {
+            "index": 340,
+            "title": "Flashcards: Ch. 53 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 53,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 341,
+            "title": "Reading Set 113: Population Ecology: Distribution",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "sectionsCovered": "54.1-54.2",
+              "pages": "1101-1108",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 113
+              }
+            }
+          },
+          {
+            "index": 342,
+            "title": "Reading Set 114: Demography & Population Growth",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "sectionsCovered": "54.3-54.5",
+              "pages": "1109-1119",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 114
+              }
+            }
+          },
+          {
+            "index": 343,
+            "title": "Reading Set 115: Human Population",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "sectionsCovered": "54.6",
+              "pages": "1120-1122",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 115
+              }
+            }
+          },
+          {
+            "index": 344,
+            "title": "Lecture Notes: Ch. 54 — Population Ecology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 345,
+            "title": "Worksheet 54: Ch. 54 — Population Ecology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 54
+              }
+            }
+          },
+          {
+            "index": 346,
+            "title": "Chapter 54 Quiz: Population Ecology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 54
+              }
+            }
+          },
+          {
+            "index": 347,
+            "title": "Flashcards: Ch. 54 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 54,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 348,
+            "title": "Reading Set 116: Community Ecology: Interactions",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "sectionsCovered": "55.1-55.2",
+              "pages": "1123-1134",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 116
+              }
+            }
+          },
+          {
+            "index": 349,
+            "title": "Reading Set 117: Community Structure & Dynamics",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "sectionsCovered": "55.3-55.4",
+              "pages": "1135-1145",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 117
+              }
+            }
+          },
+          {
+            "index": 350,
+            "title": "Lecture Notes: Ch. 55 — Community Ecology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 351,
+            "title": "Worksheet 55: Ch. 55 — Community Ecology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 55
+              }
+            }
+          },
+          {
+            "index": 352,
+            "title": "Chapter 55 Quiz: Community Ecology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 55
+              }
+            }
+          },
+          {
+            "index": 353,
+            "title": "Flashcards: Ch. 55 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 55,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 354,
+            "title": "Reading Set 118: Ecosystems and Global Ecology: Energy",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "sectionsCovered": "56.1-56.2",
+              "pages": "1148-1161",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 118
+              }
+            }
+          },
+          {
+            "index": 355,
+            "title": "Reading Set 119: Global Patterns & Climate Change",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "sectionsCovered": "56.3",
+              "pages": "1162-1168",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 119
+              }
+            }
+          },
+          {
+            "index": 356,
+            "title": "Lecture Notes: Ch. 56 — Ecosystems and Global Ecology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 357,
+            "title": "Worksheet 56: Ch. 56 — Ecosystems and Global Ecology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 56
+              }
+            }
+          },
+          {
+            "index": 358,
+            "title": "Chapter 56 Quiz: Ecosystems and Global Ecology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 56
+              }
+            }
+          },
+          {
+            "index": 359,
+            "title": "Flashcards: Ch. 56 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 56,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 360,
+            "title": "Reading Set 120: Biodiversity and Conservation: What Is It?",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "sectionsCovered": "57.1-57.2",
+              "pages": "1172-1181",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 120
+              }
+            }
+          },
+          {
+            "index": 361,
+            "title": "Reading Set 121: Threats & Conservation",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "sectionsCovered": "57.3-57.4",
+              "pages": "1182-1196",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 121
+              }
+            }
+          },
+          {
+            "index": 362,
+            "title": "Lecture Notes: Ch. 57 — Biodiversity and Conservation Biology",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "source": {
+                "sheet": "Course Overview"
+              }
+            }
+          },
+          {
+            "index": 363,
+            "title": "Worksheet 57: Ch. 57 — Biodiversity and Conservation Biology",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "worksheetType": "Comprehension & Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 57
+              }
+            }
+          },
+          {
+            "index": 364,
+            "title": "Chapter 57 Quiz: Biodiversity and Conservation Biology",
+            "category": "chapter_quiz",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "source": {
+                "sheet": "Chapter Quizzes",
+                "chapter": 57
+              }
+            }
+          },
+          {
+            "index": 365,
+            "title": "Flashcards: Ch. 57 — Key Terms & Concepts (Leitner Review)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapter": 57,
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 366,
+            "title": "Flashcards: Unit 9 — Mastery Review (All Categories)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 9",
+              "chapters": "Ch. 52-57",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 367,
+            "title": "Unit 9 Test: Ecology",
+            "category": "unit_test",
+            "meta": {
+              "unit": "Unit 9",
+              "chapters": "Ch. 52-57",
+              "source": {
+                "sheet": "Unit Tests"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "id": "vocabulary",
+      "label": "Vocabulary",
+      "focus": "Vocabulary"
+    },
+    {
+      "id": "processes",
+      "label": "Processes/Pathways",
+      "focus": "Processes/Pathways"
+    },
+    {
+      "id": "structures",
+      "label": "Structures/Functions",
+      "focus": "Structures/Functions"
+    },
+    {
+      "id": "scientists",
+      "label": "Scientists",
+      "focus": "Scientists"
+    },
+    {
+      "id": "diagrams",
+      "label": "Diagrams",
+      "focus": "Diagrams"
+    }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewIntervalDays": 1,
+        "correctTo": 2,
+        "incorrectTo": 1
+      },
+      {
+        "box": 2,
+        "reviewIntervalDays": 2,
+        "correctTo": 3,
+        "incorrectTo": 1
+      },
+      {
+        "box": 3,
+        "reviewIntervalDays": 4,
+        "correctTo": 4,
+        "incorrectTo": 1
+      },
+      {
+        "box": 4,
+        "reviewIntervalDays": 7,
+        "correctTo": 5,
+        "incorrectTo": 1
+      },
+      {
+        "box": 5,
+        "reviewIntervalDays": 14,
+        "correctTo": 6,
+        "incorrectTo": 1
+      },
+      {
+        "box": 6,
+        "reviewIntervalDays": 30,
+        "correctTo": 7,
+        "incorrectTo": 1
+      },
+      {
+        "box": 7,
+        "reviewIntervalDays": 1,
+        "correctTo": 7,
+        "incorrectTo": 1
+      }
+    ],
+    "masteryBox": 7
+  },
+  "flashcardDecks": [
+    {
+      "unit": "Unit 1",
+      "unitTitle": "Molecular Origins",
+      "categories": {
+        "vocabulary": [
+          "Polymer",
+          "Monomer",
+          "Hydrolysis",
+          "Dehydration",
+          "Amphipathic"
+        ],
+        "processes": [
+          "Polymerization",
+          "Protein folding",
+          "RNA catalysis"
+        ],
+        "structures": [
+          "Amino acid",
+          "Nucleotide",
+          "Phospholipid bilayer"
+        ],
+        "scientists": [
+          "Miller-Urey",
+          "Watson & Crick"
+        ],
+        "diagrams": [
+          "Amino acid structure",
+          "DNA helix",
+          "Membrane"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 2",
+      "unitTitle": "Cell Structure",
+      "categories": {
+        "vocabulary": [
+          "Organelle",
+          "Cytoplasm",
+          "ATP",
+          "Enzyme",
+          "Substrate"
+        ],
+        "processes": [
+          "Glycolysis",
+          "Krebs cycle",
+          "ETC",
+          "Photosynthesis",
+          "Calvin cycle"
+        ],
+        "structures": [
+          "Mitochondria",
+          "Chloroplast",
+          "ER",
+          "Golgi",
+          "Ribosome"
+        ],
+        "scientists": [
+          "Krebs",
+          "Calvin",
+          "Mitchell"
+        ],
+        "diagrams": [
+          "Cell diagrams",
+          "Metabolic pathways"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 3",
+      "unitTitle": "Genetics",
+      "categories": {
+        "vocabulary": [
+          "Allele",
+          "Genotype",
+          "Phenotype",
+          "Codon",
+          "Anticodon"
+        ],
+        "processes": [
+          "Transcription",
+          "Translation",
+          "Replication",
+          "Splicing"
+        ],
+        "structures": [
+          "DNA polymerase",
+          "RNA polymerase",
+          "Ribosome"
+        ],
+        "scientists": [
+          "Mendel",
+          "Morgan",
+          "Meselson-Stahl"
+        ],
+        "diagrams": [
+          "Punnett squares",
+          "Gene regulation"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 4",
+      "unitTitle": "Development",
+      "categories": {
+        "vocabulary": [
+          "Differentiation",
+          "Morphogen",
+          "Gastrulation",
+          "Blastula"
+        ],
+        "processes": [
+          "Cell signaling",
+          "Apoptosis",
+          "Pattern formation"
+        ],
+        "structures": [
+          "Germ layers",
+          "Somites",
+          "Meristems"
+        ],
+        "scientists": [
+          "Spemann",
+          "Mangold"
+        ],
+        "diagrams": [
+          "Embryo stages",
+          "Plant development"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 5",
+      "unitTitle": "Evolution",
+      "categories": {
+        "vocabulary": [
+          "Fitness",
+          "Adaptation",
+          "Speciation",
+          "Drift",
+          "Selection"
+        ],
+        "processes": [
+          "Natural selection",
+          "Hardy-Weinberg",
+          "Gene flow"
+        ],
+        "structures": [
+          "Phylogenetic tree",
+          "Clade",
+          "Homology"
+        ],
+        "scientists": [
+          "Darwin",
+          "Wallace",
+          "Gould"
+        ],
+        "diagrams": [
+          "Phylogenies",
+          "Cladograms"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 6",
+      "unitTitle": "Biodiversity",
+      "categories": {
+        "vocabulary": [
+          "Domain",
+          "Kingdom",
+          "Phylum",
+          "Symbiosis",
+          "Pathogen"
+        ],
+        "processes": [
+          "Nitrogen fixation",
+          "Decomposition",
+          "Parasitism"
+        ],
+        "structures": [
+          "Cell wall types",
+          "Spore",
+          "Fruiting body"
+        ],
+        "scientists": [
+          "Woese",
+          "Margulis",
+          "Linnaeus"
+        ],
+        "diagrams": [
+          "Taxonomic trees",
+          "Life cycles"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 7",
+      "unitTitle": "Plants",
+      "categories": {
+        "vocabulary": [
+          "Xylem",
+          "Phloem",
+          "Stoma",
+          "Auxin",
+          "Gibberellin"
+        ],
+        "processes": [
+          "Transpiration",
+          "Translocation",
+          "Phototropism"
+        ],
+        "structures": [
+          "Root",
+          "Stem",
+          "Leaf",
+          "Flower",
+          "Seed"
+        ],
+        "scientists": [
+          "Went",
+          "Sachs"
+        ],
+        "diagrams": [
+          "Plant anatomy",
+          "Transport"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 8",
+      "unitTitle": "Animals",
+      "categories": {
+        "vocabulary": [
+          "Neuron",
+          "Synapse",
+          "Hormone",
+          "Antibody",
+          "Nephron"
+        ],
+        "processes": [
+          "Action potential",
+          "Muscle contraction",
+          "Digestion"
+        ],
+        "structures": [
+          "Heart",
+          "Lung",
+          "Kidney",
+          "Brain",
+          "Immune cells"
+        ],
+        "scientists": [
+          "Hodgkin",
+          "Huxley",
+          "Pavlov"
+        ],
+        "diagrams": [
+          "Organ systems",
+          "Neural pathways"
+        ]
+      }
+    },
+    {
+      "unit": "Unit 9",
+      "unitTitle": "Ecology",
+      "categories": {
+        "vocabulary": [
+          "Niche",
+          "Biome",
+          "Trophic level",
+          "Carrying capacity"
+        ],
+        "processes": [
+          "Energy flow",
+          "Nutrient cycling",
+          "Succession"
+        ],
+        "structures": [
+          "Food web",
+          "Population pyramid",
+          "Ecosystem"
+        ],
+        "scientists": [
+          "Odum",
+          "MacArthur",
+          "Wilson"
+        ],
+        "diagrams": [
+          "Food webs",
+          "Population graphs"
+        ]
+      }
+    }
+  ],
+  "badges": [
+    {
+      "id": "molecular_origins_scholar",
+      "title": "Molecular Origins Scholar",
+      "unit": "Unit 1",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 4-13",
+        "capstone": "Origin of life essay"
+      }
+    },
+    {
+      "id": "cell_biology_master",
+      "title": "Cell Biology Master",
+      "unit": "Unit 2",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 14-27",
+        "capstone": "Cell processes diagram project"
+      }
+    },
+    {
+      "id": "genetics_expert",
+      "title": "Genetics Expert",
+      "unit": "Unit 3",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 28-46",
+        "capstone": "Genetics problem set + essay"
+      }
+    },
+    {
+      "id": "developmental_biology_scholar",
+      "title": "Developmental Biology Scholar",
+      "unit": "Unit 4",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 47-52",
+        "capstone": "Development comparison essay"
+      }
+    },
+    {
+      "id": "evolution_master",
+      "title": "Evolution Master",
+      "unit": "Unit 5",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 53-62",
+        "capstone": "Phylogeny construction project"
+      }
+    },
+    {
+      "id": "biodiversity_scholar",
+      "title": "Biodiversity Scholar",
+      "unit": "Unit 6",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 63-78",
+        "capstone": "Kingdom comparison presentation"
+      }
+    },
+    {
+      "id": "plant_biology_expert",
+      "title": "Plant Biology Expert",
+      "unit": "Unit 7",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 79-88",
+        "capstone": "Plant systems diagram project"
+      }
+    },
+    {
+      "id": "animal_physiology_master",
+      "title": "Animal Physiology Master",
+      "unit": "Unit 8",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 89-108",
+        "capstone": "Body systems integration essay"
+      }
+    },
+    {
+      "id": "ecology_scholar",
+      "title": "Ecology Scholar",
+      "unit": "Unit 9",
+      "requirements": {
+        "mastery": "95% Unit Test OR Box 7",
+        "completion": "Reading Sets 109-121",
+        "capstone": "Ecosystem analysis project"
+      }
+    }
+  ],
+  "generatedFrom": {
+    "sourceWorkbook": "biological_science_life_os.xlsx"
+  },
+  "revision": "full_curriculum_plus_flashcards"
+}

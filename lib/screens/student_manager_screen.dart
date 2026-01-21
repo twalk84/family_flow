@@ -3,7 +3,7 @@
 // Parent-only screen for managing students:
 // - View all students with stats
 // - Edit student details (name, age, grade, PIN, color, notes)
-// - Adjust wallet points
+// - Adjust wallet points (delegates to PointAdjustmentDialog)
 // - Reset streaks
 // - Delete students
 //
@@ -457,16 +457,16 @@ class _StudentManagerScreenState extends State<StudentManagerScreen> {
   }
 
   // ============================================================
-  // Adjust Points (UPDATED to match your Dialog)
+  // Adjust Points (INTEGRATED)
   // ============================================================
 
   Future<void> _showAdjustPointsDialog(Student student) async {
-    // Calls your existing PointAdjustmentDialog.show()
-    // It handles the logic (API calls) and validation internally.
+    // We delegate completely to PointAdjustmentDialog.
+    // It handles input, validation, and calling RewardService internally.
     final changed = await PointAdjustmentDialog.show(context, student);
 
     if (changed && mounted) {
-      _snack('Points adjusted successfully.', color: Colors.green);
+      _snack('Points updated.', color: Colors.green);
     }
   }
 

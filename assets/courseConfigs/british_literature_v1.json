@@ -1,0 +1,3676 @@
+{
+  "id": "british_literature_v1",
+  "title": "British Literature",
+  "subtitle": "Glencoe Literature: The Reader's Choice",
+  "version": 1,
+  "type": "academic",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": []
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "reading_set": {
+        "pointsEach": 10,
+        "countsTowardGrade": true
+      },
+      "lecture_notes": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "worksheet": {
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "oral_component": {
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "theme_test": {
+        "pointsEach": 100,
+        "countsTowardGrade": true
+      },
+      "writing_portfolio_18": {
+        "pointsEach": 18,
+        "countsTowardGrade": true
+      },
+      "writing_portfolio_20": {
+        "pointsEach": 20,
+        "countsTowardGrade": true
+      },
+      "writing_portfolio_22": {
+        "pointsEach": 22,
+        "countsTowardGrade": true
+      },
+      "writing_portfolio_24": {
+        "pointsEach": 24,
+        "countsTowardGrade": true
+      },
+      "writing_portfolio_26": {
+        "pointsEach": 26,
+        "countsTowardGrade": true
+      }
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "reading_set": 10,
+      "lecture_notes": 5,
+      "flashcard_session": 5,
+      "worksheet": 15,
+      "oral_component": 15,
+      "theme_test": 100,
+      "writing_portfolio_18": 18,
+      "writing_portfolio_20": 20,
+      "writing_portfolio_22": 22,
+      "writing_portfolio_24": 24,
+      "writing_portfolio_26": 26
+    },
+    "multipliers": [
+      {
+        "id": "theme_test_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "minGradePercent": 95,
+          "categoryKey": "theme_test"
+        },
+        "appliesTo": "all_theme_points"
+      },
+      {
+        "id": "flashcard_mastery",
+        "multiplier": 1.5,
+        "when": {
+          "leitnerBox": 7
+        },
+        "appliesTo": "category_points"
+      }
+    ],
+    "streaks": {
+      "reading": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      },
+      "flashcards": {
+        "bonusPerDay": 0.01,
+        "maxBonus": 0.5
+      },
+      "writing": {
+        "bonusPerDay": 0.02,
+        "maxBonus": 0.5
+      }
+    }
+  },
+  "curriculum": {
+    "totalLessons": 203,
+    "modules": [
+      {
+        "id": "britlit_intro",
+        "title": "Intro: Active Reading Strategies",
+        "unit": "Intro",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Lecture & Notes 18: Fiction Strategies",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Intro",
+              "sectionType": "Active Reading",
+              "pages": "4-17",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 18
+              }
+            }
+          },
+          {
+            "index": 2,
+            "title": "Lecture & Notes 19: Poetry Strategies",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Intro",
+              "sectionType": "Active Reading",
+              "pages": "18-23",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 19
+              }
+            }
+          },
+          {
+            "index": 3,
+            "title": "Lecture & Notes 20: Nonfiction Strategies",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Intro",
+              "sectionType": "Active Reading",
+              "pages": "24-31",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 20
+              }
+            }
+          },
+          {
+            "index": 4,
+            "title": "Flashcards: Literary Terms & Active Reading — Warm-Up (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Intro",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_1",
+        "title": "Unit 1: The Anglo-Saxon Period and the Middle Ages",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 5,
+            "title": "Lecture & Notes 1: The Anglo-Saxon Period and the Middle Ages",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "sectionType": "Unit Introduction",
+              "pages": "32-40",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 6,
+            "title": "Lecture & Notes 7: The Epic and the Epic Hero",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "sectionType": "Literature Focus",
+              "pages": "42-43",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 7
+              }
+            }
+          },
+          {
+            "index": 7,
+            "title": "Lecture & Notes 8: The Ballad Tradition",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "sectionType": "Literature Focus",
+              "pages": "86-87",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 8
+              }
+            }
+          },
+          {
+            "index": 8,
+            "title": "Lecture & Notes 9: Miracle and Morality Plays",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 1",
+              "sectionType": "Literature Focus",
+              "pages": "173-174",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 9
+              }
+            }
+          },
+          {
+            "index": 9,
+            "title": "Reading Set 1: Unit Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "Anglo-Saxon Period intro, Timeline",
+              "pages": "32-40",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 1
+              }
+            }
+          },
+          {
+            "index": 10,
+            "title": "Reading Set 2: Beowulf Part 1",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "Beowulf (Grendel)",
+              "pages": "44-55",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 2
+              }
+            }
+          },
+          {
+            "index": 11,
+            "title": "Reading Set 3: Beowulf Part 2",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "Beowulf (Grendel's Mother, Dragon)",
+              "pages": "55-62",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 3
+              }
+            }
+          },
+          {
+            "index": 12,
+            "title": "Reading Set 4: Epic Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from Gilgamesh: Death of Humbaba",
+              "pages": "63-66",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 4
+              }
+            }
+          },
+          {
+            "index": 13,
+            "title": "Reading Set 5: Anglo-Saxon Poetry",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "The Seafarer",
+              "pages": "70-75",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 5
+              }
+            }
+          },
+          {
+            "index": 14,
+            "title": "Reading Set 6: Ecclesiastical History",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from The Ecclesiastical History (Bede)",
+              "pages": "80-85",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 6
+              }
+            }
+          },
+          {
+            "index": 15,
+            "title": "Reading Set 7: Ballads",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "Sir Patrick Spens, Bonny Barbara Allan, Get Up and Bar the Door",
+              "pages": "88-95",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 7
+              }
+            }
+          },
+          {
+            "index": 16,
+            "title": "Reading Set 8: Canterbury Tales Intro",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "Literature Focus: The Ballad Tradition + Prologue intro",
+              "pages": "86, 96-99",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 8
+              }
+            }
+          },
+          {
+            "index": 17,
+            "title": "Reading Set 9: Canterbury Prologue",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from The Canterbury Tales: The Prologue",
+              "pages": "100-124",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 9
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Reading Set 10: Pardoner's Tale",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from The Canterbury Tales: The Pardoner's Tale",
+              "pages": "125-132",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 10
+              }
+            }
+          },
+          {
+            "index": 19,
+            "title": "Reading Set 11: Sir Gawain",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from Sir Gawain and the Green Knight",
+              "pages": "136-153",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 11
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Reading Set 12: Le Morte d'Arthur",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from Le Morte d'Arthur",
+              "pages": "158-166",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 12
+              }
+            }
+          },
+          {
+            "index": 21,
+            "title": "Reading Set 13: Medieval Nonfiction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from The Book of Margery Kempe",
+              "pages": "169-172",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 13
+              }
+            }
+          },
+          {
+            "index": 22,
+            "title": "Reading Set 14: Medieval Drama",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "selectionsIncluded": "from Everyman",
+              "pages": "175-189",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 14
+              }
+            }
+          },
+          {
+            "index": 23,
+            "title": "Worksheet 1: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Worksheet 2: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 25,
+            "title": "Worksheet 3: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Worksheet 4: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 27,
+            "title": "Worksheet 5: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "worksheetType": "Comparing Selections",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 28,
+            "title": "Writing Portfolio 1: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 1
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 29,
+            "title": "Oral: Readers Theater — Canterbury Tales: Prologue Character Readings",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "section": "Readers Theater",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Oral: Socratic Discussions — Heroism: Beowulf vs. Modern Heroes",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 31,
+            "title": "Flashcards: Theme 1 — The Heroic and the Humble Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Theme 1 Test: The Heroic and the Humble",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 1",
+              "theme": "Theme 1",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_2",
+        "title": "Unit 2: The English Renaissance",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 33,
+            "title": "Lecture & Notes 2: The English Renaissance",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Unit Introduction",
+              "pages": "198-206",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 34,
+            "title": "Lecture & Notes 10: The Sonnet",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Literature Focus",
+              "pages": "208-210",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 10
+              }
+            }
+          },
+          {
+            "index": 35,
+            "title": "Lecture & Notes 11: Shakespeare's Theater",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Literature Focus",
+              "pages": "266-267",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 11
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Lecture & Notes 12: The Metaphysical Poets",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Literature Focus",
+              "pages": "377-379",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 12
+              }
+            }
+          },
+          {
+            "index": 37,
+            "title": "Lecture & Notes 13: The Cavalier Poets",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Literature Focus",
+              "pages": "405-407",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 13
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Lecture & Notes 14: The Puritans",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 2",
+              "sectionType": "Literature Focus",
+              "pages": "420-422",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 14
+              }
+            }
+          },
+          {
+            "index": 39,
+            "title": "Reading Set 15: Renaissance Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "selectionsIncluded": "Unit intro, Timeline, Literature Focus: The Sonnet",
+              "pages": "198-210",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 15
+              }
+            }
+          },
+          {
+            "index": 40,
+            "title": "Reading Set 16: Early Sonnets",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "selectionsIncluded": "Wyatt: Whoso List to Hunt, The Lover Showeth...; Elizabeth I: On Monsieur's Departure",
+              "pages": "211-216",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 16
+              }
+            }
+          },
+          {
+            "index": 41,
+            "title": "Reading Set 17: Spenser & Tagore",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "selectionsIncluded": "Spenser: Sonnet 30, Sonnet 75; Tagore: 1996",
+              "pages": "221-227",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 17
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Reading Set 18: Sidney Sonnets",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "selectionsIncluded": "Sidney: Sonnet 31, Sonnet 39",
+              "pages": "233-235",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 18
+              }
+            }
+          },
+          {
+            "index": 43,
+            "title": "Worksheet 6: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 44,
+            "title": "Worksheet 7: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 7
+              }
+            }
+          },
+          {
+            "index": 45,
+            "title": "Writing Portfolio 2: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 2
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 46,
+            "title": "Flashcards: Theme 2 — Love's Labors Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 47,
+            "title": "Theme 2 Test: Love's Labors",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 2",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Reading Set 19: Shakespeare's Theater",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "Literature Focus + Media Connection",
+              "pages": "266-269",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 19
+              }
+            }
+          },
+          {
+            "index": 49,
+            "title": "Reading Set 20: Macbeth Act I",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "The Tragedy of Macbeth Act I",
+              "pages": "270-290",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 20
+              }
+            }
+          },
+          {
+            "index": 50,
+            "title": "Reading Set 21: Macbeth Act II",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "The Tragedy of Macbeth Act II",
+              "pages": "290-310",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 21
+              }
+            }
+          },
+          {
+            "index": 51,
+            "title": "Reading Set 22: Macbeth Act III",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "The Tragedy of Macbeth Act III",
+              "pages": "310-330",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 22
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Reading Set 23: Macbeth Act IV",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "The Tragedy of Macbeth Act IV",
+              "pages": "330-345",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 23
+              }
+            }
+          },
+          {
+            "index": 53,
+            "title": "Reading Set 24: Macbeth Act V",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "The Tragedy of Macbeth Act V",
+              "pages": "345-354",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 24
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Reading Set 25: Neruda Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "selectionsIncluded": "Pablo Neruda: Sonnet 60 + Comparing Selections",
+              "pages": "355-358",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 25
+              }
+            }
+          },
+          {
+            "index": 55,
+            "title": "Worksheet 8: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 8
+              }
+            }
+          },
+          {
+            "index": 56,
+            "title": "Worksheet 9: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 9
+              }
+            }
+          },
+          {
+            "index": 57,
+            "title": "Worksheet 10: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "worksheetType": "Comparing Selections",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 10
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Writing Portfolio 3: None",
+            "category": "writing_portfolio_22",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 3
+              },
+              "points": 22
+            }
+          },
+          {
+            "index": 59,
+            "title": "Oral: Readers Theater — Macbeth: Selected Scenes",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "section": "Readers Theater",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Oral: Socratic Discussions — Ambition and Morality in Macbeth",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 61,
+            "title": "Flashcards: Theme 3 — Ambition and Anguish Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 62,
+            "title": "Theme 3 Test: Ambition and Anguish",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 3",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 63,
+            "title": "Reading Set 26: Sacred Texts",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "from Genesis, Psalm 23 (King James Bible)",
+              "pages": "367-374",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 26
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Reading Set 27: Metaphysical Poets",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "Donne: Song, A Valediction: Forbidding Mourning, Death Be Not Proud",
+              "pages": "380-385",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 27
+              }
+            }
+          },
+          {
+            "index": 65,
+            "title": "Reading Set 28: Meditation & Exile",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "Donne: Meditation 17; Tolstoy: The Long Exile",
+              "pages": "386-398",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 28
+              }
+            }
+          },
+          {
+            "index": 66,
+            "title": "Reading Set 29: Jonson & Cavaliers",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "Jonson: On My First Son, Song: To Celia; Literature Focus: Cavalier Poets",
+              "pages": "403-407",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 29
+              }
+            }
+          },
+          {
+            "index": 67,
+            "title": "Reading Set 30: Cavalier Poetry",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "Herrick, Suckling, Lovelace poems",
+              "pages": "408-416",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 30
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Reading Set 31: Marvell",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "To His Coy Mistress",
+              "pages": "420-421",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 31
+              }
+            }
+          },
+          {
+            "index": 69,
+            "title": "Reading Set 32: Milton Sonnets",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "How Soon Hath Time; When I Consider How My Light Is Spent",
+              "pages": "423-427",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 32
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Reading Set 33: Paradise Lost",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "from Paradise Lost",
+              "pages": "428-438",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 33
+              }
+            }
+          },
+          {
+            "index": 71,
+            "title": "Reading Set 34: Pilgrim's Progress",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "selectionsIncluded": "from The Pilgrim's Progress",
+              "pages": "439-447",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 34
+              }
+            }
+          },
+          {
+            "index": 72,
+            "title": "Worksheet 11: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 11
+              }
+            }
+          },
+          {
+            "index": 73,
+            "title": "Worksheet 12: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 12
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Writing Portfolio 4: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 4
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 75,
+            "title": "Flashcards: Theme 4 — Inspirations Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 76,
+            "title": "Theme 4 Test: Inspirations",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 2",
+              "theme": "Theme 4",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_3",
+        "title": "Unit 3: The Restoration and the Eighteenth Century",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 77,
+            "title": "Lecture & Notes 3: The Restoration and the Eighteenth Century",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "sectionType": "Unit Introduction",
+              "pages": "456-466",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Lecture & Notes 15: The Essay",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 3",
+              "sectionType": "Literature Focus",
+              "pages": "468-470",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 15
+              }
+            }
+          },
+          {
+            "index": 79,
+            "title": "Reading Set 35: Restoration Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "Unit intro, Timeline, Literature Focus: The Essay",
+              "pages": "456-470",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 35
+              }
+            }
+          },
+          {
+            "index": 80,
+            "title": "Reading Set 36: Dryden",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "from An Essay of Dramatic Poesy",
+              "pages": "471-474",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 36
+              }
+            }
+          },
+          {
+            "index": 81,
+            "title": "Reading Set 37: Behn",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "On Her Loving Two Equally",
+              "pages": "478-480",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 37
+              }
+            }
+          },
+          {
+            "index": 82,
+            "title": "Reading Set 38: Swift Satire",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "A Modest Proposal",
+              "pages": "482-490",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 38
+              }
+            }
+          },
+          {
+            "index": 83,
+            "title": "Reading Set 39: Gulliver's Travels",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "from Gulliver's Travels (Lilliput & Brobdingnag)",
+              "pages": "491-500",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 39
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Reading Set 40: Pope",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "selectionsIncluded": "Epigrams; from An Essay on Man",
+              "pages": "504-509",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 40
+              }
+            }
+          },
+          {
+            "index": 85,
+            "title": "Worksheet 13: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 13
+              }
+            }
+          },
+          {
+            "index": 86,
+            "title": "Worksheet 14: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 14
+              }
+            }
+          },
+          {
+            "index": 87,
+            "title": "Writing Portfolio 5: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 5
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 88,
+            "title": "Oral: Socratic Discussions — Is Swift's Satire Effective Today?",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 89,
+            "title": "Flashcards: Theme 5 — Criticism and Satire Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 90,
+            "title": "Theme 5 Test: Criticism and Satire",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 5",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 91,
+            "title": "Reading Set 41: Fables",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "The Raven and the Fox + Comparing Selections",
+              "pages": "510-513",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 41
+              }
+            }
+          },
+          {
+            "index": 92,
+            "title": "Reading Set 42: Letters & Advice",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "Rules for Raising Children; Letter to Her Daughter",
+              "pages": "513-520",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 42
+              }
+            }
+          },
+          {
+            "index": 93,
+            "title": "Reading Set 43: The Spectator",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "from The Spectator",
+              "pages": "525-529",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 43
+              }
+            }
+          },
+          {
+            "index": 94,
+            "title": "Reading Set 44: Diaries",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "from The Diary of Samuel Pepys; On Keeping a Notebook",
+              "pages": "538-549",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 44
+              }
+            }
+          },
+          {
+            "index": 95,
+            "title": "Reading Set 45: Plague Year",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "from A Journal of the Plague Year",
+              "pages": "554-559",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 45
+              }
+            }
+          },
+          {
+            "index": 96,
+            "title": "Reading Set 46: Gray's Elegy",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "Elegy Written in a Country Churchyard",
+              "pages": "564-569",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 46
+              }
+            }
+          },
+          {
+            "index": 97,
+            "title": "Reading Set 47: Johnson",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "from The Dictionary; Letter to Lord Chesterfield",
+              "pages": "573-580",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 47
+              }
+            }
+          },
+          {
+            "index": 98,
+            "title": "Reading Set 48: Boswell & Burney",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "selectionsIncluded": "from The Life of Samuel Johnson; from The Diary of Fanny Burney",
+              "pages": "584-604",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 48
+              }
+            }
+          },
+          {
+            "index": 99,
+            "title": "Worksheet 15: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 15
+              }
+            }
+          },
+          {
+            "index": 100,
+            "title": "Worksheet 16: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 16
+              }
+            }
+          },
+          {
+            "index": 101,
+            "title": "Writing Portfolio 6: None",
+            "category": "writing_portfolio_22",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 6
+              },
+              "points": 22
+            }
+          },
+          {
+            "index": 102,
+            "title": "Flashcards: Theme 6 — Life Goes On Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 103,
+            "title": "Theme 6 Test: Life Goes On",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 3",
+              "theme": "Theme 6",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_4",
+        "title": "Unit 4: The Romantic Period",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 104,
+            "title": "Lecture & Notes 4: The Romantic Period",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 4",
+              "sectionType": "Unit Introduction",
+              "pages": "614-624",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 105,
+            "title": "Lecture & Notes 16: Narrative Poetry",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 4",
+              "sectionType": "Literature Focus",
+              "pages": "672-674",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 16
+              }
+            }
+          },
+          {
+            "index": 106,
+            "title": "Reading Set 49: Romantic Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "Unit intro, Timeline",
+              "pages": "614-624",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 49
+              }
+            }
+          },
+          {
+            "index": 107,
+            "title": "Reading Set 50: Blake",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "A Poison Tree, The Lamb, The Tyger",
+              "pages": "628-632",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 50
+              }
+            }
+          },
+          {
+            "index": 108,
+            "title": "Reading Set 51: Burns",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "John Anderson, My Jo; To a Mouse",
+              "pages": "636-639",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 51
+              }
+            }
+          },
+          {
+            "index": 109,
+            "title": "Reading Set 52: Wollstonecraft",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "from A Vindication of the Rights of Woman",
+              "pages": "643-648",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 52
+              }
+            }
+          },
+          {
+            "index": 110,
+            "title": "Reading Set 53: Wordsworth",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "The World Is Too Much with Us; It Is a Beauteous Evening; My Heart Leaps Up; Tintern Abbey",
+              "pages": "652-660",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 53
+              }
+            }
+          },
+          {
+            "index": 111,
+            "title": "Reading Set 54: Rilke Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "For the Sake of a Single Poem + Comparing Selections",
+              "pages": "663-665",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 54
+              }
+            }
+          },
+          {
+            "index": 112,
+            "title": "Reading Set 55: Dorothy Wordsworth",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "from The Journals of Dorothy Wordsworth",
+              "pages": "669-670",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 55
+              }
+            }
+          },
+          {
+            "index": 113,
+            "title": "Reading Set 56: Coleridge",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "Kubla Khan; The Rime of the Ancient Mariner",
+              "pages": "675-702",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 56
+              }
+            }
+          },
+          {
+            "index": 114,
+            "title": "Reading Set 57: Blue Jar Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "The Blue Jar + Comparing Selections",
+              "pages": "703-706",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 57
+              }
+            }
+          },
+          {
+            "index": 115,
+            "title": "Reading Set 58: Frankenstein",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "selectionsIncluded": "from The Introduction to Frankenstein",
+              "pages": "710-715",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 58
+              }
+            }
+          },
+          {
+            "index": 116,
+            "title": "Worksheet 17: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 17
+              }
+            }
+          },
+          {
+            "index": 117,
+            "title": "Worksheet 18: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 18
+              }
+            }
+          },
+          {
+            "index": 118,
+            "title": "Writing Portfolio 7: None",
+            "category": "writing_portfolio_18",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 7
+              },
+              "points": 18
+            }
+          },
+          {
+            "index": 119,
+            "title": "Oral: Socratic Discussions — Nature and the Human Spirit (Romantic Poets)",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 4
+              }
+            }
+          },
+          {
+            "index": 120,
+            "title": "Flashcards: Theme 7 — The Natural and the Fantastic Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 121,
+            "title": "Theme 7 Test: The Natural and the Fantastic",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 7",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 122,
+            "title": "Reading Set 59: Byron",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "selectionsIncluded": "from Childe Harold's Pilgrimage; She Walks in Beauty",
+              "pages": "725-728",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 59
+              }
+            }
+          },
+          {
+            "index": 123,
+            "title": "Reading Set 60: Shelley",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "selectionsIncluded": "Ozymandias; Ode to the West Wind; To a Skylark",
+              "pages": "732-742",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 60
+              }
+            }
+          },
+          {
+            "index": 124,
+            "title": "Reading Set 61: Keats",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "selectionsIncluded": "La Belle Dame sans Merci; When I Have Fears; Ode on a Grecian Urn; To Autumn",
+              "pages": "746-756",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 61
+              }
+            }
+          },
+          {
+            "index": 125,
+            "title": "Reading Set 62: Basho Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "selectionsIncluded": "Haiku for Four Seasons + Comparing Selections",
+              "pages": "757-759",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 62
+              }
+            }
+          },
+          {
+            "index": 126,
+            "title": "Worksheet 19: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 19
+              }
+            }
+          },
+          {
+            "index": 127,
+            "title": "Worksheet 20: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 20
+              }
+            }
+          },
+          {
+            "index": 128,
+            "title": "Writing Portfolio 8: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 8
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 129,
+            "title": "Flashcards: Theme 8 — Truth and Beauty Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 130,
+            "title": "Theme 8 Test: Truth and Beauty",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 4",
+              "theme": "Theme 8",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_5",
+        "title": "Unit 5: The Victorian Age",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 131,
+            "title": "Lecture & Notes 5: The Victorian Age",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "sectionType": "Unit Introduction",
+              "pages": "768-778",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 132,
+            "title": "Lecture & Notes 17: The Short Story",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 5",
+              "sectionType": "Literature Focus",
+              "pages": "855-857",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 17
+              }
+            }
+          },
+          {
+            "index": 133,
+            "title": "Reading Set 63: Victorian Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Unit intro, Timeline",
+              "pages": "768-778",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 63
+              }
+            }
+          },
+          {
+            "index": 134,
+            "title": "Reading Set 64: Tennyson",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "from In Memoriam A.H.H.; Crossing the Bar; Tears, Idle Tears; Ulysses",
+              "pages": "782-792",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 64
+              }
+            }
+          },
+          {
+            "index": 135,
+            "title": "Reading Set 65: Elizabeth Barrett Browning",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Sonnet 43",
+              "pages": "796-798",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 65
+              }
+            }
+          },
+          {
+            "index": 136,
+            "title": "Reading Set 66: Millay Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Love Is Not All + Comparing Selections",
+              "pages": "799-801",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 66
+              }
+            }
+          },
+          {
+            "index": 137,
+            "title": "Reading Set 67: Robert Browning",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "My Last Duchess; Porphyria's Lover",
+              "pages": "804-810",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 67
+              }
+            }
+          },
+          {
+            "index": 138,
+            "title": "Reading Set 68: Arnold",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Dover Beach",
+              "pages": "813-814",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 68
+              }
+            }
+          },
+          {
+            "index": 139,
+            "title": "Reading Set 69: Rossettis",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Dante Gabriel Rossetti: Silent Noon; Christina Rossetti: A Birthday",
+              "pages": "818-819",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 69
+              }
+            }
+          },
+          {
+            "index": 140,
+            "title": "Reading Set 70: Carroll",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "selectionsIncluded": "Jabberwocky",
+              "pages": "822-823",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 70
+              }
+            }
+          },
+          {
+            "index": 141,
+            "title": "Worksheet 21: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 21
+              }
+            }
+          },
+          {
+            "index": 142,
+            "title": "Worksheet 22: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 22
+              }
+            }
+          },
+          {
+            "index": 143,
+            "title": "Writing Portfolio 9: None",
+            "category": "writing_portfolio_22",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 9
+              },
+              "points": 22
+            }
+          },
+          {
+            "index": 144,
+            "title": "Flashcards: Theme 9 — Emotional Responses Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 145,
+            "title": "Theme 9 Test: Emotional Responses",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 9",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 146,
+            "title": "Reading Set 71: Hardy",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "selectionsIncluded": "The Darkling Thrush; The Man He Killed; Ah, Are You Digging on My Grave?",
+              "pages": "834-838",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 71
+              }
+            }
+          },
+          {
+            "index": 147,
+            "title": "Reading Set 72: Hopkins",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "selectionsIncluded": "Pied Beauty; Spring and Fall: To a Young Child",
+              "pages": "842-844",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 72
+              }
+            }
+          },
+          {
+            "index": 148,
+            "title": "Reading Set 73: Mistral Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "selectionsIncluded": "Time + Comparing Selections",
+              "pages": "845-848",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 73
+              }
+            }
+          },
+          {
+            "index": 149,
+            "title": "Reading Set 74: Housman",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "selectionsIncluded": "To an Athlete Dying Young; When I Was One-and-Twenty",
+              "pages": "852-856",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 74
+              }
+            }
+          },
+          {
+            "index": 150,
+            "title": "Reading Set 75: Kipling",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "selectionsIncluded": "Miss Youghal's Sais",
+              "pages": "864-867",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 75
+              }
+            }
+          },
+          {
+            "index": 151,
+            "title": "Worksheet 23: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 23
+              }
+            }
+          },
+          {
+            "index": 152,
+            "title": "Worksheet 24: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 24
+              }
+            }
+          },
+          {
+            "index": 153,
+            "title": "Writing Portfolio 10: None",
+            "category": "writing_portfolio_24",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 10
+              },
+              "points": 24
+            }
+          },
+          {
+            "index": 154,
+            "title": "Flashcards: Theme 10 — Lasting Impressions Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 155,
+            "title": "Theme 10 Test: Lasting Impressions",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 5",
+              "theme": "Theme 10",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "britlit_unit_6",
+        "title": "Unit 6: The Twentieth Century",
+        "unit": "Unit 6",
+        "lessons": [
+          {
+            "index": 156,
+            "title": "Lecture & Notes 6: The Twentieth Century",
+            "category": "lecture_notes",
+            "meta": {
+              "unit": "Unit 6",
+              "sectionType": "Unit Introduction",
+              "pages": "872-882",
+              "source": {
+                "sheet": "Lecture & Notes",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 157,
+            "title": "Reading Set 76: 20th Century Introduction",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Unit intro, Timeline",
+              "pages": "872-882",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 76
+              }
+            }
+          },
+          {
+            "index": 158,
+            "title": "Reading Set 77: Shaw",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Pygmalion Act I-II",
+              "pages": "886-920",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 77
+              }
+            }
+          },
+          {
+            "index": 159,
+            "title": "Reading Set 78: Shaw",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Pygmalion Act III-V",
+              "pages": "920-962",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 78
+              }
+            }
+          },
+          {
+            "index": 160,
+            "title": "Reading Set 79: WWI Poetry",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Brooke: The Soldier; Owen: Dulce et Decorum Est; Sassoon: Dreamers",
+              "pages": "967-972",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 79
+              }
+            }
+          },
+          {
+            "index": 161,
+            "title": "Reading Set 80: Conrad",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "The Lagoon",
+              "pages": "974-987",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 80
+              }
+            }
+          },
+          {
+            "index": 162,
+            "title": "Reading Set 81: Yeats",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "The Lake Isle of Innisfree; When You Are Old; The Wild Swans at Coole; Sailing to Byzantium; An Irish Airman...; The Second Coming",
+              "pages": "988-997",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 81
+              }
+            }
+          },
+          {
+            "index": 163,
+            "title": "Reading Set 82: Lawrence",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "The Rocking-Horse Winner",
+              "pages": "1000-1015",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 82
+              }
+            }
+          },
+          {
+            "index": 164,
+            "title": "Reading Set 83: Joyce",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Araby",
+              "pages": "1016-1024",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 83
+              }
+            }
+          },
+          {
+            "index": 165,
+            "title": "Reading Set 84: O'Connor",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "The Duke's Children",
+              "pages": "1025-1037",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 84
+              }
+            }
+          },
+          {
+            "index": 166,
+            "title": "Reading Set 85: Eliot",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Preludes; The Hollow Men",
+              "pages": "1038-1045",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 85
+              }
+            }
+          },
+          {
+            "index": 167,
+            "title": "Reading Set 86: Woolf",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "from A Room of One's Own",
+              "pages": "1049-1054",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 86
+              }
+            }
+          },
+          {
+            "index": 168,
+            "title": "Reading Set 87: Smith",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Not Waving but Drowning; Pretty",
+              "pages": "1055-1057",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 87
+              }
+            }
+          },
+          {
+            "index": 169,
+            "title": "Reading Set 88: Mansfield",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "A Cup of Tea",
+              "pages": "1061-1069",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 88
+              }
+            }
+          },
+          {
+            "index": 170,
+            "title": "Reading Set 89: Head",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Village People",
+              "pages": "1070-1073",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 89
+              }
+            }
+          },
+          {
+            "index": 171,
+            "title": "Reading Set 90: Churchill & Bowen",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "selectionsIncluded": "Be Ye Men of Valor; The Demon Lover",
+              "pages": "1077-1091",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 90
+              }
+            }
+          },
+          {
+            "index": 172,
+            "title": "Worksheet 25: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 25
+              }
+            }
+          },
+          {
+            "index": 173,
+            "title": "Worksheet 26: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 26
+              }
+            }
+          },
+          {
+            "index": 174,
+            "title": "Worksheet 27: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 27
+              }
+            }
+          },
+          {
+            "index": 175,
+            "title": "Worksheet 28: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 28
+              }
+            }
+          },
+          {
+            "index": 176,
+            "title": "Writing Portfolio 11: None",
+            "category": "writing_portfolio_20",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 11
+              },
+              "points": 20
+            }
+          },
+          {
+            "index": 177,
+            "title": "Oral: Readers Theater — Pygmalion: Selected Scenes",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "section": "Readers Theater",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 3
+              }
+            }
+          },
+          {
+            "index": 178,
+            "title": "Oral: Socratic Discussions — Disillusionment in the Modern World",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 5
+              }
+            }
+          },
+          {
+            "index": 179,
+            "title": "Flashcards: Theme 11 — Illusion and Disillusion Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 180,
+            "title": "Theme 11 Test: Illusion and Disillusion",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 11",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 181,
+            "title": "Reading Set 91: Greene",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "A Shocking Accident",
+              "pages": "1099-1107",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 91
+              }
+            }
+          },
+          {
+            "index": 182,
+            "title": "Reading Set 92: Auden",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Musée des Beaux Arts",
+              "pages": "1109-1113",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 92
+              }
+            }
+          },
+          {
+            "index": 183,
+            "title": "Reading Set 93: Spender & Reed",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Their Lonely Betters; What I Expected; Naming of Parts",
+              "pages": "1114-1121",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 93
+              }
+            }
+          },
+          {
+            "index": 184,
+            "title": "Reading Set 94: Dylan Thomas",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Fern Hill; Do Not Go Gentle into That Good Night; The Force That Through the Green Fuse...",
+              "pages": "1122-1127",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 94
+              }
+            }
+          },
+          {
+            "index": 185,
+            "title": "Reading Set 95: Orwell",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Shooting an Elephant",
+              "pages": "1128-1136",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 95
+              }
+            }
+          },
+          {
+            "index": 186,
+            "title": "Reading Set 96: Qiongqiong Comparison",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Empty Seat + Comparing Selections",
+              "pages": "1137-1140",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 96
+              }
+            }
+          },
+          {
+            "index": 187,
+            "title": "Reading Set 97: Lessing & Gordimer",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "A Mild Attack of Locusts; The Train from Rhodesia",
+              "pages": "1143-1158",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 97
+              }
+            }
+          },
+          {
+            "index": 188,
+            "title": "Reading Set 98: Achebe",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Dead Men's Path",
+              "pages": "1161-1165",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 98
+              }
+            }
+          },
+          {
+            "index": 189,
+            "title": "Reading Set 99: Walcott",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "from Omeros; from Tales of the Islands",
+              "pages": "1168-1171",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 99
+              }
+            }
+          },
+          {
+            "index": 190,
+            "title": "Reading Set 100: Naipaul & Markham",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "B. Wordsworth; Mammie's Form at the Post Office",
+              "pages": "1175-1187",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 100
+              }
+            }
+          },
+          {
+            "index": 191,
+            "title": "Reading Set 101: Desai & Soyinka",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Games at Twilight; Telephone Conversation",
+              "pages": "1190-1205",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 101
+              }
+            }
+          },
+          {
+            "index": 192,
+            "title": "Reading Set 102: Frame & Heaney",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Two Sheep; Follower",
+              "pages": "1210-1213",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 102
+              }
+            }
+          },
+          {
+            "index": 193,
+            "title": "Reading Set 103: Hughes & Pinter",
+            "category": "reading_set",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "selectionsIncluded": "Wind; That's All",
+              "pages": "1215-1221",
+              "source": {
+                "sheet": "Reading Sets",
+                "setNumber": 103
+              }
+            }
+          },
+          {
+            "index": 194,
+            "title": "Worksheet 29: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "worksheetType": "Reading Comprehension",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 29
+              }
+            }
+          },
+          {
+            "index": 195,
+            "title": "Worksheet 30: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "worksheetType": "Literary Analysis",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 30
+              }
+            }
+          },
+          {
+            "index": 196,
+            "title": "Worksheet 31: None",
+            "category": "worksheet",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "worksheetType": "Comparing Selections",
+              "source": {
+                "sheet": "Worksheets",
+                "rowNumber": 31
+              }
+            }
+          },
+          {
+            "index": 197,
+            "title": "Writing Portfolio 12: None",
+            "category": "writing_portfolio_26",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "pages": null,
+              "prompt": null,
+              "source": {
+                "sheet": "Writing Portfolio",
+                "rowNumber": 12
+              },
+              "points": 26
+            }
+          },
+          {
+            "index": 198,
+            "title": "Oral: Socratic Discussions — Post-Colonial Voices and Identity",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "section": "Socratic Discussions",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 6
+              }
+            }
+          },
+          {
+            "index": 199,
+            "title": "Flashcards: Theme 12 — Modern Perspectives Review (Leitner)",
+            "category": "flashcard_session",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "source": {
+                "sheet": "Flashcard Tracker"
+              }
+            }
+          },
+          {
+            "index": 200,
+            "title": "Theme 12 Test: Modern Perspectives",
+            "category": "theme_test",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Theme 12",
+              "source": {
+                "sheet": "Theme Tests"
+              }
+            }
+          },
+          {
+            "index": 201,
+            "title": "Oral: Presentations — Author Study Presentation (5-7 min)",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Any",
+              "section": "Presentations",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 1
+              }
+            }
+          },
+          {
+            "index": 202,
+            "title": "Oral: Presentations — Poetry Recitation with Analysis (3-5 min)",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Any",
+              "section": "Presentations",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 2
+              }
+            }
+          },
+          {
+            "index": 203,
+            "title": "Oral: Presentations — Research Paper Presentation (8-10 min)",
+            "category": "oral_component",
+            "meta": {
+              "unit": "Unit 6",
+              "theme": "Capstone",
+              "section": "Presentations",
+              "source": {
+                "sheet": "Oral Component",
+                "rowNumber": 3
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    {
+      "id": "literary_terms",
+      "label": "Literary Terms",
+      "focus": "Literary Terms"
+    },
+    {
+      "id": "vocabulary",
+      "label": "Vocabulary",
+      "focus": "Vocabulary"
+    },
+    {
+      "id": "author_facts",
+      "label": "Author Facts",
+      "focus": "Author Facts"
+    },
+    {
+      "id": "quotes",
+      "label": "Quotes",
+      "focus": "Quotes"
+    },
+    {
+      "id": "plot_character",
+      "label": "Plot/Character",
+      "focus": "Plot/Character"
+    }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      {
+        "box": 1,
+        "reviewIntervalDays": 1,
+        "correctTo": 2,
+        "incorrectTo": 1
+      },
+      {
+        "box": 2,
+        "reviewIntervalDays": 2,
+        "correctTo": 3,
+        "incorrectTo": 1
+      },
+      {
+        "box": 3,
+        "reviewIntervalDays": 4,
+        "correctTo": 4,
+        "incorrectTo": 1
+      },
+      {
+        "box": 4,
+        "reviewIntervalDays": 7,
+        "correctTo": 5,
+        "incorrectTo": 1
+      },
+      {
+        "box": 5,
+        "reviewIntervalDays": 14,
+        "correctTo": 6,
+        "incorrectTo": 1
+      },
+      {
+        "box": 6,
+        "reviewIntervalDays": 30,
+        "correctTo": 7,
+        "incorrectTo": 1
+      },
+      {
+        "box": 7,
+        "reviewIntervalDays": 1,
+        "correctTo": 7,
+        "incorrectTo": 1
+      }
+    ],
+    "masteryBox": 7
+  },
+  "flashcardDecks": [
+    {
+      "theme": "Theme 1: Heroic & Humble",
+      "categories": {
+        "literary_terms": [
+          "Epic",
+          "Kenning",
+          "Caesura",
+          "Alliteration",
+          "Ballad",
+          "Romance"
+        ],
+        "vocabulary": [
+          "Thane",
+          "Mead-hall",
+          "Wyrd",
+          "Wergild"
+        ],
+        "author_facts": [
+          "Chaucer",
+          "Bede",
+          "Malory"
+        ],
+        "quotes": [
+          "Beowulf quotes",
+          "Canterbury quotes"
+        ],
+        "plot_character": [
+          "Beowulf plot",
+          "Gawain tests"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 2: Love's Labors",
+      "categories": {
+        "literary_terms": [
+          "Sonnet",
+          "Volta",
+          "Couplet",
+          "Quatrain",
+          "Iambic Pentameter"
+        ],
+        "vocabulary": [
+          "Forsaken",
+          "Countenance"
+        ],
+        "author_facts": [
+          "Wyatt",
+          "Sidney",
+          "Spenser",
+          "Elizabeth I"
+        ],
+        "quotes": [
+          "Sonnet 75 quotes"
+        ],
+        "plot_character": [
+          "Sonnet structures"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 3: Ambition & Anguish",
+      "categories": {
+        "literary_terms": [
+          "Tragedy",
+          "Soliloquy",
+          "Aside",
+          "Dramatic Irony",
+          "Foil"
+        ],
+        "vocabulary": [
+          "Equivocate",
+          "Prate",
+          "Surmise"
+        ],
+        "author_facts": [
+          "Shakespeare"
+        ],
+        "quotes": [
+          "Macbeth key quotes"
+        ],
+        "plot_character": [
+          "Macbeth plot",
+          "characters"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 4: Inspirations",
+      "categories": {
+        "literary_terms": [
+          "Metaphysical Poetry",
+          "Conceit",
+          "Paradox",
+          "Epic",
+          "Allegory"
+        ],
+        "vocabulary": [
+          "Profane",
+          "Temporal"
+        ],
+        "author_facts": [
+          "Donne",
+          "Jonson",
+          "Herbert",
+          "Milton",
+          "Bunyan"
+        ],
+        "quotes": [
+          "Paradise Lost quotes"
+        ],
+        "plot_character": [
+          "Paradise Lost plot"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 5: Criticism & Satire",
+      "categories": {
+        "literary_terms": [
+          "Satire",
+          "Irony",
+          "Parody",
+          "Mock-Epic",
+          "Essay",
+          "Epigram"
+        ],
+        "vocabulary": [
+          "Expedient",
+          "Prodigious"
+        ],
+        "author_facts": [
+          "Swift",
+          "Pope",
+          "Dryden",
+          "Behn"
+        ],
+        "quotes": [
+          "Modest Proposal quotes"
+        ],
+        "plot_character": [
+          "Gulliver plot"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 6: Life Goes On",
+      "categories": {
+        "literary_terms": [
+          "Diary",
+          "Journal",
+          "Elegy",
+          "Heroic Couplet"
+        ],
+        "vocabulary": [
+          "Pestilence",
+          "Melancholy"
+        ],
+        "author_facts": [
+          "Pepys",
+          "Johnson",
+          "Boswell",
+          "Gray"
+        ],
+        "quotes": [
+          "Elegy quotes"
+        ],
+        "plot_character": [
+          "Plague Year events"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 7: Natural & Fantastic",
+      "categories": {
+        "literary_terms": [
+          "Romanticism",
+          "Lyric",
+          "Ode",
+          "Gothic",
+          "Frame Narrative"
+        ],
+        "vocabulary": [
+          "Sublime",
+          "Ethereal"
+        ],
+        "author_facts": [
+          "Blake",
+          "Wordsworth",
+          "Coleridge",
+          "Shelley (M)"
+        ],
+        "quotes": [
+          "Tintern Abbey quotes"
+        ],
+        "plot_character": [
+          "Ancient Mariner plot"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 8: Truth & Beauty",
+      "categories": {
+        "literary_terms": [
+          "Byronic Hero",
+          "Ode",
+          "Imagery",
+          "Apostrophe"
+        ],
+        "vocabulary": [
+          "Countenance",
+          "Blithe"
+        ],
+        "author_facts": [
+          "Byron",
+          "Shelley (P)",
+          "Keats"
+        ],
+        "quotes": [
+          "Ozymandias",
+          "Ode on Urn"
+        ],
+        "plot_character": [
+          "Grecian Urn themes"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 9: Emotional Responses",
+      "categories": {
+        "literary_terms": [
+          "Dramatic Monologue",
+          "Elegy",
+          "In Memoriam stanza"
+        ],
+        "vocabulary": [
+          "Ere",
+          "Slough"
+        ],
+        "author_facts": [
+          "Tennyson",
+          "Brownings",
+          "Arnold"
+        ],
+        "quotes": [
+          "Ulysses quotes"
+        ],
+        "plot_character": [
+          "My Last Duchess speaker"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 10: Lasting Impressions",
+      "categories": {
+        "literary_terms": [
+          "Sprung Rhythm",
+          "Pessimism",
+          "Portmanteau"
+        ],
+        "vocabulary": [
+          "Darkling",
+          "Pallid"
+        ],
+        "author_facts": [
+          "Hardy",
+          "Hopkins",
+          "Housman",
+          "Kipling"
+        ],
+        "quotes": [
+          "Darkling Thrush quotes"
+        ],
+        "plot_character": [
+          "Hardy themes"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 11: Illusion & Disillusion",
+      "categories": {
+        "literary_terms": [
+          "Modernism",
+          "Stream of Consciousness",
+          "Epiphany",
+          "Free Verse"
+        ],
+        "vocabulary": [
+          "Disillusion",
+          "Futility"
+        ],
+        "author_facts": [
+          "Shaw",
+          "Yeats",
+          "Joyce",
+          "Eliot",
+          "Woolf",
+          "Owen"
+        ],
+        "quotes": [
+          "Hollow Men quotes"
+        ],
+        "plot_character": [
+          "Araby epiphany"
+        ]
+      }
+    },
+    {
+      "theme": "Theme 12: Modern Perspectives",
+      "categories": {
+        "literary_terms": [
+          "Post-colonialism",
+          "Absurdism",
+          "Magic Realism"
+        ],
+        "vocabulary": [
+          "Imperialism",
+          "Indigenous"
+        ],
+        "author_facts": [
+          "Orwell",
+          "Thomas",
+          "Achebe",
+          "Walcott",
+          "Heaney"
+        ],
+        "quotes": [
+          "Do Not Go Gentle quotes"
+        ],
+        "plot_character": [
+          "Shooting Elephant themes"
+        ]
+      }
+    }
+  ],
+  "badges": [
+    {
+      "id": "anglo_saxon_scholar",
+      "title": "Anglo-Saxon Scholar",
+      "category": null,
+      "requirements": {
+        "mastery": "95% Theme 1 OR Box 7",
+        "completion": "Reading Sets 1-5"
+      }
+    },
+    {
+      "id": "medieval_master",
+      "title": "Medieval Master",
+      "category": null,
+      "requirements": {
+        "mastery": "95% Theme 1 OR Box 7",
+        "completion": "Reading Sets 6-14"
+      }
+    },
+    {
+      "id": "renaissance_scholar",
+      "title": "Renaissance Scholar",
+      "category": null,
+      "requirements": {
+        "mastery": "95% avg Themes 2-4 OR Box 7",
+        "completion": "Reading Sets 15-34"
+      }
+    },
+    {
+      "id": "restoration_sage",
+      "title": "Restoration Sage",
+      "category": null,
+      "requirements": {
+        "mastery": "95% avg Themes 5-6 OR Box 7",
+        "completion": "Reading Sets 35-48"
+      }
+    },
+    {
+      "id": "romantic_poet",
+      "title": "Romantic Poet",
+      "category": null,
+      "requirements": {
+        "mastery": "95% avg Themes 7-8 OR Box 7",
+        "completion": "Reading Sets 49-62"
+      }
+    },
+    {
+      "id": "victorian_scholar",
+      "title": "Victorian Scholar",
+      "category": null,
+      "requirements": {
+        "mastery": "95% avg Themes 9-10 OR Box 7",
+        "completion": "Reading Sets 63-75"
+      }
+    },
+    {
+      "id": "modern_literature_master",
+      "title": "Modern Literature Master",
+      "category": null,
+      "requirements": {
+        "mastery": "95% avg Themes 11-12 OR Box 7",
+        "completion": "Reading Sets 76-103"
+      }
+    },
+    {
+      "id": "genre_mastery_badges_7",
+      "title": "GENRE MASTERY BADGES (7)",
+      "category": null,
+      "requirements": {
+        "mastery": null,
+        "completion": null
+      }
+    },
+    {
+      "id": "badge",
+      "title": "Badge",
+      "category": null,
+      "requirements": {
+        "mastery": "Mastery Req",
+        "completion": "Completion Req"
+      }
+    },
+    {
+      "id": "epic_champion",
+      "title": "Epic Champion",
+      "category": null,
+      "requirements": {
+        "mastery": "95% epic questions OR Box 7",
+        "completion": "Beowulf, Gilgamesh, Paradise Lost"
+      }
+    },
+    {
+      "id": "poetry_master",
+      "title": "Poetry Master",
+      "category": null,
+      "requirements": {
+        "mastery": "95% poetry analysis OR Box 7",
+        "completion": "All sonnets, odes, lyric poems"
+      }
+    },
+    {
+      "id": "drama_scholar",
+      "title": "Drama Scholar",
+      "category": null,
+      "requirements": {
+        "mastery": "95% drama questions OR Box 7",
+        "completion": "Everyman, Macbeth, Pygmalion"
+      }
+    },
+    {
+      "id": "short_story_expert",
+      "title": "Short Story Expert",
+      "category": null,
+      "requirements": {
+        "mastery": "95% short story OR Box 7",
+        "completion": "All short fiction selections"
+      }
+    },
+    {
+      "id": "essay_nonfiction_master",
+      "title": "Essay & Nonfiction Master",
+      "category": null,
+      "requirements": {
+        "mastery": "95% nonfiction OR Box 7",
+        "completion": "All essays, diaries, journals"
+      }
+    },
+    {
+      "id": "narrative_poetry_specialist",
+      "title": "Narrative Poetry Specialist",
+      "category": null,
+      "requirements": {
+        "mastery": "95% narrative poetry OR Box 7",
+        "completion": "Ancient Mariner, Childe Harold"
+      }
+    },
+    {
+      "id": "satire_scholar",
+      "title": "Satire Scholar",
+      "category": null,
+      "requirements": {
+        "mastery": "95% satire analysis OR Box 7",
+        "completion": "Swift, Pope, Shaw"
+      }
+    },
+    {
+      "id": "badge_summary",
+      "title": "BADGE SUMMARY",
+      "category": null,
+      "requirements": {
+        "mastery": null,
+        "completion": null
+      }
+    },
+    {
+      "id": "period_badges_earned",
+      "title": "Period Badges Earned:",
+      "category": null,
+      "requirements": {
+        "mastery": null,
+        "completion": null
+      }
+    },
+    {
+      "id": "genre_badges_earned",
+      "title": "Genre Badges Earned:",
+      "category": null,
+      "requirements": {
+        "mastery": null,
+        "completion": null
+      }
+    },
+    {
+      "id": "total_badges",
+      "title": "TOTAL BADGES:",
+      "category": null,
+      "requirements": {
+        "mastery": null,
+        "completion": null
+      }
+    }
+  ],
+  "generatedFrom": {
+    "sourceWorkbook": "british_literature_life_os.xlsx"
+  }
+}
