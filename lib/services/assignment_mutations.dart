@@ -89,7 +89,12 @@ class AssignmentMutations {
 
   /// Calculate new streak values based on last completion date
   /// Returns (newCurrentStreak, newLongestStreak)
-  static (int, int) _calculateNewStreak(String lastCompletionDate, int currentStreak, int longestStreak, String today) {
+  static (int, int) _calculateNewStreak(
+    String lastCompletionDate,
+    int currentStreak,
+    int longestStreak,
+    String today,
+  ) {
     // First completion ever
     if (lastCompletionDate.isEmpty) {
       return (1, 1);
@@ -127,7 +132,7 @@ class AssignmentMutations {
   }
 
   /// Complete or uncomplete an assignment.
-  /// 
+  ///
   /// Uses batched writes instead of transactions to avoid Windows crashes.
   /// This is slightly less atomic but much more stable.
   static Future<CompletionResult> setCompleted(
@@ -166,12 +171,13 @@ class AssignmentMutations {
     // Read current state
     final assignmentSnap = await assignmentRef.get();
     final studentSnap = await studentRef.get();
-    
+
     final assignmentData = assignmentSnap.data() ?? <String, dynamic>{};
     final studentData = studentSnap.data() ?? <String, dynamic>{};
 
     final alreadyCompleted = (assignmentData['completed'] == true);
-    final existingRewardTxnId = (assignmentData['rewardTxnId'] ?? assignmentData['reward_txn_id'] ?? '').toString().trim();
+    final existingRewardTxnId =
+        (assignmentData['rewardTxnId'] ?? assignmentData['reward_txn_id'] ?? '').toString().trim();
     final existingRewardPointsApplied = (() {
       final v = assignmentData['rewardPointsApplied'] ?? assignmentData['reward_points_applied'];
       if (v is int) return v;
@@ -182,7 +188,8 @@ class AssignmentMutations {
     // Get current student streak info
     final currentStreak = asInt(studentData['currentStreak'] ?? studentData['current_streak'], fallback: 0);
     final longestStreak = asInt(studentData['longestStreak'] ?? studentData['longest_streak'], fallback: 0);
-    final lastCompletionDate = (studentData['lastCompletionDate'] ?? studentData['last_completion_date'] ?? '').toString();
+    final lastCompletionDate =
+        (studentData['lastCompletionDate'] ?? studentData['last_completion_date'] ?? '').toString();
 
     // Determine if assignment is gradable
     final isGradable = asBool(assignmentData['gradable'], fallback: true);
@@ -394,7 +401,7 @@ class AssignmentMutations {
     int orderInCourse = 0,
   }) async {
     final docRef = FirestorePaths.assignmentsCol().doc();
-    
+
     await docRef.set({
       'studentId': studentId,
       'subjectId': subjectId,

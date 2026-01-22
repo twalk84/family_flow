@@ -1,4 +1,16 @@
 // FILE: lib/screens/curriculum_manager_screen.dart
+//
+// Global Curriculum Manager (Firestore + Storage-backed configs)
+//
+// ✅ Updates:
+// - Loads curricula list from Firestore collection: /courseConfigs (active == true)
+// - Uses CourseConfigService.getConfig(id) which now fetches Firestore -> Storage JSON (with asset fallback)
+// - Keeps your stabilized streams + smooth sheet UX
+// - Falls back to a local hardcoded list if Firestore has no active configs yet (or read fails)
+//
+// NOTE:
+// - Ensure you have Firestore rules allowing signed-in users to read /courseConfigs
+// - Ensure Storage rules allow signed-in users to read /course-configs/*
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +42,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   @override
   void initState() {
     super.initState();
+
     // Initialize all connections ONCE to prevent "flashing" resets
     _studentsStream = FirestorePaths.studentsCol().snapshots();
     _subjectsStream = FirestorePaths.subjectsCol().snapshots();
@@ -39,52 +52,103 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     _loadConfigs();
   }
 
+  // ============================================================
+  // GLOBAL LOADING: Firestore list -> Storage JSON via service
+  // ============================================================
+
   Future<void> _loadConfigs() async {
     setState(() => _loading = true);
 
     try {
-      // These must match file names in: assets/courseConfigs/{id}.json
-      final configIds = [
-        // Core
-        'general_chemistry_v1',
-        'biological_science_v1',
-        'british_literature_v1',
-        'touch_typing_v1',
+      // 1) Try global list from Firestore
+      final globalIds = await _fetchActiveGlobalConfigIds();
 
-        // Math
-        'saxon_math_76',
-
-        // Languages
-        'deutsche_sprachlehre_v1',
-        'madrigals_spanish_v1',
-        'russian_in_exercises_v1',
-        'wheelocks_latin_v1',
-      ];
+      // 2) Fallback list (assets) if global list empty or unavailable
+      final ids = globalIds.isNotEmpty ? globalIds : _fallbackLocalConfigIds();
 
       final configs = <Map<String, dynamic>>[];
-      for (final id in configIds) {
+
+      // Load each config via service (global first, then asset fallback)
+      for (final id in ids) {
         try {
           final config = await _configService.getConfig(id);
           if (config != null) {
-            configs.add({
-              'id': id,
-              'config': config,
-            });
+            configs.add({'id': id, 'config': config});
           }
         } catch (e) {
           debugPrint('Failed to load config $id: $e');
         }
       }
 
+      // Sort by display name for a clean UI
+      configs.sort((a, b) {
+        final an = _getConfigName((a['config'] as Map<String, dynamic>));
+        final bn = _getConfigName((b['config'] as Map<String, dynamic>));
+        return an.toLowerCase().compareTo(bn.toLowerCase());
+      });
+
       setState(() {
         _availableConfigs = configs;
         _loading = false;
       });
+
+      if (globalIds.isEmpty) {
+        _snack('No active global curricula found. Showing local fallback list.', color: Colors.orange);
+      }
     } catch (e) {
       setState(() => _loading = false);
       _snack('Failed to load curricula: $e', color: Colors.red);
     }
   }
+
+  Future<List<String>> _fetchActiveGlobalConfigIds() async {
+    try {
+      final snap = await FirebaseFirestore.instance
+          .collection('courseConfigs')
+          .where('active', isEqualTo: true)
+          .get();
+
+      // Prefer explicit "id" field if present, else doc id
+      final ids = snap.docs
+          .map((d) {
+            final data = d.data();
+            final raw = (data['id'] ?? d.id).toString().trim();
+            return raw;
+          })
+          .where((id) => id.isNotEmpty)
+          .toList();
+
+      // De-dup while preserving order
+      final seen = <String>{};
+      final unique = <String>[];
+      for (final id in ids) {
+        if (seen.add(id)) unique.add(id);
+      }
+      return unique;
+    } catch (e) {
+      debugPrint('Global courseConfigs fetch failed: $e');
+      return [];
+    }
+  }
+
+  List<String> _fallbackLocalConfigIds() {
+    // Keep this list as a safety net for offline/dev or before publishing globals
+    return const [
+      'general_chemistry_v1',
+      'touch_typing_v1',
+      'biological_science_v1',
+      'british_literature_v1',
+      'saxon_math_76',
+      'wheelocks_latin_v1', // ✅ fixed id to match published config
+      'deutsche_sprachlehre_v1',
+      'madrigals_spanish_v1',
+      'russian_in_exercises_v1',
+    ];
+  }
+
+  // ============================================================
+  // UI Helpers
+  // ============================================================
 
   void _snack(String msg, {Color? color}) {
     if (!mounted) return;
@@ -102,6 +166,32 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   String _todayYmd() {
     final d = DateTime.now();
     return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  }
+
+  // ✅ Always compute counts from live Firestore snapshot docs.
+  (int assigned, int completed) _countsForStudentConfig({
+    required List<QueryDocumentSnapshot<Map<String, dynamic>>> assignmentDocs,
+    required String studentId,
+    required String configId,
+  }) {
+    int assigned = 0;
+    int completed = 0;
+
+    for (final doc in assignmentDocs) {
+      final data = doc.data();
+
+      final sid = (data['studentId'] ?? data['student_id'] ?? '').toString().trim();
+      if (sid != studentId) continue;
+
+      final cid = (data['courseConfigId'] ?? data['course_config_id'] ?? '').toString().trim();
+      if (cid != configId) continue;
+
+      assigned++;
+      final isDone = (data['completed'] == true) || (data['isCompleted'] == true);
+      if (isDone) completed++;
+    }
+
+    return (assigned, completed);
   }
 
   // ============================================================
@@ -200,7 +290,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   int _getTotalLessons(Map<String, dynamic> config) {
     final curriculum = config['curriculum'];
     if (curriculum is Map) {
-      return curriculum['totalLessons'] as int? ?? 0;
+      return (curriculum['totalLessons'] is num) ? (curriculum['totalLessons'] as num).toInt() : 0;
     }
     final assignments = config['assignments'];
     if (assignments is List) return assignments.length;
@@ -209,18 +299,15 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
 
   String _getConfigIcon(String configId) {
     final id = configId.toLowerCase();
-
-    if (id.contains('saxon') || id.contains('math')) return '🧮';
+    if (id.contains('math') || id.contains('saxon')) return '📐';
     if (id.contains('chem')) return '🧪';
     if (id.contains('bio')) return '🧬';
-    if (id.contains('wheelocks') || id.contains('latin')) return '🏛️';
+    if (id.contains('latin')) return '🏛️';
     if (id.contains('lit')) return '📚';
     if (id.contains('typing')) return '⌨️';
-
-    if (id.contains('deutsche') || id.contains('german')) return '🇩🇪';
-    if (id.contains('madrigals') || id.contains('spanish')) return '🇪🇸';
+    if (id.contains('spanish')) return '🇪🇸';
+    if (id.contains('german') || id.contains('deutsche')) return '🇩🇪';
     if (id.contains('russian')) return '🇷🇺';
-
     return '📖';
   }
 
@@ -339,9 +426,9 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     final curriculum = config['curriculum'];
     List configAssignments = [];
     if (curriculum is Map && curriculum['modules'] is List) {
-      for (var module in curriculum['modules']) {
-        if (module['lessons'] is List) {
-          configAssignments.addAll(module['lessons']);
+      for (final module in (curriculum['modules'] as List)) {
+        if (module is Map && module['lessons'] is List) {
+          configAssignments.addAll(module['lessons'] as List);
         }
       }
     } else {
@@ -352,10 +439,13 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         (config['grading']?['categories'] as Map?)?.cast<String, dynamic>() ??
         {};
 
-    final assignedOrders = existingAssignments.where((a) => a.courseConfigId == configId).map((a) => a.orderInCourse).toSet();
+    final assignedOrders = existingAssignments
+        .where((a) => a.courseConfigId == configId)
+        .map((a) => a.orderInCourse)
+        .toSet();
 
     final unassigned = configAssignments.where((a) {
-      final order = a['index'] as int? ?? a['order'] as int? ?? 0;
+      final order = (a is Map) ? ((a['index'] as int?) ?? (a['order'] as int?) ?? 0) : 0;
       return !assignedOrders.contains(order);
     }).toList();
 
@@ -364,8 +454,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
       builder: (sheetContext) {
         return StatefulBuilder(
           builder: (context, setSheetState) {
-            final completed =
-                existingAssignments.where((a) => a.courseConfigId == configId && a.isCompleted).length;
+            final completed = existingAssignments.where((a) => a.courseConfigId == configId && a.isCompleted).length;
             final assignedCount = assignedOrders.length;
             final totalCount = configAssignments.length;
 
@@ -393,10 +482,13 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                 const SizedBox(height: 16),
                 const Divider(color: Colors.white12),
                 const Text('Upcoming', style: TextStyle(fontWeight: FontWeight.bold)),
-                ...unassigned.take(5).map((lesson) {
-                  final order = lesson['index'] as int? ?? lesson['order'] as int? ?? 0;
+                ...unassigned.take(6).map((lesson) {
+                  if (lesson is! Map) return const SizedBox.shrink();
+                  final order = (lesson['index'] as int?) ?? (lesson['order'] as int?) ?? 0;
+                  final title = lesson['title']?.toString() ?? lesson['name']?.toString() ?? 'Lesson $order';
                   return ListTile(
-                    title: Text(lesson['title']?.toString() ?? lesson['name']?.toString() ?? 'Lesson $order'),
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(title),
                     trailing: IconButton(
                       icon: const Icon(Icons.add_circle, color: Colors.blue),
                       onPressed: () async {
@@ -427,13 +519,21 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     required Map<String, dynamic> categories,
     required Subject? linkedSubject,
   }) async {
-    final order = lessonData['index'] as int? ?? lessonData['order'] as int? ?? 0;
-    final name = lessonData['title']?.toString() ?? lessonData['name']?.toString() ?? 'Lesson $order';
-    final categoryKey = lessonData['category']?.toString() ?? 'lesson';
+    final order = (lessonData is Map) ? ((lessonData['index'] as int?) ?? (lessonData['order'] as int?) ?? 0) : 0;
+
+    final name = (lessonData is Map)
+        ? (lessonData['title']?.toString() ?? lessonData['name']?.toString() ?? 'Lesson $order')
+        : 'Lesson $order';
+
+    final categoryKey = (lessonData is Map) ? (lessonData['category']?.toString() ?? 'lesson') : 'lesson';
 
     int points = 10;
     if (categories.containsKey(categoryKey)) {
-      points = categories[categoryKey]['pointsEach'] ?? categories[categoryKey]['pointsBase'] ?? 10;
+      final cat = categories[categoryKey];
+      if (cat is Map) {
+        final raw = (cat['pointsEach'] ?? cat['pointsBase'] ?? 10);
+        points = raw is num ? raw.toInt() : 10;
+      }
     }
 
     try {
@@ -449,6 +549,9 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         orderInCourse: order,
       );
       _snack('Assigned: $name', color: Colors.green);
+
+      // ✅ Cosmetic: force repaint so counts update immediately
+      if (mounted) setState(() {});
     } catch (e) {
       _snack('Failed to assign: $e', color: Colors.red);
     }
@@ -486,12 +589,13 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       stream: _assignmentsStream,
                       builder: (context, assignmentsSnap) {
-                        final assignments = assignmentsSnap.data?.docs.map((d) => Assignment.fromDoc(d)).toList() ?? [];
+                        // ✅ Keep raw docs for accurate counting
+                        final assignmentDocs = assignmentsSnap.data?.docs ?? const <QueryDocumentSnapshot<Map<String, dynamic>>>[];
+                        final assignments = assignmentDocs.map((d) => Assignment.fromDoc(d)).toList();
 
                         return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                           stream: _progressStream,
                           builder: (context, progressSnap) {
-                            // GATEKEEPER: Prevent the list from clearing while streams are fetching data
                             if (progressSnap.connectionState == ConnectionState.waiting && students.isNotEmpty) {
                               return const Center(child: CircularProgressIndicator());
                             }
@@ -507,6 +611,12 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
 
                             final progressDocs = progressSnap.data?.docs ?? [];
 
+                            if (_availableConfigs.isEmpty) {
+                              return const Center(
+                                child: Text('No curricula available.', style: TextStyle(color: Colors.white60)),
+                              );
+                            }
+
                             return ListView.builder(
                               padding: const EdgeInsets.all(16),
                               itemCount: _availableConfigs.length,
@@ -514,15 +624,15 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                 final configData = _availableConfigs[index];
                                 final configId = configData['id'] as String;
                                 final config = configData['config'] as Map<String, dynamic>;
+
                                 final configName = _getConfigName(config);
+                                final configDesc = _getConfigDescription(config);
                                 final icon = _getConfigIcon(configId);
                                 final totalLessons = _getTotalLessons(config);
 
-                                // Stability Fix: Safer enrolled student matching logic
                                 final enrolledStudents = students.where((s) {
                                   return progressDocs.any((p) {
                                     final data = p.data();
-                                    // Match student using the fields we ensure exist during enrollment
                                     final pStudentId = data['studentId']?.toString() ?? '';
                                     final pConfigId = data['courseConfigId']?.toString() ?? '';
                                     return pStudentId == s.id && pConfigId == configId;
@@ -554,17 +664,25 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(configName,
-                                                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                                  Text('$totalLessons lessons',
-                                                      style: const TextStyle(color: Colors.white60, fontSize: 13)),
-                                                  if (_getConfigDescription(config).isNotEmpty)
-                                                    Text(
-                                                      _getConfigDescription(config),
-                                                      style: const TextStyle(color: Colors.white54, fontSize: 12),
-                                                      maxLines: 2,
-                                                      overflow: TextOverflow.ellipsis,
+                                                  Text(
+                                                    configName,
+                                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                  ),
+                                                  if (configDesc.isNotEmpty)
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 2),
+                                                      child: Text(
+                                                        configDesc,
+                                                        style: const TextStyle(color: Colors.white60, fontSize: 12),
+                                                      ),
                                                     ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(top: 4),
+                                                    child: Text(
+                                                      '$totalLessons lessons',
+                                                      style: const TextStyle(color: Colors.white60, fontSize: 13),
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -577,18 +695,30 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                         if (enrolledStudents.isNotEmpty) ...[
                                           const SizedBox(height: 12),
                                           const Divider(color: Colors.white12),
-                                          const Text('Enrolled Students', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
+                                          const Text(
+                                            'Enrolled Students',
+                                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+                                          ),
                                           const SizedBox(height: 8),
                                           ...enrolledStudents.map((s) {
-                                            final studentAssignments =
-                                                assignments.where((a) => a.studentId == s.id && a.courseConfigId == configId).toList();
-                                            final completed = studentAssignments.where((a) => a.isCompleted).length;
+                                            final studentAssignments = assignments
+                                                .where((a) => a.studentId == s.id && a.courseConfigId == configId)
+                                                .toList();
+
+                                            final (assignedCount, completed) = _countsForStudentConfig(
+                                              assignmentDocs: assignmentDocs,
+                                              studentId: s.id,
+                                              configId: configId,
+                                            );
 
                                             return ListTile(
+                                              // ✅ Interpolation ambiguity-proof (matches what we discussed)
+                                              key: ValueKey('counts_${configId}_${s.id}_${assignedCount}_${completed}'),
                                               contentPadding: EdgeInsets.zero,
                                               leading: CircleAvatar(child: Text(s.name.isNotEmpty ? s.name[0] : '?')),
                                               title: Text(s.name),
-                                              subtitle: Text('$completed assigned lessons'),
+                                              // ✅ Also ambiguity-proof (same reason)
+                                              subtitle: Text('${completed} completed / ${assignedCount} assigned'),
                                               trailing: TextButton(
                                                 onPressed: () => _showManageCurriculumSheet(
                                                   configData: configData,

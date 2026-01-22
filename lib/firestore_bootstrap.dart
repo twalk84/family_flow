@@ -15,7 +15,7 @@ import 'firestore_paths.dart';
 class FirestoreBootstrap {
   FirestoreBootstrap._();
 
-  static FirebaseFirestore get _db => FirebaseFirestore.instance;
+ 
 
   static Map<String, dynamic> _ts({bool includeCreated = false}) {
     final now = FieldValue.serverTimestamp();

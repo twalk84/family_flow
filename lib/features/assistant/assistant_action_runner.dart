@@ -81,7 +81,7 @@ class AssistantActionRunner {
       await existing.reference.set(
         {
           'age': existing.data()?['age'] ?? age,
-          'gradeLevel': (existing.data()?['gradeLevel'] ?? gradeLevel).toString(),
+          'gradeLevel': (existing.data()['gradeLevel'] ?? gradeLevel).toString(),
           'nameLower': name.toLowerCase(),
           'updatedAt': FieldValue.serverTimestamp(),
         },

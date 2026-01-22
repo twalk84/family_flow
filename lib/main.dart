@@ -28,7 +28,7 @@ import 'core/course_configs/course_config_loader.dart';
 import 'screens/menu_screen.dart';
 import 'screens/help_screen.dart';
 import 'screens/dashboard_screen.dart';
-import 'screens/daily_schedule_screen.dart';
+//import 'screens/daily_schedule_screen.dart';
 import 'screens/assistant_standalone_screen.dart';
 import 'screens/student_selection_screen.dart';
 

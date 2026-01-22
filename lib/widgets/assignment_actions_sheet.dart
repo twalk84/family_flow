@@ -4,7 +4,7 @@
 // UPDATED: Now uses AssignmentMutations.setCompleted() for proper
 // points calculation, streak tracking, and completion date handling.
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 
 import '../firestore_paths.dart';

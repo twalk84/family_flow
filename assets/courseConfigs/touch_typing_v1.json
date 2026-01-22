@@ -1,32 +1,39 @@
 {
   "id": "touch_typing_v1",
   "title": "Touch Typing",
-  "subtitle": "TypingTest.com Curriculum",
-  "version": 1,
+  "subtitle": "Life OS • Keyboard Mastery & Speed Tracking",
+  "version": 2,
   "type": "skill",
-
-  "philosophy": {
-    "summary": "Practice > Progress | Accuracy First",
-    "principles": [
-      "Consistent daily practice builds muscle memory",
-      "Accuracy is non-negotiable — speed follows naturally",
-      "15 minutes daily minimum — streaks earn bonuses",
-      "All activities require 95%+ accuracy",
-      "End-of-lesson tests require 100% (corrections allowed)"
-    ]
-  },
-
   "grading": {
     "mode": "points",
     "categories": {
-      "daily_practice": { "pointsEach": 10, "countsTowardGrade": true },
-      "activity": { "pointsEach": 5, "countsTowardGrade": true },
-      "end_of_lesson_test": { "pointsEach": 15, "countsTowardGrade": true },
-      "lesson_completion": { "pointsEach": 25, "countsTowardGrade": true },
-      "module_completion": { "pointsEach": 50, "countsTowardGrade": true }
+      "daily_practice": {
+        "label": "Daily Practice",
+        "pointsEach": 10,
+        "countsTowardGrade": true
+      },
+      "activity": {
+        "label": "Activity Completion",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "end_of_lesson_test": {
+        "label": "End-of-Lesson Test",
+        "pointsEach": 15,
+        "countsTowardGrade": true
+      },
+      "lesson_completion": {
+        "label": "Lesson Completion",
+        "pointsEach": 25,
+        "countsTowardGrade": true
+      },
+      "module_completion": {
+        "label": "Module Completion",
+        "pointsEach": 50,
+        "countsTowardGrade": true
+      }
     }
   },
-
   "rewards": {
     "enabled": true,
     "basePoints": {
@@ -38,467 +45,1974 @@
     },
     "streak": {
       "enabled": true,
-      "trackedCategories": ["daily_practice"],
-      "bonusSchedule": [
-        { "daysRequired": 5, "bonusPercent": 0.05 },
-        { "daysRequired": 10, "bonusPercent": 0.10 },
-        { "daysRequired": 15, "bonusPercent": 0.15 },
-        { "daysRequired": 20, "bonusPercent": 0.20 },
-        { "daysRequired": 25, "bonusPercent": 0.25 },
-        { "daysRequired": 30, "bonusPercent": 0.30 },
-        { "daysRequired": 50, "bonusPercent": 0.40 },
-        { "daysRequired": 75, "bonusPercent": 0.50 }
+      "trackedCategories": [
+        "daily_practice"
       ],
-      "maxBonusPercent": 0.50,
+      "bonusSchedule": [
+        {
+          "daysRequired": 5,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 10,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 15,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 20,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 25,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 30,
+          "bonusPercent": 0.05
+        },
+        {
+          "daysRequired": 50,
+          "bonusPercent": 0.1
+        },
+        {
+          "daysRequired": 75,
+          "bonusPercent": 0.1
+        }
+      ],
+      "maxBonusPercent": 0.5,
       "resetOnMissedDay": true
     },
     "improvementBonus": {
       "enabled": true,
       "metric": "wpm",
       "thresholds": [
-        { "improvement": 5, "points": 25 },
-        { "improvement": 10, "points": 50 },
-        { "improvement": 15, "points": 75 },
-        { "improvement": 20, "points": 100 },
-        { "improvement": 25, "points": 150 }
+        {
+          "improvement": 5,
+          "points": 25,
+          "note": "Daily practice +5 WPM (same or better accuracy)"
+        },
+        {
+          "improvement": 10,
+          "points": 50,
+          "note": "Activities +10 WPM (same or better accuracy)"
+        },
+        {
+          "improvement": 15,
+          "points": 75,
+          "note": "End-of-lesson tests +15 WPM (same or better accuracy)"
+        },
+        {
+          "improvement": 20,
+          "points": 100,
+          "note": "Lesson completion +20 WPM (same or better accuracy)"
+        },
+        {
+          "improvement": 25,
+          "points": 150,
+          "note": "Module completion +25 WPM (same or better accuracy)"
+        }
       ],
       "requiresSameOrBetterAccuracy": true
     }
   },
-
-  "masteryRequirements": {
-    "activities": { "minAccuracyPercent": 95 },
-    "endOfLessonTests": { "minAccuracyPercent": 100, "allowCorrections": true }
-  },
-
+  "masteryRequirements": [
+    {
+      "component": "Activities",
+      "requirement": "95%+ accuracy",
+      "notes": "Must pass to proceed"
+    },
+    {
+      "component": "End-of-Lesson Tests",
+      "requirement": "100% accuracy",
+      "notes": "Corrections allowed"
+    },
+    {
+      "component": "Module Completion",
+      "requirement": "All lessons done",
+      "notes": "Unlocks next module"
+    }
+  ],
   "curriculum": {
-    "structure": "modules > lessons > activities",
-    "totalModules": 4,
-    "totalLessons": 27,
-
+    "totalLessons": 85,
     "modules": [
       {
         "id": "touch_typing",
-        "index": 1,
         "title": "Touch Typing",
         "description": "Core keyboard mastery",
         "lessonCount": 14,
         "badgeId": "touch_typing_graduate",
         "lessons": [
           {
-            "id": "lesson_1",
             "index": 1,
-            "title": "Introduction and Initial Test",
-            "activityCount": 7,
-            "estimatedMinutes": 19,
-            "focusKeys": "Baseline assessment",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 1: Activities — Introduction and Initial Test",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Introduction and Initial Test",
+              "activityCount": 7,
+              "estimatedMinutes": 19,
+              "focus": "Baseline assessment",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
           },
           {
-            "id": "lesson_2",
             "index": 2,
-            "title": "The Home Row",
-            "activityCount": 7,
-            "estimatedMinutes": 16,
-            "focusKeys": "A S D F J K L ;",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 1: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Introduction and Initial Test",
+              "estimatedMinutes": 19,
+              "focus": "Baseline assessment",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
           },
           {
-            "id": "lesson_3",
             "index": 3,
-            "title": "Letters E and I",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "E, I",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 1: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Introduction and Initial Test",
+              "completionRule": "All activities + test completed"
+            }
           },
           {
-            "id": "lesson_4",
             "index": 4,
-            "title": "Ergonomics and Letters R and U",
-            "activityCount": 8,
-            "estimatedMinutes": 22,
-            "focusKeys": "R, U + posture",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 2: Activities — The Home Row",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "The Home Row",
+              "activityCount": 7,
+              "estimatedMinutes": 16,
+              "focus": "A S D F J K L ;",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
           },
           {
-            "id": "lesson_5",
             "index": 5,
-            "title": "Letters T and O",
-            "activityCount": 9,
-            "estimatedMinutes": 21,
-            "focusKeys": "T, O",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 2: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "The Home Row",
+              "estimatedMinutes": 16,
+              "focus": "A S D F J K L ;",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
           },
           {
-            "id": "lesson_6",
             "index": 6,
-            "title": "Capital Letters and Period",
-            "activityCount": 9,
-            "estimatedMinutes": 22,
-            "focusKeys": "Shift, .",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 2: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "The Home Row",
+              "completionRule": "All activities + test completed"
+            }
           },
           {
-            "id": "lesson_7",
             "index": 7,
-            "title": "Letter C and Comma",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "C, ,",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 3: Activities — Letters E and I",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Letters E and I",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "E, I",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
           },
           {
-            "id": "lesson_8",
             "index": 8,
-            "title": "Letters G and H, keys ' and \"",
-            "activityCount": 9,
-            "estimatedMinutes": 22,
-            "focusKeys": "G, H, ', \"",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 3: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Letters E and I",
+              "estimatedMinutes": 20,
+              "focus": "E, I",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
           },
           {
-            "id": "lesson_9",
             "index": 9,
-            "title": "Letters V and N and Question Mark",
-            "activityCount": 9,
-            "estimatedMinutes": 22,
-            "focusKeys": "V, N, ?",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 3: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Letters E and I",
+              "completionRule": "All activities + test completed"
+            }
           },
           {
-            "id": "lesson_10",
             "index": 10,
-            "title": "Letters W and M",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "W, M",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 4: Activities — Ergonomics and Letters R and U",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Ergonomics and Letters R and U",
+              "activityCount": 8,
+              "estimatedMinutes": 22,
+              "focus": "R, U + posture",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
           },
           {
-            "id": "lesson_11",
             "index": 11,
-            "title": "Letters Q and P",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "Q, P",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 4: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Ergonomics and Letters R and U",
+              "estimatedMinutes": 22,
+              "focus": "R, U + posture",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
           },
           {
-            "id": "lesson_12",
             "index": 12,
-            "title": "Letters B and Y",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "B, Y",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 4: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Ergonomics and Letters R and U",
+              "completionRule": "All activities + test completed"
+            }
           },
           {
-            "id": "lesson_13",
             "index": 13,
-            "title": "Letters Z and X",
-            "activityCount": 8,
-            "estimatedMinutes": 20,
-            "focusKeys": "Z, X",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 5: Activities — Letters T and O",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Letters T and O",
+              "activityCount": 9,
+              "estimatedMinutes": 21,
+              "focus": "T, O",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
           },
           {
-            "id": "lesson_14",
             "index": 14,
-            "title": "Final Test",
-            "activityCount": 1,
-            "estimatedMinutes": 3,
-            "focusKeys": "Full keyboard test",
-            "hasEndOfLessonTest": true
+            "title": "Touch Typing Lesson 5: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Letters T and O",
+              "estimatedMinutes": 21,
+              "focus": "T, O",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 15,
+            "title": "Touch Typing Lesson 5: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Letters T and O",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 16,
+            "title": "Touch Typing Lesson 6: Activities — Capital Letters and Period",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Capital Letters and Period",
+              "activityCount": 9,
+              "estimatedMinutes": 22,
+              "focus": "Shift, .",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 17,
+            "title": "Touch Typing Lesson 6: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Capital Letters and Period",
+              "estimatedMinutes": 22,
+              "focus": "Shift, .",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 18,
+            "title": "Touch Typing Lesson 6: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Capital Letters and Period",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 19,
+            "title": "Touch Typing Lesson 7: Activities — Letter C and Comma",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Letter C and Comma",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "C, ,",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 20,
+            "title": "Touch Typing Lesson 7: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Letter C and Comma",
+              "estimatedMinutes": 20,
+              "focus": "C, ,",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 21,
+            "title": "Touch Typing Lesson 7: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Letter C and Comma",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 22,
+            "title": "Touch Typing Lesson 8: Activities — Letters G and H, keys ' and \"",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 8,
+              "lessonTitle": "Letters G and H, keys ' and \"",
+              "activityCount": 9,
+              "estimatedMinutes": 22,
+              "focus": "G, H, ', \"",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 23,
+            "title": "Touch Typing Lesson 8: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 8,
+              "lessonTitle": "Letters G and H, keys ' and \"",
+              "estimatedMinutes": 22,
+              "focus": "G, H, ', \"",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 24,
+            "title": "Touch Typing Lesson 8: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 8,
+              "lessonTitle": "Letters G and H, keys ' and \"",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 25,
+            "title": "Touch Typing Lesson 9: Activities — Letters V and N and Question Mark",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 9,
+              "lessonTitle": "Letters V and N and Question Mark",
+              "activityCount": 9,
+              "estimatedMinutes": 22,
+              "focus": "V, N, ?",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 26,
+            "title": "Touch Typing Lesson 9: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 9,
+              "lessonTitle": "Letters V and N and Question Mark",
+              "estimatedMinutes": 22,
+              "focus": "V, N, ?",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 27,
+            "title": "Touch Typing Lesson 9: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 9,
+              "lessonTitle": "Letters V and N and Question Mark",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 28,
+            "title": "Touch Typing Lesson 10: Activities — Letters W and M",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 10,
+              "lessonTitle": "Letters W and M",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "W, M",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 29,
+            "title": "Touch Typing Lesson 10: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 10,
+              "lessonTitle": "Letters W and M",
+              "estimatedMinutes": 20,
+              "focus": "W, M",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 30,
+            "title": "Touch Typing Lesson 10: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 10,
+              "lessonTitle": "Letters W and M",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 31,
+            "title": "Touch Typing Lesson 11: Activities — Letters Q and P",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 11,
+              "lessonTitle": "Letters Q and P",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "Q, P",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 32,
+            "title": "Touch Typing Lesson 11: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 11,
+              "lessonTitle": "Letters Q and P",
+              "estimatedMinutes": 20,
+              "focus": "Q, P",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 33,
+            "title": "Touch Typing Lesson 11: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 11,
+              "lessonTitle": "Letters Q and P",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 34,
+            "title": "Touch Typing Lesson 12: Activities — Letters B and Y",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 12,
+              "lessonTitle": "Letters B and Y",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "B, Y",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 35,
+            "title": "Touch Typing Lesson 12: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 12,
+              "lessonTitle": "Letters B and Y",
+              "estimatedMinutes": 20,
+              "focus": "B, Y",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 36,
+            "title": "Touch Typing Lesson 12: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 12,
+              "lessonTitle": "Letters B and Y",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 37,
+            "title": "Touch Typing Lesson 13: Activities — Letters Z and X",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 13,
+              "lessonTitle": "Letters Z and X",
+              "activityCount": 8,
+              "estimatedMinutes": 20,
+              "focus": "Z, X",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 38,
+            "title": "Touch Typing Lesson 13: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 13,
+              "lessonTitle": "Letters Z and X",
+              "estimatedMinutes": 20,
+              "focus": "Z, X",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 39,
+            "title": "Touch Typing Lesson 13: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 13,
+              "lessonTitle": "Letters Z and X",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 40,
+            "title": "Touch Typing Lesson 14: Activities — Final Test",
+            "category": "activity",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 14,
+              "lessonTitle": "Final Test",
+              "activityCount": 1,
+              "estimatedMinutes": 3,
+              "focus": "Full keyboard test",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 41,
+            "title": "Touch Typing Lesson 14: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 14,
+              "lessonTitle": "Final Test",
+              "estimatedMinutes": 3,
+              "focus": "Full keyboard test",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 42,
+            "title": "Touch Typing Lesson 14: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "moduleLessonNumber": 14,
+              "lessonTitle": "Final Test",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 43,
+            "title": "Touch Typing: Module Completion",
+            "category": "module_completion",
+            "meta": {
+              "moduleId": "touch_typing",
+              "moduleTitle": "Touch Typing",
+              "completionRule": "All lessons in Touch Typing completed",
+              "badgeId": "touch_typing_graduate"
+            }
           }
         ]
       },
       {
         "id": "speed_building",
-        "index": 2,
         "title": "Speed Building",
-        "description": "Increase WPM while maintaining accuracy",
+        "description": "Increase WPM",
         "lessonCount": 7,
         "badgeId": "speed_demon",
         "lessons": [
-          { "id": "speed_1", "index": 1, "title": "Speed Building Lesson 1", "focusKeys": "Rhythm and flow", "hasEndOfLessonTest": true },
-          { "id": "speed_2", "index": 2, "title": "Speed Building Lesson 2", "focusKeys": "Common words", "hasEndOfLessonTest": true },
-          { "id": "speed_3", "index": 3, "title": "Speed Building Lesson 3", "focusKeys": "Word patterns", "hasEndOfLessonTest": true },
-          { "id": "speed_4", "index": 4, "title": "Speed Building Lesson 4", "focusKeys": "Sentence practice", "hasEndOfLessonTest": true },
-          { "id": "speed_5", "index": 5, "title": "Speed Building Lesson 5", "focusKeys": "Paragraph practice", "hasEndOfLessonTest": true },
-          { "id": "speed_6", "index": 6, "title": "Speed Building Lesson 6", "focusKeys": "Timed exercises", "hasEndOfLessonTest": true },
-          { "id": "speed_7", "index": 7, "title": "Speed Building Lesson 7", "focusKeys": "Final speed test", "hasEndOfLessonTest": true }
+          {
+            "index": 44,
+            "title": "Speed Building Lesson 1: Activities — Speed Building Lesson 1",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Speed Building Lesson 1",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Rhythm and flow",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 45,
+            "title": "Speed Building Lesson 1: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Speed Building Lesson 1",
+              "estimatedMinutes": null,
+              "focus": "Rhythm and flow",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 46,
+            "title": "Speed Building Lesson 1: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Speed Building Lesson 1",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 47,
+            "title": "Speed Building Lesson 2: Activities — Speed Building Lesson 2",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Speed Building Lesson 2",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Common words",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 48,
+            "title": "Speed Building Lesson 2: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Speed Building Lesson 2",
+              "estimatedMinutes": null,
+              "focus": "Common words",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 49,
+            "title": "Speed Building Lesson 2: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Speed Building Lesson 2",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 50,
+            "title": "Speed Building Lesson 3: Activities — Speed Building Lesson 3",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Speed Building Lesson 3",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Word patterns",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 51,
+            "title": "Speed Building Lesson 3: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Speed Building Lesson 3",
+              "estimatedMinutes": null,
+              "focus": "Word patterns",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 52,
+            "title": "Speed Building Lesson 3: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Speed Building Lesson 3",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 53,
+            "title": "Speed Building Lesson 4: Activities — Speed Building Lesson 4",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Speed Building Lesson 4",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Sentence practice",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 54,
+            "title": "Speed Building Lesson 4: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Speed Building Lesson 4",
+              "estimatedMinutes": null,
+              "focus": "Sentence practice",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 55,
+            "title": "Speed Building Lesson 4: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Speed Building Lesson 4",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 56,
+            "title": "Speed Building Lesson 5: Activities — Speed Building Lesson 5",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Speed Building Lesson 5",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Paragraph practice",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 57,
+            "title": "Speed Building Lesson 5: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Speed Building Lesson 5",
+              "estimatedMinutes": null,
+              "focus": "Paragraph practice",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 58,
+            "title": "Speed Building Lesson 5: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 5,
+              "lessonTitle": "Speed Building Lesson 5",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 59,
+            "title": "Speed Building Lesson 6: Activities — Speed Building Lesson 6",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Speed Building Lesson 6",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Timed exercises",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 60,
+            "title": "Speed Building Lesson 6: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Speed Building Lesson 6",
+              "estimatedMinutes": null,
+              "focus": "Timed exercises",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 61,
+            "title": "Speed Building Lesson 6: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 6,
+              "lessonTitle": "Speed Building Lesson 6",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 62,
+            "title": "Speed Building Lesson 7: Activities — Speed Building Lesson 7",
+            "category": "activity",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Speed Building Lesson 7",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Final speed test",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 63,
+            "title": "Speed Building Lesson 7: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Speed Building Lesson 7",
+              "estimatedMinutes": null,
+              "focus": "Final speed test",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 64,
+            "title": "Speed Building Lesson 7: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "moduleLessonNumber": 7,
+              "lessonTitle": "Speed Building Lesson 7",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 65,
+            "title": "Speed Building: Module Completion",
+            "category": "module_completion",
+            "meta": {
+              "moduleId": "speed_building",
+              "moduleTitle": "Speed Building",
+              "completionRule": "All lessons in Speed Building completed",
+              "badgeId": "speed_demon"
+            }
+          }
         ]
       },
       {
         "id": "number_row",
-        "index": 3,
         "title": "Number Row",
-        "description": "Numbers 0-9",
+        "description": "Numbers 0–9",
         "lessonCount": 2,
         "badgeId": "number_cruncher",
         "lessons": [
-          { "id": "num_1", "index": 1, "title": "Number Row Lesson 1", "focusKeys": "Numbers 1-5", "hasEndOfLessonTest": true },
-          { "id": "num_2", "index": 2, "title": "Number Row Lesson 2", "focusKeys": "Numbers 6-0", "hasEndOfLessonTest": true }
+          {
+            "index": 66,
+            "title": "Number Row Lesson 1: Activities — Number Row Lesson 1",
+            "category": "activity",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Number Row Lesson 1",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Numbers 1-5",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 67,
+            "title": "Number Row Lesson 1: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Number Row Lesson 1",
+              "estimatedMinutes": null,
+              "focus": "Numbers 1-5",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 68,
+            "title": "Number Row Lesson 1: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Number Row Lesson 1",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 69,
+            "title": "Number Row Lesson 2: Activities — Number Row Lesson 2",
+            "category": "activity",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Number Row Lesson 2",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "Numbers 6-0",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 70,
+            "title": "Number Row Lesson 2: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Number Row Lesson 2",
+              "estimatedMinutes": null,
+              "focus": "Numbers 6-0",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 71,
+            "title": "Number Row Lesson 2: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Number Row Lesson 2",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 72,
+            "title": "Number Row: Module Completion",
+            "category": "module_completion",
+            "meta": {
+              "moduleId": "number_row",
+              "moduleTitle": "Number Row",
+              "completionRule": "All lessons in Number Row completed",
+              "badgeId": "number_cruncher"
+            }
+          }
         ]
       },
       {
         "id": "symbols",
-        "index": 4,
         "title": "Symbols",
         "description": "Special characters",
         "lessonCount": 4,
         "badgeId": "symbol_master",
         "lessons": [
-          { "id": "sym_1", "index": 1, "title": "Symbols Lesson 1", "focusKeys": "! @ # $ %", "hasEndOfLessonTest": true },
-          { "id": "sym_2", "index": 2, "title": "Symbols Lesson 2", "focusKeys": "^ & * ( )", "hasEndOfLessonTest": true },
-          { "id": "sym_3", "index": 3, "title": "Symbols Lesson 3", "focusKeys": "- = + _ [ ]", "hasEndOfLessonTest": true },
-          { "id": "sym_4", "index": 4, "title": "Symbols Lesson 4", "focusKeys": "{ } | \\ ; :", "hasEndOfLessonTest": true }
+          {
+            "index": 73,
+            "title": "Symbols Lesson 1: Activities — Symbols Lesson 1",
+            "category": "activity",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Symbols Lesson 1",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "! @ # $ %",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 74,
+            "title": "Symbols Lesson 1: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Symbols Lesson 1",
+              "estimatedMinutes": null,
+              "focus": "! @ # $ %",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 75,
+            "title": "Symbols Lesson 1: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 1,
+              "lessonTitle": "Symbols Lesson 1",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 76,
+            "title": "Symbols Lesson 2: Activities — Symbols Lesson 2",
+            "category": "activity",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Symbols Lesson 2",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "^ & * ( )",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 77,
+            "title": "Symbols Lesson 2: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Symbols Lesson 2",
+              "estimatedMinutes": null,
+              "focus": "^ & * ( )",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 78,
+            "title": "Symbols Lesson 2: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 2,
+              "lessonTitle": "Symbols Lesson 2",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 79,
+            "title": "Symbols Lesson 3: Activities — Symbols Lesson 3",
+            "category": "activity",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Symbols Lesson 3",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "- = + _ [ ]",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 80,
+            "title": "Symbols Lesson 3: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Symbols Lesson 3",
+              "estimatedMinutes": null,
+              "focus": "- = + _ [ ]",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 81,
+            "title": "Symbols Lesson 3: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 3,
+              "lessonTitle": "Symbols Lesson 3",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 82,
+            "title": "Symbols Lesson 4: Activities — Symbols Lesson 4",
+            "category": "activity",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Symbols Lesson 4",
+              "activityCount": null,
+              "estimatedMinutes": null,
+              "focus": "{ } | \\ ; :",
+              "requires": {
+                "accuracyMinPercent": 95
+              }
+            }
+          },
+          {
+            "index": 83,
+            "title": "Symbols Lesson 4: End-of-Lesson Test",
+            "category": "end_of_lesson_test",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Symbols Lesson 4",
+              "estimatedMinutes": null,
+              "focus": "{ } | \\ ; :",
+              "requires": {
+                "accuracyMinPercent": 100
+              },
+              "metricsCapture": {
+                "required": [
+                  "wpm",
+                  "accuracy"
+                ],
+                "storeAttempt": true,
+                "attemptType": "test"
+              }
+            }
+          },
+          {
+            "index": 84,
+            "title": "Symbols Lesson 4: Lesson Completion",
+            "category": "lesson_completion",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "moduleLessonNumber": 4,
+              "lessonTitle": "Symbols Lesson 4",
+              "completionRule": "All activities + test completed"
+            }
+          },
+          {
+            "index": 85,
+            "title": "Symbols: Module Completion",
+            "category": "module_completion",
+            "meta": {
+              "moduleId": "symbols",
+              "moduleTitle": "Symbols",
+              "completionRule": "All lessons in Symbols completed",
+              "badgeId": "symbol_master"
+            }
+          }
         ]
       }
     ]
   },
-
   "metrics": {
-    "tracked": ["wpm", "accuracy"],
+    "tracked": [
+      "wpm",
+      "accuracy",
+      "minutes"
+    ],
     "baseline": {
-      "capturedAt": "lesson_1",
-      "fields": ["wpm", "accuracy"]
+      "capturedAt": {
+        "moduleId": "touch_typing",
+        "lessonNumber": 1,
+        "category": "end_of_lesson_test"
+      },
+      "fields": [
+        "wpm",
+        "accuracy"
+      ]
     },
     "milestones": {
-      "wpm": [20, 30, 40, 50, 60, 70, 80, 90, 100]
+      "wpm": [
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ]
     }
   },
-
+  "wpmTracking": {
+    "enabled": true,
+    "captureOnCategories": [
+      "end_of_lesson_test",
+      "daily_practice"
+    ],
+    "attemptSchema": {
+      "fields": [
+        {
+          "key": "wpm",
+          "type": "int",
+          "min": 0
+        },
+        {
+          "key": "accuracy",
+          "type": "double",
+          "min": 0,
+          "max": 100
+        },
+        {
+          "key": "minutes",
+          "type": "int",
+          "min": 1,
+          "optional": true
+        },
+        {
+          "key": "lessonIndex",
+          "type": "int",
+          "optional": true
+        },
+        {
+          "key": "moduleId",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "key": "attemptType",
+          "type": "string",
+          "enum": [
+            "practice",
+            "test"
+          ],
+          "optional": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "key": "createdAt",
+          "type": "timestamp"
+        }
+      ]
+    },
+    "suggestedFirestore": {
+      "attemptsSubcollection": "typingAttempts",
+      "pathTemplate": "/families/{familyId}/students/{studentId}/subjectProgress/{courseConfigId}/typingAttempts/{attemptId}",
+      "alsoUpdateAggregatesOnSubjectProgress": [
+        "metrics.wpmCurrent",
+        "metrics.wpmHigh",
+        "metrics.accuracyAverage",
+        "metrics.lastTestDate"
+      ],
+      "aggregationHints": {
+        "wpmCurrent": "use latest attempt wpm",
+        "wpmHigh": "max of attempt wpm",
+        "accuracyAverage": "rolling average of last N attempts (e.g., 10)"
+      }
+    }
+  },
   "badges": [
     {
       "id": "beginner_typist",
       "title": "Beginner Typist",
-      "description": "Reach 20 WPM",
-      "tier": "bronze",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 20 }
+      "requirement": "Reach 20 WPM",
+      "tier": "Bronze"
     },
     {
       "id": "developing_typist",
       "title": "Developing Typist",
-      "description": "Reach 30 WPM",
-      "tier": "bronze",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 30 }
+      "requirement": "Reach 30 WPM",
+      "tier": "Bronze"
     },
     {
       "id": "intermediate_typist",
       "title": "Intermediate Typist",
-      "description": "Reach 40 WPM",
-      "tier": "silver",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 40 }
+      "requirement": "Reach 40 WPM",
+      "tier": "Silver"
     },
     {
       "id": "proficient_typist",
       "title": "Proficient Typist",
-      "description": "Reach 50 WPM",
-      "tier": "silver",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 50 }
+      "requirement": "Reach 50 WPM",
+      "tier": "Silver"
     },
     {
       "id": "advanced_typist",
       "title": "Advanced Typist",
-      "description": "Reach 60 WPM",
-      "tier": "gold",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 60 }
+      "requirement": "Reach 60 WPM",
+      "tier": "Gold"
     },
     {
       "id": "expert_typist",
       "title": "Expert Typist",
-      "description": "Reach 70 WPM",
-      "tier": "gold",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 70 }
+      "requirement": "Reach 70 WPM",
+      "tier": "Gold"
     },
     {
       "id": "master_typist",
       "title": "Master Typist",
-      "description": "Reach 80 WPM",
-      "tier": "platinum",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 80 }
+      "requirement": "Reach 80 WPM",
+      "tier": "Platinum"
     },
     {
       "id": "elite_typist",
       "title": "Elite Typist",
-      "description": "Reach 90 WPM",
-      "tier": "platinum",
-      "icon": "speed",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 90 }
+      "requirement": "Reach 90 WPM",
+      "tier": "Platinum"
     },
     {
       "id": "legendary_typist",
       "title": "Legendary Typist",
-      "description": "Reach 100+ WPM",
-      "tier": "diamond",
-      "icon": "emoji_events",
-      "category": "speed",
-      "unlockCriteria": { "type": "metric_threshold", "metric": "wpm", "threshold": 100 }
+      "requirement": "Reach 100+ WPM",
+      "tier": "Diamond"
     },
     {
       "id": "careful_typist",
       "title": "Careful Typist",
-      "description": "Complete 10 activities at 95%+",
-      "tier": "bronze",
-      "icon": "verified",
-      "category": "accuracy",
-      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_95", "threshold": 10 }
+      "requirement": "Complete 10 activities at 95%+",
+      "tier": "Bronze"
     },
     {
       "id": "precise_typist",
       "title": "Precise Typist",
-      "description": "Complete 25 activities at 95%+",
-      "tier": "silver",
-      "icon": "verified",
-      "category": "accuracy",
-      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_95", "threshold": 25 }
+      "requirement": "Complete 25 activities at 95%+",
+      "tier": "Silver"
     },
     {
       "id": "accurate_typist",
       "title": "Accurate Typist",
-      "description": "Complete 50 activities at 97%+",
-      "tier": "gold",
-      "icon": "verified",
-      "category": "accuracy",
-      "unlockCriteria": { "type": "count_threshold", "condition": "activities_at_97", "threshold": 50 }
+      "requirement": "Complete 50 activities at 97%+",
+      "tier": "Gold"
     },
     {
       "id": "flawless_typist",
       "title": "Flawless Typist",
-      "description": "Complete 10 lessons with 100% tests",
-      "tier": "platinum",
-      "icon": "verified",
-      "category": "accuracy",
-      "unlockCriteria": { "type": "count_threshold", "condition": "lessons_with_perfect_test", "threshold": 10 }
+      "requirement": "Complete 10 lessons with 100% tests",
+      "tier": "Platinum"
     },
     {
       "id": "perfect_typist",
       "title": "Perfect Typist",
-      "description": "Complete all lessons with 100% tests",
-      "tier": "diamond",
-      "icon": "verified",
-      "category": "accuracy",
-      "unlockCriteria": { "type": "count_threshold", "condition": "lessons_with_perfect_test", "threshold": 27 }
+      "requirement": "Complete all lessons with 100% tests",
+      "tier": "Diamond"
     },
     {
       "id": "dedicated_typist",
       "title": "Dedicated Typist",
-      "description": "5-day practice streak",
-      "tier": "bronze",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 5 }
+      "requirement": "5-day practice streak",
+      "tier": "Bronze"
     },
     {
       "id": "committed_typist",
       "title": "Committed Typist",
-      "description": "10-day practice streak",
-      "tier": "bronze",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 10 }
+      "requirement": "10-day practice streak",
+      "tier": "Bronze"
     },
     {
       "id": "persistent_typist",
       "title": "Persistent Typist",
-      "description": "20-day practice streak",
-      "tier": "silver",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 20 }
+      "requirement": "20-day practice streak",
+      "tier": "Silver"
     },
     {
       "id": "devoted_typist",
       "title": "Devoted Typist",
-      "description": "30-day practice streak",
-      "tier": "gold",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 30 }
+      "requirement": "30-day practice streak",
+      "tier": "Gold"
     },
     {
       "id": "unstoppable_typist",
       "title": "Unstoppable Typist",
-      "description": "50-day practice streak",
-      "tier": "platinum",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 50 }
+      "requirement": "50-day practice streak",
+      "tier": "Platinum"
     },
     {
       "id": "legendary_dedication",
       "title": "Legendary Dedication",
-      "description": "75-day practice streak",
-      "tier": "diamond",
-      "icon": "local_fire_department",
-      "category": "streak",
-      "unlockCriteria": { "type": "streak", "daysRequired": 75 }
+      "requirement": "75-day practice streak",
+      "tier": "Diamond"
     },
     {
       "id": "touch_typing_graduate",
       "title": "Touch Typing Graduate",
-      "description": "Complete all 14 Touch Typing lessons",
-      "tier": "gold",
-      "icon": "school",
-      "category": "module_completion",
-      "moduleId": "touch_typing",
-      "unlockCriteria": { "type": "module_completion", "moduleId": "touch_typing" }
+      "requirement": "Complete all 14 Touch Typing lessons",
+      "tier": "Gold"
     },
     {
       "id": "speed_demon",
       "title": "Speed Demon",
-      "description": "Complete all 7 Speed Building lessons",
-      "tier": "gold",
-      "icon": "school",
-      "category": "module_completion",
-      "moduleId": "speed_building",
-      "unlockCriteria": { "type": "module_completion", "moduleId": "speed_building" }
+      "requirement": "Complete all 7 Speed Building lessons",
+      "tier": "Gold"
     },
     {
       "id": "number_cruncher",
       "title": "Number Cruncher",
-      "description": "Complete all 2 Number Row lessons",
-      "tier": "silver",
-      "icon": "school",
-      "category": "module_completion",
-      "moduleId": "number_row",
-      "unlockCriteria": { "type": "module_completion", "moduleId": "number_row" }
+      "requirement": "Complete all 2 Number Row lessons",
+      "tier": "Silver"
     },
     {
       "id": "symbol_master",
       "title": "Symbol Master",
-      "description": "Complete all 4 Symbol lessons",
-      "tier": "silver",
-      "icon": "school",
-      "category": "module_completion",
-      "moduleId": "symbols",
-      "unlockCriteria": { "type": "module_completion", "moduleId": "symbols" }
+      "requirement": "Complete all 4 Symbol lessons",
+      "tier": "Silver"
     },
     {
       "id": "keyboard_master",
       "title": "Keyboard Master",
-      "description": "Complete ALL 27 lessons",
-      "tier": "diamond",
-      "icon": "emoji_events",
-      "category": "course_completion",
-      "unlockCriteria": { "type": "course_completion" }
+      "requirement": "Complete ALL 27 lessons",
+      "tier": "Diamond"
+    }
+  ],
+  "generatedFrom": {
+    "sourceFile": "touch_typing_life_os.xlsx",
+    "generatedOn": "2026-01-21T21:31:21.751046Z",
+    "conversion": "xlsx_to_course_config_v2_with_attempt_tracking"
+  },
+  "source": {
+    "courseOverview": {
+      "components": {
+        "daily_practice": {
+          "label": "Daily Practice",
+          "pointsEach": 10,
+          "description": "15 minutes of practice (minimum)",
+          "improvementMilestone": "+5 WPM",
+          "improvementBonusPoints": 25,
+          "improvementRequirement": "Same or better accuracy"
+        },
+        "activity_completion": {
+          "label": "Activity Completion",
+          "pointsEach": 5,
+          "description": "Complete activity with 95%+ accuracy",
+          "improvementMilestone": "+10 WPM",
+          "improvementBonusPoints": 50,
+          "improvementRequirement": "Same or better accuracy"
+        },
+        "end_of_lesson_test": {
+          "label": "End-of-Lesson Test",
+          "pointsEach": 15,
+          "description": "100% accuracy required",
+          "improvementMilestone": "+15 WPM",
+          "improvementBonusPoints": 75,
+          "improvementRequirement": "Same or better accuracy"
+        },
+        "lesson_completion": {
+          "label": "Lesson Completion",
+          "pointsEach": 25,
+          "description": "All activities + test completed",
+          "improvementMilestone": "+20 WPM",
+          "improvementBonusPoints": 100,
+          "improvementRequirement": "Same or better accuracy"
+        },
+        "module_completion": {
+          "label": "Module Completion",
+          "pointsEach": 50,
+          "description": "All lessons in module completed",
+          "improvementMilestone": "+25 WPM",
+          "improvementBonusPoints": 150,
+          "improvementRequirement": "Same or better accuracy"
+        }
+      },
+      "courseStructure": [
+        {
+          "module": "Touch Typing",
+          "lessonCount": 14,
+          "focus": "Core keyboard mastery"
+        },
+        {
+          "module": "Speed Building",
+          "lessonCount": 7,
+          "focus": "Increase WPM"
+        },
+        {
+          "module": "Number Row",
+          "lessonCount": 2,
+          "focus": "Numbers 0-9"
+        },
+        {
+          "module": "Symbols",
+          "lessonCount": 4,
+          "focus": "Special characters"
+        },
+        {
+          "module": "TOTAL",
+          "lessonCount": 27,
+          "focus": ""
+        }
+      ]
+    }
+  },
+  "pointsReference": [
+    {
+      "component": "Daily Practice (with streaks)",
+      "possible": "Variable",
+      "notes": "10 pts/day + streak bonus"
+    },
+    {
+      "component": "Touch Typing Module",
+      "possible": "~750",
+      "notes": "Activities + Tests + Bonuses"
+    },
+    {
+      "component": "Speed Building Module",
+      "possible": "~250",
+      "notes": "Activities + Tests + Bonuses"
+    },
+    {
+      "component": "Number Row Module",
+      "possible": "~100",
+      "notes": "Activities + Tests + Bonuses"
+    },
+    {
+      "component": "Symbols Module",
+      "possible": "~150",
+      "notes": "Activities + Tests + Bonuses"
+    },
+    {
+      "component": "WPM Improvement Bonuses",
+      "possible": "Variable",
+      "notes": "+5 WPM = 25 pts, etc."
     }
   ]
 }

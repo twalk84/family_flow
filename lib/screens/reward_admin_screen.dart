@@ -2,6 +2,7 @@
 //
 // Parent-only screen for managing rewards and fulfilling claims.
 // Supports assigning rewards to specific students.
+// Includes: Create/Edit/Enable-Disable/Delete reward, and fulfill pending claims.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,11 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
+  Color _alpha(Color c, double opacity01) {
+    final o = opacity01.clamp(0.0, 1.0);
+    return c.withAlpha((o * 255).round());
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,10 +45,11 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
     final nameController = TextEditingController();
     final pointsController = TextEditingController();
     final descController = TextEditingController();
+
     String? errorText;
-    
-    // Track which students are selected (empty = all students)
-    Set<String> selectedStudentIds = {};
+
+    // Track which students are selected (empty list = all students)
+    final Set<String> selectedStudentIds = <String>{};
     bool assignToAll = true;
 
     showDialog(
@@ -92,15 +99,13 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
                   maxLines: 2,
                 ),
                 const SizedBox(height: 20),
-                
-                // Student Assignment Section
+
                 const Text(
                   'Assign to Students',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 const SizedBox(height: 8),
-                
-                // All Students toggle
+
                 CheckboxListTile(
                   value: assignToAll,
                   onChanged: (v) {
@@ -116,7 +121,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
                   contentPadding: EdgeInsets.zero,
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
-                
+
                 if (!assignToAll) ...[
                   const Divider(color: Colors.white12),
                   const Text(
@@ -144,7 +149,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
                     );
                   }),
                 ],
-                
+
                 if (errorText != null) ...[
                   const SizedBox(height: 12),
                   Text(
@@ -188,7 +193,8 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
                     name: name,
                     pointCost: points,
                     description: desc,
-                    assignedStudentIds: assignToAll ? [] : selectedStudentIds.toList(),
+                    assignedStudentIds:
+                        assignToAll ? const [] : selectedStudentIds.toList(),
                   );
                   if (!context.mounted) return;
                   Navigator.pop(context);
@@ -215,6 +221,25 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirestorePaths.studentsCol().snapshots(),
       builder: (context, studentsSnap) {
+        if (studentsSnap.hasError) {
+          return Scaffold(
+            appBar: AppBar(title: const Text('Manage Rewards')),
+            body: Center(
+              child: Text(
+                'Error loading students:\n${studentsSnap.error}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.redAccent),
+              ),
+            ),
+          );
+        }
+
+        if (studentsSnap.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
         final students = (studentsSnap.data?.docs ?? [])
             .map((d) => Student.fromDoc(d))
             .toList()
@@ -244,6 +269,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
               _RewardsTab(
                 students: students,
                 onAddReward: () => _showAddRewardDialog(students),
+                alpha: _alpha,
               ),
               const _PendingClaimsTab(),
             ],
@@ -261,10 +287,12 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
 class _RewardsTab extends StatelessWidget {
   final List<Student> students;
   final VoidCallback onAddReward;
+  final Color Function(Color, double) alpha;
 
   const _RewardsTab({
     required this.students,
     required this.onAddReward,
+    required this.alpha,
   });
 
   @override
@@ -274,6 +302,16 @@ class _RewardsTab extends StatelessWidget {
     return StreamBuilder<List<Reward>>(
       stream: RewardService.instance.streamAllRewards(),
       builder: (context, snap) {
+        if (snap.hasError) {
+          return Center(
+            child: Text(
+              'Error loading rewards:\n${snap.error}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.redAccent),
+            ),
+          );
+        }
+
         if (snap.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -315,10 +353,11 @@ class _RewardsTab extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               ...active.map((r) => _RewardAdminCard(
-                reward: r,
-                students: students,
-                studentMap: studentMap,
-              )),
+                    reward: r,
+                    students: students,
+                    studentMap: studentMap,
+                    alpha: alpha,
+                  )),
             ],
             if (inactive.isNotEmpty) ...[
               const SizedBox(height: 24),
@@ -327,15 +366,16 @@ class _RewardsTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white.withOpacity(0.5),
+                  color: alpha(Colors.white, 0.5),
                 ),
               ),
               const SizedBox(height: 12),
               ...inactive.map((r) => _RewardAdminCard(
-                reward: r,
-                students: students,
-                studentMap: studentMap,
-              )),
+                    reward: r,
+                    students: students,
+                    studentMap: studentMap,
+                    alpha: alpha,
+                  )),
             ],
           ],
         );
@@ -352,11 +392,13 @@ class _RewardAdminCard extends StatelessWidget {
   final Reward reward;
   final List<Student> students;
   final Map<String, Student> studentMap;
+  final Color Function(Color, double) alpha;
 
   const _RewardAdminCard({
     required this.reward,
     required this.students,
     required this.studentMap,
+    required this.alpha,
   });
 
   Color get _tierColor {
@@ -373,24 +415,74 @@ class _RewardAdminCard extends StatelessWidget {
   }
 
   String get _assignmentLabel {
-    if (reward.isForAllStudents) {
-      return 'All students';
-    }
+    if (reward.isForAllStudents) return 'All students';
+
     final names = reward.assignedStudentIds
         .map((id) => studentMap[id]?.name ?? 'Unknown')
         .toList();
-    if (names.length <= 2) {
-      return names.join(', ');
-    }
+
+    if (names.isEmpty) return 'No students selected';
+
+    if (names.length <= 2) return names.join(', ');
     return '${names.take(2).join(', ')} +${names.length - 2} more';
+  }
+
+  Future<void> _confirmDelete(BuildContext context) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Delete reward?'),
+        content: Text(
+          'This permanently deletes "${reward.name}".\n\n'
+          'If you only want to hide it, use Disable instead.',
+          style: const TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (ok != true) return;
+
+    try {
+      await RewardService.instance.deleteReward(reward.id);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Deleted reward: ${reward.name}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Delete failed: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   void _showEditDialog(BuildContext context) {
     final nameController = TextEditingController(text: reward.name);
-    final pointsController = TextEditingController(text: reward.pointCost.toString());
+    final pointsController =
+        TextEditingController(text: reward.pointCost.toString());
     final descController = TextEditingController(text: reward.description);
-    
-    Set<String> selectedStudentIds = Set.from(reward.assignedStudentIds);
+
+    String? errorText;
+
+    final Set<String> selectedStudentIds = Set<String>.from(reward.assignedStudentIds);
     bool assignToAll = reward.isForAllStudents;
 
     showDialog(
@@ -430,14 +522,13 @@ class _RewardAdminCard extends StatelessWidget {
                   maxLines: 2,
                 ),
                 const SizedBox(height: 20),
-                
-                // Student Assignment Section
+
                 const Text(
                   'Assign to Students',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 const SizedBox(height: 8),
-                
+
                 CheckboxListTile(
                   value: assignToAll,
                   onChanged: (v) {
@@ -452,7 +543,7 @@ class _RewardAdminCard extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
-                
+
                 if (!assignToAll) ...[
                   const Divider(color: Colors.white12),
                   ...students.map((student) {
@@ -469,10 +560,19 @@ class _RewardAdminCard extends StatelessWidget {
                         });
                       },
                       title: Text(student.name),
+                      subtitle: Text('Grade ${student.gradeLevel}'),
                       contentPadding: EdgeInsets.zero,
                       controlAffinity: ListTileControlAffinity.leading,
                     );
                   }),
+                ],
+
+                if (errorText != null) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    errorText!,
+                    style: const TextStyle(color: Colors.redAccent),
+                  ),
                 ],
               ],
             ),
@@ -484,20 +584,37 @@ class _RewardAdminCard extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async {
+                final name = nameController.text.trim();
                 final points = int.tryParse(pointsController.text.trim());
-                if (points == null || points <= 0) return;
+                final desc = descController.text.trim();
 
-                if (!assignToAll && selectedStudentIds.isEmpty) return;
+                if (name.isEmpty) {
+                  setDialogState(() => errorText = 'Name is required');
+                  return;
+                }
+                if (points == null || points <= 0) {
+                  setDialogState(() => errorText = 'Enter a valid point amount');
+                  return;
+                }
+                if (!assignToAll && selectedStudentIds.isEmpty) {
+                  setDialogState(() => errorText = 'Select at least one student');
+                  return;
+                }
 
-                await RewardService.instance.updateReward(
-                  rewardId: reward.id,
-                  name: nameController.text.trim(),
-                  pointCost: points,
-                  description: descController.text.trim(),
-                  assignedStudentIds: assignToAll ? [] : selectedStudentIds.toList(),
-                );
-                if (!dialogContext.mounted) return;
-                Navigator.pop(dialogContext);
+                try {
+                  await RewardService.instance.updateReward(
+                    rewardId: reward.id,
+                    name: name,
+                    pointCost: points,
+                    description: desc,
+                    assignedStudentIds:
+                        assignToAll ? const [] : selectedStudentIds.toList(),
+                  );
+                  if (!dialogContext.mounted) return;
+                  Navigator.pop(dialogContext);
+                } catch (e) {
+                  setDialogState(() => errorText = 'Save failed: $e');
+                }
               },
               child: const Text('Save'),
             ),
@@ -507,11 +624,28 @@ class _RewardAdminCard extends StatelessWidget {
     );
   }
 
-  void _toggleActive(BuildContext context) async {
-    if (reward.isActive) {
-      await RewardService.instance.disableReward(reward.id);
-    } else {
-      await RewardService.instance.enableReward(reward.id);
+  Future<void> _toggleActive(BuildContext context) async {
+    try {
+      if (reward.isActive) {
+        await RewardService.instance.disableReward(reward.id);
+      } else {
+        await RewardService.instance.enableReward(reward.id);
+      }
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(reward.isActive ? 'Reward disabled' : 'Reward enabled'),
+          backgroundColor: Colors.blueGrey,
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Update failed: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -524,9 +658,7 @@ class _RewardAdminCard extends StatelessWidget {
         color: const Color(0xFF1F2937),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: reward.isActive
-              ? _tierColor.withOpacity(0.4)
-              : Colors.white12,
+          color: reward.isActive ? alpha(_tierColor, 0.4) : Colors.white12,
         ),
       ),
       child: Column(
@@ -562,10 +694,11 @@ class _RewardAdminCard extends StatelessWidget {
               ),
               if (!reward.isActive)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(4),
+                    color: alpha(Colors.red, 0.2),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Text(
                     'Disabled',
@@ -574,6 +707,7 @@ class _RewardAdminCard extends StatelessWidget {
                 ),
             ],
           ),
+
           if (reward.description.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(
@@ -581,9 +715,9 @@ class _RewardAdminCard extends StatelessWidget {
               style: const TextStyle(color: Colors.white38, fontSize: 13),
             ),
           ],
-          const SizedBox(height: 8),
-          
-          // Show assignment info
+
+          const SizedBox(height: 10),
+
           Row(
             children: [
               Icon(
@@ -601,13 +735,18 @@ class _RewardAdminCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 4),
+
+          const SizedBox(height: 6),
           Text(
             'Claimed ${reward.timesClaimedTotal} times',
             style: const TextStyle(color: Colors.white24, fontSize: 11),
           ),
+
           const SizedBox(height: 12),
-          Row(
+
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
             children: [
               TextButton.icon(
                 onPressed: () => _showEditDialog(context),
@@ -621,6 +760,15 @@ class _RewardAdminCard extends StatelessWidget {
                   size: 16,
                 ),
                 label: Text(reward.isActive ? 'Disable' : 'Enable'),
+              ),
+              TextButton.icon(
+                onPressed: () => _confirmDelete(context),
+                icon: const Icon(Icons.delete_outline,
+                    size: 16, color: Colors.redAccent),
+                label: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
               ),
             ],
           ),
@@ -642,6 +790,16 @@ class _PendingClaimsTab extends StatelessWidget {
     return FutureBuilder<List<RewardClaim>>(
       future: RewardService.instance.getAllPendingClaims(),
       builder: (context, snap) {
+        if (snap.hasError) {
+          return Center(
+            child: Text(
+              'Error loading claims:\n${snap.error}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.redAccent),
+            ),
+          );
+        }
+
         if (snap.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -698,12 +856,17 @@ class _PendingClaimCard extends StatelessWidget {
 
   const _PendingClaimCard({required this.claim});
 
+  Color _alpha(Color c, double opacity01) {
+    final o = opacity01.clamp(0.0, 1.0);
+    return c.withAlpha((o * 255).round());
+  }
+
   String _formatDate(DateTime? date) {
     if (date == null) return 'Unknown';
     return DateFormat('MMM d, yyyy').format(date);
   }
 
-  void _fulfillClaim(BuildContext context) async {
+  Future<void> _fulfillClaim(BuildContext context) async {
     try {
       await RewardService.instance.fulfillClaim(
         studentId: claim.studentId,
@@ -735,11 +898,10 @@ class _PendingClaimCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF1F2937),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.orange.withOpacity(0.3)),
+        border: Border.all(color: _alpha(Colors.orange, 0.3)),
       ),
       child: Row(
         children: [
-          // Student and reward info
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -776,8 +938,6 @@ class _PendingClaimCard extends StatelessWidget {
               ],
             ),
           ),
-
-          // Fulfill button
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
