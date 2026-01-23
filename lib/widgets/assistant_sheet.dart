@@ -107,7 +107,7 @@ class _AssistantSheetState extends State<AssistantSheet> {
         ? null
         : widget.teacherMood!.trim();
 
-    const moods = <String?>['😊', '😐', '😕', '😡', '😴', null];
+    const moods = <String?>['�', '😔', '😐', '😊', '🤩', '😡', '😴', '🤒', '🔥', null];
 
     return PopupMenuButton<String?>(
       tooltip: 'Set teacher mood',

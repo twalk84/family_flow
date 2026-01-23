@@ -1,0 +1,670 @@
+{
+  "id": "llpsi_familia_romana_v1",
+  "title": "Lingua Latina per se Illustrata",
+  "subtitle": "Pars I: Familia Romana • Hans H. Ørberg",
+  "version": 1,
+  "type": "language",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Natural Method: Latin learned entirely through Latin context",
+      "Process Earns: Steady base points for daily work",
+      "Mastery Multiplies: Bonuses for retention and understanding",
+      "Active Latin: Speaking weighted at 15% to support immersion"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "lecture_reading": {
+        "label": "Lecture/Reading Attendance",
+        "pointsEach": 10.0,
+        "countsTowardGrade": true
+      },
+      "textbook_comprehension": {
+        "label": "Textbook Comprehension",
+        "pointsEach": 35.0,
+        "countsTowardGrade": true
+      },
+      "exercitia_latina": {
+        "label": "Exercitia Latina",
+        "pointsEach": 35.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_creation": {
+        "label": "Flashcard Creation",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "read_aloud_practice": {
+        "label": "Read-Aloud Practice",
+        "pointsEach": 20.0,
+        "countsTowardGrade": true
+      },
+      "oral_response_latine": {
+        "label": "Oral Response (Latīnē)",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "label": "Flashcards (Leitner Review)",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      }
+    },
+    "gradeWeightDistribution": {
+      "headers": [
+        "Category",
+        "Weight",
+        "Components Included"
+      ],
+      "rows": [
+        [
+          "Daily Practice (Written)",
+          "25%",
+          "Textbook (12.5%) + Exercitia (12.5%)"
+        ],
+        [
+          "Flashcard System",
+          "20%",
+          "Vocabulary + Grammar: Creation + Box 7"
+        ],
+        [
+          "Active Latin/Speaking",
+          "15%",
+          "Read-Aloud (8%) + Oral Response (7%)"
+        ],
+        [
+          "Unit Tests (Written)",
+          "20%",
+          "7 Unit Tests"
+        ],
+        [
+          "Cumulative Exams",
+          "20%",
+          "Midterm (8%) + Final (12%)"
+        ],
+        [
+          "TOTAL",
+          "100%",
+          ""
+        ]
+      ]
+    },
+    "gradeScale": {
+      "headers": [
+        "Letter Grade",
+        "Percentage",
+        "GPA Equivalent"
+      ],
+      "rows": [
+        ["A+", "97–100%", "4.0"],
+        ["A", "93–96%", "4.0"],
+        ["A-", "90–92%", "3.7"],
+        ["B+", "87–89%", "3.3"],
+        ["B", "83–86%", "3.0"],
+        ["B-", "80–82%", "2.7"],
+        ["C+", "77–79%", "2.3"],
+        ["C", "73–76%", "2.0"],
+        ["C-", "70–72%", "1.7"],
+        ["D", "60–69%", "1.0"],
+        ["F", "Below 60%", "0.0"]
+      ]
+    },
+    "streakBonusesTable": {
+      "headers": [
+        "Speaking Streak",
+        "Bonus"
+      ],
+      "rows": [
+        ["3 consecutive chapters at 14+/16 oral response", "+100 points"],
+        ["5 consecutive chapters at 14+/16 oral response", "+200 points"],
+        ["10 consecutive chapters at 14+/16 oral response", "+400 points"],
+        ["3 consecutive chapters at 16/16 (perfect)", "+200 points"],
+        ["5 consecutive chapters at 16/16 (perfect)", "+400 points"]
+      ]
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "lecture_reading": 10,
+      "textbook_comprehension": 35,
+      "exercitia_latina": 35,
+      "flashcard_creation": 25,
+      "read_aloud_practice": 20,
+      "oral_response_latine": 25,
+      "flashcard_session": 5
+    },
+    "multipliers": [],
+    "streaks": {
+      "daily": [
+        { "days": 5, "multiplier": 1.1 },
+        { "days": 10, "multiplier": 1.25 },
+        { "days": 20, "multiplier": 1.5 },
+        { "days": 30, "multiplier": 2.0 }
+      ]
+    }
+  },
+  "curriculum": {
+    "totalLessons": 170,
+    "modules": [
+      {
+        "id": "llpsi_unit_1",
+        "title": "Unit 1: The Roman Family & Estate",
+        "unit": "Unit 1",
+        "lessons": [
+          {
+            "index": 1,
+            "title": "Cap. I: IMPERIVM ROMANVM",
+            "category": "lesson",
+            "meta": { "unit": "Unit 1", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } }
+          },
+          { "index": 2, "title": "Flashcards: Cap. I", "category": "flashcard_session", "meta": { "unit": "Unit 1", "deckHint": "Unit 1" } },
+          {
+            "index": 3,
+            "title": "Cap. II: FAMILIA ROMANA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 1", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } }
+          },
+          { "index": 4, "title": "Flashcards: Cap. II", "category": "flashcard_session", "meta": { "unit": "Unit 1", "deckHint": "Unit 1" } },
+          {
+            "index": 5,
+            "title": "Cap. III: PVER IMPROBVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 1", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } }
+          },
+          { "index": 6, "title": "Flashcards: Cap. III", "category": "flashcard_session", "meta": { "unit": "Unit 1", "deckHint": "Unit 1" } },
+          {
+            "index": 7,
+            "title": "Cap. IV: DOMINVS ET SERVI",
+            "category": "lesson",
+            "meta": { "unit": "Unit 1", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } }
+          },
+          { "index": 8, "title": "Flashcards: Cap. IV", "category": "flashcard_session", "meta": { "unit": "Unit 1", "deckHint": "Unit 1" } },
+          {
+            "index": 9,
+            "title": "Cap. V: VILLA ET HORTVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 1", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } }
+          },
+          { "index": 10, "title": "Flashcards: Cap. V", "category": "flashcard_session", "meta": { "unit": "Unit 1", "deckHint": "Unit 1" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_2",
+        "title": "Unit 2: Journeys & Animals",
+        "unit": "Unit 2",
+        "lessons": [
+          {
+            "index": 11,
+            "title": "Cap. VI: VIA LATINA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 2", "source": { "coverage": "VI–X", "assessment": "Unit 2 Test" } }
+          },
+          { "index": 12, "title": "Flashcards: Cap. VI", "category": "flashcard_session", "meta": { "unit": "Unit 2", "deckHint": "Unit 2" } },
+          {
+            "index": 13,
+            "title": "Cap. VII: PVELLA ET ROSA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 2", "source": { "coverage": "VI–X", "assessment": "Unit 2 Test" } }
+          },
+          { "index": 14, "title": "Flashcards: Cap. VII", "category": "flashcard_session", "meta": { "unit": "Unit 2", "deckHint": "Unit 2" } },
+          {
+            "index": 15,
+            "title": "Cap. VIII: TABERNA ROMANA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 2", "source": { "coverage": "VI–X", "assessment": "Unit 2 Test" } }
+          },
+          { "index": 16, "title": "Flashcards: Cap. VIII", "category": "flashcard_session", "meta": { "unit": "Unit 2", "deckHint": "Unit 2" } },
+          {
+            "index": 17,
+            "title": "Cap. IX: PASTOR ET OVES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 2", "source": { "coverage": "VI–X", "assessment": "Unit 2 Test" } }
+          },
+          { "index": 18, "title": "Flashcards: Cap. IX", "category": "flashcard_session", "meta": { "unit": "Unit 2", "deckHint": "Unit 2" } },
+          {
+            "index": 19,
+            "title": "Cap. X: BESTIAE ET HOMINES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 2", "source": { "coverage": "VI–X", "assessment": "Unit 2 Test" } }
+          },
+          { "index": 20, "title": "Flashcards: Cap. X", "category": "flashcard_session", "meta": { "unit": "Unit 2", "deckHint": "Unit 2" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_3",
+        "title": "Unit 3: Body, Military, School",
+        "unit": "Unit 3",
+        "lessons": [
+          {
+            "index": 21,
+            "title": "Cap. XI: CORPVS HVMANVM",
+            "category": "lesson",
+            "meta": { "unit": "Unit 3", "source": { "coverage": "XI–XV", "assessment": "Unit 3 Test" } }
+          },
+          { "index": 22, "title": "Flashcards: Cap. XI", "category": "flashcard_session", "meta": { "unit": "Unit 3", "deckHint": "Unit 3" } },
+          {
+            "index": 23,
+            "title": "Cap. XII: MILES ROMANVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 3", "source": { "coverage": "XI–XV", "assessment": "Unit 3 Test" } }
+          },
+          { "index": 24, "title": "Flashcards: Cap. XII", "category": "flashcard_session", "meta": { "unit": "Unit 3", "deckHint": "Unit 3" } },
+          {
+            "index": 25,
+            "title": "Cap. XIII: ANNVS ET MENSES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 3", "source": { "coverage": "XI–XV", "assessment": "Unit 3 Test" } }
+          },
+          { "index": 26, "title": "Flashcards: Cap. XIII", "category": "flashcard_session", "meta": { "unit": "Unit 3", "deckHint": "Unit 3" } },
+          {
+            "index": 27,
+            "title": "Cap. XIV: NOVVS DIES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 3", "source": { "coverage": "XI–XV", "assessment": "Unit 3 Test" } }
+          },
+          { "index": 28, "title": "Flashcards: Cap. XIV", "category": "flashcard_session", "meta": { "unit": "Unit 3", "deckHint": "Unit 3" } },
+          {
+            "index": 29,
+            "title": "Cap. XV: MAGISTER ET DISCIPVLI",
+            "category": "lesson",
+            "meta": { "unit": "Unit 3", "source": { "coverage": "XI–XV", "assessment": "Unit 3 Test" } }
+          },
+          { "index": 30, "title": "Flashcards: Cap. XV", "category": "flashcard_session", "meta": { "unit": "Unit 3", "deckHint": "Unit 3" } }
+        ]
+      },
+      {
+        "id": "llpsi_midterm",
+        "title": "MIDTERM REVIEW",
+        "unit": "MIDTERM",
+        "lessons": [
+          { "index": 31, "title": "Review: Cap. I", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 32, "title": "Flashcards: Cap. I", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 33, "title": "Review: Cap. II", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 34, "title": "Flashcards: Cap. II", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 35, "title": "Review: Cap. III", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 36, "title": "Flashcards: Cap. III", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 37, "title": "Review: Cap. IV", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 38, "title": "Flashcards: Cap. IV", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 39, "title": "Review: Cap. V", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 40, "title": "Flashcards: Cap. V", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 41, "title": "Review: Cap. VI", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 42, "title": "Flashcards: Cap. VI", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 43, "title": "Review: Cap. VII", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 44, "title": "Flashcards: Cap. VII", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 45, "title": "Review: Cap. VIII", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 46, "title": "Flashcards: Cap. VIII", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 47, "title": "Review: Cap. IX", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 48, "title": "Flashcards: Cap. IX", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 49, "title": "Review: Cap. X", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 50, "title": "Flashcards: Cap. X", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 51, "title": "Review: Cap. XI", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 52, "title": "Flashcards: Cap. XI", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 53, "title": "Review: Cap. XII", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 54, "title": "Flashcards: Cap. XII", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 55, "title": "Review: Cap. XIII", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 56, "title": "Flashcards: Cap. XIII", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 57, "title": "Review: Cap. XIV", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 58, "title": "Flashcards: Cap. XIV", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } },
+          { "index": 59, "title": "Review: Cap. XV", "category": "lesson", "meta": { "unit": "MIDTERM", "source": { "coverage": "I–XV", "assessment": "Midterm Exam" } } },
+          { "index": 60, "title": "Flashcards: Cap. XV", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "deckHint": "MIDTERM" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_4",
+        "title": "Unit 4: Weather, Letters, Marriage",
+        "unit": "Unit 4",
+        "lessons": [
+          {
+            "index": 61,
+            "title": "Cap. XVI: TEMPESTAS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 4", "source": { "coverage": "XVI–XX", "assessment": "Unit 4 Test" } }
+          },
+          { "index": 62, "title": "Flashcards: Cap. XVI", "category": "flashcard_session", "meta": { "unit": "Unit 4", "deckHint": "Unit 4" } },
+          {
+            "index": 63,
+            "title": "Cap. XVII: NVMERI DIFFICILES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 4", "source": { "coverage": "XVI–XX", "assessment": "Unit 4 Test" } }
+          },
+          { "index": 64, "title": "Flashcards: Cap. XVII", "category": "flashcard_session", "meta": { "unit": "Unit 4", "deckHint": "Unit 4" } },
+          {
+            "index": 65,
+            "title": "Cap. XVIII: LITTERAE LATINAE",
+            "category": "lesson",
+            "meta": { "unit": "Unit 4", "source": { "coverage": "XVI–XX", "assessment": "Unit 4 Test" } }
+          },
+          { "index": 66, "title": "Flashcards: Cap. XVIII", "category": "flashcard_session", "meta": { "unit": "Unit 4", "deckHint": "Unit 4" } },
+          {
+            "index": 67,
+            "title": "Cap. XIX: MARITVS ET VXOR",
+            "category": "lesson",
+            "meta": { "unit": "Unit 4", "source": { "coverage": "XVI–XX", "assessment": "Unit 4 Test" } }
+          },
+          { "index": 68, "title": "Flashcards: Cap. XIX", "category": "flashcard_session", "meta": { "unit": "Unit 4", "deckHint": "Unit 4" } },
+          {
+            "index": 69,
+            "title": "Cap. XX: PARENTES",
+            "category": "lesson",
+            "meta": { "unit": "Unit 4", "source": { "coverage": "XVI–XX", "assessment": "Unit 4 Test" } }
+          },
+          { "index": 70, "title": "Flashcards: Cap. XX", "category": "flashcard_session", "meta": { "unit": "Unit 4", "deckHint": "Unit 4" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_5",
+        "title": "Unit 5: School Life & Myths",
+        "unit": "Unit 5",
+        "lessons": [
+          {
+            "index": 71,
+            "title": "Cap. XXI: PVGNA DISCIPVLORVM",
+            "category": "lesson",
+            "meta": { "unit": "Unit 5", "source": { "coverage": "XXI–XXV", "assessment": "Unit 5 Test" } }
+          },
+          { "index": 72, "title": "Flashcards: Cap. XXI", "category": "flashcard_session", "meta": { "unit": "Unit 5", "deckHint": "Unit 5" } },
+          {
+            "index": 73,
+            "title": "Cap. XXII: CAVE CANEM",
+            "category": "lesson",
+            "meta": { "unit": "Unit 5", "source": { "coverage": "XXI–XXV", "assessment": "Unit 5 Test" } }
+          },
+          { "index": 74, "title": "Flashcards: Cap. XXII", "category": "flashcard_session", "meta": { "unit": "Unit 5", "deckHint": "Unit 5" } },
+          {
+            "index": 75,
+            "title": "Cap. XXIII: EPISTVLA MAGISTRI",
+            "category": "lesson",
+            "meta": { "unit": "Unit 5", "source": { "coverage": "XXI–XXV", "assessment": "Unit 5 Test" } }
+          },
+          { "index": 76, "title": "Flashcards: Cap. XXIII", "category": "flashcard_session", "meta": { "unit": "Unit 5", "deckHint": "Unit 5" } },
+          {
+            "index": 77,
+            "title": "Cap. XXIV: PVER AEGROTVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 5", "source": { "coverage": "XXI–XXV", "assessment": "Unit 5 Test" } }
+          },
+          { "index": 78, "title": "Flashcards: Cap. XXIV", "category": "flashcard_session", "meta": { "unit": "Unit 5", "deckHint": "Unit 5" } },
+          {
+            "index": 79,
+            "title": "Cap. XXV: THESEVS ET MINOTAVRVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 5", "source": { "coverage": "XXI–XXV", "assessment": "Unit 5 Test" } }
+          },
+          { "index": 80, "title": "Flashcards: Cap. XXV", "category": "flashcard_session", "meta": { "unit": "Unit 5", "deckHint": "Unit 5" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_6",
+        "title": "Unit 6: Myths & Sea",
+        "unit": "Unit 6",
+        "lessons": [
+          {
+            "index": 81,
+            "title": "Cap. XXVI: DAEDALVS ET ICARVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 6", "source": { "coverage": "XXVI–XXX", "assessment": "Unit 6 Test" } }
+          },
+          { "index": 82, "title": "Flashcards: Cap. XXVI", "category": "flashcard_session", "meta": { "unit": "Unit 6", "deckHint": "Unit 6" } },
+          {
+            "index": 83,
+            "title": "Cap. XXVII: RES RVSTICAE",
+            "category": "lesson",
+            "meta": { "unit": "Unit 6", "source": { "coverage": "XXVI–XXX", "assessment": "Unit 6 Test" } }
+          },
+          { "index": 84, "title": "Flashcards: Cap. XXVII", "category": "flashcard_session", "meta": { "unit": "Unit 6", "deckHint": "Unit 6" } },
+          {
+            "index": 85,
+            "title": "Cap. XXVIII: PERICVLA MARIS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 6", "source": { "coverage": "XXVI–XXX", "assessment": "Unit 6 Test" } }
+          },
+          { "index": 86, "title": "Flashcards: Cap. XXVIII", "category": "flashcard_session", "meta": { "unit": "Unit 6", "deckHint": "Unit 6" } },
+          {
+            "index": 87,
+            "title": "Cap. XXIX: NAVIGARE NECESSE EST",
+            "category": "lesson",
+            "meta": { "unit": "Unit 6", "source": { "coverage": "XXVI–XXX", "assessment": "Unit 6 Test" } }
+          },
+          { "index": 88, "title": "Flashcards: Cap. XXIX", "category": "flashcard_session", "meta": { "unit": "Unit 6", "deckHint": "Unit 6" } },
+          {
+            "index": 89,
+            "title": "Cap. XXX: CONVIVIVM",
+            "category": "lesson",
+            "meta": { "unit": "Unit 6", "source": { "coverage": "XXVI–XXX", "assessment": "Unit 6 Test" } }
+          },
+          { "index": 90, "title": "Flashcards: Cap. XXX", "category": "flashcard_session", "meta": { "unit": "Unit 6", "deckHint": "Unit 6" } }
+        ]
+      },
+      {
+        "id": "llpsi_unit_7",
+        "title": "Unit 7: Roman Life",
+        "unit": "Unit 7",
+        "lessons": [
+          {
+            "index": 91,
+            "title": "Cap. XXXI: INTER POCVLA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 7", "source": { "coverage": "XXXI–XXXV", "assessment": "Unit 7 Test" } }
+          },
+          { "index": 92, "title": "Flashcards: Cap. XXXI", "category": "flashcard_session", "meta": { "unit": "Unit 7", "deckHint": "Unit 7" } },
+          {
+            "index": 93,
+            "title": "Cap. XXXII: CLASSIS ROMANA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 7", "source": { "coverage": "XXXI–XXXV", "assessment": "Unit 7 Test" } }
+          },
+          { "index": 94, "title": "Flashcards: Cap. XXXII", "category": "flashcard_session", "meta": { "unit": "Unit 7", "deckHint": "Unit 7" } },
+          {
+            "index": 95,
+            "title": "Cap. XXXIII: EXERCITVS ROMANVS",
+            "category": "lesson",
+            "meta": { "unit": "Unit 7", "source": { "coverage": "XXXI–XXXV", "assessment": "Unit 7 Test" } }
+          },
+          { "index": 96, "title": "Flashcards: Cap. XXXIII", "category": "flashcard_session", "meta": { "unit": "Unit 7", "deckHint": "Unit 7" } },
+          {
+            "index": 97,
+            "title": "Cap. XXXIV: DE ARTE POETICA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 7", "source": { "coverage": "XXXI–XXXV", "assessment": "Unit 7 Test" } }
+          },
+          { "index": 98, "title": "Flashcards: Cap. XXXIV", "category": "flashcard_session", "meta": { "unit": "Unit 7", "deckHint": "Unit 7" } },
+          {
+            "index": 99,
+            "title": "Cap. XXXV: ARS GRAMMATICA",
+            "category": "lesson",
+            "meta": { "unit": "Unit 7", "source": { "coverage": "XXXI–XXXV", "assessment": "Unit 7 Test" } }
+          },
+          { "index": 100, "title": "Flashcards: Cap. XXXV", "category": "flashcard_session", "meta": { "unit": "Unit 7", "deckHint": "Unit 7" } }
+        ]
+      },
+      {
+        "id": "llpsi_final",
+        "title": "FINAL EXAM REVIEW",
+        "unit": "FINAL",
+        "lessons": [
+          { "index": 101, "title": "Review: Cap. I", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 102, "title": "Flashcards: Cap. I", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 103, "title": "Review: Cap. II", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 104, "title": "Flashcards: Cap. II", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 105, "title": "Review: Cap. III", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 106, "title": "Flashcards: Cap. III", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 107, "title": "Review: Cap. IV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 108, "title": "Flashcards: Cap. IV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 109, "title": "Review: Cap. V", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 110, "title": "Flashcards: Cap. V", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 111, "title": "Review: Cap. VI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 112, "title": "Flashcards: Cap. VI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 113, "title": "Review: Cap. VII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 114, "title": "Flashcards: Cap. VII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 115, "title": "Review: Cap. VIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 116, "title": "Flashcards: Cap. VIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 117, "title": "Review: Cap. IX", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 118, "title": "Flashcards: Cap. IX", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 119, "title": "Review: Cap. X", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 120, "title": "Flashcards: Cap. X", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 121, "title": "Review: Cap. XI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 122, "title": "Flashcards: Cap. XI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 123, "title": "Review: Cap. XII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 124, "title": "Flashcards: Cap. XII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 125, "title": "Review: Cap. XIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 126, "title": "Flashcards: Cap. XIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 127, "title": "Review: Cap. XIV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 128, "title": "Flashcards: Cap. XIV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 129, "title": "Review: Cap. XV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 130, "title": "Flashcards: Cap. XV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 131, "title": "Review: Cap. XVI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 132, "title": "Flashcards: Cap. XVI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 133, "title": "Review: Cap. XVII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 134, "title": "Flashcards: Cap. XVII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 135, "title": "Review: Cap. XVIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 136, "title": "Flashcards: Cap. XVIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 137, "title": "Review: Cap. XIX", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 138, "title": "Flashcards: Cap. XIX", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 139, "title": "Review: Cap. XX", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 140, "title": "Flashcards: Cap. XX", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 141, "title": "Review: Cap. XXI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 142, "title": "Flashcards: Cap. XXI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 143, "title": "Review: Cap. XXII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 144, "title": "Flashcards: Cap. XXII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 145, "title": "Review: Cap. XXIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 146, "title": "Flashcards: Cap. XXIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 147, "title": "Review: Cap. XXIV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 148, "title": "Flashcards: Cap. XXIV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 149, "title": "Review: Cap. XXV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 150, "title": "Flashcards: Cap. XXV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 151, "title": "Review: Cap. XXVI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 152, "title": "Flashcards: Cap. XXVI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 153, "title": "Review: Cap. XXVII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 154, "title": "Flashcards: Cap. XXVII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 155, "title": "Review: Cap. XXVIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 156, "title": "Flashcards: Cap. XXVIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 157, "title": "Review: Cap. XXIX", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 158, "title": "Flashcards: Cap. XXIX", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 159, "title": "Review: Cap. XXX", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 160, "title": "Flashcards: Cap. XXX", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 161, "title": "Review: Cap. XXXI", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 162, "title": "Flashcards: Cap. XXXI", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 163, "title": "Review: Cap. XXXII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 164, "title": "Flashcards: Cap. XXXII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 165, "title": "Review: Cap. XXXIII", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 166, "title": "Flashcards: Cap. XXXIII", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 167, "title": "Review: Cap. XXXIV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 168, "title": "Flashcards: Cap. XXXIV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } },
+          { "index": 169, "title": "Review: Cap. XXXV", "category": "lesson", "meta": { "unit": "FINAL", "source": { "coverage": "I–XXXV", "assessment": "Final Exam" } } },
+          { "index": 170, "title": "Flashcards: Cap. XXXV", "category": "flashcard_session", "meta": { "unit": "FINAL", "deckHint": "FINAL" } }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    { "key": "vocabulary", "label": "Vocabulary (Contextual)" },
+    { "key": "grammar", "label": "Grammar (Inductive)" },
+    { "key": "phrases", "label": "Phrases & Dialog" },
+    { "key": "pronunciation", "label": "Pronunciation" },
+    { "key": "listening", "label": "Listening" },
+    { "key": "speaking", "label": "Speaking" }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      { "box": 1, "reviewAfterDays": 0 },
+      { "box": 2, "reviewAfterDays": 1 },
+      { "box": 3, "reviewAfterDays": 3 },
+      { "box": 4, "reviewAfterDays": 7 },
+      { "box": 5, "reviewAfterDays": 14 },
+      { "box": 6, "reviewAfterDays": 30 },
+      { "box": 7, "reviewAfterDays": 60 }
+    ],
+    "masteryBox": 7
+  },
+  "flashcardDecks": [
+    { "unit": "Unit 1", "unitTitle": "Unit 1: The Roman Family & Estate", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 2", "unitTitle": "Unit 2: Journeys & Animals", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 3", "unitTitle": "Unit 3: Body, Military, School", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "MIDTERM", "unitTitle": "MIDTERM REVIEW", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 4", "unitTitle": "Unit 4: Weather, Letters, Marriage", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 5", "unitTitle": "Unit 5: School Life & Myths", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 6", "unitTitle": "Unit 6: Myths & Sea", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 7", "unitTitle": "Unit 7: Roman Life", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "FINAL", "unitTitle": "FINAL EXAM REVIEW", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } }
+  ],
+  "badges": [
+    {
+      "id": "badge_familia_romana",
+      "label": "🏠 Familia Romana",
+      "description": "Story Arc: Family & Estate",
+      "requirement": "Capita I–V + Cards to Box 7",
+      "bonus": 400
+    },
+    {
+      "id": "badge_via_latina",
+      "label": "🛤️ Via Latina",
+      "description": "Story Arc: Journeys & Animals",
+      "requirement": "Capita VI–X + Cards to Box 7",
+      "bonus": 400
+    },
+    {
+      "id": "badge_miles_romanus",
+      "label": "⚔️ Miles Romanus",
+      "description": "Story Arc: Body, Military, School",
+      "requirement": "Capita XI–XV + Cards to Box 7",
+      "bonus": 400
+    },
+    {
+      "id": "badge_litterae_latinae",
+      "label": "📜 Litterae Latinae",
+      "description": "Story Arc: Weather, Letters, Marriage",
+      "requirement": "Capita XVI–XX + Cards to Box 7",
+      "bonus": 400
+    },
+    {
+      "id": "badge_mythologia",
+      "label": "🏛️ Mythologia",
+      "description": "Story Arc: School Life & Myths",
+      "requirement": "Capita XXI–XXVI + Cards to Box 7",
+      "bonus": 500
+    },
+    {
+      "id": "badge_navigatio",
+      "label": "⚓ Navigatio",
+      "description": "Story Arc: Sea Voyages & Feasts",
+      "requirement": "Capita XXVII–XXXII + Cards to Box 7",
+      "bonus": 500
+    },
+    {
+      "id": "badge_ars_et_grammatica",
+      "label": "🎭 Ars et Grammatica",
+      "description": "Story Arc: Army, Poetry, Grammar",
+      "requirement": "Capita XXXIII–XXXV + Cards to Box 7",
+      "bonus": 400
+    },
+    {
+      "id": "badge_lector_latinus",
+      "label": "📖 Lector Latinus",
+      "description": "Fluent Reader",
+      "requirement": "Read all 35 chapters fluently",
+      "bonus": 750
+    },
+    {
+      "id": "badge_locutor_latinus",
+      "label": "🗣️ Locutor Latinus",
+      "description": "Active Speaker",
+      "requirement": "90%+ Speaking Average",
+      "bonus": 1000
+    },
+    {
+      "id": "badge_discipulus_optimus",
+      "label": "🏆 Discipulus Optimus",
+      "description": "Course Master",
+      "requirement": "All 9 Badges",
+      "bonus": 2000
+    }
+  ],
+  "generatedFrom": {
+    "sourceFile": "LLPSI_Familia_Romana_Grading_System.docx",
+    "conversion": "doc_grading_system_to_course_config",
+    "generatedOn": "2026-01-22T20:00:00Z"
+  }
+}

@@ -631,12 +631,16 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                   onPressed: unassigned.isEmpty
                       ? null
                       : () async {
+                          final dueDate = await _pickDueDate();
+                          if (dueDate == null) return;
+                          
                           await _assignLesson(
                             student: student,
                             configId: configId,
                             lessonData: unassigned.first,
                             categories: categories,
                             linkedSubject: linkedSubject,
+                            dueDate: dueDate,
                           );
                           Navigator.pop(sheetContext);
                         },
@@ -654,12 +658,16 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                     trailing: IconButton(
                       icon: const Icon(Icons.add_circle, color: Colors.blue),
                       onPressed: () async {
+                        final dueDate = await _pickDueDate();
+                        if (dueDate == null) return;
+                        
                         await _assignLesson(
                           student: student,
                           configId: configId,
                           lessonData: lesson,
                           categories: categories,
                           linkedSubject: linkedSubject,
+                          dueDate: dueDate,
                         );
                         Navigator.pop(sheetContext);
                       },
@@ -674,12 +682,31 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     );
   }
 
+  Future<String?> _pickDueDate() async {
+    final result = await showDialog<DateTime>(
+      context: context,
+      builder: (_) => DatePickerDialog(
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 365)),
+      ),
+    );
+    
+    if (result == null) return null;
+    
+    // Format as YYYY-MM-DD
+    return '${result.year.toString().padLeft(4, '0')}-'
+           '${result.month.toString().padLeft(2, '0')}-'
+           '${result.day.toString().padLeft(2, '0')}';
+  }
+
   Future<void> _assignLesson({
     required Student student,
     required String configId,
     required dynamic lessonData,
     required Map<String, dynamic> categories,
     required Subject? linkedSubject,
+    required String dueDate,
   }) async {
     final order = (lessonData is Map) ? ((lessonData['index'] as int?) ?? (lessonData['order'] as int?) ?? 0) : 0;
 
@@ -718,7 +745,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         studentId: student.id,
         subjectId: subject.id,
         name: name,
-        dueDate: _todayYmd(),
+        dueDate: dueDate,
         pointsBase: points,
         gradable: true,
         courseConfigId: configId,

@@ -112,13 +112,14 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
   // Overdue assignments (past due date, not completed)
   List<Assignment> get overdueAssignments {
     final now = DateTime.now();
+    final todayDate = DateTime(now.year, now.month, now.day); // Start of today
     return widget.assignments.where((a) {
       if (a.isCompleted) return false;
       try {
         final parts = a.dueDate.split('-');
         if (parts.length != 3) return false;
         final due = DateTime(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
-        return due.isBefore(now);
+        return due.isBefore(todayDate); // Past due only if before TODAY (not before now)
       } catch (_) {
         return false;
       }

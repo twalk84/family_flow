@@ -51,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   final TextEditingController _subjectSearchCtrl = TextEditingController();
   String _subjectQuery = '';
 
-  final List<String> _moods = const ['😫', '😔', '😐', '😊', '🔥'];
+  final List<String> _moods = const ['�', '😔', '😐', '😊', '🤩', '😡', '😴', '🤒', '🔥'];
 
   final List<Color> _defaultStudentPalette = const [
     Colors.blue,
