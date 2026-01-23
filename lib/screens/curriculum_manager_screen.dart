@@ -5,20 +5,24 @@
 // ✅ Updates:
 // - Loads curricula list from Firestore collection: /courseConfigs (active == true)
 // - Uses CourseConfigService.getConfig(id) which now fetches Firestore -> Storage JSON (with asset fallback)
-// - Keeps your stabilized streams + smooth sheet UX
-// - Falls back to a local hardcoded list if Firestore has no active configs yet (or read fails)
+// - Keeps stabilized streams + smooth sheet UX
+// - ✅ Adds Delete Curriculum: Subject + Assignments + Progress (+ optional point reversal via service)
 //
-// NOTE:
-// - Ensure you have Firestore rules allowing signed-in users to read /courseConfigs
-// - Ensure Storage rules allow signed-in users to read /course-configs/*
+// ✅ NEW FIXES (Unassigned + Edit Subject Title):
+// - ✅ Ensures a Subject doc exists for each curriculum (courseConfigId == configId)
+// - ✅ Assignments created from curriculum ALWAYS get a real subjectId (never '')
+// - ✅ Assignments also store subjectName/studentName for consistent UI display
+// - ✅ Adds Rename Subject (updates subject doc + backfills assignments + updates subjectProgress)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../core/firestore/firestore_paths.dart';
 import '../core/models/models.dart';
+
 import '../services/assignment_mutations.dart';
 import '../services/course_config_service.dart';
+import '../services/subject_delete_service.dart';
 
 class CurriculumManagerScreen extends StatefulWidget {
   const CurriculumManagerScreen({super.key});
@@ -139,7 +143,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
       'biological_science_v1',
       'british_literature_v1',
       'saxon_math_76',
-      'wheelocks_latin_v1', // ✅ fixed id to match published config
+      'wheelocks_latin_v1',
       'deutsche_sprachlehre_v1',
       'madrigals_spanish_v1',
       'russian_in_exercises_v1',
@@ -195,6 +199,145 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   }
 
   // ============================================================
+  // ✅ SUBJECT ENSURE + RENAME (Fixes "Unassigned")
+  // ============================================================
+
+  Future<Subject> _ensureSubjectForConfig({
+    required String configId,
+    required String configName,
+    required List<Subject> subjects,
+  }) async {
+    // 1) If already exists, return it.
+    for (final s in subjects) {
+      if (s.courseConfigId.trim() == configId.trim()) {
+        return s;
+      }
+    }
+
+    // 2) Create a subject doc (family-level) for this curriculum.
+    final safeName = configName.trim().isNotEmpty ? configName.trim() : configId.trim();
+    final docRef = FirestorePaths.subjectsCol().doc();
+
+    await docRef.set({
+      'name': safeName,
+      'nameLower': safeName.toLowerCase(),
+      'courseConfigId': configId.trim(),
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    return Subject(
+      id: docRef.id,
+      name: safeName,
+      courseConfigId: configId.trim(),
+    );
+  }
+
+  Future<void> _renameSubjectDialog({
+    required Subject subject,
+    required String courseConfigId,
+    required List<Student> allStudents,
+  }) async {
+    final c = TextEditingController(text: subject.name);
+
+    final newName = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Rename Subject'),
+        content: TextField(
+          controller: c,
+          autofocus: true,
+          decoration: const InputDecoration(
+            labelText: 'Subject name',
+            hintText: 'e.g. Touch Typing',
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(ctx, c.text.trim()),
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+
+    if (newName == null) return;
+    final trimmed = newName.trim();
+    if (trimmed.isEmpty) {
+      _snack('Subject name cannot be empty.', color: Colors.orange);
+      return;
+    }
+
+    // Progress dialog
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        backgroundColor: Color(0xFF1F2937),
+        content: SizedBox(
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 14),
+              Text('Updating subject name...'),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    try {
+      // 1) Update subject doc
+      await FirestorePaths.subjectsCol().doc(subject.id).set({
+        'name': trimmed,
+        'nameLower': trimmed.toLowerCase(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      // 2) Backfill assignments that reference this subject so UI always shows the new name
+      // (Batch in chunks to respect Firestore limits)
+      final query = await FirestorePaths.assignmentsCol().where('subjectId', isEqualTo: subject.id).get();
+      final docs = query.docs;
+
+      const int chunkSize = 450;
+      for (int i = 0; i < docs.length; i += chunkSize) {
+        final batch = FirebaseFirestore.instance.batch();
+        final slice = docs.skip(i).take(chunkSize);
+        for (final d in slice) {
+          batch.update(d.reference, {
+            'subjectName': trimmed,
+            'updatedAt': FieldValue.serverTimestamp(),
+          });
+        }
+        await batch.commit();
+      }
+
+      // 3) Update subjectProgress docs for all students enrolled in this config
+      // (Doc id is configId in your design)
+      for (final s in allStudents) {
+        await FirestorePaths.subjectProgressCol(s.id).doc(courseConfigId).set({
+          'subjectId': subject.id,
+          'subjectName': trimmed,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+      }
+
+      if (!mounted) return;
+      Navigator.pop(context); // close progress
+      _snack('Renamed subject to "$trimmed".', color: Colors.green);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // close progress
+      _snack('Rename failed: $e', color: Colors.red);
+    }
+  }
+
+  // ============================================================
   // Smooth Bottom Sheet
   // ============================================================
 
@@ -245,10 +388,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                           Expanded(
                             child: Text(
                               title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
                           IconButton(
@@ -315,7 +455,11 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   // Enroll Student in Curriculum
   // ============================================================
 
-  Future<void> _showEnrollSheet(Map<String, dynamic> configData, List<Student> students) async {
+  Future<void> _showEnrollSheet(
+    Map<String, dynamic> configData,
+    List<Student> students,
+    List<Subject> subjects,
+  ) async {
     final configId = configData['id'] as String;
     final config = configData['config'] as Map<String, dynamic>;
     final configName = _getConfigName(config);
@@ -370,10 +514,19 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                         onPressed: selectedStudents.isEmpty
                             ? null
                             : () async {
+                                // ✅ Ensure subject exists so assignments will never be "Unassigned"
+                                final ensuredSubject = await _ensureSubjectForConfig(
+                                  configId: configId,
+                                  configName: configName,
+                                  subjects: subjects,
+                                );
+
                                 await _enrollStudents(
                                   configId: configId,
                                   configName: configName,
                                   studentIds: selectedStudents.toList(),
+                                  subjectId: ensuredSubject.id,
+                                  subjectName: ensuredSubject.name,
                                 );
                                 if (mounted) Navigator.pop(sheetContext);
                               },
@@ -393,12 +546,21 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     required String configId,
     required String configName,
     required List<String> studentIds,
+
+    // ✅ Added: store subject linkage on progress docs
+    required String subjectId,
+    required String subjectName,
   }) async {
     try {
       for (final studentId in studentIds) {
         await FirestorePaths.subjectProgressCol(studentId).doc(configId).set({
           'courseConfigId': configId,
           'studentId': studentId, // Required for filtering logic
+
+          // ✅ Helps downstream UI and repair tools
+          'subjectId': subjectId,
+          'subjectName': subjectName,
+
           'enrolledAt': FieldValue.serverTimestamp(),
           'updatedAt': FieldValue.serverTimestamp(),
         }, SetOptions(merge: true));
@@ -537,9 +699,24 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     }
 
     try {
+      // ✅ HARD FIX: Guarantee a real subjectId so UI never shows "Unassigned"
+      Subject subject;
+      if (linkedSubject != null && linkedSubject.id.trim().isNotEmpty) {
+        subject = linkedSubject;
+      } else {
+        // Create/ensure the subject now (in case enroll happened earlier without subject existing)
+        subject = await _ensureSubjectForConfig(
+          configId: configId,
+          configName: configId, // fallback; UI will likely use config name elsewhere
+          subjects: const <Subject>[],
+        );
+
+        // The subjects stream will catch up, but we already have the subject object here.
+      }
+
       await AssignmentMutations.createAssignment(
         studentId: student.id,
-        subjectId: linkedSubject?.id ?? '',
+        subjectId: subject.id,
         name: name,
         dueDate: _todayYmd(),
         pointsBase: points,
@@ -547,7 +724,12 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         courseConfigId: configId,
         categoryKey: categoryKey,
         orderInCourse: order,
+
+        // ✅ Store display names so every UI shows correct label immediately.
+        studentName: student.name,
+        subjectName: subject.name,
       );
+
       _snack('Assigned: $name', color: Colors.green);
 
       // ✅ Cosmetic: force repaint so counts update immediately
@@ -555,6 +737,171 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     } catch (e) {
       _snack('Failed to assign: $e', color: Colors.red);
     }
+  }
+
+  // ============================================================
+  // Delete Curriculum (Subject + related data)
+  // ============================================================
+
+  Future<void> _deleteSubjectCascade({
+    required Subject subject,
+    required String courseConfigId,
+    required int linkedAssignmentCount,
+    required List<String> studentIds,
+  }) async {
+    // Count badges for dialog (optional)
+    int badgeCount = 0;
+    try {
+      final snap = await FirebaseFirestore.instance
+          .collectionGroup('badgesEarned')
+          .where('subjectId', isEqualTo: subject.id)
+          .get();
+      badgeCount = snap.docs.length;
+    } catch (_) {}
+
+    final ok = await showDialog<bool>(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text('Delete Subject + Cleanup?'),
+              content: Text(
+                'This will permanently delete:\n'
+                '• Subject: "${subject.name}"\n'
+                '• Assignments linked to it: $linkedAssignmentCount\n'
+                '• Progress docs (subjectProgress): up to ${studentIds.length}\n'
+                '• Badges for this subject: $badgeCount\n\n'
+                '✅ Wallet points WILL be reversed for completed assignments.\n\n'
+                'Continue?',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.delete),
+                  label: const Text('Delete'),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () => Navigator.pop(ctx, true),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+
+    if (!ok) return;
+
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        content: SizedBox(
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 14),
+              Text('Deleting subject and cleaning up...'),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    try {
+      final result = await SubjectDeleteService.instance.deleteSubjectCascade(
+        subjectId: subject.id,
+        courseConfigId: courseConfigId,
+        studentIds: studentIds,
+        reversePoints: true,
+      );
+
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+
+      _snack(
+        'Deleted subject. '
+        '${result.assignmentsDeleted} assignments, '
+        '${result.progressDocsDeleted} progress docs, '
+        '${result.badgesDeleted} badges cleaned, '
+        '${result.pointsReversed} points reversed.',
+        color: Colors.green,
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+      _snack('Delete failed: $e', color: Colors.red);
+    }
+  }
+  Future<void> _repairAssignmentsForConfig({
+    required String configId,
+    required Subject subject,
+  }) async {
+    // Pull assignments that match this curriculum (support both field styles)
+    final a1 = await FirestorePaths.assignmentsCol()
+        .where('courseConfigId', isEqualTo: configId)
+        .get();
+  
+    QuerySnapshot<Map<String, dynamic>> a2;
+    try {
+      a2 = await FirestorePaths.assignmentsCol()
+          .where('course_config_id', isEqualTo: configId)
+          .get();
+    } catch (_) {
+      // If no index / field doesn’t exist widely, ignore snake query.
+      a2 = await FirestorePaths.assignmentsCol().limit(0).get();
+    }
+  
+    final byId = <String, QueryDocumentSnapshot<Map<String, dynamic>>>{};
+    for (final d in a1.docs) {
+      byId[d.id] = d;
+    }
+    for (final d in a2.docs) {
+      byId[d.id] = d;
+    }
+  
+    final docs = byId.values.toList();
+    if (docs.isEmpty) {
+      _snack('No assignments found for $configId.', color: Colors.orange);
+      return;
+    }
+  
+    int fixed = 0;
+  
+    // Batch in chunks (Firestore limit safety)
+    const chunkSize = 450;
+    for (int i = 0; i < docs.length; i += chunkSize) {
+      final batch = FirebaseFirestore.instance.batch();
+      final slice = docs.skip(i).take(chunkSize);
+  
+      for (final d in slice) {
+        final data = d.data();
+  
+        final sid = (data['subjectId'] ?? data['subject_id'] ?? '').toString().trim();
+        final sname = (data['subjectName'] ?? data['subject_name'] ?? '').toString().trim();
+  
+        final needsId = sid.isEmpty || sid != subject.id;
+        final needsName = sname.isEmpty || sname != subject.name;
+  
+        if (!needsId && !needsName) continue;
+  
+        batch.update(d.reference, {
+          'subjectId': subject.id,
+          'subject_id': subject.id,
+          'subjectName': subject.name,
+          'subject_name': subject.name,
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+        fixed++;
+      }
+  
+      await batch.commit();
+    }
+  
+    _snack('Repair complete: fixed $fixed assignments.', color: Colors.green);
   }
 
   // ============================================================
@@ -590,7 +937,8 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                       stream: _assignmentsStream,
                       builder: (context, assignmentsSnap) {
                         // ✅ Keep raw docs for accurate counting
-                        final assignmentDocs = assignmentsSnap.data?.docs ?? const <QueryDocumentSnapshot<Map<String, dynamic>>>[];
+                        final assignmentDocs =
+                            assignmentsSnap.data?.docs ?? const <QueryDocumentSnapshot<Map<String, dynamic>>>[];
                         final assignments = assignmentDocs.map((d) => Assignment.fromDoc(d)).toList();
 
                         return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -644,6 +992,12 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                       orElse: () => null,
                                     );
 
+                                final linkedAssignmentCount = matchedSubject == null
+                                    ? 0
+                                    : assignments.where((a) => a.subjectId == matchedSubject.id).length;
+
+                                final allStudentIds = students.map((s) => s.id).toList();
+
                                 return Card(
                                   color: const Color(0xFF1F2937),
                                   margin: const EdgeInsets.only(bottom: 12),
@@ -687,9 +1041,43 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                               ),
                                             ),
                                             OutlinedButton(
-                                              onPressed: () => _showEnrollSheet(configData, students),
+                                              onPressed: () => _showEnrollSheet(configData, students, subjects),
                                               child: const Text('Enroll'),
                                             ),
+
+                                            // ✅ Rename Subject (creates subject if missing, then renames)
+                                            const SizedBox(width: 8),
+                                            IconButton(
+                                              tooltip: 'Rename subject',
+                                              icon: const Icon(Icons.edit, color: Colors.white70),
+                                              onPressed: () async {
+                                                final subject = matchedSubject ??
+                                                    await _ensureSubjectForConfig(
+                                                      configId: configId,
+                                                      configName: configName,
+                                                      subjects: subjects,
+                                                    );
+                                                await _renameSubjectDialog(
+                                                  subject: subject,
+                                                  courseConfigId: configId,
+                                                  allStudents: students,
+                                                );
+                                              },
+                                            ),
+
+                                            if (matchedSubject != null) ...[
+                                              const SizedBox(width: 4),
+                                              IconButton(
+                                                tooltip: 'Delete subject + assignments + progress',
+                                                icon: const Icon(Icons.delete, color: Colors.redAccent),
+                                                onPressed: () => _deleteSubjectCascade(
+                                                  subject: matchedSubject,
+                                                  courseConfigId: configId,
+                                                  linkedAssignmentCount: linkedAssignmentCount,
+                                                  studentIds: allStudentIds,
+                                                ),
+                                              ),
+                                            ],
                                           ],
                                         ),
                                         if (enrolledStudents.isNotEmpty) ...[
@@ -712,20 +1100,27 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                                             );
 
                                             return ListTile(
-                                              // ✅ Interpolation ambiguity-proof (matches what we discussed)
                                               key: ValueKey('counts_${configId}_${s.id}_${assignedCount}_${completed}'),
                                               contentPadding: EdgeInsets.zero,
                                               leading: CircleAvatar(child: Text(s.name.isNotEmpty ? s.name[0] : '?')),
                                               title: Text(s.name),
-                                              // ✅ Also ambiguity-proof (same reason)
-                                              subtitle: Text('${completed} completed / ${assignedCount} assigned'),
+                                              subtitle: Text('$completed completed / $assignedCount assigned'),
                                               trailing: TextButton(
-                                                onPressed: () => _showManageCurriculumSheet(
-                                                  configData: configData,
-                                                  student: s,
-                                                  existingAssignments: studentAssignments,
-                                                  linkedSubject: matchedSubject,
-                                                ),
+                                                onPressed: () async {
+                                                  final subject = matchedSubject ??
+                                                      await _ensureSubjectForConfig(
+                                                        configId: configId,
+                                                        configName: configName,
+                                                        subjects: subjects,
+                                                      );
+
+                                                  await _showManageCurriculumSheet(
+                                                    configData: configData,
+                                                    student: s,
+                                                    existingAssignments: studentAssignments,
+                                                    linkedSubject: subject,
+                                                  );
+                                                },
                                                 child: const Text('Manage'),
                                               ),
                                             );

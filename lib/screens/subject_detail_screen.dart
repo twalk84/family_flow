@@ -7,12 +7,17 @@
 // - ✅ Tap an assignment to open the shared polished actions sheet
 // - ✅ Live stream so completes/deletes instantly reflect here
 // - ✅ Progress header with completion bar, badges, streaks
+// - ✅ Delete Subject + Cleanup button in AppBar (calls SubjectDeleteService)
+// - ✅ Shows "Completed: <timestamp>" on completed assignments when completionDate is present
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../firestore_paths.dart';
-import '../models.dart';
+import '../core/firestore/firestore_paths.dart';
+import '../core/models/models.dart';
+
+import '../services/subject_delete_service.dart';
+
 import '../widgets/assignment_actions_sheet.dart';
 import '../widgets/progress_header.dart';
 
@@ -76,6 +81,19 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
     super.dispose();
   }
 
+  void _snack(String msg, {Color? color}) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   Color _studentColor(Student s, int index) {
     final v = s.colorValue;
     if (v != 0) return Color(v);
@@ -83,8 +101,14 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   }
 
   Map<String, Student> _studentsById() => {for (final s in widget.students) s.id: s};
-
   Map<String, Subject> _subjectsById() => {widget.subject.id: widget.subject};
+
+  Student? _findStudentById(String id) {
+    for (final s in widget.students) {
+      if (s.id == id) return s;
+    }
+    return null;
+  }
 
   List<Assignment> _mapDocs(QuerySnapshot<Map<String, dynamic>> snap) {
     final studentsById = _studentsById();
@@ -121,10 +145,121 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
     });
   }
 
+  Future<void> _onDeleteSubjectPressed() async {
+    int assignmentCount = 0;
+    int badgeCount = 0;
+
+    try {
+      final aSnap = await FirestorePaths.assignmentsCol()
+          .where('subjectId', isEqualTo: widget.subject.id)
+          .get();
+      assignmentCount = aSnap.docs.length;
+    } catch (_) {}
+
+    try {
+      final bSnap = await FirebaseFirestore.instance
+          .collectionGroup('badgesEarned')
+          .where('subjectId', isEqualTo: widget.subject.id)
+          .get();
+      badgeCount = bSnap.docs.length;
+    } catch (_) {}
+
+    final studentIds = widget.students.map((s) => s.id).toList();
+
+    final ok = await showDialog<bool>(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text('Delete Subject + Cleanup?'),
+              content: Text(
+                'This will permanently delete:\n'
+                '• Subject: "${widget.subject.name}"\n'
+                '• Assignments: $assignmentCount\n'
+                '• Progress docs (subjectProgress): up to ${studentIds.length}\n'
+                '• Badges for this subject: $badgeCount\n\n'
+                '✅ Wallet points WILL be reversed for completed assignments.\n\n'
+                'Continue?',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx, false),
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.delete),
+                  label: const Text('Delete'),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  onPressed: () => Navigator.pop(ctx, true),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
+
+    if (!ok) return;
+
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        content: SizedBox(
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 14),
+              Text('Deleting subject and cleaning up...'),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    try {
+      final result = await SubjectDeleteService.instance.deleteSubjectCascade(
+        subjectId: widget.subject.id,
+        courseConfigId: widget.subject.courseConfigId,
+        studentIds: studentIds,
+        reversePoints: true,
+      );
+
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+
+      _snack(
+        'Deleted subject. '
+        '${result.assignmentsDeleted} assignments, '
+        '${result.progressDocsDeleted} progress docs, '
+        '${result.badgesDeleted} badges cleaned, '
+        '${result.pointsReversed} points reversed.',
+        color: Colors.green,
+      );
+
+      // Leave detail screen (subject no longer exists)
+      Navigator.pop(context);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+      _snack('Delete failed: $e', color: Colors.red);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.subject.name)),
+      appBar: AppBar(
+        title: Text(widget.subject.name),
+        actions: [
+          IconButton(
+            tooltip: 'Delete subject + cleanup',
+            icon: const Icon(Icons.delete, color: Colors.redAccent),
+            onPressed: _onDeleteSubjectPressed,
+          ),
+        ],
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final maxW = constraints.maxWidth;
@@ -140,13 +275,10 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                     .snapshots(),
                 builder: (context, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
-                    // fallback to passed assignments if available (instant paint)
                     final fallback = (widget.assignments ?? const <Assignment>[])
                         .where((a) => a.subjectId == widget.subject.id)
                         .toList();
-                    if (fallback.isNotEmpty) {
-                      return _body(context, fallback);
-                    }
+                    if (fallback.isNotEmpty) return _body(context, fallback);
                     return const Center(child: CircularProgressIndicator());
                   }
 
@@ -154,9 +286,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                     final fallback = (widget.assignments ?? const <Assignment>[])
                         .where((a) => a.subjectId == widget.subject.id)
                         .toList();
-                    if (fallback.isNotEmpty) {
-                      return _body(context, fallback);
-                    }
+                    if (fallback.isNotEmpty) return _body(context, fallback);
                     return Center(child: Text('Error: ${snap.error}'));
                   }
 
@@ -177,14 +307,11 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
   Widget _body(BuildContext context, List<Assignment> subjectAssignments) {
     final filtered = _applyFilters(subjectAssignments);
 
-    // Which students have *any* assignments for this subject (unfiltered by search),
-    // so chips reflect reality and still allow you to jump around.
     final studentsWithAny = <String>{};
     for (final a in subjectAssignments) {
       if (a.studentId.isNotEmpty) studentsWithAny.add(a.studentId);
     }
 
-    // group filtered list by studentId
     final byStudent = <String, List<Assignment>>{};
     for (final a in filtered) {
       byStudent.putIfAbsent(a.studentId, () => <Assignment>[]).add(a);
@@ -197,18 +324,14 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
 
     final filtersActive = _query.isNotEmpty || _selectedStudentId != null;
 
-    // Determine which student to show progress for
     Student? progressStudent = widget.currentStudent;
     if (progressStudent == null && _selectedStudentId != null) {
-      progressStudent = widget.students.where((s) => s.id == _selectedStudentId).firstOrNull;
+      progressStudent = _findStudentById(_selectedStudentId!);
     }
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        // ========================================
-        // NEW: Progress Header (if we have a student context)
-        // ========================================
         if (progressStudent != null) ...[
           ProgressHeader(
             student: progressStudent,
@@ -239,7 +362,6 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
         ),
         const SizedBox(height: 12),
 
-        // Search + chips
         _filterBar(studentOrder, byStudent),
 
         const SizedBox(height: 14),
@@ -294,20 +416,15 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                   ? null
                   : IconButton(
                       tooltip: 'Clear search',
-                      onPressed: () {
-                        _searchCtrl.text = '';
-                        // listener updates _query
-                      },
+                      onPressed: () => _searchCtrl.text = '',
                       icon: const Icon(Icons.close),
                     ),
               border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: 12),
-
           const Text('Filter by student', style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w600)),
           const SizedBox(height: 10),
-
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -318,7 +435,7 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                   onTap: () => setState(() => _selectedStudentId = null),
                 ),
                 ...studentOrder.map((s) {
-                  final count = byStudent[s.id]?.length ?? 0; // count in filtered list
+                  final count = byStudent[s.id]?.length ?? 0;
                   final isSelected = selectedId == s.id;
 
                   return _chip(
@@ -399,7 +516,6 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
             ],
           ),
           const SizedBox(height: 12),
-
           for (final a in items) _assignmentRow(context, a),
         ],
       ),
@@ -449,10 +565,18 @@ class _SubjectDetailScreenState extends State<SubjectDetailScreen> {
                         a.dueDate.isEmpty ? 'No due date' : a.dueDate,
                         style: const TextStyle(color: Colors.white60, fontSize: 12),
                       ),
+                      if (isDone && a.completionDate.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          'Completed: ${a.completionDate}',
+                          style: const TextStyle(color: Colors.greenAccent, fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ],
                     ],
                   ),
                 ),
-                // Show points earned if available
                 if (isDone && a.rewardPointsApplied > 0) ...[
                   const SizedBox(width: 8),
                   Container(

@@ -471,46 +471,81 @@ class _StudentManagerScreenState extends State<StudentManagerScreen> {
   }
 
   // ============================================================
-  // Reset Streak
+  // Edit Streak
   // ============================================================
 
-  Future<void> _confirmResetStreak(Student student) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF1F2937),
-        title: Text('Reset ${student.name}\'s streak?'),
-        content: Text(
-          'Current streak: ${student.currentStreak} days\n'
-          'Longest streak: ${student.longestStreak} days\n\n'
-          'This will reset their current streak to 0. Longest streak will be preserved.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Reset'),
-          ),
-        ],
-      ),
-    );
+  Future<void> _showEditStreakSheet(Student student) async {
+    final currentStreakCtrl = TextEditingController(text: student.currentStreak.toString());
+    final longestStreakCtrl = TextEditingController(text: student.longestStreak.toString());
 
-    if (ok == true) {
-      try {
-        await FirestorePaths.studentsCol().doc(student.id).update({
-          'currentStreak': 0,
-          'lastCompletionDate': '',
-          'updatedAt': FieldValue.serverTimestamp(),
-        });
-        _snack('Streak reset for ${student.name}.', color: Colors.orange);
-      } catch (e) {
-        _snack('Reset failed: $e', color: Colors.red);
-      }
-    }
+    await _showSmoothSheet<void>(
+      title: 'Edit Streak: ${student.name}',
+      builder: (sheetContext) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Adjust streak values', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(
+              controller: currentStreakCtrl,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Current Streak (days)',
+                helperText: 'Consecutive days with completed assignments',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 12),
+            TextField(
+              controller: longestStreakCtrl,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Longest Streak (days)',
+                helperText: 'All-time best streak',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    child: const Text('Cancel'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.save),
+                    label: const Text('Save'),
+                    onPressed: () async {
+                      final currentStreak = int.tryParse(currentStreakCtrl.text.trim()) ?? 0;
+                      final longestStreak = int.tryParse(longestStreakCtrl.text.trim()) ?? 0;
+
+                      try {
+                        await FirestorePaths.studentsCol().doc(student.id).update({
+                          'currentStreak': currentStreak,
+                          'longestStreak': longestStreak,
+                          'updatedAt': FieldValue.serverTimestamp(),
+                        });
+
+                        if (mounted) {
+                          Navigator.pop(sheetContext);
+                          _snack('Streak updated for ${student.name}.', color: Colors.green);
+                        }
+                      } catch (e) {
+                        _snack('Update failed: $e', color: Colors.red);
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // ============================================================
@@ -704,12 +739,12 @@ class _StudentManagerScreenState extends State<StudentManagerScreen> {
 
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.restart_alt, color: Colors.orange),
-              title: const Text('Reset Streak'),
-              subtitle: Text('Current: ${student.currentStreak} days'),
+              leading: const Icon(Icons.local_fire_department, color: Colors.deepOrange),
+              title: const Text('Edit Streak'),
+              subtitle: Text('Current: ${student.currentStreak} days • Best: ${student.longestStreak} days'),
               onTap: () {
                 Navigator.pop(sheetContext);
-                _confirmResetStreak(student);
+                _showEditStreakSheet(student);
               },
             ),
 

@@ -399,33 +399,77 @@ class AssignmentMutations {
     String courseConfigId = '',
     String categoryKey = '',
     int orderInCourse = 0,
+
+    // ✅ Added (optional): store display names for consistent UI rendering
+    // even if a screen doesn't resolve subjectsById at runtime.
+    String studentName = '',
+    String subjectName = '',
   }) async {
     final docRef = FirestorePaths.assignmentsCol().doc();
 
     await docRef.set({
-      'studentId': studentId,
-      'subjectId': subjectId,
-      'name': name,
-      'nameLower': name.toLowerCase(),
-      'dueDate': dueDate,
-      'completionDate': '',
-      'completed': false,
-      'grade': null,
-      'courseConfigId': courseConfigId,
-      'categoryKey': categoryKey,
-      'orderInCourse': orderInCourse,
-      'pointsBase': pointsBase,
-      'pointsEarned': 0,
-      'gradable': gradable,
-      'pointsPossible': pointsBase,
-      'weight': 1.0,
-      'attempts': [],
-      'bestGrade': null,
-      'rewardTxnId': '',
-      'rewardPointsApplied': 0,
-      'createdAt': FieldValue.serverTimestamp(),
-      'updatedAt': FieldValue.serverTimestamp(),
-    });
+     // IDs (write both camelCase + snake_case for compatibility)
+     'studentId': studentId,
+     'student_id': studentId,
+   
+     'subjectId': subjectId,
+     'subject_id': subjectId,
+   
+     // Optional display names (write both)
+     'studentName': studentName,
+     'student_name': studentName,
+   
+     'subjectName': subjectName,
+     'subject_name': subjectName,
+   
+     // Core
+     'name': name,
+     'nameLower': name.toLowerCase(),
+     'dueDate': dueDate,
+     'completionDate': '',
+     'completed': false,
+     'grade': null,
+   
+     // Curriculum link (write both)
+     'courseConfigId': courseConfigId,
+     'course_config_id': courseConfigId,
+   
+     'categoryKey': categoryKey,
+     'category_key': categoryKey,
+   
+     'orderInCourse': orderInCourse,
+     'order_in_course': orderInCourse,
+   
+     // Points
+     'pointsBase': pointsBase,
+     'points_base': pointsBase,
+   
+     'pointsEarned': 0,
+     'points_earned': 0,
+   
+     'gradable': gradable,
+   
+     // Legacy
+     'pointsPossible': pointsBase,
+     'points_possible': pointsBase,
+   
+     'weight': 1.0,
+   
+     // Retest tracking
+     'attempts': [],
+     'bestGrade': null,
+   
+     // Wallet tracking
+     'rewardTxnId': '',
+     'reward_txn_id': '',
+   
+     'rewardPointsApplied': 0,
+     'reward_points_applied': 0,
+   
+     'createdAt': FieldValue.serverTimestamp(),
+     'updatedAt': FieldValue.serverTimestamp(),
+   });
+
 
     return docRef.id;
   }

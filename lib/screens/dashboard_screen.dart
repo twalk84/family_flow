@@ -7,12 +7,14 @@
 // - Add Assignment: includes pointsBase and gradable fields
 // - Assignment completion: uses AssignmentMutations.setCompleted() for proper points/streak tracking
 // - Shows streak info on student cards
+// - Assignments tab now browses: Student -> Subject -> Assignments (drill-down on narrow, 3-column on wide)
 
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'student_manager_screen.dart';
 import 'curriculum_manager_screen.dart';
 import '../firestore_paths.dart';
@@ -40,6 +42,10 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   String? teacherMood;
   bool _autoOpenedSchedule = false;
+
+  // Assignments browser (Student -> Subject -> Assignments)
+  String? _assignBrowserStudentId;
+  String? _assignBrowserSubjectId;
 
   // Subjects search UI
   final TextEditingController _subjectSearchCtrl = TextEditingController();
@@ -259,10 +265,12 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   Future<void> _resetAllStudentStreaks(List<Student> students) async {
     const limit = 450;
-    final refs = students.map((s) => FirestorePaths.studentsCol().doc(s.id)).toList();
+    final refs =
+        students.map((s) => FirestorePaths.studentsCol().doc(s.id)).toList();
 
     for (var i = 0; i < refs.length; i += limit) {
-      final chunk = refs.sublist(i, (i + limit) > refs.length ? refs.length : (i + limit));
+      final chunk = refs.sublist(
+          i, (i + limit) > refs.length ? refs.length : (i + limit));
       final batch = FirebaseFirestore.instance.batch();
       for (final r in chunk) {
         batch.set(
@@ -288,6 +296,89 @@ class _DashboardScreenState extends State<DashboardScreen>
       },
       SetOptions(merge: true),
     );
+  }
+
+  Future<void> _confirmDeleteSubject({
+    required Subject subject,
+    required List<Student> students,
+    required List<Assignment> allAssignments,
+  }) async {
+    final related = allAssignments.where((a) => a.subjectId == subject.id).toList();
+    final completed = related.where((a) => a.isCompleted).toList();
+
+    final ok = await showDialog<bool>(
+          context: context,
+          builder: (_) => AlertDialog(
+            backgroundColor: const Color(0xFF1F2937),
+            title: const Text('Delete subject?'),
+            content: Text(
+              'This will delete:\n'
+              '• Subject: "${subject.name}"\n'
+              '• Assignments linked to it: ${related.length}\n\n'
+              'If any of those assignments were completed, points/streaks will be reversed first.\n\n'
+              'This cannot be undone.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: () => Navigator.pop(context, true),
+                icon: const Icon(Icons.delete_forever),
+                label: const Text('Delete'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+
+    if (!ok) return;
+
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        backgroundColor: Color(0xFF1F2937),
+        content: SizedBox(
+          height: 90,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 14),
+              Text('Deleting subject...'),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    try {
+      // 1) Reverse points/streaks for completed assignments first
+      for (final a in completed) {
+        await AssignmentMutations.setCompleted(a, completed: false);
+      }
+
+      // 2) Delete the assignments linked to this subject
+      final refs =
+          related.map((a) => FirestorePaths.assignmentsCol().doc(a.id)).toList(growable: false);
+      await _batchDeleteDocs(refs);
+
+      // 3) Delete the subject document
+      await FirestorePaths.subjectsCol().doc(subject.id).delete();
+
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+      _snack('Deleted "${subject.name}" (${related.length} assignments).',
+          color: Colors.green);
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context); // close progress dialog
+      _snack('Delete failed: $e', color: Colors.red);
+    }
   }
 
   // ============================================================
@@ -321,7 +412,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
               const SizedBox(height: 16),
               ListTile(
-                leading: const Icon(Icons.restart_alt, color: Colors.orangeAccent),
+                leading:
+                    const Icon(Icons.restart_alt, color: Colors.orangeAccent),
                 title: const Text('Reset ALL streaks (set to 0)'),
                 subtitle: const Text('Keeps students + assignments.'),
                 onTap: () async {
@@ -331,7 +423,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
               const Divider(color: Colors.white12),
               ListTile(
-                leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
+                leading:
+                    const Icon(Icons.delete_forever, color: Colors.redAccent),
                 title: const Text('Delete ALL students (and their assignments)'),
                 subtitle: const Text('This cannot be undone.'),
                 onTap: () async {
@@ -433,7 +526,8 @@ class _DashboardScreenState extends State<DashboardScreen>
   ) async {
     const limit = 450;
     for (var i = 0; i < refs.length; i += limit) {
-      final chunk = refs.sublist(i, (i + limit) > refs.length ? refs.length : (i + limit));
+      final chunk = refs.sublist(
+          i, (i + limit) > refs.length ? refs.length : (i + limit));
       final batch = FirebaseFirestore.instance.batch();
       for (final r in chunk) {
         batch.delete(r);
@@ -463,7 +557,8 @@ class _DashboardScreenState extends State<DashboardScreen>
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Student Info', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Student Info',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 TextField(
                   controller: nameCtrl,
@@ -569,7 +664,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                             'gradeLevel': grade,
                             'color': selectedColorValue,
                             'walletBalance': 0,
-                            // NEW: Streak fields
                             'currentStreak': 0,
                             'longestStreak': 0,
                             'lastCompletionDate': '',
@@ -605,7 +699,8 @@ class _DashboardScreenState extends State<DashboardScreen>
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Subject Name', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Subject Name',
+                style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             TextField(
               controller: nameCtrl,
@@ -657,7 +752,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   /// UPDATED: Now includes pointsBase and gradable fields
-  /// Opens the Add Assignment sheet with the narrowed points input.
   Future<void> _showAddAssignmentDialog({
     required List<Student> students,
     required List<Subject> subjects,
@@ -733,15 +827,14 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // START: Points & Grading Section (Optimized for Android)
-                const Text('Points & Grading', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Points & Grading',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 12),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      flex: 1, // Narrows the points box to ~33% width
+                      flex: 1,
                       child: TextField(
                         controller: pointsCtrl,
                         keyboardType: TextInputType.number,
@@ -754,7 +847,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      flex: 2, // Gives the grading section ~66% width
+                      flex: 2,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -763,7 +856,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                             style: TextStyle(fontSize: 12, color: Colors.white70),
                           ),
                           const SizedBox(height: 4),
-                          // Wrap ensures ChoiceChips don't cause pixel overflow
                           Wrap(
                             spacing: 8,
                             runSpacing: 8,
@@ -787,8 +879,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                   ],
                 ),
-                // END: Points & Grading Section
-
                 const SizedBox(height: 12),
                 Container(
                   padding: const EdgeInsets.all(10),
@@ -859,6 +949,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       },
     );
   }
+
   // ============================================================
   // Assignment actions (smooth) - UPDATED with proper completion flow
   // ============================================================
@@ -916,8 +1007,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                   ],
                 ),
-
-                // Show points info
                 const SizedBox(height: 8),
                 Row(
                   children: [
@@ -929,7 +1018,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 16),
                 const Divider(color: Colors.white12),
 
@@ -1042,7 +1130,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                   const Text('Status', style: TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
 
-                  // Show completion info
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -1066,7 +1153,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 const Spacer(),
                                 const Icon(Icons.check_circle, color: Colors.green, size: 16),
                                 const SizedBox(width: 4),
-                                const Text('Points earned', style: TextStyle(color: Colors.green, fontSize: 12)),
+                                const Text('Points earned',
+                                    style: TextStyle(color: Colors.green, fontSize: 12)),
                               ],
                             ],
                           ),
@@ -1091,7 +1179,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                               const SizedBox(width: 8),
                               Text(
                                 '+${a.pointsEarned} points earned',
-                                style: const TextStyle(color: Colors.amber, fontSize: 13, fontWeight: FontWeight.w600),
+                                style: const TextStyle(
+                                  color: Colors.amber,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
@@ -1118,8 +1210,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   leading: const Icon(Icons.delete, color: Colors.redAccent),
-                  title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
-                  subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
+                  title: const Text('Delete assignment',
+                      style: TextStyle(color: Colors.redAccent)),
+                  subtitle: const Text('This cannot be undone.',
+                      style: TextStyle(color: Colors.white60)),
                   onTap: () async {
                     Navigator.pop(sheetContext);
                     await _showDeleteAssignmentConfirmSheet(a);
@@ -1133,7 +1227,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  /// Show feedback after completing an assignment
   void _showCompletionFeedback(CompletionResult result, int basePoints, {int? grade}) {
     final pts = result.pointsAwarded;
     final streak = result.currentStreak;
@@ -1221,9 +1314,8 @@ class _DashboardScreenState extends State<DashboardScreen>
           children: [
             Text(s.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
-            Text('Grade ${s.gradeLevel} • Age ${s.age}', style: const TextStyle(color: Colors.white60)),
-
-            // Show streak info
+            Text('Grade ${s.gradeLevel} • Age ${s.age}',
+                style: const TextStyle(color: Colors.white60)),
             if (s.currentStreak > 0) ...[
               const SizedBox(height: 12),
               Container(
@@ -1253,7 +1345,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ),
             ],
-
             const SizedBox(height: 16),
             const Divider(color: Colors.white12),
             const SizedBox(height: 8),
@@ -1409,6 +1500,19 @@ class _DashboardScreenState extends State<DashboardScreen>
                   icon: const Icon(Icons.edit, size: 18),
                   label: const Text('Edit'),
                 ),
+                const SizedBox(width: 8),
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    Navigator.pop(sheetContext);
+                    await _confirmDeleteSubject(
+                      subject: subject,
+                      students: students,
+                      allAssignments: assignments,
+                    );
+                  },
+                  icon: const Icon(Icons.delete_outline, size: 18, color: Colors.redAccent),
+                  label: const Text('Delete'),
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -1434,7 +1538,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                 children: rows.map((r) {
                   final st = studentById[r.studentId];
                   final idx = st == null ? 0 : students.indexWhere((s) => s.id == st.id);
-                  final color = st == null ? Colors.grey : _colorForStudent(st, idx < 0 ? 0 : idx);
+                  final color = st == null
+                      ? Colors.grey
+                      : _colorForStudent(st, idx < 0 ? 0 : idx);
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
@@ -1576,7 +1682,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           students: students,
           assignments: assignments,
           onComplete: (id, grade) async {
-            // Find the assignment and use proper completion
             final a = assignments.firstWhere((x) => x.id == id);
             await _completeAssignment(a, grade: grade);
           },
@@ -1692,6 +1797,32 @@ class _DashboardScreenState extends State<DashboardScreen>
   Widget build(BuildContext context) {
     final isNarrow = MediaQuery.of(context).size.width < 900;
 
+    Future<bool> _confirmBackNavigation() async {
+      final result = await showDialog<bool>(
+        context: context,
+        builder: (_) => AlertDialog(
+          backgroundColor: const Color(0xFF1F2937),
+          title: const Text('Leave Dashboard?'),
+          content: const Text(
+            'You will be returned to the student selection screen and will need to enter your PIN again. Continue?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Leave'),
+            ),
+          ],
+        ),
+      );
+
+      return result ?? false;
+    }
+
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: FirestorePaths.studentsCol().snapshots(),
       builder: (context, studentsSnap) {
@@ -1731,11 +1862,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                 List<Widget> buildActions() {
                   if (isNarrow) {
                     return [
-                    
                       IconButton(
-                        tooltip: 'Add Subject',
-                        icon: const Icon(Icons.bookmark_add),
-                        onPressed: _showAddSubjectDialog,
+                        tooltip: 'Add Student',
+                        icon: const Icon(Icons.person_add_alt_1),
+                        onPressed: _showAddStudentDialog,
                       ),
                       IconButton(
                         tooltip: "Today's Schedule",
@@ -1757,7 +1887,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                         icon: const Icon(Icons.chat_bubble_outline),
                         onPressed: _openAssistantSheet,
                       ),
-                      // In dashboard_screen.dart, add to buildActions():
                       IconButton(
                         tooltip: 'Manage Students',
                         icon: const Icon(Icons.manage_accounts),
@@ -1814,6 +1943,22 @@ class _DashboardScreenState extends State<DashboardScreen>
                       onPressed: _openAssistantSheet,
                     ),
                     _pillButton(
+                      icon: Icons.manage_accounts,
+                      label: 'Students',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const StudentManagerScreen()),
+                      ),
+                    ),
+                    _pillButton(
+                      icon: Icons.library_books,
+                      label: 'Curriculum',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const CurriculumManagerScreen()),
+                      ),
+                    ),
+                    _pillButton(
                       icon: Icons.logout,
                       label: 'Sign out',
                       onPressed: _signOut,
@@ -1823,13 +1968,22 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ];
                 }
 
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('FamilyOS'),
-                    actions: buildActions(),
-                  ),
-                  body: SafeArea(
-                    child: LayoutBuilder(
+                return PopScope(
+                  canPop: false,
+                  onPopInvokedWithResult: (didPop, result) async {
+                    if (didPop) return;
+                    final shouldPop = await _confirmBackNavigation();
+                    if (shouldPop && mounted) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: Scaffold(
+                    appBar: AppBar(
+                      title: const Text('FamilyOS'),
+                      actions: buildActions(),
+                    ),
+                    body: SafeArea(
+                      child: LayoutBuilder(
                       builder: (context, constraints) {
                         final maxW = constraints.maxWidth;
                         final targetW = maxW > 1100 ? 1100.0 : maxW;
@@ -1845,8 +1999,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                                 children: [
                                   Text(
                                     isNarrow
-                                        ? 'Tap tabs • Tap rows for actions • Long-press delete'
-                                        : 'Students always visible • Assignments/Subjects on right • Tap for actions',
+                                        ? 'Tap tabs • Drill into Assignments (Student → Subject → List)'
+                                        : 'Students always visible • Assignments/Subjects on right',
                                     style: TextStyle(color: Colors.grey[500], fontSize: 12),
                                   ),
                                   const SizedBox(height: 12),
@@ -1877,7 +2031,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                   controller: _tabController,
                                                   children: [
                                                     _studentsPanel(students, assignments),
-                                                    _assignmentsPanel(assignments),
+                                                    _assignmentsPanel(
+                                                      assignments,
+                                                      students: students,
+                                                      subjects: subjects,
+                                                    ),
                                                     _subjectsPanel(
                                                       subjects: subjects,
                                                       students: students,
@@ -1918,7 +2076,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                                                       Expanded(
                                                         child: TabBarView(
                                                           children: [
-                                                            _assignmentsPanel(assignments),
+                                                            _assignmentsPanel(
+                                                              assignments,
+                                                              students: students,
+                                                              subjects: subjects,
+                                                            ),
                                                             _subjectsPanel(
                                                               subjects: subjects,
                                                               students: students,
@@ -1941,6 +2103,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                         );
                       },
                     ),
+                    ),
                   ),
                 );
               },
@@ -1952,7 +2115,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   // ============================================================
-  // Panels - UPDATED with streak display
+  // Panels - UPDATED with streak display + assignments browser
   // ============================================================
 
   Widget _studentsPanel(List<Student> students, List<Assignment> assignments) {
@@ -1983,7 +2146,8 @@ class _DashboardScreenState extends State<DashboardScreen>
               final student = students[index];
               final color = _colorForStudent(student, index);
 
-              final studentAssignments = assignments.where((a) => a.studentId == student.id).toList();
+              final studentAssignments =
+                  assignments.where((a) => a.studentId == student.id).toList();
               final total = studentAssignments.length;
               final completed = studentAssignments.where((a) => a.isCompleted).length;
 
@@ -2031,7 +2195,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     maxLines: 1,
                                   ),
                                 ),
-                                // UPDATED: Show streak badge
                                 if (student.currentStreak > 0) ...[
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -2094,107 +2257,396 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 
-  Widget _assignmentsPanel(List<Assignment> assignments) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Assignments (${assignments.length})',
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
-        Expanded(
-          child: ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: assignments.length,
-            itemBuilder: (context, index) {
-              final a = assignments[index];
-              final isCompleted = a.isCompleted;
+  /// Assignments browser:
+  /// - Narrow: drill down (Students -> Subjects -> Assignments)
+  /// - Wide: 3 columns side-by-side
+  Widget _assignmentsPanel(
+    List<Assignment> assignments, {
+    required List<Student> students,
+    required List<Subject> subjects,
+  }) {
+    const unassignedKey = '__unassigned__';
 
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () => _showAssignmentActionsSheet(a),
-                    onLongPress: () => _showDeleteAssignmentConfirmSheet(a),
-                    child: Ink(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: isCompleted ? Colors.green.withOpacity(0.1) : const Color(0xFF1F2937),
-                        border: isCompleted ? Border.all(color: Colors.green.withOpacity(0.3)) : null,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            isCompleted ? Icons.check_circle : Icons.circle_outlined,
-                            color: isCompleted ? Colors.green : Colors.grey,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  a.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    decoration: isCompleted ? TextDecoration.lineThrough : null,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Text(
-                                  '${a.subjectName} • ${a.studentName}',
-                                  style: const TextStyle(color: Colors.grey, fontSize: 12),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                a.dueDate,
-                                style: const TextStyle(fontSize: 12, color: Colors.grey),
-                              ),
-                              if (a.grade != null)
-                                Text(
-                                  '${a.grade}%',
-                                  style: TextStyle(
-                                    color: a.grade! >= 90 ? Colors.green : Colors.orange,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              // Show points
-                              if (a.pointsBase > 0)
-                                Text(
-                                  '${a.pointsBase} pts',
-                                  style: const TextStyle(fontSize: 10, color: Colors.amber),
-                                ),
-                            ],
-                          ),
-                          const SizedBox(width: 6),
-                          IconButton(
-                            tooltip: 'Actions',
-                            icon: const Icon(Icons.more_horiz, color: Colors.white70),
-                            onPressed: () => _showAssignmentActionsSheet(a),
-                          ),
-                        ],
-                      ),
+    final subjectsById = {for (final s in subjects) s.id: s};
+    final studentsById = {for (final s in students) s.id: s};
+
+    // Group by student
+    final byStudent = <String, List<Assignment>>{};
+    for (final a in assignments) {
+      final sid = a.studentId.trim();
+      if (sid.isEmpty) continue;
+      byStudent.putIfAbsent(sid, () => <Assignment>[]).add(a);
+    }
+
+    // Show ALL students, even if no assignments (so the browser always matches your roster)
+    final studentOrder = [...students]
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+    int pendingCount(List<Assignment> list) => list.where((a) => !a.isCompleted).length;
+
+    Color studentDot(Student s) =>
+        s.colorValue != 0 ? Color(s.colorValue) : Colors.white24;
+
+    void selectStudent(String sid) {
+      setState(() {
+        _assignBrowserStudentId = sid;
+        _assignBrowserSubjectId = null;
+      });
+    }
+
+    void selectSubject(String key) {
+      setState(() {
+        _assignBrowserSubjectId = key;
+      });
+    }
+
+    void goBack() {
+      setState(() {
+        if (_assignBrowserSubjectId != null) {
+          _assignBrowserSubjectId = null;
+        } else {
+          _assignBrowserStudentId = null;
+        }
+      });
+    }
+
+    void clearAll() {
+      setState(() {
+        _assignBrowserStudentId = null;
+        _assignBrowserSubjectId = null;
+      });
+    }
+
+    Widget studentsList() {
+      if (studentOrder.isEmpty) {
+        return Center(
+          child: Text('No students yet.', style: TextStyle(color: Colors.grey[600])),
+        );
+      }
+
+      return ListView.separated(
+        itemCount: studentOrder.length,
+        separatorBuilder: (_, __) => const Divider(height: 1, color: Colors.white12),
+        itemBuilder: (context, i) {
+          final s = studentOrder[i];
+          final list = byStudent[s.id] ?? const <Assignment>[];
+          final pending = pendingCount(list);
+          final total = list.length;
+
+          final selected = _assignBrowserStudentId == s.id;
+
+          return ListTile(
+            onTap: () => selectStudent(s.id),
+            leading: Container(
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                color: studentDot(s),
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white24),
+              ),
+            ),
+            title: Text(
+              s.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontWeight: selected ? FontWeight.bold : FontWeight.w600),
+            ),
+            subtitle: Text(
+              total == 0 ? 'No assignments' : '$pending pending • $total total',
+              style: const TextStyle(color: Colors.white60, fontSize: 12),
+            ),
+            trailing: const Icon(Icons.chevron_right, color: Colors.white38),
+            selected: selected,
+            selectedTileColor: Colors.purple.withOpacity(0.12),
+          );
+        },
+      );
+    }
+
+    Widget subjectsListForStudent(String studentId) {
+      final list = byStudent[studentId] ?? const <Assignment>[];
+
+      if (list.isEmpty) {
+        return Center(
+          child: Text('No assignments for this student.', style: TextStyle(color: Colors.grey[600])),
+        );
+      }
+
+      final bySubject = <String, List<Assignment>>{};
+      for (final a in list) {
+        final key = a.subjectId.trim().isEmpty ? unassignedKey : a.subjectId.trim();
+        bySubject.putIfAbsent(key, () => <Assignment>[]).add(a);
+      }
+
+      // ordered keys: subjects in your subjects list (alphabetical), then Unassigned
+      final subjectKeys = <String>[];
+
+      final presentSubjectIds = bySubject.keys.where((k) => k != unassignedKey).toSet();
+      final subjectObjs = subjects.where((s) => presentSubjectIds.contains(s.id)).toList()
+        ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
+      subjectKeys.addAll(subjectObjs.map((s) => s.id));
+      if (bySubject.containsKey(unassignedKey)) subjectKeys.add(unassignedKey);
+
+      String subjectLabel(String key) {
+        if (key == unassignedKey) return 'Unassigned';
+        return subjectsById[key]?.name ?? 'Unknown Subject';
+      }
+
+      return ListView.separated(
+        itemCount: subjectKeys.length,
+        separatorBuilder: (_, __) => const Divider(height: 1, color: Colors.white12),
+        itemBuilder: (context, i) {
+          final key = subjectKeys[i];
+          final items = bySubject[key] ?? const <Assignment>[];
+          final pending = pendingCount(items);
+          final total = items.length;
+
+          final selected = _assignBrowserSubjectId == key;
+
+          return ListTile(
+            onTap: () => selectSubject(key),
+            leading: const Icon(Icons.book, color: Colors.white54, size: 20),
+            title: Text(
+              subjectLabel(key),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontWeight: selected ? FontWeight.bold : FontWeight.w600),
+            ),
+            subtitle: Text(
+              '$pending pending • $total total',
+              style: const TextStyle(color: Colors.white60, fontSize: 12),
+            ),
+            trailing: const Icon(Icons.chevron_right, color: Colors.white38),
+            selected: selected,
+            selectedTileColor: Colors.purple.withOpacity(0.12),
+          );
+        },
+      );
+    }
+
+    Widget assignmentsList(String studentId, String subjectKey) {
+      final list = byStudent[studentId] ?? const <Assignment>[];
+      final filtered = list.where((a) {
+        final key = a.subjectId.trim().isEmpty ? unassignedKey : a.subjectId.trim();
+        return key == subjectKey;
+      }).toList();
+
+      filtered.sort((a, b) {
+        final ac = a.isCompleted ? 1 : 0;
+        final bc = b.isCompleted ? 1 : 0;
+        if (ac != bc) return ac.compareTo(bc);
+
+        final ad = a.dueDate.trim();
+        final bd = b.dueDate.trim();
+        if (ad.isEmpty && bd.isNotEmpty) return 1;
+        if (ad.isNotEmpty && bd.isEmpty) return -1;
+        final dcmp = ad.compareTo(bd);
+        if (dcmp != 0) return dcmp;
+
+        return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+      });
+
+      if (filtered.isEmpty) {
+        return Center(
+          child: Text('No assignments here.', style: TextStyle(color: Colors.grey[600])),
+        );
+      }
+
+      return ListView.separated(
+        itemCount: filtered.length,
+        separatorBuilder: (_, __) => const Divider(height: 1, color: Colors.white12),
+        itemBuilder: (context, i) {
+          final a = filtered[i];
+          final done = a.isCompleted;
+
+          return ListTile(
+            onTap: () => _showAssignmentActionsSheet(a),
+            onLongPress: () => _showDeleteAssignmentConfirmSheet(a),
+            leading: Icon(
+              done ? Icons.check_circle : Icons.circle_outlined,
+              color: done ? Colors.green : Colors.white38,
+              size: 20,
+            ),
+            title: Text(
+              a.name,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                decoration: done ? TextDecoration.lineThrough : null,
+                color: done ? Colors.white70 : Colors.white,
+              ),
+            ),
+            subtitle: Text(
+              a.dueDate.isEmpty ? 'No due date' : 'Due: ${a.dueDate}',
+              style: const TextStyle(color: Colors.white60, fontSize: 12),
+            ),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                if (a.pointsBase > 0)
+                  Text('${a.pointsBase} pts',
+                      style: const TextStyle(color: Colors.amber, fontSize: 11)),
+                if (a.grade != null)
+                  Text(
+                    '${a.grade}%',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: (a.grade ?? 0) >= 90 ? Colors.green : Colors.orange,
                     ),
                   ),
-                ),
-              );
-            },
-          ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+
+    String titleText() {
+      if (_assignBrowserStudentId == null) return 'Assignments';
+      final st = studentsById[_assignBrowserStudentId!];
+      if (_assignBrowserSubjectId == null) return st?.name ?? 'Student';
+
+      final sk = _assignBrowserSubjectId!;
+      final subjectName =
+          (sk == unassignedKey) ? 'Unassigned' : (subjectsById[sk]?.name ?? 'Subject');
+      return '${st?.name ?? 'Student'} • $subjectName';
+    }
+
+    Widget header() {
+      final canGoBack = _assignBrowserStudentId != null;
+
+      return Container(
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1F2937),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.white12),
         ),
-      ],
+        child: Row(
+          children: [
+            if (canGoBack)
+              IconButton(
+                tooltip: 'Back',
+                onPressed: goBack,
+                icon: const Icon(Icons.arrow_back),
+              ),
+            Expanded(
+              child: Text(
+                titleText(),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (canGoBack)
+              TextButton(
+                onPressed: clearAll,
+                child: const Text('Clear'),
+              ),
+            if (!canGoBack && studentOrder.isNotEmpty)
+              Text(
+                '${studentOrder.length} student${studentOrder.length == 1 ? '' : 's'}',
+                style: const TextStyle(color: Colors.white60, fontSize: 12),
+              ),
+          ],
+        ),
+      );
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 820;
+
+        final sid = _assignBrowserStudentId;
+        final sub = _assignBrowserSubjectId;
+
+        // Narrow: drill-down
+        if (!wide) {
+          Widget body;
+          if (sid == null) {
+            body = studentsList();
+          } else if (sub == null) {
+            body = subjectsListForStudent(sid);
+          } else {
+            body = assignmentsList(sid, sub);
+          }
+
+          return Column(
+            children: [
+              header(),
+              const SizedBox(height: 12),
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 180),
+                  child: body,
+                ),
+              ),
+            ],
+          );
+        }
+
+        // Wide: 3 columns
+        return Column(
+          children: [
+            header(),
+            const SizedBox(height: 12),
+            Expanded(
+              child: Row(
+                children: [
+                  // Students
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1F2937),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: studentsList(),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+
+                  // Subjects
+                  Expanded(
+                    flex: 4,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1F2937),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: sid == null
+                          ? Center(child: Text('Select a student', style: TextStyle(color: Colors.grey[600])))
+                          : subjectsListForStudent(sid),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+
+                  // Assignments
+                  Expanded(
+                    flex: 6,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1F2937),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: (sid == null || sub == null)
+                          ? Center(child: Text('Select a subject', style: TextStyle(color: Colors.grey[600])))
+                          : assignmentsList(sid, sub),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -2211,12 +2663,11 @@ class _DashboardScreenState extends State<DashboardScreen>
       (studentSetBySubject[a.subjectId] ??= <String>{}).add(a.studentId);
     }
 
-    final sorted = [...subjects]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    final sorted = [...subjects]
+      ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     final q = _subjectQuery.toLowerCase();
-    final filtered = q.isEmpty
-        ? sorted
-        : sorted.where((s) => s.name.toLowerCase().contains(q)).toList();
+    final filtered = q.isEmpty ? sorted : sorted.where((s) => s.name.toLowerCase().contains(q)).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -2237,7 +2688,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
         const SizedBox(height: 10),
-
         TextField(
           controller: _subjectSearchCtrl,
           decoration: InputDecoration(
@@ -2261,7 +2711,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ),
           ),
         ),
-
         const SizedBox(height: 8),
         if (_subjectQuery.isNotEmpty)
           Text(
@@ -2269,7 +2718,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             style: const TextStyle(color: Colors.white60, fontSize: 12),
           ),
         const SizedBox(height: 10),
-
         Expanded(
           child: filtered.isEmpty
               ? Center(
@@ -2296,6 +2744,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                             subject: s,
                             students: students,
                             assignments: assignments,
+                          ),
+                          onLongPress: () => _confirmDeleteSubject(
+                            subject: s,
+                            students: students,
+                            allAssignments: assignments,
                           ),
                           child: Ink(
                             padding: const EdgeInsets.all(12),
@@ -2329,6 +2782,15 @@ class _DashboardScreenState extends State<DashboardScreen>
                                   tooltip: 'Edit subject',
                                   icon: const Icon(Icons.edit, color: Colors.white70),
                                   onPressed: () => _showEditSubjectSheet(s),
+                                ),
+                                IconButton(
+                                  tooltip: 'Delete subject',
+                                  icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
+                                  onPressed: () => _confirmDeleteSubject(
+                                    subject: s,
+                                    students: students,
+                                    allAssignments: assignments,
+                                  ),
                                 ),
                               ],
                             ),

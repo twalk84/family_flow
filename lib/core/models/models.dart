@@ -3,7 +3,11 @@
 // Strongly-typed Firestore models + safe coercion helpers.
 // This file intentionally exports normalizeDueDate() for use across the app.
 //
-// UPDATED: Added student-level streak tracking and assignment points/retest fields.
+// UPDATED:
+// - ✅ Fixed duplicate _yyyyMmDd() definition
+// - ✅ AssignmentAttempt.toMap() no longer uses FieldValue.serverTimestamp()
+//   (serverTimestamp is NOT allowed inside array items; use Timestamp.now() instead)
+// - ✅ More robust attempts parsing (Map casting)
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -29,10 +33,9 @@ String normalizeDueDate(dynamic v) {
     // Already yyyy-mm-dd
     final simple = RegExp(r'^\d{4}-\d{2}-\d{2}$');
     if (simple.hasMatch(s)) return s;
-    
+
     // Handle yyyy-m-d (not padded) -> yyyy-mm-dd
     final loose = RegExp(r'^(\d{4})-(\d{1,2})-(\d{1,2})$').firstMatch(s);
-    
     if (loose != null) {
       final y = loose.group(1)!;
       final m = loose.group(2)!.padLeft(2, '0');
@@ -81,12 +84,28 @@ String asString(dynamic v, {String fallback = ''}) {
   return v.toString();
 }
 
+DateTime? _toDateTime(dynamic v) {
+  if (v == null) return null;
+  if (v is Timestamp) return v.toDate();
+  if (v is DateTime) return v;
+
+  // Common if something exported to JSON or stored as epoch millis:
+  if (v is int) return DateTime.fromMillisecondsSinceEpoch(v);
+
+  if (v is String) return DateTime.tryParse(v);
+  return null;
+}
+
 // =====================
 // AssignmentAttempt (for retest tracking)
 // =====================
 class AssignmentAttempt {
   final int grade;
-  final String date; // "YYYY-MM-DD"
+
+  /// Local date string for easy grouping/sorting: "YYYY-MM-DD"
+  final String date;
+
+  /// Precise moment of attempt (stored as Firestore Timestamp)
   final DateTime? timestamp;
 
   const AssignmentAttempt({
@@ -96,26 +115,33 @@ class AssignmentAttempt {
   });
 
   factory AssignmentAttempt.fromMap(Map<String, dynamic> data) {
+    final ts = _toDateTime(data['timestamp']);
+    final rawDate = asString(data['date'], fallback: '');
+
+    // If date wasn't stored (older data), derive it from timestamp if possible.
+    final normalizedDate = rawDate.isNotEmpty ? rawDate : (ts != null ? _yyyyMmDd(ts) : '');
+
     return AssignmentAttempt(
       grade: asInt(data['grade'], fallback: 0),
-      date: asString(data['date'], fallback: ''),
-      timestamp: _toDateTime(data['timestamp']),
+      date: normalizedDate,
+      timestamp: ts,
     );
   }
 
-  Map<String, dynamic> toMap() => {
-        'grade': grade,
-        'date': date,
-        'timestamp': timestamp != null ? Timestamp.fromDate(timestamp!) : FieldValue.serverTimestamp(),
-      };
-}
+  Map<String, dynamic> toMap() {
+    // Ensure date is always filled even if caller passed ''.
+    final safeDate = date.isNotEmpty ? date : _yyyyMmDd(DateTime.now());
 
-DateTime? _toDateTime(dynamic v) {
-  if (v == null) return null;
-  if (v is Timestamp) return v.toDate();
-  if (v is DateTime) return v;
-  if (v is String) return DateTime.tryParse(v);
-  return null;
+    return <String, dynamic>{
+      'grade': grade,
+      'date': safeDate,
+
+      // IMPORTANT:
+      // Firestore does NOT allow FieldValue.serverTimestamp() inside an array item.
+      // Since attempts is stored as a LIST on the assignment doc, we must store a real Timestamp.
+      'timestamp': timestamp != null ? Timestamp.fromDate(timestamp!) : Timestamp.now(),
+    };
+  }
 }
 
 // =====================
@@ -342,19 +368,20 @@ class Assignment {
     final subid = asString(data['subjectId'] ?? data['subject_id']);
 
     // Prefer resolved names from maps; fallback to stored names; fallback to ''
-    final resolvedStudentName = studentsById?[sid]?.name ??
-        asString(data['studentName'] ?? data['student_name'], fallback: '');
+    final resolvedStudentName =
+        studentsById?[sid]?.name ?? asString(data['studentName'] ?? data['student_name'], fallback: '');
 
-    final resolvedSubjectName = subjectsById?[subid]?.name ??
-        asString(data['subjectName'] ?? data['subject_name'], fallback: '');
+    final resolvedSubjectName =
+        subjectsById?[subid]?.name ?? asString(data['subjectName'] ?? data['subject_name'], fallback: '');
 
-    // Parse attempts list
+    // Parse attempts list (robust casting)
     final attemptsRaw = data['attempts'];
     final attemptsList = <AssignmentAttempt>[];
     if (attemptsRaw is List) {
       for (final a in attemptsRaw) {
-        if (a is Map<String, dynamic>) {
-          attemptsList.add(AssignmentAttempt.fromMap(a));
+        if (a is Map) {
+          final map = Map<String, dynamic>.from(a);
+          attemptsList.add(AssignmentAttempt.fromMap(map));
         }
       }
     }
@@ -374,24 +401,18 @@ class Assignment {
       completionDate: normalizeDueDate(data['completionDate'] ?? data['completion_date']),
       isCompleted: asBool(data['completed'] ?? data['isCompleted'] ?? data['is_completed']),
       grade: data['grade'] == null ? null : asInt(data['grade'], fallback: 0),
-
       courseConfigId: asString(data['courseConfigId'] ?? data['course_config_id'], fallback: ''),
       categoryKey: asString(data['categoryKey'] ?? data['category_key'], fallback: ''),
       orderInCourse: asInt(data['orderInCourse'] ?? data['order_in_course'], fallback: 0),
-
       pointsBase: pBase,
       pointsEarned: asInt(data['pointsEarned'] ?? data['points_earned'], fallback: 0),
       gradable: asBool(data['gradable'], fallback: true), // default to gradable
-
       pointsPossible: pBase, // legacy compatibility
       weight: asDouble(data['weight'], fallback: 1.0),
-
       attempts: attemptsList,
       bestGrade: data['bestGrade'] == null ? null : asInt(data['bestGrade'], fallback: 0),
-
       rewardTxnId: asString(data['rewardTxnId'] ?? data['reward_txn_id'], fallback: ''),
       rewardPointsApplied: asInt(data['rewardPointsApplied'] ?? data['reward_points_applied'], fallback: 0),
-
       studentName: resolvedStudentName,
       subjectName: resolvedSubjectName,
     );
@@ -406,11 +427,9 @@ class Assignment {
         'completionDate': completionDate,
         'completed': isCompleted,
         'grade': grade,
-
         'courseConfigId': courseConfigId,
         'categoryKey': categoryKey,
         'orderInCourse': orderInCourse,
-
         'pointsBase': pointsBase,
         'pointsEarned': pointsEarned,
         'gradable': gradable,
@@ -419,9 +438,9 @@ class Assignment {
         'pointsPossible': pointsBase,
         'weight': weight,
 
+        // NOTE: attempts is an array of maps; do NOT put FieldValue.serverTimestamp() inside these maps.
         'attempts': attempts.map((a) => a.toMap()).toList(),
         'bestGrade': bestGrade,
-
         'rewardTxnId': rewardTxnId,
         'rewardPointsApplied': rewardPointsApplied,
       };

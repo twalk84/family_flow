@@ -177,6 +177,13 @@ class FirestorePaths {
     String? familyId,
   ]) =>
       rewardClaimsCol(studentId, familyId).doc(claimId);
+  
+  // Attempts subcollection:
+  // /families/{familyId}/assignments/{assignmentId}/attempts/{attemptId}
+  static CollectionReference<Map<String, dynamic>> assignmentAttemptsCol(String assignmentId) {
+    return assignmentsCol().doc(assignmentId).collection('attempts');
+  }
+
 
   // ========================================
   // Course configs (global)

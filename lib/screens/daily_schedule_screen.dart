@@ -3,12 +3,15 @@
 // Improved transitions:
 // - Month / Week / Day are mutually exclusive panels
 // - Selecting Week or Day hides Month automatically
-// - Selecting Month hides Week and shows Month + Day list
+// - Selecting Month shows Month + Day list
 // - Smooth animated transitions
 //
-// Updated in this version:
-// - ✅ Student colors use Student.colorValue when set (matches dashboard/profile colors)
-// - ✅ Month cell overflow fix (adapts when cells are too short; hides dots if needed)
+// This fixed version:
+// - Removes accidentally-pasted Dashboard assignment browser code
+// - Adds missing _assignmentCard()
+// - Loads subjects so Assignment.fromDoc(...) matches Dashboard usage
+// - Uses AssignmentMutations for complete + incomplete (keeps points/streak correct)
+// - Shows "Completed: <completionDate>" when completionDate is present
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +19,7 @@ import 'package:flutter/material.dart';
 
 import '../firestore_paths.dart';
 import '../models.dart';
+import '../services/assignment_mutations.dart';
 
 enum ScheduleViewMode { day, week }
 
@@ -91,7 +95,10 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
     if (selected == t.subtract(const Duration(days: 1))) return 'Yesterday';
 
     final weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    final months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
     return '${weekdays[date.weekday - 1]}, ${months[date.month - 1]} ${date.day}';
   }
 
@@ -135,20 +142,19 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
   void _setDayMode() {
     setState(() {
       _viewMode = ScheduleViewMode.day;
-      _showMonth = false; // hide month panel
+      _showMonth = false;
     });
   }
 
   void _setWeekMode() {
     setState(() {
       _viewMode = ScheduleViewMode.week;
-      _showMonth = false; // hide month panel
+      _showMonth = false;
     });
   }
 
   void _toggleMonth() {
     setState(() {
-      // Month means: show month panel + day list (not week list)
       _viewMode = ScheduleViewMode.day;
       _showMonth = !_showMonth;
       _calendarMonth = DateTime(_selectedDate.year, _selectedDate.month, 1);
@@ -186,7 +192,10 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
     final count = summary?.assignmentCount ?? 0;
     final students = summary?.studentIds.length ?? 0;
 
-    if (count == 0) return _snack('$label: no assignments due');
+    if (count == 0) {
+      _snack('$label: no assignments due');
+      return;
+    }
 
     final sSuffix = students == 1 ? 'student' : 'students';
     final aSuffix = count == 1 ? 'assignment' : 'assignments';
@@ -221,26 +230,39 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
   List<Assignment> _overdueAssignments(List<Assignment> all) {
     final todayStr = _yyyyMmDd(DateTime.now());
     return all.where((a) {
+      if (_selectedStudentId != null && a.studentId != _selectedStudentId) return false;
       final done = _isCompleted(a);
       return !done && a.dueDate.isNotEmpty && a.dueDate.compareTo(todayStr) < 0;
     }).toList();
   }
 
-  // ---------- completion actions ----------
+  // ---------- completion actions (uses AssignmentMutations like Dashboard) ----------
 
   Future<void> _setCompleted(Assignment a, {required bool completed, int? grade}) async {
+    // Optimistic UI
     setState(() {
       _local[a.id] = _LocalCompletion(completed: completed, grade: grade ?? _grade(a));
     });
 
     try {
       if (completed) {
-        await widget.onComplete(a.id, grade);
-      } else {
-        await FirestorePaths.assignmentsCol().doc(a.id).set(
-          {'completed': false, 'updatedAt': FieldValue.serverTimestamp()},
-          SetOptions(merge: true),
+        // Match Dashboard behavior (points/streak logic lives here)
+        await AssignmentMutations.setCompleted(
+          a,
+          completed: true,
+          gradePercent: grade,
+          // If you want the selected day to count as the completion date:
+          completionDate: _yyyyMmDd(_selectedDate),
         );
+
+        // Keep the legacy callback for compatibility, but never let it crash the schedule.
+        try {
+          await widget.onComplete(a.id, grade);
+        } catch (_) {
+          // ignore callback failures (prevents dashboard "firstWhere" crashes if lists drift)
+        }
+      } else {
+        await AssignmentMutations.setCompleted(a, completed: false);
       }
     } catch (e) {
       if (!mounted) return;
@@ -504,79 +526,137 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
     );
   }
 
-  // ---------- list bodies ----------
+  // ---------- assignment card (missing in your pasted file) ----------
 
   Widget _assignmentCard(Assignment a) {
     final done = _isCompleted(a);
+    final color = _studentColor(a.studentId);
+
+    final completionDate = a.completionDate.trim();
     final grade = _grade(a);
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: done ? null : () => _showGradeDialog(a),
-          child: Ink(
-            decoration: BoxDecoration(
-              color: done ? Colors.green.withOpacity(0.10) : const Color(0xFF1F2937),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: done ? Colors.green.withOpacity(0.30) : Colors.white12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Row(
-                children: [
-                  Icon(done ? Icons.check_circle : Icons.circle_outlined, color: done ? Colors.green : Colors.grey),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          a.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            decoration: done ? TextDecoration.lineThrough : null,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${a.subjectName} • ${a.studentName}',
-                          style: const TextStyle(color: Colors.grey, fontSize: 12),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ],
-                    ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: done ? Colors.green.withOpacity(0.08) : const Color(0xFF1F2937),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: done ? Colors.green.withOpacity(0.25) : Colors.white12),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Student color dot
+          Container(
+            width: 10,
+            height: 10,
+            margin: const EdgeInsets.only(top: 6),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          const SizedBox(width: 10),
+
+          // Text content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  a.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    decoration: done ? TextDecoration.lineThrough : null,
+                    color: done ? Colors.white70 : Colors.white,
                   ),
-                  const SizedBox(width: 10),
-                  if (grade != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.green.withOpacity(0.20),
-                        borderRadius: BorderRadius.circular(12),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${a.studentName} • ${a.subjectName}',
+                  style: const TextStyle(color: Colors.white60, fontSize: 12),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: [
+                    _pill(
+                      icon: Icons.event,
+                      text: a.dueDate.isEmpty ? 'No due date' : a.dueDate,
+                    ),
+                    if (a.pointsBase > 0)
+                      _pill(
+                        icon: Icons.stars,
+                        text: '${a.pointsBase} pts',
+                        color: Colors.amber,
                       ),
-                      child: Text('$grade%', style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+                    _pill(
+                      icon: a.gradable ? Icons.grade : Icons.check_circle_outline,
+                      text: a.gradable ? 'Graded' : 'Pass/Fail',
                     ),
-                  const SizedBox(width: 6),
-                  IconButton(
-                    tooltip: done ? 'Undo completion' : 'Mark complete (no grade)',
-                    onPressed: () => _setCompleted(a, completed: !done, grade: grade),
-                    icon: Icon(done ? Icons.undo : Icons.check, color: done ? Colors.orange : Colors.green),
-                  ),
-                ],
-              ),
+                    if (done && completionDate.isNotEmpty)
+                      _pill(
+                        icon: Icons.check,
+                        text: 'Completed: $completionDate',
+                        color: Colors.greenAccent,
+                      ),
+                    if (done && grade != null)
+                      _pill(
+                        icon: Icons.grade,
+                        text: 'Grade: $grade%',
+                        color: (grade >= 90) ? Colors.greenAccent : Colors.orangeAccent,
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
-        ),
+
+          // Actions
+          const SizedBox(width: 10),
+          if (!done)
+            IconButton(
+              tooltip: 'Complete',
+              icon: const Icon(Icons.check_circle, color: Colors.green),
+              onPressed: () {
+                if (a.gradable) {
+                  _showGradeDialog(a);
+                } else {
+                  _setCompleted(a, completed: true, grade: null);
+                }
+              },
+            )
+          else
+            IconButton(
+              tooltip: 'Mark incomplete',
+              icon: const Icon(Icons.undo, color: Colors.orangeAccent),
+              onPressed: () => _setCompleted(a, completed: false),
+            ),
+        ],
       ),
     );
   }
+
+  Widget _pill({required IconData icon, required String text, Color? color}) {
+    final c = color ?? Colors.white70;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: c),
+          const SizedBox(width: 6),
+          Text(text, style: TextStyle(color: c, fontSize: 12)),
+        ],
+      ),
+    );
+  }
+
+  // ---------- list bodies ----------
 
   Widget _dayBody(List<Assignment> allAssignments) {
     final list = _assignmentsForDate(allAssignments, _selectedDate);
@@ -730,12 +810,19 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
     );
   }
 
-  // ---------- build ----------
+  // ---------- mapping ----------
 
-  List<Assignment> _mapDocsToAssignments(QuerySnapshot<Map<String, dynamic>> snap) {
-    final studentsById = {for (final s in widget.students) s.id: s};
-    return snap.docs.map((d) => Assignment.fromDoc(d, studentsById: studentsById)).toList();
+  List<Assignment> _mapDocsToAssignments(
+    QuerySnapshot<Map<String, dynamic>> snap, {
+    required Map<String, Student> studentsById,
+    required Map<String, Subject> subjectsById,
+  }) {
+    return snap.docs
+        .map((d) => Assignment.fromDoc(d, studentsById: studentsById, subjectsById: subjectsById))
+        .toList();
   }
+
+  // ---------- build ----------
 
   @override
   Widget build(BuildContext context) {
@@ -787,19 +874,46 @@ class _DailyScheduleScreenState extends State<DailyScheduleScreen> {
           if (widget.useLiveFirestore) {
             if (user == null) return const Center(child: Text('Sign in required.'));
 
+            final studentsById = {for (final s in widget.students) s.id: s};
+
             return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirestorePaths.assignmentsCol().snapshots(),
-              builder: (context, snap) {
-                if (snap.connectionState == ConnectionState.waiting) {
+              stream: FirestorePaths.subjectsCol().snapshots(),
+              builder: (context, subjectsSnap) {
+                if (subjectsSnap.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (snap.hasError) {
-                  return Center(child: Text('Error: ${snap.error}'));
+                if (subjectsSnap.hasError) {
+                  return Center(child: Text('Error: ${subjectsSnap.error}'));
                 }
-                final docs = snap.data;
-                if (docs == null) return const Center(child: Text('No data.'));
-                final all = _mapDocsToAssignments(docs);
-                return buildWithAssignments(all);
+
+                final subjectsDocs = subjectsSnap.data;
+                final subjects = (subjectsDocs?.docs ?? const [])
+                    .map((d) => Subject.fromDoc(d))
+                    .toList();
+                final subjectsById = {for (final s in subjects) s.id: s};
+
+                return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: FirestorePaths.assignmentsCol().orderBy('dueDate').snapshots(),
+                  builder: (context, assignmentsSnap) {
+                    if (assignmentsSnap.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (assignmentsSnap.hasError) {
+                      return Center(child: Text('Error: ${assignmentsSnap.error}'));
+                    }
+
+                    final docs = assignmentsSnap.data;
+                    if (docs == null) return const Center(child: Text('No data.'));
+
+                    final all = _mapDocsToAssignments(
+                      docs,
+                      studentsById: studentsById,
+                      subjectsById: subjectsById,
+                    );
+
+                    return buildWithAssignments(all);
+                  },
+                );
               },
             );
           }
@@ -911,8 +1025,7 @@ class _MonthDotsCalendar extends StatelessWidget {
     );
   }
 
-  // ✅ OVERFLOW FIX: adapts to tight height constraints (e.g., when cells get squished).
-  // If the cell is too short, we hide dots instead of overflowing.
+  // Overflow fix: if the cell is too short, hide dots instead of overflowing.
   Widget _buildCell(int offset, int days, int row, int col) {
     final cellIndex = row * 7 + col;
     final dayNum = cellIndex - offset + 1;
