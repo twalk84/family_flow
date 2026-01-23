@@ -15,6 +15,7 @@ import '../firestore_paths.dart';
 import '../models.dart';
 import '../widgets/mood_picker.dart';
 import '../services/reward_service.dart';
+import '../services/course_config_service.dart';
 import 'rewards_page.dart';
 
 class StudentProfileScreen extends StatefulWidget {
@@ -183,6 +184,101 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       final completed = entry.value.where((a) => a.isCompleted).length;
       result[entry.key] = {'completed': completed, 'total': entry.value.length};
     }
+    return result;
+  }
+
+  /// Calculate course-based progress (lessons completed / total lessons in course)
+  /// Groups assignments by courseConfigId and uses curriculum JSON to get total lessons
+  Future<Map<String, Map<String, dynamic>>> calculateCourseProgress() async {
+    final result = <String, Map<String, dynamic>>{};
+    final configService = CourseConfigService.instance;
+    
+    // Group assignments by courseConfigId
+    final assignmentsByCourse = <String, List<Assignment>>{};
+    for (final a in widget.assignments) {
+      if (a.courseConfigId.trim().isEmpty) continue;
+      assignmentsByCourse.putIfAbsent(a.courseConfigId, () => []);
+      assignmentsByCourse[a.courseConfigId]!.add(a);
+    }
+    
+    // For each course, fetch config and calculate progress
+    for (final entry in assignmentsByCourse.entries) {
+      final courseConfigId = entry.key;
+      final assignments = entry.value;
+      
+      try {
+        // Fetch the curriculum config
+        final config = await configService.getConfig(courseConfigId);
+        if (config == null) {
+          // Fallback to assignment count if config not found
+          final completed = assignments.where((a) => a.isCompleted).length;
+          result[courseConfigId] = {
+            'completed': completed,
+            'total': assignments.length,
+            'percent': assignments.isNotEmpty ? ((completed / assignments.length) * 100).toStringAsFixed(1) : '0.0',
+            'courseName': courseConfigId,
+          };
+          continue;
+        }
+        
+        // Count total lessons from config
+        // The structure has "units" array at root, and each unit has "lessons" array
+        int totalLessons = 0;
+        
+        // Try the nested units structure first
+        final units = config['units'] as List? ?? [];
+        for (final unit in units) {
+          if (unit is Map<String, dynamic>) {
+            final lessons = unit['lessons'] as List? ?? [];
+            totalLessons += lessons.length;
+          }
+        }
+        
+        // If no lessons found in units, try looking for a direct "lessons" key
+        if (totalLessons == 0) {
+          final lessons = config['lessons'] as List? ?? [];
+          totalLessons = lessons.length;
+        }
+        
+        // If still no lessons, use assignment count as fallback
+        if (totalLessons == 0) {
+          totalLessons = assignments.length;
+        }
+        
+        // Count completed lessons
+        // First try counting by orderInCourse (if assignments have this set)
+        final completedOrders = assignments
+            .where((a) => a.isCompleted && a.orderInCourse > 0)
+            .map((a) => a.orderInCourse)
+            .toSet();
+        
+        int completed = completedOrders.length;
+        
+        // If no orderInCourse values were used, fall back to counting completed assignments
+        if (completed == 0 && assignments.any((a) => a.isCompleted)) {
+          completed = assignments.where((a) => a.isCompleted).length;
+        }
+        
+        final percent = (completed / totalLessons * 100).toStringAsFixed(1);
+        
+        result[courseConfigId] = {
+          'completed': completed,
+          'total': totalLessons,
+          'percent': percent,
+          'courseName': (config['title'] as String?) ?? courseConfigId,
+        };
+      } catch (e) {
+        // If anything fails, fall back to assignment count
+        final completed = assignments.where((a) => a.isCompleted).length;
+        result[courseConfigId] = {
+          'completed': completed,
+          'total': assignments.length,
+          'percent': assignments.isNotEmpty ? ((completed / assignments.length) * 100).toStringAsFixed(1) : '0.0',
+          'courseName': courseConfigId,
+        };
+      }
+    }
+    
     return result;
   }
 
@@ -1190,6 +1286,119 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       }).toList(),
                     ],
                   ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // ========== COURSE PROGRESS (LESSON-BASED) ==========
+                FutureBuilder<Map<String, Map<String, dynamic>>>(
+                  future: calculateCourseProgress(),
+                  builder: (context, snapshot) {
+                    // Always show something for debugging
+                    final courseProgress = snapshot.data ?? {};
+                    final isLoading = snapshot.connectionState == ConnectionState.waiting;
+                    
+                    if (isLoading) {
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1F2937),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.white12),
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    
+                    // Show course progress section if we have data
+                    if (courseProgress.isNotEmpty) {
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1F2937),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.amber.withOpacity(0.3)),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(Icons.school, size: 18, color: Colors.amber),
+                                SizedBox(width: 8),
+                                Text('Course Progress (Lessons)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            ...courseProgress.entries.map((entry) {
+                              final courseId = entry.key;
+                              final data = entry.value;
+                              final completed = data['completed'] as int? ?? 0;
+                              final total = data['total'] as int? ?? 0;
+                              final percent = double.tryParse(data['percent'] as String? ?? '0') ?? 0.0;
+                              final courseName = (data['courseName'] as String?) ?? courseId;
+                              
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            courseName,
+                                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Text(
+                                          '$completed/$total lessons',
+                                          style: const TextStyle(fontSize: 12, color: Colors.white60),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(4),
+                                            child: LinearProgressIndicator(
+                                              value: total > 0 ? completed / total : 0,
+                                              minHeight: 8,
+                                              backgroundColor: Colors.white10,
+                                              valueColor: AlwaysStoppedAnimation(
+                                                percent >= 80 ? Colors.green : Colors.orange,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '${percent.toStringAsFixed(1)}%',
+                                          style: const TextStyle(fontSize: 12, color: Colors.amber, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      );
+                    }
+                    
+                    // If no course progress data, don't show section
+                    return const SizedBox.shrink();
+                  },
                 ),
 
                 const SizedBox(height: 16),
