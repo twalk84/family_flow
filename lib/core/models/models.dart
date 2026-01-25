@@ -166,6 +166,7 @@ class Student {
   final int currentStreak; // consecutive days with at least 1 completion
   final int longestStreak; // all-time best streak
   final String lastCompletionDate; // "YYYY-MM-DD" of last completed assignment
+  final String profilePictureUrl; // URL to profile picture in Firebase Storage
 
   const Student({
     required this.id,
@@ -179,6 +180,7 @@ class Student {
     required this.currentStreak,
     required this.longestStreak,
     required this.lastCompletionDate,
+    required this.profilePictureUrl,
   });
 
   factory Student.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -202,6 +204,7 @@ class Student {
       currentStreak: asInt(data['currentStreak'] ?? data['current_streak'], fallback: 0),
       longestStreak: asInt(data['longestStreak'] ?? data['longest_streak'], fallback: 0),
       lastCompletionDate: normalizeDueDate(data['lastCompletionDate'] ?? data['last_completion_date']),
+      profilePictureUrl: asString(data['profilePictureUrl'] ?? data['profile_picture_url'], fallback: ''),
     );
   }
 
@@ -217,6 +220,7 @@ class Student {
         'currentStreak': currentStreak,
         'longestStreak': longestStreak,
         'lastCompletionDate': lastCompletionDate,
+        'profilePictureUrl': profilePictureUrl,
       };
 
   /// Calculate streak bonus percentage based on current streak
@@ -241,6 +245,7 @@ class Student {
     int? currentStreak,
     int? longestStreak,
     String? lastCompletionDate,
+    String? profilePictureUrl,
   }) =>
       Student(
         id: id ?? this.id,
@@ -254,6 +259,7 @@ class Student {
         currentStreak: currentStreak ?? this.currentStreak,
         longestStreak: longestStreak ?? this.longestStreak,
         lastCompletionDate: lastCompletionDate ?? this.lastCompletionDate,
+        profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
       );
 }
 
@@ -494,3 +500,9 @@ class Assignment {
         subjectName: subjectName ?? this.subjectName,
       );
 }
+
+
+
+
+
+

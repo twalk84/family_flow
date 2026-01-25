@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../firestore_paths.dart';
 import '../models.dart';
 import '../core/models/reward_models.dart';
+import '../core/models/group_reward_model.dart';
 import '../services/reward_service.dart';
 
 class RewardAdminScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -253,6 +254,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
               tabs: const [
                 Tab(text: 'Rewards'),
                 Tab(text: 'Pending Claims'),
+                Tab(text: 'Group Rewards'),
               ],
             ),
             actions: [
@@ -272,6 +274,7 @@ class _RewardAdminScreenState extends State<RewardAdminScreen>
                 alpha: _alpha,
               ),
               const _PendingClaimsTab(),
+              _GroupRewardsAdminTab(students: students),
             ],
           ),
         );
@@ -947,6 +950,628 @@ class _PendingClaimCard extends StatelessWidget {
             child: const Text('Fulfill'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ========================================
+// Group Rewards Admin Tab
+// ========================================
+
+class _GroupRewardsAdminTab extends StatefulWidget {
+  final List<Student> students;
+
+  const _GroupRewardsAdminTab({required this.students});
+
+  @override
+  State<_GroupRewardsAdminTab> createState() => _GroupRewardsAdminTabState();
+}
+
+class _GroupRewardsAdminTabState extends State<_GroupRewardsAdminTab> {
+  late RewardService _rewardService;
+
+  @override
+  void initState() {
+    super.initState();
+    _rewardService = RewardService.instance;
+  }
+
+  void _showCreateGroupRewardDialog() {
+    final nameController = TextEditingController();
+    final descController = TextEditingController();
+    final pointsController = TextEditingController();
+    final Set<String> selectedStudentIds = <String>{};
+    bool restrictToStudents = false;
+    DateTime? expiresAt;
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          backgroundColor: const Color(0xFF1F2937),
+          title: const Text('Create Group Reward'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Reward Name',
+                    hintText: 'e.g., Movie Night Fund',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: descController,
+                  decoration: const InputDecoration(
+                    labelText: 'Description',
+                    hintText: 'What is this reward for?',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: pointsController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Points Needed',
+                    hintText: 'e.g., 1000',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // Expiration date
+                Row(
+                  children: [
+                    Text(
+                      expiresAt == null
+                          ? 'No expiration'
+                          : 'Expires: ${expiresAt!.toString().split(' ')[0]}',
+                      style: const TextStyle(fontSize: 14),
+                    ),
+                    const SizedBox(width: 8),
+                    TextButton(
+                      onPressed: () async {
+                        final picked = await showDatePicker(
+                          context: context,
+                          initialDate:
+                              DateTime.now().add(const Duration(days: 30)),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.now().add(const Duration(days: 365)),
+                        );
+                        if (picked != null) {
+                          setDialogState(() => expiresAt = picked);
+                        }
+                      },
+                      child: const Text('Set Date'),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                // Restrict to students checkbox
+                CheckboxListTile(
+                  value: restrictToStudents,
+                  onChanged: (value) {
+                    setDialogState(() => restrictToStudents = value ?? false);
+                  },
+                  title: const Text('Restrict to specific students'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+                if (restrictToStudents) ...[
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Select students:',
+                            style: TextStyle(fontSize: 12)),
+                        const SizedBox(height: 8),
+                        ...widget.students.map((student) {
+                          final isSelected =
+                              selectedStudentIds.contains(student.id);
+                          return CheckboxListTile(
+                            value: isSelected,
+                            onChanged: (value) {
+                              setDialogState(() {
+                                if (value ?? false) {
+                                  selectedStudentIds.add(student.id);
+                                } else {
+                                  selectedStudentIds.remove(student.id);
+                                }
+                              });
+                            },
+                            title: Text(student.name,
+                                style: const TextStyle(fontSize: 13)),
+                            contentPadding: EdgeInsets.zero,
+                          );
+                        }).toList(),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: () async {
+                final name = nameController.text.trim();
+                final desc = descController.text.trim();
+                final pointsStr = pointsController.text.trim();
+
+                if (name.isEmpty || desc.isEmpty || pointsStr.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content:
+                            Text('Please fill in all required fields')),
+                  );
+                  return;
+                }
+
+                final points = int.tryParse(pointsStr);
+                if (points == null || points <= 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Invalid points value')),
+                  );
+                  return;
+                }
+
+                try {
+                  await _rewardService.createGroupReward(
+                    name: name,
+                    description: desc,
+                    pointsNeeded: points,
+                    allowedStudentIds: restrictToStudents
+                        ? selectedStudentIds.toList()
+                        : const [],
+                    expiresAt: expiresAt,
+                  );
+
+                  if (mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content: Text('Group reward created successfully')),
+                    );
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error: $e')),
+                    );
+                  }
+                }
+              },
+              child: const Text('Create'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showGroupRewardDetails(GroupReward groupReward) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: Text(groupReward.name),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Description: ${groupReward.description}'),
+              const SizedBox(height: 12),
+              Text(
+                  'Progress: ${groupReward.pointsContributed} / ${groupReward.pointsNeeded} points'),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: (groupReward.pointsContributed /
+                          groupReward.pointsNeeded)
+                      .clamp(0.0, 1.0),
+                  minHeight: 8,
+                  backgroundColor: Colors.grey[700],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    groupReward.isCompleted ? Colors.green : Colors.blue,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text('Contributors: ${groupReward.contributorCount}'),
+              const SizedBox(height: 8),
+              if (groupReward.expiresAt != null)
+                Text(
+                  'Expires: ${groupReward.expiresAt!.toString().split(' ')[0]}',
+                  style: const TextStyle(color: Colors.orange),
+                ),
+              if (groupReward.isExpired)
+                const Text('EXPIRED',
+                    style: TextStyle(color: Colors.red, fontSize: 14)),
+              const SizedBox(height: 16),
+              const Text('Student Contributions:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              ...(groupReward.studentContributions.entries.toList()
+                    ..sort((a, b) => b.value.compareTo(a.value)))
+                  .map((entry) {
+                    final studentId = entry.key;
+                    String studentName = 'Unknown';
+                    try {
+                      final student = widget.students.firstWhere((s) => s.id == studentId);
+                      studentName = student.name;
+                    } catch (_) {}
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(studentName),
+                          Text('${entry.value} pts',
+                              style: const TextStyle(color: Colors.cyan)),
+                        ],
+                      ),
+                    );
+                  })
+                  .toList(),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Close'),
+          ),
+          TextButton(
+            onPressed: () => _showEditGroupContributionsDialog(groupReward),
+            child: const Text('Edit Contributions'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEditGroupContributionsDialog(GroupReward groupReward) {
+    // Initialize controllers with current values
+    final controllers = <String, TextEditingController>{};
+    for (var student in widget.students) {
+      final currentContribution = groupReward.studentContributions[student.id] ?? 0;
+      controllers[student.id] = TextEditingController(text: currentContribution.toString());
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Edit Group Contributions'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Student Contributions:'),
+              const SizedBox(height: 8),
+              ...widget.students.map((student) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(student.name),
+                      SizedBox(
+                        width: 80,
+                        child: TextField(
+                          controller: controllers[student.id],
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final updatedContributions = <String, int>{};
+              controllers.forEach((studentId, controller) {
+                updatedContributions[studentId] = int.tryParse(controller.text) ?? 0;
+              });
+
+              try {
+                await RewardService.instance.updateGroupRewardContributions(
+                  groupRewardId: groupReward.id,
+                  studentContributions: updatedContributions,
+                );
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Group contributions updated')),
+                  );
+                }
+              } catch (e) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $e')),
+                  );
+                }
+              }
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _deleteGroupReward(String groupRewardId) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1F2937),
+        title: const Text('Delete Group Reward?'),
+        content: const Text(
+            'This will permanently delete this group reward and all contributions.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () async {
+              try {
+                await FirebaseFirestore.instance
+                    .doc(FirestorePaths.groupRewardDoc(groupRewardId).path)
+                    .delete();
+
+                if (mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Group reward deleted')),
+                  );
+                }
+              } catch (e) {
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $e')),
+                  );
+                }
+              }
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showCreateGroupRewardDialog,
+        tooltip: 'Create Group Reward',
+        child: const Icon(Icons.add),
+      ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _rewardService.getActiveGroupRewardsStream(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final groupRewards = (snapshot.data?.docs ?? [])
+              .map((doc) => GroupReward.fromDoc(doc as DocumentSnapshot<Map<String, dynamic>>))
+              .toList()
+            ..sort((a, b) => (b.createdAt ?? DateTime.now()).compareTo(a.createdAt ?? DateTime.now()));
+
+          if (groupRewards.isEmpty) {
+            return const Center(
+              child: Text('No group rewards yet. Create one to get started!'),
+            );
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(12),
+            itemCount: groupRewards.length,
+            itemBuilder: (context, index) {
+              final reward = groupRewards[index];
+              return Card(
+                color: const Color(0xFF2D3748),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  reward.name,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  reward.description,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (reward.isCompleted)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.green.withAlpha(100),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: const Text(
+                                'REDEEMED',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          if (reward.isExpired && !reward.isCompleted)
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red.withAlpha(100),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: const Text(
+                                'EXPIRED',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${reward.pointsContributed} / ${reward.pointsNeeded} pts',
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            '${reward.contributorCount} contributors',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.cyan,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: (reward.pointsContributed / reward.pointsNeeded)
+                              .clamp(0.0, 1.0),
+                          minHeight: 6,
+                          backgroundColor: Colors.grey[700],
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            reward.isCompleted
+                                ? Colors.green
+                                : Colors.blue,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () =>
+                                _showGroupRewardDetails(reward),
+                            child: const Text('Details'),
+                          ),
+                          const SizedBox(width: 8),
+                          if (!reward.isCompleted)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                              ),
+                              onPressed: () async {
+                                try {
+                                  await _rewardService
+                                      .redeemGroupReward(reward.id);
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            'Group reward marked as redeemed'),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  if (mounted) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(
+                                      SnackBar(content: Text('Error: $e')),
+                                    );
+                                  }
+                                }
+                              },
+                              child: const Text('Redeem'),
+                            ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Colors.red, size: 18),
+                            onPressed: () =>
+                                _deleteGroupReward(reward.id),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

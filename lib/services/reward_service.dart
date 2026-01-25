@@ -527,6 +527,192 @@ class RewardService {
       );
     });
   }
+
+  // ========================================
+  // Group Rewards (Family-Level Collaborative Goals)
+  // ========================================
+
+  /// Create a new group reward that all students can contribute to
+  Future<dynamic> createGroupReward({
+    required String name,
+    required int pointsNeeded,
+    String description = '',
+    List<String> allowedStudentIds = const [],
+    DateTime? expiresAt,
+  }) async {
+    final docRef = FirestorePaths.groupRewardsCol().doc();
+
+    final data = {
+      'id': docRef.id,
+      'name': name,
+      'nameLower': name.toLowerCase(),
+      'pointsNeeded': pointsNeeded,
+      'pointsContributed': 0,
+      'description': description,
+      'isActive': true,
+      'isRedeemed': false,
+      'allowedStudentIds': allowedStudentIds,
+      'studentContributions': <String, int>{},
+      'expiresAt': expiresAt,
+      'createdAt': FieldValue.serverTimestamp(),
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
+
+    await docRef.set(data);
+    return data;
+  }
+
+  /// Update an existing group reward
+  Future<void> updateGroupReward({
+    required String groupRewardId,
+    String? name,
+    int? pointsNeeded,
+    String? description,
+    bool? isActive,
+    List<String>? allowedStudentIds,
+    DateTime? expiresAt,
+  }) async {
+    final updates = <String, dynamic>{
+      'updatedAt': FieldValue.serverTimestamp(),
+    };
+
+    if (name != null) {
+      updates['name'] = name;
+      updates['nameLower'] = name.toLowerCase();
+    }
+    if (pointsNeeded != null) updates['pointsNeeded'] = pointsNeeded;
+    if (description != null) updates['description'] = description;
+    if (isActive != null) updates['isActive'] = isActive;
+    if (allowedStudentIds != null) updates['allowedStudentIds'] = allowedStudentIds;
+    if (expiresAt != null) updates['expiresAt'] = expiresAt;
+
+    await FirestorePaths.groupRewardDoc(groupRewardId).update(updates);
+  }
+
+  /// Mark a group reward as redeemed
+  Future<void> redeemGroupReward(String groupRewardId) async {
+    await FirestorePaths.groupRewardDoc(groupRewardId).update({
+      'isRedeemed': true,
+      'isActive': false,
+      'redeemedAt': FieldValue.serverTimestamp(),
+    });
+  }
+
+  /// Get a single group reward
+  Future<dynamic> getGroupReward(String groupRewardId) async {
+    final snap = await FirestorePaths.groupRewardDoc(groupRewardId).get();
+    return snap.data();
+  }
+
+  /// Get all active group rewards
+  Future<List<Map<String, dynamic>>> getActiveGroupRewards() async {
+    final snap = await FirestorePaths.groupRewardsCol().get();
+    final rewards = snap.docs.map((d) => d.data()).toList();
+    final active = rewards
+        .where((r) => asBool(r['isActive'], fallback: true) && 
+                      !asBool(r['isRedeemed'], fallback: false))
+        .toList();
+    return active;
+  }
+
+  /// Stream active group rewards in real-time (for admin dashboard)
+  Stream<QuerySnapshot> getActiveGroupRewardsStream() {
+    return FirestorePaths.groupRewardsCol().snapshots();
+  }
+
+  /// Stream active group rewards for a specific student
+  Stream<List<Map<String, dynamic>>> streamActiveGroupRewardsForStudent(String studentId) {
+    return FirestorePaths.groupRewardsCol().snapshots().map((snap) {
+      final rewards = snap.docs.map((d) => d.data()).toList();
+      final filtered = rewards.where((r) {
+        final isActive = asBool(r['isActive'], fallback: true);
+        final isRedeemed = asBool(r['isRedeemed'], fallback: false);
+        final allowed = r['allowedStudentIds'] as List? ?? [];
+        final canAccess = allowed.isEmpty || allowed.contains(studentId);
+        return isActive && !isRedeemed && canAccess;
+      }).toList();
+      return filtered;
+    });
+  }
+
+  /// Contribute points to a group reward
+  Future<void> contributeToGroupReward({
+    required String groupRewardId,
+    required String studentId,
+    required int points,
+  }) async {
+    if (points <= 0) {
+      throw ArgumentError('Points must be greater than 0');
+    }
+
+    // Get current group reward
+    final current = await getGroupReward(groupRewardId);
+    if (current == null) {
+      throw Exception('Group reward not found');
+    }
+
+    // Verify student can contribute
+    final allowed = current['allowedStudentIds'] as List? ?? [];
+    if (allowed.isNotEmpty && !allowed.contains(studentId)) {
+      throw Exception('Student is not allowed to contribute to this reward');
+    }
+
+    if (!asBool(current['isActive'], fallback: false) || 
+        asBool(current['isRedeemed'], fallback: false)) {
+      throw Exception('This group reward is no longer active');
+    }
+
+    // Get student's wallet balance
+    final balance = await getWalletBalance(studentId);
+    if (balance < points) {
+      throw InsufficientBalanceException(required: points, available: balance);
+    }
+
+    // Calculate new totals
+    final currentContributed = asInt(current['pointsContributed'], fallback: 0);
+    final pointsNeeded = asInt(current['pointsNeeded'], fallback: 0);
+    final newContributed = currentContributed + points;
+    final newClamped = newContributed.clamp(0, pointsNeeded);
+    
+    // Update student contributions
+    final contributions = Map<String, dynamic>.from(current['studentContributions'] ?? {});
+    final existingContribution = asInt(contributions[studentId], fallback: 0);
+    contributions[studentId] = existingContribution + points;
+
+    // Update group reward
+    await FirestorePaths.groupRewardDoc(groupRewardId).update({
+      'pointsContributed': newClamped,
+      'studentContributions': contributions,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+
+    // Deduct points from student wallet
+    await adjustPoints(
+      studentId: studentId,
+      points: -points,
+      reason: 'Contributed to group reward: ${current['name'] ?? 'Group Goal'}',
+    );
+  }
+
+  /// Get a student's total contribution to a specific group reward
+  Future<int> getStudentGroupContribution(String groupRewardId, String studentId) async {
+    final reward = await getGroupReward(groupRewardId);
+    if (reward == null) return 0;
+
+    final contributions = reward['studentContributions'] as Map? ?? {};
+    return 0;
+  }
+
+  /// Updates student contributions for a group reward
+  Future<void> updateGroupRewardContributions({
+    required String groupRewardId,
+    required Map<String, int> studentContributions,
+  }) async {
+    await FirestorePaths.groupRewardDoc(groupRewardId).update({
+      'studentContributions': studentContributions,
+      'updatedAt': FieldValue.serverTimestamp(),
+    });
+  }
 }
 
 // ========================================

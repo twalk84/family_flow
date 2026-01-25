@@ -1,4 +1,4 @@
-// FILE: lib/core/models/reward_models.dart
+﻿// FILE: lib/core/models/reward_models.dart
 //
 // Models for the reward system: definitions, claims, and tiers.
 // Supports student-specific reward assignments.
@@ -83,9 +83,9 @@ enum ClaimStatus {
   String get emoji {
     switch (this) {
       case ClaimStatus.pending:
-        return '⏳';
+        return 'â³';
       case ClaimStatus.fulfilled:
-        return '✓';
+        return 'âœ“';
     }
   }
 
@@ -223,7 +223,7 @@ class Reward {
 // RewardClaim (Student Redemption)
 // =====================
 /// A record of a student claiming a reward.
-/// Status flows: pending → fulfilled
+/// Status flows: pending â†’ fulfilled
 class RewardClaim {
   final String id;
   final String studentId;

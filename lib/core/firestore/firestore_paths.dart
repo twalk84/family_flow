@@ -99,6 +99,18 @@ class FirestorePaths {
       rewardsCol(familyId).doc(rewardId);
 
   // ========================================
+  // Group Rewards (family-level)
+  // ========================================
+
+  /// /families/{familyId}/groupRewards
+  static CollectionReference<Map<String, dynamic>> groupRewardsCol([String? familyId]) =>
+      familyDoc(familyId).collection('groupRewards');
+
+  /// /families/{familyId}/groupRewards/{groupRewardId}
+  static DocumentReference<Map<String, dynamic>> groupRewardDoc(String groupRewardId, [String? familyId]) =>
+      groupRewardsCol(familyId).doc(groupRewardId);
+
+  // ========================================
   // Student subcollections
   // ========================================
 

@@ -21,6 +21,7 @@ dependencies:
   cloud_firestore: ^6.1.1
   cloud_functions: ^6.0.5
   firebase_storage: ^13.0.6
+  image_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -31,4 +32,3 @@ flutter:
   uses-material-design: true
   assets:
     - assets/courseConfigs/
-

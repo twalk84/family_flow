@@ -1042,15 +1042,37 @@ class _MonthDotsCalendar extends StatelessWidget {
     final today = DateTime.now();
     final isToday = _sameDay(date, today);
 
-    const maxDots = 4;
-    final shown = dots.length > maxDots ? dots.take(maxDots).toList() : dots;
-    final extra = dots.length - shown.length;
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final canShowDots = constraints.maxHeight >= 36 && shown.isNotEmpty;
+          final double avail = constraints.maxWidth - 12; // Account for Container padding
+          const double dotW = 9.0;
+          const double textW = 14.0;
+
+          List<Color> shown = [];
+          int extra = 0;
+
+          // Limit max dots to 3 by default, but reduce if width is constrained
+          const int limit = 3;
+
+          if (dots.isNotEmpty) {
+            final double needed = dots.length * dotW;
+            if (needed <= avail && dots.length <= limit) {
+              shown = dots;
+              extra = 0;
+            } else {
+              final double spaceForDots = avail - textW;
+              int fit = (spaceForDots / dotW).floor();
+              if (fit > limit) fit = limit;
+              if (fit < 0) fit = 0;
+
+              shown = dots.take(fit).toList();
+              extra = dots.length - fit;
+            }
+          }
+
+          final canShowDots = constraints.maxHeight >= 36 && dots.isNotEmpty;
 
           return InkWell(
             borderRadius: BorderRadius.circular(10),
@@ -1086,21 +1108,29 @@ class _MonthDotsCalendar extends StatelessWidget {
                     ),
                   ),
                   if (canShowDots)
-                    Row(
-                      children: [
-                        for (final color in shown)
-                          Container(
-                            width: 6,
-                            height: 6,
-                            margin: const EdgeInsets.only(right: 4),
-                            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-                          ),
-                        if (extra > 0)
-                          Text(
-                            '+$extra',
-                            style: const TextStyle(color: Colors.white60, fontSize: 10),
-                          ),
-                      ],
+                    SizedBox(
+                      height: 16,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            for (final color in shown)
+                              Container(
+                                width: 6,
+                                height: 6,
+                                margin: const EdgeInsets.only(right: 3),
+                                decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                              ),
+                            if (extra > 0)
+                              Text(
+                                '+$extra',
+                                style: const TextStyle(color: Colors.white60, fontSize: 9),
+                              ),
+                          ],
+                        ),
+                      ),
                     ),
                 ],
               ),

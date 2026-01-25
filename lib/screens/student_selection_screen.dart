@@ -376,6 +376,7 @@ class _StudentSelectionScreenState extends State<StudentSelectionScreen> {
                         color: color,
                         icon: Icons.person,
                         hasPin: hasPin,
+                        profilePictureUrl: student.profilePictureUrl,
                         subtitle: total > 0
                             ? '$completed/$total done'
                             : 'No assignments',
@@ -404,6 +405,7 @@ class _ProfileCard extends StatelessWidget {
   final bool hasPin;
   final String? subtitle;
   final VoidCallback onTap;
+  final String? profilePictureUrl;
 
   const _ProfileCard({
     required this.label,
@@ -412,6 +414,7 @@ class _ProfileCard extends StatelessWidget {
     required this.hasPin,
     this.subtitle,
     required this.onTap,
+    this.profilePictureUrl,
   });
 
   @override
@@ -438,7 +441,16 @@ class _ProfileCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: color, width: 2),
                 ),
-                child: Icon(icon, size: 32, color: color),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(32),
+                  child: profilePictureUrl != null && profilePictureUrl!.isNotEmpty
+                      ? Image.network(
+                          profilePictureUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => Icon(icon, size: 32, color: color),
+                        )
+                      : Icon(icon, size: 32, color: color),
+                ),
               ),
               const SizedBox(height: 12),
               Padding(

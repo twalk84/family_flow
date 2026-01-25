@@ -614,6 +614,10 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     await _showSmoothSheet<void>(
       title: '$configName - ${student.name}',
       builder: (sheetContext) {
+        // Batch selection state
+        final selectedIndices = <int>{};
+        bool batchMode = false;
+        
         return StatefulBuilder(
           builder: (context, setSheetState) {
             final completed = existingAssignments.where((a) => a.courseConfigId == configId && a.isCompleted).length;
@@ -625,53 +629,148 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
               children: [
                 Text('Progress: $completed completed / $assignedCount assigned / $totalCount total'),
                 const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.add),
-                  label: const Text('Assign Next'),
-                  onPressed: unassigned.isEmpty
-                      ? null
-                      : () async {
-                          final dueDate = await _pickDueDate();
-                          if (dueDate == null) return;
-                          
-                          await _assignLesson(
-                            student: student,
-                            configId: configId,
-                            lessonData: unassigned.first,
-                            categories: categories,
-                            linkedSubject: linkedSubject,
-                            dueDate: dueDate,
-                          );
-                          Navigator.pop(sheetContext);
+                // Batch selection state
+                if (!batchMode) ...[
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.add),
+                    label: const Text('Assign Next'),
+                    onPressed: unassigned.isEmpty
+                        ? null
+                        : () async {
+                            final dueDate = await _pickDueDate();
+                            if (dueDate == null) return;
+
+                            await _assignLesson(
+                              student: student,
+                              configId: configId,
+                              lessonData: unassigned.first,
+                              categories: categories,
+                              linkedSubject: linkedSubject,
+                              dueDate: dueDate,
+                            );
+                            Navigator.pop(sheetContext);
+                          },
+                  ),
+                ] else ...[
+                  if (selectedIndices.isNotEmpty) ...[
+                    Row(
+                      children: [
+                        Text('${selectedIndices.length} selected'),
+                        const Spacer(),
+                        ElevatedButton.icon(
+                          icon: const Icon(Icons.clear),
+                          label: const Text('Clear'),
+                          onPressed: () => setSheetState(() => selectedIndices.clear()),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton.icon(
+                          icon: const Icon(Icons.check),
+                          label: const Text('Assign All'),
+                          onPressed: () async {
+                            final dueDate = await _pickDueDate();
+                            if (dueDate == null) return;
+
+                            for (final idx in selectedIndices) {
+                              if (idx < unassigned.length) {
+                                await _assignLesson(
+                                  student: student,
+                                  configId: configId,
+                                  lessonData: unassigned[idx],
+                                  categories: categories,
+                                  linkedSubject: linkedSubject,
+                                  dueDate: dueDate,
+                                );
+                              }
+                            }
+                            if (mounted) Navigator.pop(sheetContext);
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                  ] else ...[
+                    const Text('Select lessons to assign in batch', style: TextStyle(color: Colors.white70)),
+                    const SizedBox(height: 12),
+                  ],
+                ],
+                Row(
+                  children: [
+                    if (!batchMode)
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.checklist),
+                        label: const Text('Batch Mode'),
+                        onPressed: () => setSheetState(() => batchMode = true),
+                      ),
+                    if (batchMode)
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.check_circle),
+                        label: const Text('Exit Batch'),
+                        onPressed: () {
+                          selectedIndices.clear();
+                          setSheetState(() => batchMode = false);
                         },
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 const Divider(color: Colors.white12),
                 const Text('Upcoming', style: TextStyle(fontWeight: FontWeight.bold)),
-                ...unassigned.take(6).map((lesson) {
+                ...unassigned.asMap().entries.map((entry) {
+                  final idx = entry.key;
+                  final lesson = entry.value;
                   if (lesson is! Map) return const SizedBox.shrink();
+                  
                   final order = (lesson['index'] as int?) ?? (lesson['order'] as int?) ?? 0;
                   final title = lesson['title']?.toString() ?? lesson['name']?.toString() ?? 'Lesson $order';
+                  final isSelected = selectedIndices.contains(idx);
+                  
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
+                    leading: batchMode
+                        ? Checkbox(
+                            value: isSelected,
+                            onChanged: (_) {
+                              setSheetState(() {
+                                if (isSelected) {
+                                  selectedIndices.remove(idx);
+                                } else {
+                                  selectedIndices.add(idx);
+                                }
+                              });
+                            },
+                          )
+                        : null,
                     title: Text(title),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.add_circle, color: Colors.blue),
-                      onPressed: () async {
-                        final dueDate = await _pickDueDate();
-                        if (dueDate == null) return;
-                        
-                        await _assignLesson(
-                          student: student,
-                          configId: configId,
-                          lessonData: lesson,
-                          categories: categories,
-                          linkedSubject: linkedSubject,
-                          dueDate: dueDate,
-                        );
-                        Navigator.pop(sheetContext);
-                      },
-                    ),
+                    onTap: batchMode
+                        ? () {
+                            setSheetState(() {
+                              if (isSelected) {
+                                selectedIndices.remove(idx);
+                              } else {
+                                selectedIndices.add(idx);
+                              }
+                            });
+                          }
+                        : null,
+                    trailing: batchMode
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.add_circle, color: Colors.blue),
+                            onPressed: () async {
+                              final dueDate = await _pickDueDate();
+                              if (dueDate == null) return;
+
+                              await _assignLesson(
+                                student: student,
+                                configId: configId,
+                                lessonData: lesson,
+                                categories: categories,
+                                linkedSubject: linkedSubject,
+                                dueDate: dueDate,
+                              );
+                              Navigator.pop(sheetContext);
+                            },
+                          ),
                   );
                 }),
               ],
