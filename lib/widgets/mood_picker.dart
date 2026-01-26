@@ -5,6 +5,7 @@
 // - compact=false: shows full wrap of options.
 
 import 'package:flutter/material.dart';
+import '../app_config.dart';
 
 class MoodPicker extends StatelessWidget {
   final String? value;
@@ -21,7 +22,6 @@ class MoodPicker extends StatelessWidget {
     this.compact = true,
   });
 
-  static const List<String> _moods = ['😊', '😐', '😕', '😡', '😴', '🤒', '🤩'];
   static const String _noneToken = '__none__';
 
   @override
@@ -41,7 +41,7 @@ class MoodPicker extends StatelessWidget {
           child: Text('Clear mood'),
         ),
         const PopupMenuDivider(),
-        for (final m in _moods)
+        for (final m in AppConfig.availableMoods)
           PopupMenuItem<String>(
             value: m,
             child: Text(m, style: const TextStyle(fontSize: 22)),
@@ -85,7 +85,7 @@ class MoodPicker extends StatelessWidget {
           selected: value == null,
           onTap: () => onChanged(null),
         ),
-        for (final m in _moods)
+        for (final m in AppConfig.availableMoods)
           _chip(
             context,
             label: m,

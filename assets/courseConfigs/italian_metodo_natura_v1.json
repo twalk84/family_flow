@@ -1,0 +1,436 @@
+{
+  "id": "italian_metodo_natura_v1",
+  "title": "L'Italiano secondo il Metodo Natura",
+  "subtitle": "Arthur M. Jensen",
+  "version": 1,
+  "type": "language",
+  "philosophy": {
+    "summary": "PHILOSOPHY: PROCESS EARNS, MASTERY MULTIPLIES",
+    "principles": [
+      "Natural Method: Italian learned entirely through Italian context",
+      "Process Earns: Steady base points for daily work",
+      "Mastery Multiplies: Bonuses for retention and understanding",
+      "Active Italian: Speaking weighted at 15% to support immersion"
+    ]
+  },
+  "grading": {
+    "mode": "points",
+    "categories": {
+      "lecture_reading": {
+        "label": "Lecture/Reading Attendance",
+        "pointsEach": 10.0,
+        "countsTowardGrade": true
+      },
+      "textbook_exercises": {
+        "label": "Textbook Exercises (Esercizio A, B, C)",
+        "pointsEach": 35.0,
+        "countsTowardGrade": true
+      },
+      "worksheet": {
+        "label": "Worksheet",
+        "pointsEach": 35.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_creation": {
+        "label": "Flashcard Creation",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "read_aloud_practice": {
+        "label": "Read-Aloud Practice",
+        "pointsEach": 20.0,
+        "countsTowardGrade": true
+      },
+      "oral_response_italiano": {
+        "label": "Oral Response (In Italiano)",
+        "pointsEach": 25.0,
+        "countsTowardGrade": true
+      },
+      "flashcard_session": {
+        "label": "Flashcards (Leitner Review)",
+        "pointsEach": 5,
+        "countsTowardGrade": true
+      },
+      "unit_test": {
+        "label": "Unit Test",
+        "pointsEach": 200,
+        "countsTowardGrade": true
+      },
+      "midterm_exam": {
+        "label": "Midterm Exam",
+        "pointsEach": 500,
+        "countsTowardGrade": true
+      },
+      "final_exam": {
+        "label": "Final Exam",
+        "pointsEach": 750,
+        "countsTowardGrade": true
+      }
+    },
+    "gradeWeightDistribution": {
+      "headers": ["Category", "Weight", "Components Included"],
+      "rows": [
+        ["Daily Practice (Written)", "25%", "Textbook Exercises (12.5%) + Worksheets (12.5%)"],
+        ["Flashcard System", "20%", "Vocabulary + Grammar: Creation + Box 7"],
+        ["Active Italian/Speaking", "15%", "Read-Aloud (8%) + Oral Response (7%)"],
+        ["Unit Tests (Written)", "20%", "4 Unit Tests"],
+        ["Cumulative Exams", "20%", "Midterm (8%) + Final (12%)"],
+        ["TOTAL", "100%", ""]
+      ]
+    },
+    "gradeScale": {
+      "headers": ["Letter Grade", "Percentage", "GPA Equivalent"],
+      "rows": [
+        ["A+", "97–100%", "4.0"],
+        ["A", "93–96%", "4.0"],
+        ["A-", "90–92%", "3.7"],
+        ["B+", "87–89%", "3.3"],
+        ["B", "83–86%", "3.0"],
+        ["B-", "80–82%", "2.7"],
+        ["C+", "77–79%", "2.3"],
+        ["C", "73–76%", "2.0"],
+        ["C-", "70–72%", "1.7"],
+        ["D", "60–69%", "1.0"],
+        ["F", "Below 60%", "0.0"]
+      ]
+    },
+    "speakingRubric": {
+      "headers": ["Score", "Pronunciation", "Fluency", "Accuracy", "Comprehension"],
+      "rows": [
+        ["4", "Clear, correct Italian sounds", "Responds without hesitation", "Grammatically correct", "Fully understands question"],
+        ["3", "Minor pronunciation errors", "Brief hesitation", "1–2 minor errors", "Mostly understands"],
+        ["2", "Noticeable errors", "Frequent pauses", "Several errors", "Partial understanding"],
+        ["1", "Difficult to understand", "Very halting", "Many errors", "Needs question repeated"]
+      ],
+      "maxScore": 16
+    },
+    "streakBonusesTable": {
+      "headers": ["Speaking Streak", "Bonus"],
+      "rows": [
+        ["3 consecutive chapters at 14+/16 oral response", "+100 points"],
+        ["5 consecutive chapters at 14+/16 oral response", "+200 points"],
+        ["10 consecutive chapters at 14+/16 oral response", "+400 points"],
+        ["3 consecutive chapters at 16/16 (perfect)", "+200 points"],
+        ["5 consecutive chapters at 16/16 (perfect)", "+400 points"]
+      ]
+    }
+  },
+  "rewards": {
+    "enabled": true,
+    "basePoints": {
+      "lecture_reading": 10,
+      "textbook_exercises": 35,
+      "worksheet": 35,
+      "flashcard_creation": 25,
+      "read_aloud_practice": 20,
+      "oral_response_italiano": 25,
+      "flashcard_session": 5,
+      "unit_test": 200,
+      "midterm_exam": 500,
+      "final_exam": 750
+    },
+    "bonusPoints": {
+      "textbook_exercises_perfect": 15,
+      "worksheet_perfect": 15,
+      "read_aloud_fluent": 10,
+      "oral_response_perfect": 15,
+      "unit_test_perfect": 100,
+      "midterm_perfect": 250,
+      "final_perfect": 500
+    },
+    "multipliers": [
+      {
+        "id": "test_mastery",
+        "multiplier": 1.5,
+        "when": { "minGradePercent": 100, "categoryKey": "unit_test" },
+        "appliesTo": "all_test_points"
+      },
+      {
+        "id": "flashcard_mastery",
+        "multiplier": 1.5,
+        "when": { "leitnerBox": 7 },
+        "appliesTo": "category_points"
+      }
+    ],
+    "streaks": {
+      "daily": [
+        { "days": 5, "multiplier": 1.1 },
+        { "days": 10, "multiplier": 1.25 },
+        { "days": 20, "multiplier": 1.5 },
+        { "days": 30, "multiplier": 2.0 }
+      ]
+    },
+    "milestones": [
+      { "id": "midterm_complete", "description": "Complete Chapter IX (Midterm point)", "bonus": 300 },
+      { "id": "course_complete", "description": "Complete all 18 chapters", "bonus": 750 },
+      { "id": "final_pass", "description": "Pass Final Exam (70%+)", "bonus": 400 },
+      { "id": "speed_completion", "description": "Complete course in under 60 days", "bonus": 500 },
+      { "id": "high_average", "description": "Maintain 90%+ course average", "bonus": 1000 },
+      { "id": "fluent_reader", "description": "Read entire book aloud fluently", "bonus": 400 },
+      { "id": "oral_mastery", "description": "Answer 75 questions correctly in Italian", "bonus": 250 }
+    ]
+  },
+  "curriculum": {
+    "totalLessons": 144,
+    "modules": [
+      {
+        "id": "italian_unit_1",
+        "title": "Unit 1: La Famiglia Rossi",
+        "unit": "Unit 1",
+        "storyArc": "Family & Daily Life",
+        "chapters": "I–V",
+        "lessons": [
+          { "index": 1, "title": "Cap. I: La Famiglia Rossi", "category": "lesson", "meta": { "unit": "Unit 1", "chapter": 1, "chapterTitle": "La Famiglia Rossi", "content": "The Rossi family: Carlo, Teresa, Bruno, Pietro, Maria, Pia; basic family vocabulary, essere/avere", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } } },
+          { "index": 2, "title": "Flashcards: Cap. I", "category": "flashcard_session", "meta": { "unit": "Unit 1", "chapter": 1, "deckHint": "Unit 1" } },
+          { "index": 3, "title": "Cap. II: Il Pranzo", "category": "lesson", "meta": { "unit": "Unit 1", "chapter": 2, "chapterTitle": "Il Pranzo", "content": "Lunch; meal vocabulary, food items, table setting", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } } },
+          { "index": 4, "title": "Flashcards: Cap. II", "category": "flashcard_session", "meta": { "unit": "Unit 1", "chapter": 2, "deckHint": "Unit 1" } },
+          { "index": 5, "title": "Cap. III: La Cena", "category": "lesson", "meta": { "unit": "Unit 1", "chapter": 3, "chapterTitle": "La Cena", "content": "Dinner; evening routines, more food vocabulary", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } } },
+          { "index": 6, "title": "Flashcards: Cap. III", "category": "flashcard_session", "meta": { "unit": "Unit 1", "chapter": 3, "deckHint": "Unit 1" } },
+          { "index": 7, "title": "Cap. IV: L'Incidente", "category": "lesson", "meta": { "unit": "Unit 1", "chapter": 4, "chapterTitle": "L'Incidente", "content": "The incident; an event in the family, past tense introduction", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } } },
+          { "index": 8, "title": "Flashcards: Cap. IV", "category": "flashcard_session", "meta": { "unit": "Unit 1", "chapter": 4, "deckHint": "Unit 1" } },
+          { "index": 9, "title": "Cap. V: I Regali di Bruno", "category": "lesson", "meta": { "unit": "Unit 1", "chapter": 5, "chapterTitle": "I Regali di Bruno", "content": "Bruno's gifts; giving, receiving, possessions", "source": { "coverage": "I–V", "assessment": "Unit 1 Test" } } },
+          { "index": 10, "title": "Flashcards: Cap. V", "category": "flashcard_session", "meta": { "unit": "Unit 1", "chapter": 5, "deckHint": "Unit 1" } },
+          { "index": 11, "title": "Unit 1 Test: La Famiglia Rossi", "category": "unit_test", "meta": { "unit": "Unit 1", "coverage": "Cap. I–V", "testType": "unit" } }
+        ]
+      },
+      {
+        "id": "italian_unit_2",
+        "title": "Unit 2: La Vita di Bruno",
+        "unit": "Unit 2",
+        "storyArc": "Bruno's Recovery & Dreams",
+        "chapters": "VI–IX",
+        "lessons": [
+          { "index": 12, "title": "Cap. VI: Bruno può alzarsi", "category": "lesson", "meta": { "unit": "Unit 2", "chapter": 6, "chapterTitle": "Bruno può alzarsi", "content": "Bruno can get up; modal verbs (potere), daily actions", "source": { "coverage": "VI–IX", "assessment": "Unit 2 Test" } } },
+          { "index": 13, "title": "Flashcards: Cap. VI", "category": "flashcard_session", "meta": { "unit": "Unit 2", "chapter": 6, "deckHint": "Unit 2" } },
+          { "index": 14, "title": "Cap. VII: Domani andiamo a Pisa", "category": "lesson", "meta": { "unit": "Unit 2", "chapter": 7, "chapterTitle": "Domani andiamo a Pisa", "content": "Tomorrow we go to Pisa; future plans, travel vocabulary", "source": { "coverage": "VI–IX", "assessment": "Unit 2 Test" } } },
+          { "index": 15, "title": "Flashcards: Cap. VII", "category": "flashcard_session", "meta": { "unit": "Unit 2", "chapter": 7, "deckHint": "Unit 2" } },
+          { "index": 16, "title": "Cap. VIII: Il Sogno di Bruno", "category": "lesson", "meta": { "unit": "Unit 2", "chapter": 8, "chapterTitle": "Il Sogno di Bruno", "content": "Bruno's dream; describing dreams, imagination", "source": { "coverage": "VI–IX", "assessment": "Unit 2 Test" } } },
+          { "index": 17, "title": "Flashcards: Cap. VIII", "category": "flashcard_session", "meta": { "unit": "Unit 2", "chapter": 8, "deckHint": "Unit 2" } },
+          { "index": 18, "title": "Cap. IX: Città e Paesi", "category": "lesson", "meta": { "unit": "Unit 2", "chapter": 9, "chapterTitle": "Città e Paesi", "content": "Cities and countries; geography, nationalities", "source": { "coverage": "VI–IX", "assessment": "Unit 2 Test" } } },
+          { "index": 19, "title": "Flashcards: Cap. IX", "category": "flashcard_session", "meta": { "unit": "Unit 2", "chapter": 9, "deckHint": "Unit 2" } },
+          { "index": 20, "title": "Unit 2 Test: La Vita di Bruno", "category": "unit_test", "meta": { "unit": "Unit 2", "coverage": "Cap. VI–IX", "testType": "unit" } }
+        ]
+      },
+      {
+        "id": "italian_midterm",
+        "title": "MIDTERM REVIEW",
+        "unit": "MIDTERM",
+        "storyArc": "Review & Assessment",
+        "chapters": "I–IX",
+        "lessons": [
+          { "index": 21, "title": "Review: Cap. I", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 1, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 22, "title": "Flashcards: Cap. I Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 1, "deckHint": "MIDTERM" } },
+          { "index": 23, "title": "Review: Cap. II", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 2, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 24, "title": "Flashcards: Cap. II Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 2, "deckHint": "MIDTERM" } },
+          { "index": 25, "title": "Review: Cap. III", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 3, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 26, "title": "Flashcards: Cap. III Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 3, "deckHint": "MIDTERM" } },
+          { "index": 27, "title": "Review: Cap. IV", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 4, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 28, "title": "Flashcards: Cap. IV Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 4, "deckHint": "MIDTERM" } },
+          { "index": 29, "title": "Review: Cap. V", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 5, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 30, "title": "Flashcards: Cap. V Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 5, "deckHint": "MIDTERM" } },
+          { "index": 31, "title": "Review: Cap. VI", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 6, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 32, "title": "Flashcards: Cap. VI Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 6, "deckHint": "MIDTERM" } },
+          { "index": 33, "title": "Review: Cap. VII", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 7, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 34, "title": "Flashcards: Cap. VII Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 7, "deckHint": "MIDTERM" } },
+          { "index": 35, "title": "Review: Cap. VIII", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 8, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 36, "title": "Flashcards: Cap. VIII Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 8, "deckHint": "MIDTERM" } },
+          { "index": 37, "title": "Review: Cap. IX", "category": "lesson", "meta": { "unit": "MIDTERM", "chapter": 9, "reviewType": "comprehensive", "source": { "coverage": "I–IX", "assessment": "Midterm Exam" } } },
+          { "index": 38, "title": "Flashcards: Cap. IX Review", "category": "flashcard_session", "meta": { "unit": "MIDTERM", "chapter": 9, "deckHint": "MIDTERM" } },
+          { "index": 39, "title": "Midterm Exam: Capitoli I–IX", "category": "midterm_exam", "meta": { "unit": "MIDTERM", "coverage": "Cap. I–IX", "testType": "midterm" } }
+        ]
+      },
+      {
+        "id": "italian_unit_3",
+        "title": "Unit 3: Il Mondo",
+        "unit": "Unit 3",
+        "storyArc": "Time, Seasons, Identity",
+        "chapters": "X–XIV",
+        "lessons": [
+          { "index": 40, "title": "Cap. X: Nomi e Cognomi", "category": "lesson", "meta": { "unit": "Unit 3", "chapter": 10, "chapterTitle": "Nomi e Cognomi", "content": "First names and surnames; identity, introductions", "source": { "coverage": "X–XIV", "assessment": "Unit 3 Test" } } },
+          { "index": 41, "title": "Flashcards: Cap. X", "category": "flashcard_session", "meta": { "unit": "Unit 3", "chapter": 10, "deckHint": "Unit 3" } },
+          { "index": 42, "title": "Cap. XI: L'Anno", "category": "lesson", "meta": { "unit": "Unit 3", "chapter": 11, "chapterTitle": "L'Anno", "content": "The year; months, seasons, calendar dates", "source": { "coverage": "X–XIV", "assessment": "Unit 3 Test" } } },
+          { "index": 43, "title": "Flashcards: Cap. XI", "category": "flashcard_session", "meta": { "unit": "Unit 3", "chapter": 11, "deckHint": "Unit 3" } },
+          { "index": 44, "title": "Cap. XII: Le Stagioni", "category": "lesson", "meta": { "unit": "Unit 3", "chapter": 12, "chapterTitle": "Le Stagioni", "content": "The seasons; weather, nature, seasonal activities", "source": { "coverage": "X–XIV", "assessment": "Unit 3 Test" } } },
+          { "index": 45, "title": "Flashcards: Cap. XII", "category": "flashcard_session", "meta": { "unit": "Unit 3", "chapter": 12, "deckHint": "Unit 3" } },
+          { "index": 46, "title": "Cap. XIII: Giorno e Notte", "category": "lesson", "meta": { "unit": "Unit 3", "chapter": 13, "chapterTitle": "Giorno e Notte", "content": "Day and night; telling time, daily schedule", "source": { "coverage": "X–XIV", "assessment": "Unit 3 Test" } } },
+          { "index": 47, "title": "Flashcards: Cap. XIII", "category": "flashcard_session", "meta": { "unit": "Unit 3", "chapter": 13, "deckHint": "Unit 3" } },
+          { "index": 48, "title": "Cap. XIV: La Mattina", "category": "lesson", "meta": { "unit": "Unit 3", "chapter": 14, "chapterTitle": "La Mattina", "content": "The morning; morning routines, reflexive verbs", "source": { "coverage": "X–XIV", "assessment": "Unit 3 Test" } } },
+          { "index": 49, "title": "Flashcards: Cap. XIV", "category": "flashcard_session", "meta": { "unit": "Unit 3", "chapter": 14, "deckHint": "Unit 3" } },
+          { "index": 50, "title": "Unit 3 Test: Il Mondo", "category": "unit_test", "meta": { "unit": "Unit 3", "coverage": "Cap. X–XIV", "testType": "unit" } }
+        ]
+      },
+      {
+        "id": "italian_unit_4",
+        "title": "Unit 4: La Cultura Italiana",
+        "unit": "Unit 4",
+        "storyArc": "Food, Celebrations, Rome",
+        "chapters": "XV–XVIII",
+        "lessons": [
+          { "index": 51, "title": "Cap. XV: I Pasti", "category": "lesson", "meta": { "unit": "Unit 4", "chapter": 15, "chapterTitle": "I Pasti", "content": "Meals; Italian food culture, eating habits", "source": { "coverage": "XV–XVIII", "assessment": "Unit 4 Test" } } },
+          { "index": 52, "title": "Flashcards: Cap. XV", "category": "flashcard_session", "meta": { "unit": "Unit 4", "chapter": 15, "deckHint": "Unit 4" } },
+          { "index": 53, "title": "Cap. XVI: I Compleanni", "category": "lesson", "meta": { "unit": "Unit 4", "chapter": 16, "chapterTitle": "I Compleanni", "content": "Birthdays; celebrations, age, wishes, conditionals", "source": { "coverage": "XV–XVIII", "assessment": "Unit 4 Test" } } },
+          { "index": 54, "title": "Flashcards: Cap. XVI", "category": "flashcard_session", "meta": { "unit": "Unit 4", "chapter": 16, "deckHint": "Unit 4" } },
+          { "index": 55, "title": "Cap. XVII: Via del Corso", "category": "lesson", "meta": { "unit": "Unit 4", "chapter": 17, "chapterTitle": "Via del Corso", "content": "Via del Corso; Rome, shopping, directions", "source": { "coverage": "XV–XVIII", "assessment": "Unit 4 Test" } } },
+          { "index": 56, "title": "Flashcards: Cap. XVII", "category": "flashcard_session", "meta": { "unit": "Unit 4", "chapter": 17, "deckHint": "Unit 4" } },
+          { "index": 57, "title": "Cap. XVIII: Il Viaggio", "category": "lesson", "meta": { "unit": "Unit 4", "chapter": 18, "chapterTitle": "Il Viaggio", "content": "The journey; travel narrative, course conclusion", "source": { "coverage": "XV–XVIII", "assessment": "Unit 4 Test" } } },
+          { "index": 58, "title": "Flashcards: Cap. XVIII", "category": "flashcard_session", "meta": { "unit": "Unit 4", "chapter": 18, "deckHint": "Unit 4" } },
+          { "index": 59, "title": "Unit 4 Test: La Cultura Italiana", "category": "unit_test", "meta": { "unit": "Unit 4", "coverage": "Cap. XV–XVIII", "testType": "unit" } }
+        ]
+      },
+      {
+        "id": "italian_final",
+        "title": "FINAL EXAM REVIEW",
+        "unit": "FINAL",
+        "storyArc": "Comprehensive Review",
+        "chapters": "I–XVIII",
+        "lessons": [
+          { "index": 60, "title": "Review: Cap. I", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 1, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 61, "title": "Flashcards: Cap. I Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 1, "deckHint": "FINAL" } },
+          { "index": 62, "title": "Review: Cap. II", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 2, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 63, "title": "Flashcards: Cap. II Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 2, "deckHint": "FINAL" } },
+          { "index": 64, "title": "Review: Cap. III", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 3, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 65, "title": "Flashcards: Cap. III Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 3, "deckHint": "FINAL" } },
+          { "index": 66, "title": "Review: Cap. IV", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 4, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 67, "title": "Flashcards: Cap. IV Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 4, "deckHint": "FINAL" } },
+          { "index": 68, "title": "Review: Cap. V", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 5, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 69, "title": "Flashcards: Cap. V Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 5, "deckHint": "FINAL" } },
+          { "index": 70, "title": "Review: Cap. VI", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 6, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 71, "title": "Flashcards: Cap. VI Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 6, "deckHint": "FINAL" } },
+          { "index": 72, "title": "Review: Cap. VII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 7, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 73, "title": "Flashcards: Cap. VII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 7, "deckHint": "FINAL" } },
+          { "index": 74, "title": "Review: Cap. VIII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 8, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 75, "title": "Flashcards: Cap. VIII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 8, "deckHint": "FINAL" } },
+          { "index": 76, "title": "Review: Cap. IX", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 9, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 77, "title": "Flashcards: Cap. IX Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 9, "deckHint": "FINAL" } },
+          { "index": 78, "title": "Review: Cap. X", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 10, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 79, "title": "Flashcards: Cap. X Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 10, "deckHint": "FINAL" } },
+          { "index": 80, "title": "Review: Cap. XI", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 11, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 81, "title": "Flashcards: Cap. XI Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 11, "deckHint": "FINAL" } },
+          { "index": 82, "title": "Review: Cap. XII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 12, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 83, "title": "Flashcards: Cap. XII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 12, "deckHint": "FINAL" } },
+          { "index": 84, "title": "Review: Cap. XIII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 13, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 85, "title": "Flashcards: Cap. XIII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 13, "deckHint": "FINAL" } },
+          { "index": 86, "title": "Review: Cap. XIV", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 14, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 87, "title": "Flashcards: Cap. XIV Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 14, "deckHint": "FINAL" } },
+          { "index": 88, "title": "Review: Cap. XV", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 15, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 89, "title": "Flashcards: Cap. XV Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 15, "deckHint": "FINAL" } },
+          { "index": 90, "title": "Review: Cap. XVI", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 16, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 91, "title": "Flashcards: Cap. XVI Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 16, "deckHint": "FINAL" } },
+          { "index": 92, "title": "Review: Cap. XVII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 17, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 93, "title": "Flashcards: Cap. XVII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 17, "deckHint": "FINAL" } },
+          { "index": 94, "title": "Review: Cap. XVIII", "category": "lesson", "meta": { "unit": "FINAL", "chapter": 18, "reviewType": "comprehensive", "source": { "coverage": "I–XVIII", "assessment": "Final Exam" } } },
+          { "index": 95, "title": "Flashcards: Cap. XVIII Final Review", "category": "flashcard_session", "meta": { "unit": "FINAL", "chapter": 18, "deckHint": "FINAL" } },
+          { "index": 96, "title": "Final Exam: Capitoli I–XVIII", "category": "final_exam", "meta": { "unit": "FINAL", "coverage": "Cap. I–XVIII", "testType": "final" } }
+        ]
+      }
+    ]
+  },
+  "flashcardCategories": [
+    { "key": "vocabulary", "label": "Vocabulary (Contextual)" },
+    { "key": "grammar", "label": "Grammar (Inductive)" },
+    { "key": "phrases", "label": "Phrases & Dialog" },
+    { "key": "pronunciation", "label": "Pronunciation" },
+    { "key": "listening", "label": "Listening" },
+    { "key": "speaking", "label": "Speaking" }
+  ],
+  "leitnerSystem": {
+    "boxes": [
+      { "box": 1, "reviewAfterDays": 0 },
+      { "box": 2, "reviewAfterDays": 1 },
+      { "box": 3, "reviewAfterDays": 3 },
+      { "box": 4, "reviewAfterDays": 7 },
+      { "box": 5, "reviewAfterDays": 14 },
+      { "box": 6, "reviewAfterDays": 30 },
+      { "box": 7, "reviewAfterDays": 60 }
+    ],
+    "masteryBox": 7,
+    "graduationBonuses": {
+      "vocabulary": 10,
+      "grammar": 20
+    }
+  },
+  "flashcardDecks": [
+    { "unit": "Unit 1", "unitTitle": "Unit 1: La Famiglia Rossi", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 2", "unitTitle": "Unit 2: La Vita di Bruno", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "MIDTERM", "unitTitle": "MIDTERM REVIEW", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 3", "unitTitle": "Unit 3: Il Mondo", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "Unit 4", "unitTitle": "Unit 4: La Cultura Italiana", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } },
+    { "unit": "FINAL", "unitTitle": "FINAL EXAM REVIEW", "categories": { "vocabulary": [], "grammar": [], "phrases": [] } }
+  ],
+  "badges": [
+    {
+      "id": "badge_la_famiglia",
+      "label": "🏠 La Famiglia",
+      "description": "Story Arc: Family & Daily Life",
+      "requirement": "Capitoli I–V + Cards to Box 7 + 80%+ Unit Test",
+      "bonus": 300
+    },
+    {
+      "id": "badge_sogni_bruno",
+      "label": "💭 I Sogni di Bruno",
+      "description": "Story Arc: Bruno's Recovery & Dreams",
+      "requirement": "Capitoli VI–IX + Cards to Box 7 + 80%+ Unit Test",
+      "bonus": 300
+    },
+    {
+      "id": "badge_il_mondo",
+      "label": "🌍 Il Mondo",
+      "description": "Story Arc: Time, Seasons, Identity",
+      "requirement": "Capitoli X–XIV + Cards to Box 7 + 80%+ Unit Test",
+      "bonus": 350
+    },
+    {
+      "id": "badge_cultura_italiana",
+      "label": "🎉 La Cultura Italiana",
+      "description": "Story Arc: Food, Celebrations, Rome",
+      "requirement": "Capitoli XV–XVIII + Cards to Box 7 + 80%+ Unit Test",
+      "bonus": 350
+    },
+    {
+      "id": "badge_lettore_fluente",
+      "label": "📖 Lettore Fluente",
+      "description": "Fluent Reader",
+      "requirement": "Read all 18 chapters with fluency score 3+ on each",
+      "bonus": 500
+    },
+    {
+      "id": "badge_parlatore_italiano",
+      "label": "🗣️ Parlatore Italiano",
+      "description": "Active Speaker",
+      "requirement": "90%+ Speaking Average",
+      "bonus": 750
+    },
+    {
+      "id": "badge_studente_eccellente",
+      "label": "🏆 Studente Eccellente",
+      "description": "Course Master",
+      "requirement": "All 6 Badges",
+      "bonus": 1500
+    }
+  ],
+  "chapterDetails": [
+    { "chapter": 1, "title": "La Famiglia Rossi", "unit": "Unit 1", "grammarFocus": ["essere", "avere", "gender/number agreement", "definite/indefinite articles"], "vocabularyThemes": ["family members", "people", "numbers 1-4", "ordinals"] },
+    { "chapter": 2, "title": "Il Pranzo", "unit": "Unit 1", "grammarFocus": ["present tense -are verbs", "food vocabulary"], "vocabularyThemes": ["lunch foods", "table items", "eating verbs"] },
+    { "chapter": 3, "title": "La Cena", "unit": "Unit 1", "grammarFocus": ["present tense -ere verbs", "time expressions"], "vocabularyThemes": ["dinner foods", "evening activities"] },
+    { "chapter": 4, "title": "L'Incidente", "unit": "Unit 1", "grammarFocus": ["passato prossimo introduction", "irregular past participles"], "vocabularyThemes": ["actions", "accidents", "body parts"] },
+    { "chapter": 5, "title": "I Regali di Bruno", "unit": "Unit 1", "grammarFocus": ["possessive adjectives", "indirect object pronouns"], "vocabularyThemes": ["gifts", "giving/receiving", "possessions"] },
+    { "chapter": 6, "title": "Bruno può alzarsi", "unit": "Unit 2", "grammarFocus": ["modal verbs (potere, volere, dovere)", "reflexive verbs"], "vocabularyThemes": ["daily actions", "abilities"] },
+    { "chapter": 7, "title": "Domani andiamo a Pisa", "unit": "Unit 2", "grammarFocus": ["future with present tense", "andare + places"], "vocabularyThemes": ["travel", "cities", "transportation"] },
+    { "chapter": 8, "title": "Il Sogno di Bruno", "unit": "Unit 2", "grammarFocus": ["imperfect tense introduction", "descriptive language"], "vocabularyThemes": ["dreams", "imagination", "feelings"] },
+    { "chapter": 9, "title": "Città e Paesi", "unit": "Unit 2", "grammarFocus": ["nationality adjectives", "prepositions with places"], "vocabularyThemes": ["countries", "cities", "nationalities"] },
+    { "chapter": 10, "title": "Nomi e Cognomi", "unit": "Unit 3", "grammarFocus": ["chiamarsi", "question formation"], "vocabularyThemes": ["names", "introductions", "identity"] },
+    { "chapter": 11, "title": "L'Anno", "unit": "Unit 3", "grammarFocus": ["dates", "ordinal numbers"], "vocabularyThemes": ["months", "seasons", "calendar"] },
+    { "chapter": 12, "title": "Le Stagioni", "unit": "Unit 3", "grammarFocus": ["weather expressions", "impersonal verbs"], "vocabularyThemes": ["seasons", "weather", "nature", "activities"] },
+    { "chapter": 13, "title": "Giorno e Notte", "unit": "Unit 3", "grammarFocus": ["telling time", "daily schedule"], "vocabularyThemes": ["time of day", "clock times", "routines"] },
+    { "chapter": 14, "title": "La Mattina", "unit": "Unit 3", "grammarFocus": ["reflexive verbs expanded", "morning routine"], "vocabularyThemes": ["morning activities", "personal care"] },
+    { "chapter": 15, "title": "I Pasti", "unit": "Unit 4", "grammarFocus": ["partitive articles", "quantities"], "vocabularyThemes": ["meals", "food culture", "eating habits"] },
+    { "chapter": 16, "title": "I Compleanni", "unit": "Unit 4", "grammarFocus": ["conditional mood introduction", "age expressions"], "vocabularyThemes": ["birthdays", "celebrations", "wishes"] },
+    { "chapter": 17, "title": "Via del Corso", "unit": "Unit 4", "grammarFocus": ["directions", "imperative mood"], "vocabularyThemes": ["Rome", "shopping", "streets", "buildings"] },
+    { "chapter": 18, "title": "Il Viaggio", "unit": "Unit 4", "grammarFocus": ["narrative tenses", "course synthesis"], "vocabularyThemes": ["travel", "journey", "comprehensive review"] }
+  ],
+  "generatedFrom": {
+    "sourceFile": "Italian_Metodo_Natura_Grading_System.docx",
+    "conversion": "doc_grading_system_to_course_config",
+    "generatedOn": "2026-01-25T00:00:00Z"
+  }
+}

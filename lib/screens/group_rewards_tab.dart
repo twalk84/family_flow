@@ -44,7 +44,7 @@ class _GroupRewardsTabState extends State<GroupRewardsTab> {
 
   int _getContributorCount(Map<String, dynamic> reward) {
     final contributions = reward['studentContributions'] as Map? ?? {};
-    return contributions.length;
+    return contributions.values.where((v) => asInt(v) > 0).length;
   }
 
   int _getStudentContribution(Map<String, dynamic> reward, String studentId) {

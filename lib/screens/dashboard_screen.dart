@@ -15,6 +15,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../app_config.dart';
 import 'student_manager_screen.dart';
 import 'curriculum_manager_screen.dart';
 import '../firestore_paths.dart';
@@ -50,8 +51,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   // Subjects search UI
   final TextEditingController _subjectSearchCtrl = TextEditingController();
   String _subjectQuery = '';
-
-  final List<String> _moods = const ['�', '😔', '😐', '😊', '🤩', '😡', '😴', '🤒', '🔥'];
 
   final List<Color> _defaultStudentPalette = const [
     Colors.blue,
@@ -1740,7 +1739,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             tooltip: 'Change mood',
             onSelected: (m) => _setTeacherMood(m),
             itemBuilder: (_) => [
-              ..._moods.map(
+              ...AppConfig.availableMoods.map(
                 (m) => PopupMenuItem<String?>(
                   value: m,
                   child: Text(m, style: const TextStyle(fontSize: 20)),

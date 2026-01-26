@@ -32,6 +32,10 @@ set(CMAKE_CXX_FLAGS_PROFILE "${CMAKE_CXX_FLAGS_RELEASE}")
 # Use Unicode for all projects.
 add_definitions(-DUNICODE -D_UNICODE)
 
+# Fix for "cannot open program database ... if multiple CL.EXE write to the same .PDB file"
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FS")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /FS")
+
 # Compilation settings that should be applied to most targets.
 #
 # Be cautious about adding new options here, as plugins use this function by
@@ -43,6 +47,7 @@ function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_options(${TARGET} PRIVATE /EHsc)
   target_compile_definitions(${TARGET} PRIVATE "_HAS_EXCEPTIONS=0")
   target_compile_definitions(${TARGET} PRIVATE "$<$<CONFIG:Debug>:_DEBUG>")
+  target_compile_options(${TARGET} PRIVATE /FS)
 endfunction()
 
 # Flutter library and tool build rules.

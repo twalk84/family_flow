@@ -1,0 +1,723 @@
+{
+  "id": "henle-latin-first-year",
+  "title": "Henle Latin: First Year",
+  "subject": "Latin",
+  "description": "A rigorous, grammar-based approach to Latin following the Henle method. Covers all five declensions, verb conjugations, subjunctive mood, and foundational syntax through 14 units and 42 lessons.",
+  "author": "Robert J. Henle, S.J.",
+  "publisher": "Loyola Press",
+  "version": "1.0.0",
+  "totalAssignments": 177,
+  "estimatedWeeks": 36,
+  "categories": {
+    "introduction": {
+      "displayName": "Introduction",
+      "pointsBase": 5,
+      "gradable": false,
+      "countTowardCompletion": true,
+      "description": "Introductory reading for each unit"
+    },
+    "lesson": {
+      "displayName": "Lesson",
+      "pointsBase": 10,
+      "gradable": true,
+      "countTowardCompletion": true,
+      "description": "Core grammar lesson with exercises"
+    },
+    "section": {
+      "displayName": "Section",
+      "pointsBase": 8,
+      "gradable": true,
+      "countTowardCompletion": true,
+      "description": "Sub-section within a lesson"
+    },
+    "unit_review": {
+      "displayName": "Unit Review",
+      "pointsBase": 15,
+      "gradable": true,
+      "countTowardCompletion": true,
+      "description": "Comprehensive review of unit material"
+    },
+    "mastery_vocabulary": {
+      "displayName": "Mastery Vocabulary",
+      "pointsBase": 20,
+      "gradable": true,
+      "countTowardCompletion": true,
+      "description": "Vocabulary review covering multiple units"
+    }
+  },
+  "units": [
+    {
+      "unit": 1,
+      "title": "The Five Declensions",
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "The First Declension",
+          "sections": [
+            { "section": 1, "title": "The declension of terra", "page": 6 },
+            { "section": 2, "title": "Rules for gender", "page": 9 },
+            { "section": 3, "title": "Use of verbs", "page": 9 },
+            { "section": 4, "title": "The accusative case", "page": 13 },
+            { "section": 5, "title": "The genitive case", "page": 16 }
+          ]
+        },
+        {
+          "lesson": 2,
+          "title": "The Second Declension",
+          "sections": [
+            { "section": 1, "title": "The declension of servus", "page": 17 },
+            { "section": 2, "title": "The declension of bellum", "page": 20 },
+            { "section": 3, "title": "The indirect object", "page": 22 },
+            { "section": 4, "title": "Use of prepositions", "page": 24 },
+            { "section": 5, "title": "The predicate noun", "page": 27 },
+            { "section": 6, "title": "Use of quod, 'because'", "page": 31 }
+          ]
+        },
+        {
+          "lesson": 3,
+          "title": "The Third Declension",
+          "sections": [
+            { "section": 1, "title": "Gender in the third declension", "page": 35 },
+            { "section": 2, "title": "Rules for nouns like lēx and pars", "page": 36 },
+            { "section": 3, "title": "The declension of lēx", "page": 36 },
+            { "section": 4, "title": "Appositives", "page": 38 },
+            { "section": 5, "title": "The expletive there", "page": 42 },
+            { "section": 6, "title": "The declension of pars", "page": 44 },
+            { "section": 7, "title": "Review of nouns like lēx and pars", "page": 47 },
+            { "section": 8, "title": "The declension of flūmen", "page": 51 },
+            { "section": 9, "title": "Review of the third declension", "page": 53 }
+          ]
+        },
+        {
+          "lesson": 4,
+          "title": "The Fourth Declension",
+          "sections": [
+            { "section": 1, "title": "The declension of portus", "page": 56 },
+            { "section": 2, "title": "In with the accusative", "page": 57 }
+          ]
+        },
+        {
+          "lesson": 5,
+          "title": "The Fifth Declension",
+          "page": 62
+        },
+        {
+          "lesson": 6,
+          "title": "Nouns with Special Meanings in the Plural",
+          "page": 64
+        }
+      ],
+      "review": { "title": "Review of Unit One", "page": 70 }
+    },
+    {
+      "unit": 2,
+      "title": "Adjectives",
+      "lessons": [
+        {
+          "lesson": 7,
+          "title": "Adjectives of the First and Second Declensions",
+          "sections": [
+            { "section": 1, "title": "The declension of magnus, a, um", "page": 72 },
+            { "section": 2, "title": "Agreement of adjectives", "page": 73 },
+            { "section": 3, "title": "Predicate adjectives", "page": 75 },
+            { "section": 4, "title": "Use of prō", "page": 77 }
+          ]
+        },
+        {
+          "lesson": 8,
+          "title": "Adjectives of the Third Declension",
+          "sections": [
+            { "section": 1, "title": "The declension of gravis, e", "page": 82 },
+            { "section": 2, "title": "Adjectives governing cases", "page": 85 },
+            { "section": 3, "title": "The declension of Jēsūs", "page": 87 }
+          ]
+        }
+      ],
+      "masteryVocabulary": { "title": "Mastery Review Vocabulary No. 1 [Units One and Two]", "page": 91 }
+    },
+    {
+      "unit": 3,
+      "title": "The First Conjugation",
+      "lessons": [
+        {
+          "lesson": 9,
+          "title": "The First Conjugation",
+          "sections": [
+            { "section": 1, "title": "Principal parts: the first conjugation", "page": 99 },
+            { "section": 2, "title": "Present indicative active of laudō", "page": 101 },
+            { "section": 3, "title": "Agreement of verbs", "page": 102 },
+            { "section": 4, "title": "Imperfect indicative active of laudō", "page": 105 },
+            { "section": 5, "title": "Future indicative active of laudō", "page": 108 },
+            { "section": 6, "title": "Questions", "page": 111 }
+          ]
+        },
+        {
+          "lesson": 10,
+          "title": "The Present, Imperfect, and Future Indicative Active of Moneō",
+          "sections": [
+            { "section": 1, "title": "The interrogative particle -ne", "page": 114 },
+            { "section": 2, "title": "The interrogative pronoun", "page": 117 }
+          ]
+        },
+        {
+          "lesson": 11,
+          "title": "Personal Pronouns",
+          "sections": [
+            { "section": 1, "title": "Present system active of the third conjugation", "page": 120 },
+            { "section": 2, "title": "Pronouns of the first person", "page": 125 },
+            { "section": 3, "title": "Pronouns of the second person", "page": 128 },
+            { "section": 4, "title": "Direct reflexive pronouns", "page": 132 }
+          ]
+        },
+        {
+          "lesson": 12,
+          "title": "Present System Active of the Third Conjugation",
+          "sections": [
+            { "section": 1, "title": "Principal parts of the third conjugation", "page": 135 },
+            { "section": 2, "title": "Present indicative active of mittō", "page": 140 },
+            { "section": 3, "title": "Imperfect indicative active of mittō", "page": 140 },
+            { "section": 4, "title": "Future indicative active of mittō", "page": 143 }
+          ]
+        },
+        {
+          "lesson": 13,
+          "title": "Present System Active of the Fourth Conjugation",
+          "page": 147
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "title": "Additional Nouns and Adjectives of the First and Second Declensions",
+      "lessons": [
+        {
+          "lesson": 14,
+          "title": "Present System Indicative of Sum",
+          "sections": [
+            { "section": 1, "title": "Present, imperfect, and future indicative of sum", "page": 151 },
+            { "section": 2, "title": "Compounds of sum", "page": 153 }
+          ]
+        },
+        {
+          "lesson": 15,
+          "title": "The Perfect System Active",
+          "sections": [
+            { "section": 1, "title": "The perfect active stem", "page": 155 },
+            { "section": 2, "title": "The perfect indicative active", "page": 155 },
+            { "section": 3, "title": "Pluperfect and future perfect indicative active", "page": 160 }
+          ]
+        },
+        {
+          "lesson": 16,
+          "title": "Additional Nouns and Adjectives of the First and Second Declensions",
+          "sections": [
+            { "section": 1, "title": "Declension of puer, ager, and vir", "page": 163 },
+            { "section": 2, "title": "Declension of miser and niger", "page": 168 },
+            { "section": 3, "title": "Possessive adjectives of the first and second persons", "page": 173 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 5,
+      "title": "Present System Passive",
+      "lessons": [
+        {
+          "lesson": 17,
+          "title": "Present System Passive of the First Conjugation; Agency",
+          "sections": [
+            { "section": 1, "title": "Active and passive signs in the passive", "page": 179 },
+            { "section": 2, "title": "Final personal signs in the passive", "page": 180 },
+            { "section": 3, "title": "Present system passive of the first conjugation", "page": 181 },
+            { "section": 4, "title": "The ablative of agent", "page": 185 }
+          ]
+        },
+        {
+          "lesson": 18,
+          "title": "Present System Passive of the Second Conjugation; Ablative of Means",
+          "sections": [
+            { "section": 1, "title": "Present system passive of the second conjugation", "page": 192 },
+            { "section": 2, "title": "The ablative of means", "page": 194 }
+          ]
+        },
+        {
+          "lesson": 19,
+          "title": "Present System Passive of the Third Conjugation",
+          "sections": [
+            { "section": 1, "title": "Present system passive of the third conjugation", "page": 197 },
+            { "section": 2, "title": "Ablatives of agency and means compared", "page": 199 }
+          ]
+        },
+        {
+          "lesson": 20,
+          "title": "Present System Passive of the Fourth Conjugation; Accompaniment",
+          "sections": [
+            { "section": 1, "title": "Present system passive of the fourth conjugation", "page": 202 },
+            { "section": 2, "title": "Ablative of accompaniment", "page": 203 }
+          ]
+        },
+        {
+          "lesson": 21,
+          "title": "The Perfect System of the Indicative Passive",
+          "page": 208
+        }
+      ],
+      "masteryVocabulary": { "title": "Mastery Review Vocabulary No. 2 [Units Three, Four, and Five]", "page": 217 }
+    },
+    {
+      "unit": 6,
+      "title": "The Present Subjunctive; Purpose Clauses",
+      "lessons": [
+        {
+          "lesson": 22,
+          "title": "The Present Subjunctive",
+          "sections": [
+            { "section": 1, "title": "The present subjunctive active", "page": 221 },
+            { "section": 2, "title": "Mood in purpose clauses", "page": 223 },
+            { "section": 3, "title": "Primary tenses", "page": 225 },
+            { "section": 4, "title": "Negative purpose clauses", "page": 228 }
+          ]
+        },
+        {
+          "lesson": 23,
+          "title": "The Imperfect Subjunctive Active",
+          "sections": [
+            { "section": 1, "title": "Imperfect subjunctive active of the four conjugations", "page": 232 },
+            { "section": 2, "title": "Secondary tenses; imperfect subjunctive of sum", "page": 235 },
+            { "section": 3, "title": "Adjectives used as nouns", "page": 237 }
+          ]
+        },
+        {
+          "lesson": 24,
+          "title": "Relative Clauses; The Use of Ad",
+          "sections": [
+            { "section": 1, "title": "Quī, quae, quod", "page": 241 },
+            { "section": 2, "title": "The use of ad", "page": 246 },
+            { "section": 3, "title": "Relative clauses of purpose", "page": 248 },
+            { "section": 4, "title": "Purpose clauses introduced by quō", "page": 253 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 7,
+      "title": "Direct Questions",
+      "lessons": [
+        {
+          "lesson": 25,
+          "title": "Direct Questions",
+          "sections": [
+            { "section": 1, "title": "Interrogative adverbs", "page": 257 },
+            { "section": 2, "title": "Interrogative particles", "page": 260 },
+            { "section": 3, "title": "The interrogative pronoun", "page": 269 },
+            { "section": 4, "title": "The interrogative adjective", "page": 271 }
+          ]
+        },
+        {
+          "lesson": 26,
+          "title": "The Perfect System Active of the Subjunctive",
+          "sections": [
+            { "section": 1, "title": "Perfect and pluperfect subjunctive active", "page": 274 },
+            { "section": 2, "title": "Indirect and pluperfect subjunctive active", "page": 280 },
+            { "section": 3, "title": "Secondary questions; primary sequence", "page": 281 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 8,
+      "title": "The Vocative; Imperative Mood",
+      "lessons": [
+        {
+          "lesson": 27,
+          "title": "The Vocative; Imperative Mood",
+          "sections": [
+            { "section": 1, "title": "The vocative", "page": 286 },
+            { "section": 2, "title": "Present imperative active", "page": 289 },
+            { "section": 3, "title": "The subjunctive in wishes and exhortations", "page": 293 }
+          ]
+        },
+        {
+          "lesson": 28,
+          "title": "Suus and Suī",
+          "sections": [
+            { "section": 1, "title": "Suus and suī as direct reflexives", "page": 296 },
+            { "section": 2, "title": "Suus and suī as indirect reflexives", "page": 300 }
+          ]
+        },
+        {
+          "lesson": 29,
+          "title": "The Passive Subjunctive",
+          "sections": [
+            { "section": 1, "title": "Present and imperfect subjunctive passive", "page": 305 },
+            { "section": 2, "title": "The perfect system of the passive subjunctive", "page": 309 },
+            { "section": 3, "title": "The ablative of cause", "page": 314 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 9,
+      "title": "The Perfect Participle Passive",
+      "lessons": [
+        {
+          "lesson": 30,
+          "title": "Hic, Haec, Hoc",
+          "sections": [
+            { "section": 1, "title": "The declension of hic, haec, hoc", "page": 317 },
+            { "section": 2, "title": "Uses of hic, haec, hoc", "page": 319 }
+          ]
+        },
+        {
+          "lesson": 31,
+          "title": "The Prepositions Ex (Ē), Ab (Ā)",
+          "page": 325
+        },
+        {
+          "lesson": 32,
+          "title": "Ille and Is",
+          "page": 331
+        },
+        {
+          "lesson": 33,
+          "title": "Ablative Constructions",
+          "sections": [
+            { "section": 1, "title": "The ablative of separation", "page": 336 },
+            { "section": 2, "title": "Review of ablative constructions", "page": 341 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 10,
+      "title": "Possum; The Infinitive in Noun Constructions",
+      "lessons": [
+        {
+          "lesson": 34,
+          "title": "Possum; The Infinitive in Noun Constructions",
+          "sections": [
+            { "section": 1, "title": "Indicative of possum", "page": 345 },
+            { "section": 2, "title": "The infinitive of purpose, predicate noun, and object", "page": 351 },
+            { "section": 3, "title": "Subjunctive of possum", "page": 352 },
+            { "section": 4, "title": "The infinitive with subject accusative", "page": 360 }
+          ]
+        },
+        {
+          "lesson": 35,
+          "title": "Numerals; Irregular Adjectives",
+          "sections": [
+            { "section": 1, "title": "Numerals", "page": 363 },
+            { "section": 2, "title": "Adjectives with irregular endings in the genitive and dative singular", "page": 370 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 11,
+      "title": "-Iō Verbs; Verbs for Time",
+      "lessons": [
+        {
+          "lesson": 36,
+          "title": "-Iō Verbs; Verbs for Time",
+          "sections": [
+            { "section": 1, "title": "Indicative active of -iō verbs", "page": 374 },
+            { "section": 2, "title": "Time when", "page": 381 },
+            { "section": 3, "title": "Subjunctive active and space", "page": 386 },
+            { "section": 4, "title": "Extent of time and space", "page": 389 },
+            { "section": 5, "title": "Indicative passive of -iō verbs", "page": 393 },
+            { "section": 6, "title": "Time within which", "page": 396 },
+            { "section": 7, "title": "Subjunctive passive of -iō verbs", "page": 398 }
+          ]
+        },
+        {
+          "lesson": 37,
+          "title": "Dative Verbs; The Passive of Verbs of Calling",
+          "page": 403
+        }
+      ]
+    },
+    {
+      "unit": 12,
+      "title": "The Accusative with the Infinitive",
+      "lessons": [
+        {
+          "lesson": 38,
+          "title": "The Accusative with the Infinitive",
+          "sections": [
+            { "section": 1, "title": "Perfect and future infinitives active", "page": 407 },
+            { "section": 2, "title": "Accusative with the infinitive after verbs of saying, thinking, seeing, and the like", "page": 412 },
+            { "section": 3, "title": "Accusative with the infinitive after verbs of saying, thinking, seeing, and the like (continued)", "page": 414 },
+            { "section": 4, "title": "Passive infinitives", "page": 420 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 13,
+      "title": "The Comparison of Adjectives",
+      "lessons": [
+        {
+          "lesson": 39,
+          "title": "The Comparison of Adjectives",
+          "sections": [
+            { "section": 1, "title": "Regular comparison of adjectives", "page": 428 },
+            { "section": 2, "title": "Declension of comparative and superlative adjectives", "page": 434 },
+            { "section": 3, "title": "The ablative of comparison", "page": 435 },
+            { "section": 4, "title": "Irregular comparatives and superlatives", "page": 439 }
+          ]
+        },
+        {
+          "lesson": 40,
+          "title": "Deponent Verbs",
+          "sections": [
+            { "section": 1, "title": "Indicative of deponent verbs", "page": 440 },
+            { "section": 2, "title": "Subjunctive of deponent verbs", "page": 445 },
+            { "section": 3, "title": "Perfect participle of deponent verbs", "page": 448 },
+            { "section": 4, "title": "Infinitives of deponent verbs", "page": 450 }
+          ]
+        }
+      ]
+    },
+    {
+      "unit": 14,
+      "title": "The Irregular Verb Eō",
+      "lessons": [
+        {
+          "lesson": 41,
+          "title": "The Irregular Verb Eō",
+          "sections": [
+            { "section": 1, "title": "Indicative of eō", "page": 453 },
+            { "section": 2, "title": "Subjunctive of eō", "page": 457 },
+            { "section": 3, "title": "Infinitives of eō", "page": 460 }
+          ]
+        }
+      ],
+      "masteryVocabulary": { "title": "Mastery Review Vocabulary No. 3 [Units Six-Fourteen]", "page": 464 }
+    }
+  ],
+  "assignments": [
+    { "order": 1, "name": "Introduction", "category": "introduction", "unit": 1, "page": 3 },
+    
+    { "order": 2, "name": "Lesson 1: The First Declension", "category": "lesson", "unit": 1, "lesson": 1, "page": 6 },
+    { "order": 3, "name": "L1.1: The declension of terra", "category": "section", "unit": 1, "lesson": 1, "section": 1, "page": 6 },
+    { "order": 4, "name": "L1.2: Rules for gender", "category": "section", "unit": 1, "lesson": 1, "section": 2, "page": 9 },
+    { "order": 5, "name": "L1.3: Use of verbs", "category": "section", "unit": 1, "lesson": 1, "section": 3, "page": 9 },
+    { "order": 6, "name": "L1.4: The accusative case", "category": "section", "unit": 1, "lesson": 1, "section": 4, "page": 13 },
+    { "order": 7, "name": "L1.5: The genitive case", "category": "section", "unit": 1, "lesson": 1, "section": 5, "page": 16 },
+    
+    { "order": 8, "name": "Lesson 2: The Second Declension", "category": "lesson", "unit": 1, "lesson": 2, "page": 17 },
+    { "order": 9, "name": "L2.1: The declension of servus", "category": "section", "unit": 1, "lesson": 2, "section": 1, "page": 17 },
+    { "order": 10, "name": "L2.2: The declension of bellum", "category": "section", "unit": 1, "lesson": 2, "section": 2, "page": 20 },
+    { "order": 11, "name": "L2.3: The indirect object", "category": "section", "unit": 1, "lesson": 2, "section": 3, "page": 22 },
+    { "order": 12, "name": "L2.4: Use of prepositions", "category": "section", "unit": 1, "lesson": 2, "section": 4, "page": 24 },
+    { "order": 13, "name": "L2.5: The predicate noun", "category": "section", "unit": 1, "lesson": 2, "section": 5, "page": 27 },
+    { "order": 14, "name": "L2.6: Use of quod, 'because'", "category": "section", "unit": 1, "lesson": 2, "section": 6, "page": 31 },
+    
+    { "order": 15, "name": "Lesson 3: The Third Declension", "category": "lesson", "unit": 1, "lesson": 3, "page": 35 },
+    { "order": 16, "name": "L3.1: Gender in the third declension", "category": "section", "unit": 1, "lesson": 3, "section": 1, "page": 35 },
+    { "order": 17, "name": "L3.2: Rules for nouns like lēx and pars", "category": "section", "unit": 1, "lesson": 3, "section": 2, "page": 36 },
+    { "order": 18, "name": "L3.3: The declension of lēx", "category": "section", "unit": 1, "lesson": 3, "section": 3, "page": 36 },
+    { "order": 19, "name": "L3.4: Appositives", "category": "section", "unit": 1, "lesson": 3, "section": 4, "page": 38 },
+    { "order": 20, "name": "L3.5: The expletive there", "category": "section", "unit": 1, "lesson": 3, "section": 5, "page": 42 },
+    { "order": 21, "name": "L3.6: The declension of pars", "category": "section", "unit": 1, "lesson": 3, "section": 6, "page": 44 },
+    { "order": 22, "name": "L3.7: Review of nouns like lēx and pars", "category": "section", "unit": 1, "lesson": 3, "section": 7, "page": 47 },
+    { "order": 23, "name": "L3.8: The declension of flūmen", "category": "section", "unit": 1, "lesson": 3, "section": 8, "page": 51 },
+    { "order": 24, "name": "L3.9: Review of the third declension", "category": "section", "unit": 1, "lesson": 3, "section": 9, "page": 53 },
+    
+    { "order": 25, "name": "Lesson 4: The Fourth Declension", "category": "lesson", "unit": 1, "lesson": 4, "page": 56 },
+    { "order": 26, "name": "L4.1: The declension of portus", "category": "section", "unit": 1, "lesson": 4, "section": 1, "page": 56 },
+    { "order": 27, "name": "L4.2: In with the accusative", "category": "section", "unit": 1, "lesson": 4, "section": 2, "page": 57 },
+    
+    { "order": 28, "name": "Lesson 5: The Fifth Declension", "category": "lesson", "unit": 1, "lesson": 5, "page": 62 },
+    
+    { "order": 29, "name": "Lesson 6: Nouns with Special Meanings in the Plural", "category": "lesson", "unit": 1, "lesson": 6, "page": 64 },
+    
+    { "order": 30, "name": "Review of Unit One", "category": "unit_review", "unit": 1, "page": 70 },
+    
+    { "order": 31, "name": "Lesson 7: Adjectives of the First and Second Declensions", "category": "lesson", "unit": 2, "lesson": 7, "page": 72 },
+    { "order": 32, "name": "L7.1: The declension of magnus, a, um", "category": "section", "unit": 2, "lesson": 7, "section": 1, "page": 72 },
+    { "order": 33, "name": "L7.2: Agreement of adjectives", "category": "section", "unit": 2, "lesson": 7, "section": 2, "page": 73 },
+    { "order": 34, "name": "L7.3: Predicate adjectives", "category": "section", "unit": 2, "lesson": 7, "section": 3, "page": 75 },
+    { "order": 35, "name": "L7.4: Use of prō", "category": "section", "unit": 2, "lesson": 7, "section": 4, "page": 77 },
+    
+    { "order": 36, "name": "Lesson 8: Adjectives of the Third Declension", "category": "lesson", "unit": 2, "lesson": 8, "page": 82 },
+    { "order": 37, "name": "L8.1: The declension of gravis, e", "category": "section", "unit": 2, "lesson": 8, "section": 1, "page": 82 },
+    { "order": 38, "name": "L8.2: Adjectives governing cases", "category": "section", "unit": 2, "lesson": 8, "section": 2, "page": 85 },
+    { "order": 39, "name": "L8.3: The declension of Jēsūs", "category": "section", "unit": 2, "lesson": 8, "section": 3, "page": 87 },
+    
+    { "order": 40, "name": "Mastery Review Vocabulary No. 1 [Units One and Two]", "category": "mastery_vocabulary", "unit": 2, "page": 91 },
+    
+    { "order": 41, "name": "Unit 3 Introduction", "category": "introduction", "unit": 3, "page": 99 },
+    
+    { "order": 42, "name": "Lesson 9: The First Conjugation", "category": "lesson", "unit": 3, "lesson": 9, "page": 99 },
+    { "order": 43, "name": "L9.1: Principal parts: the first conjugation", "category": "section", "unit": 3, "lesson": 9, "section": 1, "page": 99 },
+    { "order": 44, "name": "L9.2: Present indicative active of laudō", "category": "section", "unit": 3, "lesson": 9, "section": 2, "page": 101 },
+    { "order": 45, "name": "L9.3: Agreement of verbs", "category": "section", "unit": 3, "lesson": 9, "section": 3, "page": 102 },
+    { "order": 46, "name": "L9.4: Imperfect indicative active of laudō", "category": "section", "unit": 3, "lesson": 9, "section": 4, "page": 105 },
+    { "order": 47, "name": "L9.5: Future indicative active of laudō", "category": "section", "unit": 3, "lesson": 9, "section": 5, "page": 108 },
+    { "order": 48, "name": "L9.6: Questions", "category": "section", "unit": 3, "lesson": 9, "section": 6, "page": 111 },
+    
+    { "order": 49, "name": "Lesson 10: Present, Imperfect, and Future Indicative Active of Moneō", "category": "lesson", "unit": 3, "lesson": 10, "page": 114 },
+    { "order": 50, "name": "L10.1: The interrogative particle -ne", "category": "section", "unit": 3, "lesson": 10, "section": 1, "page": 114 },
+    { "order": 51, "name": "L10.2: The interrogative pronoun", "category": "section", "unit": 3, "lesson": 10, "section": 2, "page": 117 },
+    
+    { "order": 52, "name": "Lesson 11: Personal Pronouns", "category": "lesson", "unit": 3, "lesson": 11, "page": 120 },
+    { "order": 53, "name": "L11.1: Present system active of the third conjugation", "category": "section", "unit": 3, "lesson": 11, "section": 1, "page": 120 },
+    { "order": 54, "name": "L11.2: Pronouns of the first person", "category": "section", "unit": 3, "lesson": 11, "section": 2, "page": 125 },
+    { "order": 55, "name": "L11.3: Pronouns of the second person", "category": "section", "unit": 3, "lesson": 11, "section": 3, "page": 128 },
+    { "order": 56, "name": "L11.4: Direct reflexive pronouns", "category": "section", "unit": 3, "lesson": 11, "section": 4, "page": 132 },
+    
+    { "order": 57, "name": "Lesson 12: Present System Active of the Third Conjugation", "category": "lesson", "unit": 3, "lesson": 12, "page": 135 },
+    { "order": 58, "name": "L12.1: Principal parts of the third conjugation", "category": "section", "unit": 3, "lesson": 12, "section": 1, "page": 135 },
+    { "order": 59, "name": "L12.2: Present indicative active of mittō", "category": "section", "unit": 3, "lesson": 12, "section": 2, "page": 140 },
+    { "order": 60, "name": "L12.3: Imperfect indicative active of mittō", "category": "section", "unit": 3, "lesson": 12, "section": 3, "page": 140 },
+    { "order": 61, "name": "L12.4: Future indicative active of mittō", "category": "section", "unit": 3, "lesson": 12, "section": 4, "page": 143 },
+    
+    { "order": 62, "name": "Lesson 13: Present System Active of the Fourth Conjugation", "category": "lesson", "unit": 3, "lesson": 13, "page": 147 },
+    
+    { "order": 63, "name": "Lesson 14: Present System Indicative of Sum", "category": "lesson", "unit": 4, "lesson": 14, "page": 151 },
+    { "order": 64, "name": "L14.1: Present, imperfect, and future indicative of sum", "category": "section", "unit": 4, "lesson": 14, "section": 1, "page": 151 },
+    { "order": 65, "name": "L14.2: Compounds of sum", "category": "section", "unit": 4, "lesson": 14, "section": 2, "page": 153 },
+    
+    { "order": 66, "name": "Lesson 15: The Perfect System Active", "category": "lesson", "unit": 4, "lesson": 15, "page": 155 },
+    { "order": 67, "name": "L15.1: The perfect active stem", "category": "section", "unit": 4, "lesson": 15, "section": 1, "page": 155 },
+    { "order": 68, "name": "L15.2: The perfect indicative active", "category": "section", "unit": 4, "lesson": 15, "section": 2, "page": 155 },
+    { "order": 69, "name": "L15.3: Pluperfect and future perfect indicative active", "category": "section", "unit": 4, "lesson": 15, "section": 3, "page": 160 },
+    
+    { "order": 70, "name": "Lesson 16: Additional Nouns and Adjectives", "category": "lesson", "unit": 4, "lesson": 16, "page": 163 },
+    { "order": 71, "name": "L16.1: Declension of puer, ager, and vir", "category": "section", "unit": 4, "lesson": 16, "section": 1, "page": 163 },
+    { "order": 72, "name": "L16.2: Declension of miser and niger", "category": "section", "unit": 4, "lesson": 16, "section": 2, "page": 168 },
+    { "order": 73, "name": "L16.3: Possessive adjectives of the first and second persons", "category": "section", "unit": 4, "lesson": 16, "section": 3, "page": 173 },
+    
+    { "order": 74, "name": "Lesson 17: Present System Passive; Agency", "category": "lesson", "unit": 5, "lesson": 17, "page": 179 },
+    { "order": 75, "name": "L17.1: Active and passive signs in the passive", "category": "section", "unit": 5, "lesson": 17, "section": 1, "page": 179 },
+    { "order": 76, "name": "L17.2: Final personal signs in the passive", "category": "section", "unit": 5, "lesson": 17, "section": 2, "page": 180 },
+    { "order": 77, "name": "L17.3: Present system passive of the first conjugation", "category": "section", "unit": 5, "lesson": 17, "section": 3, "page": 181 },
+    { "order": 78, "name": "L17.4: The ablative of agent", "category": "section", "unit": 5, "lesson": 17, "section": 4, "page": 185 },
+    
+    { "order": 79, "name": "Lesson 18: Present System Passive of Second Conjugation; Ablative of Means", "category": "lesson", "unit": 5, "lesson": 18, "page": 192 },
+    { "order": 80, "name": "L18.1: Present system passive of the second conjugation", "category": "section", "unit": 5, "lesson": 18, "section": 1, "page": 192 },
+    { "order": 81, "name": "L18.2: The ablative of means", "category": "section", "unit": 5, "lesson": 18, "section": 2, "page": 194 },
+    
+    { "order": 82, "name": "Lesson 19: Present System Passive of Third Conjugation", "category": "lesson", "unit": 5, "lesson": 19, "page": 197 },
+    { "order": 83, "name": "L19.1: Present system passive of the third conjugation", "category": "section", "unit": 5, "lesson": 19, "section": 1, "page": 197 },
+    { "order": 84, "name": "L19.2: Ablatives of agency and means compared", "category": "section", "unit": 5, "lesson": 19, "section": 2, "page": 199 },
+    
+    { "order": 85, "name": "Lesson 20: Present System Passive of Fourth Conjugation; Accompaniment", "category": "lesson", "unit": 5, "lesson": 20, "page": 202 },
+    { "order": 86, "name": "L20.1: Present system passive of the fourth conjugation", "category": "section", "unit": 5, "lesson": 20, "section": 1, "page": 202 },
+    { "order": 87, "name": "L20.2: Ablative of accompaniment", "category": "section", "unit": 5, "lesson": 20, "section": 2, "page": 203 },
+    
+    { "order": 88, "name": "Lesson 21: The Perfect System of the Indicative Passive", "category": "lesson", "unit": 5, "lesson": 21, "page": 208 },
+    
+    { "order": 89, "name": "Mastery Review Vocabulary No. 2 [Units Three, Four, and Five]", "category": "mastery_vocabulary", "unit": 5, "page": 217 },
+    
+    { "order": 90, "name": "Unit 6 Introduction", "category": "introduction", "unit": 6, "page": 221 },
+    
+    { "order": 91, "name": "Lesson 22: The Present Subjunctive", "category": "lesson", "unit": 6, "lesson": 22, "page": 221 },
+    { "order": 92, "name": "L22.1: The present subjunctive active", "category": "section", "unit": 6, "lesson": 22, "section": 1, "page": 221 },
+    { "order": 93, "name": "L22.2: Mood in purpose clauses", "category": "section", "unit": 6, "lesson": 22, "section": 2, "page": 223 },
+    { "order": 94, "name": "L22.3: Primary tenses", "category": "section", "unit": 6, "lesson": 22, "section": 3, "page": 225 },
+    { "order": 95, "name": "L22.4: Negative purpose clauses", "category": "section", "unit": 6, "lesson": 22, "section": 4, "page": 228 },
+    
+    { "order": 96, "name": "Lesson 23: The Imperfect Subjunctive Active", "category": "lesson", "unit": 6, "lesson": 23, "page": 232 },
+    { "order": 97, "name": "L23.1: Imperfect subjunctive active of the four conjugations", "category": "section", "unit": 6, "lesson": 23, "section": 1, "page": 232 },
+    { "order": 98, "name": "L23.2: Secondary tenses; imperfect subjunctive of sum", "category": "section", "unit": 6, "lesson": 23, "section": 2, "page": 235 },
+    { "order": 99, "name": "L23.3: Adjectives used as nouns", "category": "section", "unit": 6, "lesson": 23, "section": 3, "page": 237 },
+    
+    { "order": 100, "name": "Lesson 24: Relative Clauses; The Use of Ad", "category": "lesson", "unit": 6, "lesson": 24, "page": 241 },
+    { "order": 101, "name": "L24.1: Quī, quae, quod", "category": "section", "unit": 6, "lesson": 24, "section": 1, "page": 241 },
+    { "order": 102, "name": "L24.2: The use of ad", "category": "section", "unit": 6, "lesson": 24, "section": 2, "page": 246 },
+    { "order": 103, "name": "L24.3: Relative clauses of purpose", "category": "section", "unit": 6, "lesson": 24, "section": 3, "page": 248 },
+    { "order": 104, "name": "L24.4: Purpose clauses introduced by quō", "category": "section", "unit": 6, "lesson": 24, "section": 4, "page": 253 },
+    
+    { "order": 105, "name": "Unit 7 Introduction", "category": "introduction", "unit": 7, "page": 257 },
+    
+    { "order": 106, "name": "Lesson 25: Direct Questions", "category": "lesson", "unit": 7, "lesson": 25, "page": 257 },
+    { "order": 107, "name": "L25.1: Interrogative adverbs", "category": "section", "unit": 7, "lesson": 25, "section": 1, "page": 257 },
+    { "order": 108, "name": "L25.2: Interrogative particles", "category": "section", "unit": 7, "lesson": 25, "section": 2, "page": 260 },
+    { "order": 109, "name": "L25.3: The interrogative pronoun", "category": "section", "unit": 7, "lesson": 25, "section": 3, "page": 269 },
+    { "order": 110, "name": "L25.4: The interrogative adjective", "category": "section", "unit": 7, "lesson": 25, "section": 4, "page": 271 },
+    
+    { "order": 111, "name": "Lesson 26: The Perfect System Active of the Subjunctive", "category": "lesson", "unit": 7, "lesson": 26, "page": 274 },
+    { "order": 112, "name": "L26.1: Perfect and pluperfect subjunctive active", "category": "section", "unit": 7, "lesson": 26, "section": 1, "page": 274 },
+    { "order": 113, "name": "L26.2: Indirect and pluperfect subjunctive active", "category": "section", "unit": 7, "lesson": 26, "section": 2, "page": 280 },
+    { "order": 114, "name": "L26.3: Secondary questions; primary sequence", "category": "section", "unit": 7, "lesson": 26, "section": 3, "page": 281 },
+    
+    { "order": 115, "name": "Lesson 27: The Vocative; Imperative Mood", "category": "lesson", "unit": 8, "lesson": 27, "page": 286 },
+    { "order": 116, "name": "L27.1: The vocative", "category": "section", "unit": 8, "lesson": 27, "section": 1, "page": 286 },
+    { "order": 117, "name": "L27.2: Present imperative active", "category": "section", "unit": 8, "lesson": 27, "section": 2, "page": 289 },
+    { "order": 118, "name": "L27.3: The subjunctive in wishes and exhortations", "category": "section", "unit": 8, "lesson": 27, "section": 3, "page": 293 },
+    
+    { "order": 119, "name": "Lesson 28: Suus and Suī", "category": "lesson", "unit": 8, "lesson": 28, "page": 296 },
+    { "order": 120, "name": "L28.1: Suus and suī as direct reflexives", "category": "section", "unit": 8, "lesson": 28, "section": 1, "page": 296 },
+    { "order": 121, "name": "L28.2: Suus and suī as indirect reflexives", "category": "section", "unit": 8, "lesson": 28, "section": 2, "page": 300 },
+    
+    { "order": 122, "name": "Lesson 29: The Passive Subjunctive", "category": "lesson", "unit": 8, "lesson": 29, "page": 305 },
+    { "order": 123, "name": "L29.1: Present and imperfect subjunctive passive", "category": "section", "unit": 8, "lesson": 29, "section": 1, "page": 305 },
+    { "order": 124, "name": "L29.2: The perfect system of the passive subjunctive", "category": "section", "unit": 8, "lesson": 29, "section": 2, "page": 309 },
+    { "order": 125, "name": "L29.3: The ablative of cause", "category": "section", "unit": 8, "lesson": 29, "section": 3, "page": 314 },
+    
+    { "order": 126, "name": "Lesson 30: Hic, Haec, Hoc", "category": "lesson", "unit": 9, "lesson": 30, "page": 317 },
+    { "order": 127, "name": "L30.1: The declension of hic, haec, hoc", "category": "section", "unit": 9, "lesson": 30, "section": 1, "page": 317 },
+    { "order": 128, "name": "L30.2: Uses of hic, haec, hoc", "category": "section", "unit": 9, "lesson": 30, "section": 2, "page": 319 },
+    
+    { "order": 129, "name": "Lesson 31: The Prepositions Ex (Ē), Ab (Ā)", "category": "lesson", "unit": 9, "lesson": 31, "page": 325 },
+    
+    { "order": 130, "name": "Lesson 32: Ille and Is", "category": "lesson", "unit": 9, "lesson": 32, "page": 331 },
+    
+    { "order": 131, "name": "Lesson 33: Ablative Constructions", "category": "lesson", "unit": 9, "lesson": 33, "page": 336 },
+    { "order": 132, "name": "L33.1: The ablative of separation", "category": "section", "unit": 9, "lesson": 33, "section": 1, "page": 336 },
+    { "order": 133, "name": "L33.2: Review of ablative constructions", "category": "section", "unit": 9, "lesson": 33, "section": 2, "page": 341 },
+    
+    { "order": 134, "name": "Lesson 34: Possum; The Infinitive in Noun Constructions", "category": "lesson", "unit": 10, "lesson": 34, "page": 345 },
+    { "order": 135, "name": "L34.1: Indicative of possum", "category": "section", "unit": 10, "lesson": 34, "section": 1, "page": 345 },
+    { "order": 136, "name": "L34.2: The infinitive of purpose, predicate noun, and object", "category": "section", "unit": 10, "lesson": 34, "section": 2, "page": 351 },
+    { "order": 137, "name": "L34.3: Subjunctive of possum", "category": "section", "unit": 10, "lesson": 34, "section": 3, "page": 352 },
+    { "order": 138, "name": "L34.4: The infinitive with subject accusative", "category": "section", "unit": 10, "lesson": 34, "section": 4, "page": 360 },
+    
+    { "order": 139, "name": "Lesson 35: Numerals; Irregular Adjectives", "category": "lesson", "unit": 10, "lesson": 35, "page": 363 },
+    { "order": 140, "name": "L35.1: Numerals", "category": "section", "unit": 10, "lesson": 35, "section": 1, "page": 363 },
+    { "order": 141, "name": "L35.2: Adjectives with irregular endings", "category": "section", "unit": 10, "lesson": 35, "section": 2, "page": 370 },
+    
+    { "order": 142, "name": "Lesson 36: -Iō Verbs; Verbs for Time", "category": "lesson", "unit": 11, "lesson": 36, "page": 374 },
+    { "order": 143, "name": "L36.1: Indicative active of -iō verbs", "category": "section", "unit": 11, "lesson": 36, "section": 1, "page": 374 },
+    { "order": 144, "name": "L36.2: Time when", "category": "section", "unit": 11, "lesson": 36, "section": 2, "page": 381 },
+    { "order": 145, "name": "L36.3: Subjunctive active and space", "category": "section", "unit": 11, "lesson": 36, "section": 3, "page": 386 },
+    { "order": 146, "name": "L36.4: Extent of time and space", "category": "section", "unit": 11, "lesson": 36, "section": 4, "page": 389 },
+    { "order": 147, "name": "L36.5: Indicative passive of -iō verbs", "category": "section", "unit": 11, "lesson": 36, "section": 5, "page": 393 },
+    { "order": 148, "name": "L36.6: Time within which", "category": "section", "unit": 11, "lesson": 36, "section": 6, "page": 396 },
+    { "order": 149, "name": "L36.7: Subjunctive passive of -iō verbs", "category": "section", "unit": 11, "lesson": 36, "section": 7, "page": 398 },
+    
+    { "order": 150, "name": "Lesson 37: Dative Verbs; The Passive of Verbs of Calling", "category": "lesson", "unit": 11, "lesson": 37, "page": 403 },
+    
+    { "order": 151, "name": "Lesson 38: The Accusative with the Infinitive", "category": "lesson", "unit": 12, "lesson": 38, "page": 407 },
+    { "order": 152, "name": "L38.1: Perfect and future infinitives active", "category": "section", "unit": 12, "lesson": 38, "section": 1, "page": 407 },
+    { "order": 153, "name": "L38.2: Accusative with the infinitive (part 1)", "category": "section", "unit": 12, "lesson": 38, "section": 2, "page": 412 },
+    { "order": 154, "name": "L38.3: Accusative with the infinitive (part 2)", "category": "section", "unit": 12, "lesson": 38, "section": 3, "page": 414 },
+    { "order": 155, "name": "L38.4: Passive infinitives", "category": "section", "unit": 12, "lesson": 38, "section": 4, "page": 420 },
+    
+    { "order": 156, "name": "Lesson 39: The Comparison of Adjectives", "category": "lesson", "unit": 13, "lesson": 39, "page": 428 },
+    { "order": 157, "name": "L39.1: Regular comparison of adjectives", "category": "section", "unit": 13, "lesson": 39, "section": 1, "page": 428 },
+    { "order": 158, "name": "L39.2: Declension of comparative and superlative adjectives", "category": "section", "unit": 13, "lesson": 39, "section": 2, "page": 434 },
+    { "order": 159, "name": "L39.3: The ablative of comparison", "category": "section", "unit": 13, "lesson": 39, "section": 3, "page": 435 },
+    { "order": 160, "name": "L39.4: Irregular comparatives and superlatives", "category": "section", "unit": 13, "lesson": 39, "section": 4, "page": 439 },
+    
+    { "order": 161, "name": "Lesson 40: Deponent Verbs", "category": "lesson", "unit": 13, "lesson": 40, "page": 440 },
+    { "order": 162, "name": "L40.1: Indicative of deponent verbs", "category": "section", "unit": 13, "lesson": 40, "section": 1, "page": 440 },
+    { "order": 163, "name": "L40.2: Subjunctive of deponent verbs", "category": "section", "unit": 13, "lesson": 40, "section": 2, "page": 445 },
+    { "order": 164, "name": "L40.3: Perfect participle of deponent verbs", "category": "section", "unit": 13, "lesson": 40, "section": 3, "page": 448 },
+    { "order": 165, "name": "L40.4: Infinitives of deponent verbs", "category": "section", "unit": 13, "lesson": 40, "section": 4, "page": 450 },
+    
+    { "order": 166, "name": "Lesson 41: The Irregular Verb Eō", "category": "lesson", "unit": 14, "lesson": 41, "page": 453 },
+    { "order": 167, "name": "L41.1: Indicative of eō", "category": "section", "unit": 14, "lesson": 41, "section": 1, "page": 453 },
+    { "order": 168, "name": "L41.2: Subjunctive of eō", "category": "section", "unit": 14, "lesson": 41, "section": 2, "page": 457 },
+    { "order": 169, "name": "L41.3: Infinitives of eō", "category": "section", "unit": 14, "lesson": 41, "section": 3, "page": 460 },
+    
+    { "order": 170, "name": "Mastery Review Vocabulary No. 3 [Units Six-Fourteen]", "category": "mastery_vocabulary", "unit": 14, "page": 464 }
+  ],
+  "metadata": {
+    "createdAt": "2026-01-25",
+    "updatedAt": "2026-01-25",
+    "notes": "Henle Latin First Year is a rigorous, traditional approach to Latin grammar. The Grammar companion book (blue cover) is a reference text, not a sequential curriculum - it should be used alongside the First Year text as needed for grammar explanations. This config covers the First Year text only."
+  }
+}

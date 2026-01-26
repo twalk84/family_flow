@@ -920,6 +920,41 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1F2937),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.white12),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(Icons.mood, size: 18, color: Colors.white70),
+                          SizedBox(width: 8),
+                          Text(
+                            'Mood',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      if (uid == null)
+                        const Text(
+                          'You must be signed in to set mood.',
+                          style: TextStyle(color: Colors.redAccent),
+                        )
+                      else
+                        MoodPicker(value: mood, onChanged: (m) => _setMood(m)),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
                 _WalletPreviewCard(student: student),
 
                 const SizedBox(height: 16),
@@ -1029,6 +1064,27 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                 ),
                                 const Text(
                                   'Best',
+                                  style: TextStyle(
+                                    color: Colors.white60,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  '+${(student.streakBonusPercent * 100).round()}%',
+                                  style: const TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.greenAccent,
+                                  ),
+                                ),
+                                const Text(
+                                  'Bonus',
                                   style: TextStyle(
                                     color: Colors.white60,
                                     fontSize: 12,
@@ -1724,40 +1780,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                   },
                 ),
 
-                const SizedBox(height: 16),
-
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1F2937),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: const [
-                          Icon(Icons.mood, size: 18, color: Colors.white70),
-                          SizedBox(width: 8),
-                          Text(
-                            'Mood',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      if (uid == null)
-                        const Text(
-                          'You must be signed in to set mood.',
-                          style: TextStyle(color: Colors.redAccent),
-                        )
-                      else
-                        MoodPicker(value: mood, onChanged: (m) => _setMood(m)),
-                    ],
-                  ),
-                ),
 
                 if (student.notes.isNotEmpty) ...[
                   const SizedBox(height: 16),

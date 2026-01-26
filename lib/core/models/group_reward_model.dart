@@ -66,10 +66,14 @@ class GroupReward {
   }
 
   /// Get list of students who have contributed
-  List<String> get contributors => studentContributions.keys.toList();
+  List<String> get contributors => studentContributions.entries
+      .where((e) => e.value > 0)
+      .map((e) => e.key)
+      .toList();
 
   /// Get number of students who have contributed
-  int get contributorCount => studentContributions.length;
+  int get contributorCount =>
+      studentContributions.values.where((v) => v > 0).length;
 
   /// Check if student is expired
   bool get isExpired {

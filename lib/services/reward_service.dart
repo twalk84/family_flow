@@ -708,8 +708,19 @@ class RewardService {
     required String groupRewardId,
     required Map<String, int> studentContributions,
   }) async {
+    int totalContributed = 0;
+    final cleanedContributions = <String, int>{};
+
+    for (final entry in studentContributions.entries) {
+      if (entry.value > 0) {
+        totalContributed += entry.value;
+        cleanedContributions[entry.key] = entry.value;
+      }
+    }
+
     await FirestorePaths.groupRewardDoc(groupRewardId).update({
-      'studentContributions': studentContributions,
+      'studentContributions': cleanedContributions,
+      'pointsContributed': totalContributed,
       'updatedAt': FieldValue.serverTimestamp(),
     });
   }
