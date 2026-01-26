@@ -3,11 +3,13 @@
 // Student rewards page - wallet hub, reward store, navigation to history.
 // Only shows rewards assigned to the current student.
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models.dart';
 import '../core/models/reward_models.dart';
 import '../services/reward_service.dart';
+import '../firestore_paths.dart';
 import 'points_history_screen.dart';
 import 'my_claims_screen.dart';
 import 'group_rewards_tab.dart';
@@ -25,13 +27,8 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> with TickerProviderStateMixin {
-  // ...existing code...
   final _rewardService = RewardService.instance;
   late TabController _tabController;
-  
-  // Point allocation tracking: rewardId -> points allocated
-  final Map<String, int> _allocations = {};
-  int _totalAllocated = 0;
 
   @override
   void initState() {
@@ -45,180 +42,21 @@ class _RewardsPageState extends State<RewardsPage> with TickerProviderStateMixin
     super.dispose();
   }
 
-  void _updateAllocation(String rewardId, int points) {
-    setState(() {
-      if (points <= 0) {
-        _allocations.remove(rewardId);
-      } else {
-        _allocations[rewardId] = points;
-      }
-      _totalAllocated = _allocations.values.fold(0, (a, b) => a + b);
-    });
-  }
-
-  void _showPointAllocationDialog(Reward reward, int balance) {
-    int allocatedPoints = _allocations[reward.id] ?? 0;
-    TextEditingController controller = TextEditingController(text: allocatedPoints.toString());
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1F2937),
-        title: Text('Allocate Points to ${reward.name}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Reward cost: ${reward.pointCost} points',
-              style: const TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Available: ${balance - _totalAllocated + allocatedPoints} points',
-              style: const TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Points to allocate',
-                hintText: '0 - ${balance - _totalAllocated + allocatedPoints}',
-                border: const OutlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              _updateAllocation(reward.id, 0);
-              Navigator.pop(context);
-            },
-            child: const Text('Clear'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.purple,
-            ),
-            onPressed: () {
-              final points = int.tryParse(controller.text) ?? 0;
-              final maxAvailable = balance - _totalAllocated + allocatedPoints;
-              if (points < 0) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Cannot allocate negative points')),
-                );
-                return;
-              }
-              if (points > maxAvailable) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Only $maxAvailable points available')),
-                );
-                return;
-              }
-              _updateAllocation(reward.id, points);
-              Navigator.pop(context);
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showAllocationSummary(int balance) {
-    if (_allocations.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No points allocated yet')),
-      );
-      return;
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1F2937),
-        title: const Text('Confirm Point Allocations'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Current balance: $balance points',
-                style: const TextStyle(color: Colors.white70),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Total allocating: $_totalAllocated points',
-                style: const TextStyle(
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Remaining: ${balance - _totalAllocated} points',
-                style: const TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text('Allocations:', style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              ..._allocations.entries.map((entry) {
-                return Text(
-                  '• ${entry.key}: ${entry.value} points',
-                  style: const TextStyle(color: Colors.white70),
-                );
-              }).toList(),
-            ],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-            ),
-            onPressed: () async {
-              Navigator.pop(context);
-              await _applyAllocations();
-            },
-            child: const Text('Confirm All'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _applyAllocations() async {
+  Future<void> _updateAllocation(Reward reward, int currentAllocation, int newAmount, int balance) async {
     try {
-      for (final entry in _allocations.entries) {
-        final rewardId = entry.key;
-
-        // Claim the reward
-        await _rewardService.claimReward(
-          studentId: widget.student.id,
-          studentName: widget.student.name,
-          rewardId: rewardId,
-        );
-      }
-
+      await _rewardService.setAllocation(
+        studentId: widget.student.id,
+        rewardId: reward.id,
+        rewardName: reward.name,
+        newAmount: newAmount,
+      );
+      
       if (!mounted) return;
-      setState(() => _allocations.clear());
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Rewards claimed successfully!'),
+        SnackBar(
+          content: Text('Allocation updated for ${reward.name}'),
           backgroundColor: Colors.green,
+          duration: const Duration(milliseconds: 1500),
         ),
       );
     } catch (e) {
@@ -230,6 +68,106 @@ class _RewardsPageState extends State<RewardsPage> with TickerProviderStateMixin
         ),
       );
     }
+  }
+
+  void _showPointAllocationDialog(Reward reward, int balance, int currentAllocation) {
+    TextEditingController controller = TextEditingController(text: currentAllocation.toString());
+    // Points available to allocate = Wallet Balance (because allocated points are already deducted)
+    // Wait, if I am increasing allocation, I need more points from wallet.
+    // If I am decreasing, I get points back.
+    // So "Max Available" for NEW allocation = Current Allocation + Wallet Balance.
+    final maxPotentialAllocation = currentAllocation + balance;
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        scrollable: true,
+        backgroundColor: const Color(0xFF1F2937),
+        title: Text('Allocate Points to ${reward.name}'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Reward cost: ${reward.pointCost} points',
+              style: const TextStyle(color: Colors.white70),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Currently allocated: $currentAllocation points',
+              style: const TextStyle(color: Colors.white70),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Wallet balance: $balance points',
+              style: const TextStyle(color: Colors.white70),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Total to allocate',
+                // Max is reward cost or what they can afford
+                hintText: '0 - ${reward.pointCost < maxPotentialAllocation ? reward.pointCost : maxPotentialAllocation}',
+                border: const OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          if (currentAllocation > 0)
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _updateAllocation(reward, currentAllocation, 0, balance);
+              },
+              child: const Text('Clear Allocation', style: TextStyle(color: Colors.redAccent)),
+            ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+            ),
+            onPressed: () {
+              final points = int.tryParse(controller.text) ?? 0;
+              final maxAffordable = maxPotentialAllocation;
+              
+              if (points < 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Cannot allocate negative points')),
+                );
+                return;
+              }
+              if (points > reward.pointCost) {
+                 ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Cannot allocate more than cost (${reward.pointCost})')),
+                );
+                return;
+              }
+              if (points > maxAffordable) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Not enough points (Max: $maxAffordable)')),
+                );
+                return;
+              }
+              
+              if (points == currentAllocation) {
+                Navigator.pop(context);
+                return;
+              }
+
+              Navigator.pop(context);
+              _updateAllocation(reward, currentAllocation, points, balance);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showClaimConfirmation(Reward reward, int balance) {
@@ -332,100 +270,88 @@ class _RewardsPageState extends State<RewardsPage> with TickerProviderStateMixin
   }
 
   Widget _buildIndividualRewardsTab() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxW = constraints.maxWidth;
-        final targetW = maxW > 600 ? 600.0 : maxW;
+    // Wrap in StreamBuilder to get real-time student updates (for rewardAllocations)
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirestorePaths.studentDoc(widget.student.id).snapshots(),
+      builder: (context, studentSnap) {
+        if (!studentSnap.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        // Parse latest student data
+        final currentStudent = Student.fromDoc(studentSnap.data as DocumentSnapshot<Map<String, dynamic>>);
+        
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final maxW = constraints.maxWidth;
+            final targetW = maxW > 600 ? 600.0 : maxW;
 
-        return Align(
-          alignment: Alignment.topCenter,
-          child: SizedBox(
-            width: targetW,
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                // Wallet Card
-                _WalletCard(studentId: widget.student.id),
-                const SizedBox(height: 20),
-
-                // Available Rewards
-                const Text(
-                  'Available Rewards',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                _RewardsList(
-                  studentId: widget.student.id,
-                  onAllocate: _showPointAllocationDialog,
-                  allocations: _allocations,
-                ),
-                const SizedBox(height: 12),
-                // Confirm allocations button
-                StreamBuilder<int>(
-                  stream: RewardService.instance.streamWalletBalance(widget.student.id),
-                  builder: (context, balanceSnap) {
-                    final balance = balanceSnap.data ?? 0;
-                    return SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Icons.check),
-                        label: Text(
-                          _totalAllocated > 0
-                              ? 'Confirm Allocations ($_totalAllocated points)'
-                              : 'No allocations yet',
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: _totalAllocated > 0 ? Colors.green : Colors.grey,
-                        ),
-                        onPressed: _totalAllocated > 0
-                            ? () => _showAllocationSummary(balance)
-                            : null,
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-
-                // Navigation buttons
-                Row(
+            return Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: targetW,
+                child: ListView(
+                  padding: const EdgeInsets.all(16),
                   children: [
-                    Expanded(
-                      child: _NavButton(
-                        icon: Icons.history,
-                        label: 'Points History',
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => PointsHistoryScreen(
-                              student: widget.student,
-                            ),
-                          ),
-                        ),
+                    // Wallet Card
+                    _WalletCard(student: currentStudent),
+                    const SizedBox(height: 20),
+
+                    // Available Rewards
+                    const Text(
+                      'Available Rewards',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: _NavButton(
-                        icon: Icons.card_giftcard,
-                        label: 'My Claims',
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => MyClaimsScreen(
-                              student: widget.student,
+                    const SizedBox(height: 12),
+                    _RewardsList(
+                      student: currentStudent,
+                      onAllocate: _showPointAllocationDialog,
+                      onClaim: _showClaimConfirmation,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Navigation buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _NavButton(
+                            icon: Icons.history,
+                            label: 'Points History',
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PointsHistoryScreen(
+                                  student: widget.student,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _NavButton(
+                            icon: Icons.card_giftcard,
+                            label: 'My Claims',
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => MyClaimsScreen(
+                                  student: widget.student,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
@@ -437,66 +363,61 @@ class _RewardsPageState extends State<RewardsPage> with TickerProviderStateMixin
 // ========================================
 
 class _WalletCard extends StatelessWidget {
-  final String studentId;
+  final Student student;
 
-  const _WalletCard({required this.studentId});
+  const _WalletCard({required this.student});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-      stream: RewardService.instance.streamWalletBalance(studentId),
-      builder: (context, balanceSnap) {
-        final balance = balanceSnap.data ?? 0;
+    final balance = student.walletBalance;
 
-        return Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.purple.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Text(
+            '💰 WALLET',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 2,
+              color: Colors.white70,
             ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.purple.withOpacity(0.3),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
-              ),
-            ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text(
-                '💰 WALLET',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 2,
-                  color: Colors.white70,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                '$balance',
-                style: const TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              const Text(
-                'points',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white70,
-                ),
-              ),
-            ],
+          const SizedBox(height: 12),
+          Text(
+            '$balance',
+            style: const TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
-        );
-      },
+          const Text(
+            'points',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white70,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -506,62 +427,59 @@ class _WalletCard extends StatelessWidget {
 // ========================================
 
 class _RewardsList extends StatelessWidget {
-  final String studentId;
-  final void Function(Reward reward, int balance) onAllocate;
-  final Map<String, int> allocations;
+  final Student student;
+  final void Function(Reward reward, int balance, int currentAllocation) onAllocate;
+  final void Function(Reward reward, int balance) onClaim;
 
   const _RewardsList({
-    required this.studentId,
+    required this.student,
     required this.onAllocate,
-    required this.allocations,
+    required this.onClaim,
   });
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-      stream: RewardService.instance.streamWalletBalance(studentId),
-      builder: (context, balanceSnap) {
-        final balance = balanceSnap.data ?? 0;
+    final balance = student.walletBalance;
+    final allocations = student.rewardAllocations;
 
-        // Use the student-filtered stream
-        return StreamBuilder<List<Reward>>(
-          stream: RewardService.instance.streamActiveRewardsForStudent(studentId),
-          builder: (context, rewardsSnap) {
-            if (rewardsSnap.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    // Use the student-filtered stream
+    return StreamBuilder<List<Reward>>(
+      stream: RewardService.instance.streamActiveRewardsForStudent(student.id),
+      builder: (context, rewardsSnap) {
+        if (rewardsSnap.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-            final rewards = rewardsSnap.data ?? [];
+        final rewards = rewardsSnap.data ?? [];
 
-            if (rewards.isEmpty) {
-              return Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1F2937),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white12),
-                ),
-                child: const Center(
-                  child: Text(
-                    'No rewards available yet.\nAsk your parent to add some!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white60),
-                  ),
-                ),
-              );
-            }
+        if (rewards.isEmpty) {
+          return Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1F2937),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white12),
+            ),
+            child: const Center(
+              child: Text(
+                'No rewards available yet.\nAsk your parent to add some!',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white60),
+              ),
+            ),
+          );
+        }
 
-            return Column(
-              children: rewards.map((reward) {
-                return _RewardCard(
-                  reward: reward,
-                  balance: balance,
-                  allocatedPoints: allocations[reward.id] ?? 0,
-                  onAllocate: () => onAllocate(reward, balance),
-                );
-              }).toList(),
+        return Column(
+          children: rewards.map((reward) {
+            return _RewardCard(
+              reward: reward,
+              balance: balance,
+              allocatedPoints: allocations[reward.id] ?? 0,
+              onAllocate: () => onAllocate(reward, balance, allocations[reward.id] ?? 0),
+              onClaim: () => onClaim(reward, balance),
             );
-          },
+          }).toList(),
         );
       },
     );
@@ -577,12 +495,14 @@ class _RewardCard extends StatelessWidget {
   final int balance;
   final int allocatedPoints;
   final VoidCallback onAllocate;
+  final VoidCallback onClaim;
 
   const _RewardCard({
     required this.reward,
     required this.balance,
     required this.allocatedPoints,
     required this.onAllocate,
+    required this.onClaim,
   });
 
   Color get _tierColor {
@@ -601,7 +521,18 @@ class _RewardCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final canAfford = reward.canAfford(balance);
-    final pointsNeeded = reward.pointsNeeded(balance);
+    // Needed: cost - allocated. If allocated > cost (shouldn't happen), then 0 needed.
+    // Wait, reward.pointsNeeded(balance) uses wallet balance.
+    // We want to show how much MORE is needed.
+    // Points needed = Reward Cost - Allocated - Wallet Balance.
+    // But points are already deducted from wallet when allocated.
+    // So if Cost=100, Allocated=40, Wallet=10.
+    // User has effectively 50 points (40 already paid, 10 available).
+    // Needed = 100 - 40 - 10 = 50.
+    
+    final remainingCost = reward.pointCost - allocatedPoints;
+    final actuallyCanAfford = balance >= remainingCost;
+    final pointsShort = remainingCost - balance;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -661,13 +592,26 @@ class _RewardCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 2),
-                      Text(
-                        '${reward.pointCost - allocatedPoints} remaining',
-                        style: const TextStyle(
-                          color: Colors.green,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            '$allocatedPoints allocated',
+                            style: const TextStyle(
+                              color: Colors.purpleAccent,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          if (remainingCost > 0)
+                            Text(
+                              '$remainingCost left',
+                              style: const TextStyle(
+                                color: Colors.white70,
+                                fontSize: 12,
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   )
@@ -678,11 +622,25 @@ class _RewardCard extends StatelessWidget {
                       color: Colors.white70,
                     ),
                   ),
-                if (!canAfford && allocatedPoints == 0)
+                  
+                if (!actuallyCanAfford && allocatedPoints == 0)
+                   // Fallback logic if nothing allocated
+                   Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      'Need ${reward.pointCost - balance} more',
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  )
+                else if (!actuallyCanAfford)
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      'Need $pointsNeeded more',
+                      'Need $pointsShort more',
                       style: const TextStyle(
                         color: Colors.orange,
                         fontSize: 11,
@@ -690,6 +648,7 @@ class _RewardCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
                 if (reward.description.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
@@ -707,14 +666,33 @@ class _RewardCard extends StatelessWidget {
           ),
 
           // Allocate button (always visible)
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.purple,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            ),
-            onPressed: onAllocate,
-            child: const Text('Allocate'),
+          Column(
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                ),
+                onPressed: onAllocate,
+                child: const Text('Allocate'),
+              ),
+              if (allocatedPoints > 0 && actuallyCanAfford)
+                 Padding(
+                   padding: const EdgeInsets.only(top: 8),
+                   child: SizedBox(
+                     height: 30,
+                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                        ),
+                        onPressed: onClaim,
+                        child: const Text('Claim', style: TextStyle(fontSize: 12)),
+                     ),
+                   ),
+                 ),
+            ],
           ),
         ],
       ),

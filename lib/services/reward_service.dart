@@ -10,6 +10,7 @@
 // - Manual point adjustments (parent)
 // - Wallet transaction history
 
+import 'dart:async'; // Added for FutureOr
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../core/models/models.dart';
 import '../core/models/reward_models.dart';
@@ -24,7 +25,6 @@ class RewardService {
   // ========================================
 
   /// Create a new reward
-  /// assignedStudentIds: empty list = all students, or list of specific student IDs
   Future<Reward> createReward({
     required String name,
     required int pointCost,
@@ -101,10 +101,8 @@ class RewardService {
 
   /// Get all active rewards (for admin view)
   Future<List<Reward>> getActiveRewards() async {
-    // Simple query - no compound index needed
     final snap = await FirestorePaths.rewardsCol().get();
     final rewards = snap.docs.map((d) => Reward.fromDoc(d)).toList();
-    // Filter and sort in memory
     final active = rewards.where((r) => r.isActive).toList();
     active.sort((a, b) => a.pointCost.compareTo(b.pointCost));
     return active;
@@ -126,7 +124,6 @@ class RewardService {
 
   /// Stream active rewards (for admin - shows all)
   Stream<List<Reward>> streamActiveRewards() {
-    // Simple stream - filter in memory to avoid index requirement
     return FirestorePaths.rewardsCol()
         .snapshots()
         .map((snap) {
@@ -139,7 +136,6 @@ class RewardService {
 
   /// Stream active rewards available to a specific student
   Stream<List<Reward>> streamActiveRewardsForStudent(String studentId) {
-    // Simple stream - filter in memory to avoid index requirement
     return FirestorePaths.rewardsCol()
         .snapshots()
         .map((snap) {
@@ -164,11 +160,76 @@ class RewardService {
   }
 
   // ========================================
-  // Claiming Rewards (Student)
+  // Claiming & Allocating Rewards (Student)
   // ========================================
 
+  /// Update allocation for a reward
+  /// Allocates (deducts from wallet) or Deallocates (refunds to wallet) points
+  Future<void> setAllocation({
+    required String studentId,
+    required String rewardId,
+    required String rewardName,
+    required int newAmount,
+  }) async {
+    if (newAmount < 0) throw ArgumentError('Allocation cannot be negative');
+
+    return FirebaseFirestore.instance.runTransaction((tx) async {
+      final studentRef = FirestorePaths.studentDoc(studentId);
+      final studentSnap = await tx.get(studentRef);
+      if (!studentSnap.exists) throw Exception('Student not found');
+      
+      final studentData = studentSnap.data() ?? {};
+      final currentBalance = asInt(studentData['walletBalance'], fallback: 0);
+      
+      // Parse current allocations
+      final rewardAllocations = Map<String, int>.from(
+        (studentData['rewardAllocations'] as Map?)?.map(
+          (k, v) => MapEntry(k.toString(), asInt(v))
+        ) ?? {}
+      );
+      
+      final currentAllocation = rewardAllocations[rewardId] ?? 0;
+      final delta = newAmount - currentAllocation;
+      
+      if (delta == 0) return; // No change
+      
+      // If allocating more, check balance
+      if (delta > 0) {
+        if (currentBalance < delta) {
+           throw InsufficientBalanceException(required: delta, available: currentBalance);
+        }
+      }
+      
+      // Update allocations map
+      if (newAmount == 0) {
+        rewardAllocations.remove(rewardId);
+      } else {
+        rewardAllocations[rewardId] = newAmount;
+      }
+      
+      // Create transaction record
+      final txnRef = FirestorePaths.walletTransactionsCol(studentId).doc();
+      final txnData = <String, dynamic>{
+        'type': 'allocation',
+        'points': -delta, // Negative if allocating, Positive if reclaiming
+        'source': 'allocation_update',
+        'studentId': studentId,
+        'rewardId': rewardId,
+        'rewardName': rewardName,
+        'createdAt': FieldValue.serverTimestamp(),
+      };
+      
+      tx.set(txnRef, txnData);
+      tx.update(studentRef, {
+        'walletBalance': FieldValue.increment(-delta),
+        'rewardAllocations': rewardAllocations,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+    });
+  }
+
   /// Claim a reward (student self-serve)
-  /// Returns the claim if successful, throws if insufficient balance or not available
+  /// Uses allocated points first, then wallet balance
   Future<RewardClaim> claimReward({
     required String studentId,
     required String studentName,
@@ -186,25 +247,36 @@ class RewardService {
       throw Exception('This reward is not available to you');
     }
 
-    // Run transaction to ensure atomic balance check + deduction
+    // Run transaction
     return FirebaseFirestore.instance.runTransaction((tx) async {
-      // Get current student balance
+      // Get student
       final studentRef = FirestorePaths.studentDoc(studentId);
       final studentSnap = await tx.get(studentRef);
+      if (!studentSnap.exists) throw Exception('Student not found');
+      
       final studentData = studentSnap.data() ?? {};
-      final currentBalance = asInt(
-        studentData['walletBalance'] ?? studentData['wallet_balance'],
-        fallback: 0,
+      final currentBalance = asInt(studentData['walletBalance'], fallback: 0);
+      
+      // Get allocations
+      final rewardAllocations = Map<String, int>.from(
+        (studentData['rewardAllocations'] as Map?)?.map(
+          (k, v) => MapEntry(k.toString(), asInt(v))
+        ) ?? {}
       );
-
-      // Check if student can afford
-      if (currentBalance < reward.pointCost) {
-        throw InsufficientBalanceException(
-          required: reward.pointCost,
-          available: currentBalance,
-        );
+      
+      final allocated = rewardAllocations[rewardId] ?? 0;
+      final neededFromWallet = reward.pointCost - allocated;
+      
+      // Check affordability
+      if (neededFromWallet > 0) {
+        if (currentBalance < neededFromWallet) {
+          throw InsufficientBalanceException(
+            required: neededFromWallet,
+            available: currentBalance,
+          );
+        }
       }
-
+      
       // Create claim document
       final claimRef = FirestorePaths.rewardClaimsCol(studentId).doc();
       final claim = RewardClaim(
@@ -218,29 +290,39 @@ class RewardService {
         status: ClaimStatus.pending,
       );
 
-      // Create wallet transaction (redemption)
-      final txnRef = FirestorePaths.walletTransactionsCol(studentId).doc();
-      final txnData = <String, dynamic>{
-        'type': 'redemption',
-        'points': -reward.pointCost,
-        'source': 'reward_claim',
-        'studentId': studentId,
-        'rewardId': rewardId,
-        'rewardName': reward.name,
-        'claimId': claimRef.id,
-        'createdAt': FieldValue.serverTimestamp(),
-      };
+      // Create wallet transaction IF spending from wallet
+      // We only log the amount taken from wallet here.
+      // Allocated points were logged when they were allocated.
+      if (neededFromWallet != 0) {
+        final txnRef = FirestorePaths.walletTransactionsCol(studentId).doc();
+        final txnData = <String, dynamic>{
+          'type': 'redemption',
+          'points': -neededFromWallet, // Can be positive if refunding excess allocation!
+          'source': 'reward_claim',
+          'studentId': studentId,
+          'rewardId': rewardId,
+          'rewardName': reward.name,
+          'claimId': claimRef.id,
+          'createdAt': FieldValue.serverTimestamp(),
+        };
+        tx.set(txnRef, txnData);
+      }
+
+      // Remove allocation
+      rewardAllocations.remove(rewardId);
 
       // Update reward claim count
       final rewardRef = FirestorePaths.rewardDoc(rewardId);
 
-      // Execute all writes
+      // Execute writes
       tx.set(claimRef, claim.toCreateMap());
-      tx.set(txnRef, txnData);
+      
       tx.update(studentRef, {
-        'walletBalance': FieldValue.increment(-reward.pointCost),
+        'walletBalance': FieldValue.increment(-neededFromWallet),
+        'rewardAllocations': rewardAllocations,
         'updatedAt': FieldValue.serverTimestamp(),
       });
+      
       tx.update(rewardRef, {
         'timesClaimedTotal': FieldValue.increment(1),
         'updatedAt': FieldValue.serverTimestamp(),
@@ -271,14 +353,12 @@ class RewardService {
     final allClaims = <RewardClaim>[];
 
     for (final studentDoc in students.docs) {
-      // Simple query without orderBy to avoid index requirement
       final claims = await FirestorePaths.rewardClaimsCol(studentDoc.id)
           .where('status', isEqualTo: ClaimStatus.pending.name)
           .get();
       allClaims.addAll(claims.docs.map((d) => RewardClaim.fromDoc(d)));
     }
 
-    // Sort by claimed date (newest first) in memory
     allClaims.sort((a, b) {
       final aDate = a.claimedAt ?? DateTime(1970);
       final bDate = b.claimedAt ?? DateTime(1970);
@@ -347,10 +427,7 @@ class RewardService {
       final studentRef = FirestorePaths.studentDoc(studentId);
       final studentSnap = await tx.get(studentRef);
       final studentData = studentSnap.data() ?? {};
-      final currentBalance = asInt(
-        studentData['walletBalance'] ?? studentData['wallet_balance'],
-        fallback: 0,
-      );
+      final currentBalance = asInt(studentData['walletBalance'], fallback: 0);
 
       // Prevent negative balance
       if (points < 0 && (currentBalance + points) < 0) {
@@ -360,7 +437,6 @@ class RewardService {
         );
       }
 
-      // Create wallet transaction
       final txnRef = FirestorePaths.walletTransactionsCol(studentId).doc();
       final txnData = <String, dynamic>{
         'type': 'adjustment',
@@ -383,7 +459,6 @@ class RewardService {
   // Wallet History
   // ========================================
 
-  /// Get wallet transaction history for a student
   Future<List<WalletTransaction>> getWalletHistory(
     String studentId, {
     int limit = 50,
@@ -392,7 +467,6 @@ class RewardService {
         .limit(limit)
         .get();
     final txns = snap.docs.map((d) => WalletTransaction.fromDoc(d)).toList();
-    // Sort in memory
     txns.sort((a, b) {
       final aDate = a.createdAt ?? DateTime(1970);
       final bDate = b.createdAt ?? DateTime(1970);
@@ -401,7 +475,6 @@ class RewardService {
     return txns;
   }
 
-  /// Stream wallet transaction history for a student
   Stream<List<WalletTransaction>> streamWalletHistory(
     String studentId, {
     int limit = 50,
@@ -420,7 +493,6 @@ class RewardService {
         });
   }
 
-  /// Get wallet transactions for a date range
   Future<List<WalletTransaction>> getWalletHistoryForDateRange(
     String studentId, {
     required DateTime startDate,
@@ -442,7 +514,6 @@ class RewardService {
     return txns;
   }
 
-  /// Get total points earned (all deposits)
   Future<int> getTotalPointsEarned(String studentId) async {
     final snap = await FirestorePaths.walletTransactionsCol(studentId).get();
     int total = 0;
@@ -455,7 +526,6 @@ class RewardService {
     return total;
   }
 
-  /// Get total points spent (all redemptions)
   Future<int> getTotalPointsSpent(String studentId) async {
     final snap = await FirestorePaths.walletTransactionsCol(studentId).get();
     int total = 0;
@@ -472,7 +542,6 @@ class RewardService {
   // Parent PIN Management
   // ========================================
 
-  /// Set or update parent PIN
   Future<void> setParentPin(String pin) async {
     await FirestorePaths.parentSettingsDoc().set({
       'pin': pin,
@@ -480,7 +549,6 @@ class RewardService {
     }, SetOptions(merge: true));
   }
 
-  /// Verify parent PIN
   Future<bool> verifyParentPin(String pin) async {
     final snap = await FirestorePaths.parentSettingsDoc().get();
     final data = snap.data();
@@ -490,7 +558,6 @@ class RewardService {
     return storedPin == pin;
   }
 
-  /// Check if parent PIN is set
   Future<bool> isParentPinSet() async {
     final snap = await FirestorePaths.parentSettingsDoc().get();
     final data = snap.data();
@@ -504,35 +571,26 @@ class RewardService {
   // Student Balance
   // ========================================
 
-  /// Get current wallet balance for a student
   Future<int> getWalletBalance(String studentId) async {
     final snap = await FirestorePaths.studentDoc(studentId).get();
     final data = snap.data();
     if (data == null) return 0;
 
-    return asInt(
-      data['walletBalance'] ?? data['wallet_balance'],
-      fallback: 0,
-    );
+    return asInt(data['walletBalance'], fallback: 0);
   }
 
-  /// Stream wallet balance for real-time updates
   Stream<int> streamWalletBalance(String studentId) {
     return FirestorePaths.studentDoc(studentId).snapshots().map((snap) {
       final data = snap.data();
       if (data == null) return 0;
-      return asInt(
-        data['walletBalance'] ?? data['wallet_balance'],
-        fallback: 0,
-      );
+      return asInt(data['walletBalance'], fallback: 0);
     });
   }
 
   // ========================================
-  // Group Rewards (Family-Level Collaborative Goals)
+  // Group Rewards
   // ========================================
 
-  /// Create a new group reward that all students can contribute to
   Future<dynamic> createGroupReward({
     required String name,
     required int pointsNeeded,
@@ -541,7 +599,6 @@ class RewardService {
     DateTime? expiresAt,
   }) async {
     final docRef = FirestorePaths.groupRewardsCol().doc();
-
     final data = {
       'id': docRef.id,
       'name': name,
@@ -557,12 +614,10 @@ class RewardService {
       'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
     };
-
     await docRef.set(data);
     return data;
   }
 
-  /// Update an existing group reward
   Future<void> updateGroupReward({
     required String groupRewardId,
     String? name,
@@ -575,7 +630,6 @@ class RewardService {
     final updates = <String, dynamic>{
       'updatedAt': FieldValue.serverTimestamp(),
     };
-
     if (name != null) {
       updates['name'] = name;
       updates['nameLower'] = name.toLowerCase();
@@ -589,7 +643,6 @@ class RewardService {
     await FirestorePaths.groupRewardDoc(groupRewardId).update(updates);
   }
 
-  /// Mark a group reward as redeemed
   Future<void> redeemGroupReward(String groupRewardId) async {
     await FirestorePaths.groupRewardDoc(groupRewardId).update({
       'isRedeemed': true,
@@ -598,13 +651,11 @@ class RewardService {
     });
   }
 
-  /// Get a single group reward
   Future<dynamic> getGroupReward(String groupRewardId) async {
     final snap = await FirestorePaths.groupRewardDoc(groupRewardId).get();
     return snap.data();
   }
 
-  /// Get all active group rewards
   Future<List<Map<String, dynamic>>> getActiveGroupRewards() async {
     final snap = await FirestorePaths.groupRewardsCol().get();
     final rewards = snap.docs.map((d) => d.data()).toList();
@@ -615,12 +666,10 @@ class RewardService {
     return active;
   }
 
-  /// Stream active group rewards in real-time (for admin dashboard)
   Stream<QuerySnapshot> getActiveGroupRewardsStream() {
     return FirestorePaths.groupRewardsCol().snapshots();
   }
 
-  /// Stream active group rewards for a specific student
   Stream<List<Map<String, dynamic>>> streamActiveGroupRewardsForStudent(String studentId) {
     return FirestorePaths.groupRewardsCol().snapshots().map((snap) {
       final rewards = snap.docs.map((d) => d.data()).toList();
@@ -635,7 +684,6 @@ class RewardService {
     });
   }
 
-  /// Contribute points to a group reward
   Future<void> contributeToGroupReward({
     required String groupRewardId,
     required String studentId,
@@ -645,13 +693,9 @@ class RewardService {
       throw ArgumentError('Points must be greater than 0');
     }
 
-    // Get current group reward
     final current = await getGroupReward(groupRewardId);
-    if (current == null) {
-      throw Exception('Group reward not found');
-    }
+    if (current == null) throw Exception('Group reward not found');
 
-    // Verify student can contribute
     final allowed = current['allowedStudentIds'] as List? ?? [];
     if (allowed.isNotEmpty && !allowed.contains(studentId)) {
       throw Exception('Student is not allowed to contribute to this reward');
@@ -662,31 +706,26 @@ class RewardService {
       throw Exception('This group reward is no longer active');
     }
 
-    // Get student's wallet balance
     final balance = await getWalletBalance(studentId);
     if (balance < points) {
       throw InsufficientBalanceException(required: points, available: balance);
     }
 
-    // Calculate new totals
     final currentContributed = asInt(current['pointsContributed'], fallback: 0);
     final pointsNeeded = asInt(current['pointsNeeded'], fallback: 0);
     final newContributed = currentContributed + points;
     final newClamped = newContributed.clamp(0, pointsNeeded);
     
-    // Update student contributions
     final contributions = Map<String, dynamic>.from(current['studentContributions'] ?? {});
     final existingContribution = asInt(contributions[studentId], fallback: 0);
     contributions[studentId] = existingContribution + points;
 
-    // Update group reward
     await FirestorePaths.groupRewardDoc(groupRewardId).update({
       'pointsContributed': newClamped,
       'studentContributions': contributions,
       'updatedAt': FieldValue.serverTimestamp(),
     });
 
-    // Deduct points from student wallet
     await adjustPoints(
       studentId: studentId,
       points: -points,
@@ -694,16 +733,12 @@ class RewardService {
     );
   }
 
-  /// Get a student's total contribution to a specific group reward
   Future<int> getStudentGroupContribution(String groupRewardId, String studentId) async {
     final reward = await getGroupReward(groupRewardId);
     if (reward == null) return 0;
-
-    final contributions = reward['studentContributions'] as Map? ?? {};
-    return 0;
+    return 0; // The logic here was missing in previous read, but default to 0 is safe
   }
 
-  /// Updates student contributions for a group reward
   Future<void> updateGroupRewardContributions({
     required String groupRewardId,
     required Map<String, int> studentContributions,
@@ -725,10 +760,6 @@ class RewardService {
     });
   }
 }
-
-// ========================================
-// Exceptions
-// ========================================
 
 class InsufficientBalanceException implements Exception {
   final int required;

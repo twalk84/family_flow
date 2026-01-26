@@ -31,11 +31,12 @@ class CurriculumManagerScreen extends StatefulWidget {
   State<CurriculumManagerScreen> createState() => _CurriculumManagerScreenState();
 }
 
-class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
+class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> with SingleTickerProviderStateMixin {
   final _configService = CourseConfigService.instance;
 
   List<Map<String, dynamic>> _availableConfigs = [];
   bool _loading = true;
+  late TabController _tabController;
 
   // SENIOR FIX: Define streams as members to prevent recreation during build cycles
   late Stream<QuerySnapshot<Map<String, dynamic>>> _studentsStream;
@@ -46,6 +47,7 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
 
     // Initialize all connections ONCE to prevent "flashing" resets
     _studentsStream = FirestorePaths.studentsCol().snapshots();
@@ -54,6 +56,12 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
     _progressStream = FirebaseFirestore.instance.collectionGroup('subjectProgress').snapshots();
 
     _loadConfigs();
+  }
+  
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   // ============================================================
@@ -165,11 +173,6 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
         duration: const Duration(seconds: 2),
       ),
     );
-  }
-
-  String _todayYmd() {
-    final d = DateTime.now();
-    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
   }
 
   // ✅ Always compute counts from live Firestore snapshot docs.
@@ -962,73 +965,6 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
       _snack('Delete failed: $e', color: Colors.red);
     }
   }
-  Future<void> _repairAssignmentsForConfig({
-    required String configId,
-    required Subject subject,
-  }) async {
-    // Pull assignments that match this curriculum (support both field styles)
-    final a1 = await FirestorePaths.assignmentsCol()
-        .where('courseConfigId', isEqualTo: configId)
-        .get();
-  
-    QuerySnapshot<Map<String, dynamic>> a2;
-    try {
-      a2 = await FirestorePaths.assignmentsCol()
-          .where('course_config_id', isEqualTo: configId)
-          .get();
-    } catch (_) {
-      // If no index / field doesn’t exist widely, ignore snake query.
-      a2 = await FirestorePaths.assignmentsCol().limit(0).get();
-    }
-  
-    final byId = <String, QueryDocumentSnapshot<Map<String, dynamic>>>{};
-    for (final d in a1.docs) {
-      byId[d.id] = d;
-    }
-    for (final d in a2.docs) {
-      byId[d.id] = d;
-    }
-  
-    final docs = byId.values.toList();
-    if (docs.isEmpty) {
-      _snack('No assignments found for $configId.', color: Colors.orange);
-      return;
-    }
-  
-    int fixed = 0;
-  
-    // Batch in chunks (Firestore limit safety)
-    const chunkSize = 450;
-    for (int i = 0; i < docs.length; i += chunkSize) {
-      final batch = FirebaseFirestore.instance.batch();
-      final slice = docs.skip(i).take(chunkSize);
-  
-      for (final d in slice) {
-        final data = d.data();
-  
-        final sid = (data['subjectId'] ?? data['subject_id'] ?? '').toString().trim();
-        final sname = (data['subjectName'] ?? data['subject_name'] ?? '').toString().trim();
-  
-        final needsId = sid.isEmpty || sid != subject.id;
-        final needsName = sname.isEmpty || sname != subject.name;
-  
-        if (!needsId && !needsName) continue;
-  
-        batch.update(d.reference, {
-          'subjectId': subject.id,
-          'subject_id': subject.id,
-          'subjectName': subject.name,
-          'subject_name': subject.name,
-          'updatedAt': FieldValue.serverTimestamp(),
-        });
-        fixed++;
-      }
-  
-      await batch.commit();
-    }
-  
-    _snack('Repair complete: fixed $fixed assignments.', color: Colors.green);
-  }
 
   // ============================================================
   // Build (Stabilized Nested Streams)
@@ -1046,6 +982,13 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
             onPressed: _loadConfigs,
           ),
         ],
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'My Subjects', icon: Icon(Icons.class_)),
+            Tab(text: 'Course Library', icon: Icon(Icons.local_library)),
+          ],
+        ),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -1075,188 +1018,51 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                             }
 
                             if (progressSnap.hasError) {
-                              return Center(
-                                child: Text(
-                                  'Stream Error: ${progressSnap.error}',
-                                  style: const TextStyle(color: Colors.red),
-                                ),
-                              );
+                              return Center(child: Text('Error: ${progressSnap.error}'));
                             }
 
                             final progressDocs = progressSnap.data?.docs ?? [];
 
-                            if (_availableConfigs.isEmpty) {
-                              return const Center(
-                                child: Text('No curricula available.', style: TextStyle(color: Colors.white60)),
-                              );
+                            // Filter active vs library
+                            final activeConfigs = <Map<String, dynamic>>[];
+                            final libraryConfigs = <Map<String, dynamic>>[];
+
+                            for (final c in _availableConfigs) {
+                              final configId = c['id'] as String;
+                              
+                              // Check if any student is enrolled in this config
+                              final isEnrolled = progressDocs.any((p) {
+                                final data = p.data();
+                                return (data['courseConfigId']?.toString() ?? '') == configId;
+                              });
+
+                              if (isEnrolled) {
+                                activeConfigs.add(c);
+                              } else {
+                                libraryConfigs.add(c);
+                              }
                             }
 
-                            return ListView.builder(
-                              padding: const EdgeInsets.all(16),
-                              itemCount: _availableConfigs.length,
-                              itemBuilder: (context, index) {
-                                final configData = _availableConfigs[index];
-                                final configId = configData['id'] as String;
-                                final config = configData['config'] as Map<String, dynamic>;
+                            return TabBarView(
+                              controller: _tabController,
+                              children: [
+                                // TAB 1: My Subjects (Active)
+                                _buildActiveTab(
+                                  activeConfigs,
+                                  students,
+                                  subjects,
+                                  assignments,
+                                  assignmentDocs,
+                                  progressDocs,
+                                ),
 
-                                final configName = _getConfigName(config);
-                                final configDesc = _getConfigDescription(config);
-                                final icon = _getConfigIcon(configId);
-                                final totalLessons = _getTotalLessons(config);
-
-                                final enrolledStudents = students.where((s) {
-                                  return progressDocs.any((p) {
-                                    final data = p.data();
-                                    final pStudentId = data['studentId']?.toString() ?? '';
-                                    final pConfigId = data['courseConfigId']?.toString() ?? '';
-                                    return pStudentId == s.id && pConfigId == configId;
-                                  });
-                                }).toList();
-
-                                final Subject? matchedSubject = subjects.cast<Subject?>().firstWhere(
-                                      (s) => s?.courseConfigId == configId,
-                                      orElse: () => null,
-                                    );
-
-                                final linkedAssignmentCount = matchedSubject == null
-                                    ? 0
-                                    : assignments.where((a) => a.subjectId == matchedSubject.id).length;
-
-                                final allStudentIds = students.map((s) => s.id).toList();
-
-                                return Card(
-                                  color: const Color(0xFF1F2937),
-                                  margin: const EdgeInsets.only(bottom: 12),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                    side: const BorderSide(color: Colors.white12),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(icon, style: const TextStyle(fontSize: 28)),
-                                            const SizedBox(width: 12),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    configName,
-                                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                                  ),
-                                                  if (configDesc.isNotEmpty)
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 2),
-                                                      child: Text(
-                                                        configDesc,
-                                                        style: const TextStyle(color: Colors.white60, fontSize: 12),
-                                                      ),
-                                                    ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 4),
-                                                    child: Text(
-                                                      '$totalLessons lessons',
-                                                      style: const TextStyle(color: Colors.white60, fontSize: 13),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            OutlinedButton(
-                                              onPressed: () => _showEnrollSheet(configData, students, subjects),
-                                              child: const Text('Enroll'),
-                                            ),
-
-                                            // ✅ Rename Subject (creates subject if missing, then renames)
-                                            const SizedBox(width: 8),
-                                            IconButton(
-                                              tooltip: 'Rename subject',
-                                              icon: const Icon(Icons.edit, color: Colors.white70),
-                                              onPressed: () async {
-                                                final subject = matchedSubject ??
-                                                    await _ensureSubjectForConfig(
-                                                      configId: configId,
-                                                      configName: configName,
-                                                      subjects: subjects,
-                                                    );
-                                                await _renameSubjectDialog(
-                                                  subject: subject,
-                                                  courseConfigId: configId,
-                                                  allStudents: students,
-                                                );
-                                              },
-                                            ),
-
-                                            if (matchedSubject != null) ...[
-                                              const SizedBox(width: 4),
-                                              IconButton(
-                                                tooltip: 'Delete subject + assignments + progress',
-                                                icon: const Icon(Icons.delete, color: Colors.redAccent),
-                                                onPressed: () => _deleteSubjectCascade(
-                                                  subject: matchedSubject,
-                                                  courseConfigId: configId,
-                                                  linkedAssignmentCount: linkedAssignmentCount,
-                                                  studentIds: allStudentIds,
-                                                ),
-                                              ),
-                                            ],
-                                          ],
-                                        ),
-                                        if (enrolledStudents.isNotEmpty) ...[
-                                          const SizedBox(height: 12),
-                                          const Divider(color: Colors.white12),
-                                          const Text(
-                                            'Enrolled Students',
-                                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          ...enrolledStudents.map((s) {
-                                            final studentAssignments = assignments
-                                                .where((a) => a.studentId == s.id && a.courseConfigId == configId)
-                                                .toList();
-
-                                            final (assignedCount, completed) = _countsForStudentConfig(
-                                              assignmentDocs: assignmentDocs,
-                                              studentId: s.id,
-                                              configId: configId,
-                                            );
-
-                                            return ListTile(
-                                              key: ValueKey('counts_${configId}_${s.id}_${assignedCount}_${completed}'),
-                                              contentPadding: EdgeInsets.zero,
-                                              leading: CircleAvatar(child: Text(s.name.isNotEmpty ? s.name[0] : '?')),
-                                              title: Text(s.name),
-                                              subtitle: Text('$completed completed / $assignedCount assigned'),
-                                              trailing: TextButton(
-                                                onPressed: () async {
-                                                  final subject = matchedSubject ??
-                                                      await _ensureSubjectForConfig(
-                                                        configId: configId,
-                                                        configName: configName,
-                                                        subjects: subjects,
-                                                      );
-
-                                                  await _showManageCurriculumSheet(
-                                                    configData: configData,
-                                                    student: s,
-                                                    existingAssignments: studentAssignments,
-                                                    linkedSubject: subject,
-                                                  );
-                                                },
-                                                child: const Text('Manage'),
-                                              ),
-                                            );
-                                          }),
-                                        ],
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
+                                // TAB 2: Course Library (Available)
+                                _buildLibraryTab(
+                                  libraryConfigs,
+                                  students,
+                                  subjects,
+                                ),
+                              ],
                             );
                           },
                         );
@@ -1266,6 +1072,355 @@ class _CurriculumManagerScreenState extends State<CurriculumManagerScreen> {
                 );
               },
             ),
+    );
+  }
+
+  Widget _buildActiveTab(
+    List<Map<String, dynamic>> configs,
+    List<Student> students,
+    List<Subject> subjects,
+    List<Assignment> assignments,
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> assignmentDocs,
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> progressDocs,
+  ) {
+    if (configs.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.class_outlined, size: 64, color: Colors.white24),
+            const SizedBox(height: 16),
+            const Text(
+              'No active subjects.',
+              style: TextStyle(fontSize: 18, color: Colors.white60),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: () => _tabController.animateTo(1),
+              child: const Text('Browse Library'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: configs.length,
+      itemBuilder: (context, index) {
+        final configData = configs[index];
+        final configId = configData['id'] as String;
+        final config = configData['config'] as Map<String, dynamic>;
+        final configName = _getConfigName(config);
+        final icon = _getConfigIcon(configId);
+        final totalLessons = _getTotalLessons(config);
+
+        // Identify enrolled students for THIS config
+        final enrolledStudents = students.where((s) {
+          return progressDocs.any((p) {
+            final data = p.data();
+            final pStudentId = data['studentId']?.toString() ?? '';
+            final pConfigId = data['courseConfigId']?.toString() ?? '';
+            return pStudentId == s.id && pConfigId == configId;
+          });
+        }).toList();
+
+        // Identify linked Subject doc
+        final Subject? matchedSubject = subjects.cast<Subject?>().firstWhere(
+              (s) => s?.courseConfigId == configId,
+              orElse: () => null,
+            );
+        
+        final linkedAssignmentCount = matchedSubject == null
+             ? 0
+             : assignments.where((a) => a.subjectId == matchedSubject.id).length;
+        
+        final allStudentIds = students.map((s) => s.id).toList();
+
+        return Card(
+          color: const Color(0xFF1F2937),
+          margin: const EdgeInsets.only(bottom: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: const BorderSide(color: Colors.white10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header: Icon + Title + Menu
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 8, 8),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(icon, style: const TextStyle(fontSize: 24)),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            configName,
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '$totalLessons lessons • ${enrolledStudents.length} students',
+                            style: const TextStyle(fontSize: 12, color: Colors.white60),
+                          ),
+                        ],
+                      ),
+                    ),
+                    PopupMenuButton<String>(
+                      icon: const Icon(Icons.more_vert, color: Colors.white60),
+                      onSelected: (value) async {
+                        if (value == 'rename') {
+                          final subject = matchedSubject ??
+                              await _ensureSubjectForConfig(
+                                configId: configId,
+                                configName: configName,
+                                subjects: subjects,
+                              );
+                          await _renameSubjectDialog(
+                            subject: subject,
+                            courseConfigId: configId,
+                            allStudents: students,
+                          );
+                        } else if (value == 'delete') {
+                          if (matchedSubject != null) {
+                            await _deleteSubjectCascade(
+                              subject: matchedSubject,
+                              courseConfigId: configId,
+                              linkedAssignmentCount: linkedAssignmentCount,
+                              studentIds: allStudentIds,
+                            );
+                          }
+                        } else if (value == 'enroll') {
+                          _showEnrollSheet(configData, students, subjects);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: 'enroll',
+                          child: Row(
+                            children: [
+                              Icon(Icons.person_add, size: 18),
+                              SizedBox(width: 8),
+                              Text('Enroll More'),
+                            ],
+                          ),
+                        ),
+                        const PopupMenuItem(
+                          value: 'rename',
+                          child: Row(
+                            children: [
+                              Icon(Icons.edit, size: 18),
+                              SizedBox(width: 8),
+                              Text('Rename Subject'),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 'delete',
+                          enabled: matchedSubject != null,
+                          child: const Row(
+                            children: [
+                              Icon(Icons.delete, size: 18, color: Colors.redAccent),
+                              SizedBox(width: 8),
+                              Text('Delete Subject', style: TextStyle(color: Colors.redAccent)),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const Divider(color: Colors.white10),
+
+              // Student Progress List
+              ...enrolledStudents.map((s) {
+                final studentAssignments = assignments
+                    .where((a) => a.studentId == s.id && a.courseConfigId == configId)
+                    .toList();
+
+                final (assignedCount, completed) = _countsForStudentConfig(
+                  assignmentDocs: assignmentDocs,
+                  studentId: s.id,
+                  configId: configId,
+                );
+
+                // Protect against division by zero if config missing totalLessons
+                final effectiveTotal = totalLessons > 0 ? totalLessons : (assignedCount > 0 ? assignedCount : 1);
+                final progress = completed / effectiveTotal;
+                
+                // Cap progress at 1.0 just in case
+                final safeProgress = progress > 1.0 ? 1.0 : progress;
+
+                return InkWell(
+                  onTap: () async {
+                    final subject = matchedSubject ??
+                        await _ensureSubjectForConfig(
+                          configId: configId,
+                          configName: configName,
+                          subjects: subjects,
+                        );
+
+                    await _showManageCurriculumSheet(
+                      configData: configData,
+                      student: s,
+                      existingAssignments: studentAssignments,
+                      linkedSubject: subject,
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                          child: Text(
+                            s.name.isNotEmpty ? s.name[0] : '?',
+                            style: const TextStyle(fontSize: 14, color: Colors.blueAccent),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      s.name,
+                                      style: const TextStyle(fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Text(
+                                    '$completed / $totalLessons',
+                                    style: const TextStyle(fontSize: 12, color: Colors.white60),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: LinearProgressIndicator(
+                                  value: safeProgress,
+                                  backgroundColor: Colors.white10,
+                                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                                  minHeight: 6,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Icon(Icons.chevron_right, color: Colors.white24, size: 20),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildLibraryTab(
+    List<Map<String, dynamic>> configs,
+    List<Student> students,
+    List<Subject> subjects,
+  ) {
+    if (configs.isEmpty) {
+      return const Center(
+        child: Text(
+          'No available curricula.',
+          style: TextStyle(color: Colors.white60),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: configs.length,
+      itemBuilder: (context, index) {
+        final configData = configs[index];
+        final configId = configData['id'] as String;
+        final config = configData['config'] as Map<String, dynamic>;
+        
+        final configName = _getConfigName(config);
+        final configDesc = _getConfigDescription(config);
+        final icon = _getConfigIcon(configId);
+        final totalLessons = _getTotalLessons(config);
+
+        return Card(
+          color: const Color(0xFF1F2937).withOpacity(0.5),
+          margin: const EdgeInsets.only(bottom: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(color: Colors.white10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Text(icon, style: const TextStyle(fontSize: 28)),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        configName,
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      if (configDesc.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            configDesc,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(color: Colors.white60, fontSize: 13),
+                          ),
+                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 6),
+                        child: Text(
+                          '$totalLessons lessons',
+                          style: const TextStyle(color: Colors.white38, fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                    foregroundColor: Colors.blueAccent,
+                    elevation: 0,
+                  ),
+                  onPressed: () => _showEnrollSheet(configData, students, subjects),
+                  child: const Text('Enroll'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

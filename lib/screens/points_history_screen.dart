@@ -315,6 +315,8 @@ class _TransactionCard extends StatelessWidget {
         return Icons.local_fire_department;
       case WalletTransactionType.improvementBonus:
         return Icons.trending_up;
+      case WalletTransactionType.allocation:
+        return Icons.savings;
     }
   }
 

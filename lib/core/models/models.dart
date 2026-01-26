@@ -161,6 +161,7 @@ class Student {
 
   // Wallet
   final int walletBalance; // points
+  final Map<String, int> rewardAllocations; // rewardId -> points allocated
 
   // Streak tracking (student-level, across all subjects)
   final int currentStreak; // consecutive days with at least 1 completion
@@ -177,6 +178,7 @@ class Student {
     required this.pin,
     required this.notes,
     required this.walletBalance,
+    this.rewardAllocations = const {},
     required this.currentStreak,
     required this.longestStreak,
     required this.lastCompletionDate,
@@ -192,6 +194,15 @@ class Student {
       fallback: 0,
     );
 
+    // Parse reward allocations
+    Map<String, int> allocations = {};
+    final rawAllocations = data['rewardAllocations'] ?? data['reward_allocations'];
+    if (rawAllocations is Map) {
+      rawAllocations.forEach((key, value) {
+        allocations[key.toString()] = asInt(value, fallback: 0);
+      });
+    }
+
     return Student(
       id: doc.id,
       name: asString(data['name']),
@@ -201,6 +212,7 @@ class Student {
       pin: asString(data['pin'], fallback: ''),
       notes: asString(data['notes'], fallback: ''),
       walletBalance: asInt(data['walletBalance'] ?? data['wallet_balance'], fallback: 0),
+      rewardAllocations: allocations,
       currentStreak: asInt(data['currentStreak'] ?? data['current_streak'], fallback: 0),
       longestStreak: asInt(data['longestStreak'] ?? data['longest_streak'], fallback: 0),
       lastCompletionDate: normalizeDueDate(data['lastCompletionDate'] ?? data['last_completion_date']),
@@ -217,6 +229,7 @@ class Student {
         'pin': pin,
         'notes': notes,
         'walletBalance': walletBalance,
+        'rewardAllocations': rewardAllocations,
         'currentStreak': currentStreak,
         'longestStreak': longestStreak,
         'lastCompletionDate': lastCompletionDate,
@@ -242,6 +255,7 @@ class Student {
     String? pin,
     String? notes,
     int? walletBalance,
+    Map<String, int>? rewardAllocations,
     int? currentStreak,
     int? longestStreak,
     String? lastCompletionDate,
@@ -256,6 +270,7 @@ class Student {
         pin: pin ?? this.pin,
         notes: notes ?? this.notes,
         walletBalance: walletBalance ?? this.walletBalance,
+        rewardAllocations: rewardAllocations ?? this.rewardAllocations,
         currentStreak: currentStreak ?? this.currentStreak,
         longestStreak: longestStreak ?? this.longestStreak,
         lastCompletionDate: lastCompletionDate ?? this.lastCompletionDate,

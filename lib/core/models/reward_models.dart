@@ -322,10 +322,13 @@ enum WalletTransactionType {
   redemption,    // Points spent on reward
   adjustment,    // Manual adjustment by parent
   streakBonus,   // Bonus from streak milestone
-  improvementBonus; // Bonus from WPM improvement
+  improvementBonus, // Bonus from WPM improvement
+  allocation;    // Points allocated to a specific reward
 
   static WalletTransactionType fromString(String? value) {
     switch (value?.toLowerCase()) {
+      case 'allocation':
+        return WalletTransactionType.allocation;
       case 'reversal':
         return WalletTransactionType.reversal;
       case 'redemption':
@@ -426,6 +429,8 @@ class WalletTransaction {
         return 'Streak bonus';
       case WalletTransactionType.improvementBonus:
         return 'Improvement bonus';
+      case WalletTransactionType.allocation:
+        return rewardName != null ? 'Allocated to $rewardName' : 'Points allocated';
     }
   }
 
@@ -442,6 +447,8 @@ class WalletTransaction {
         return 'Streak milestone';
       case WalletTransactionType.improvementBonus:
         return 'WPM improvement';
+      case WalletTransactionType.allocation:
+        return 'Saved for later';
     }
   }
 }
