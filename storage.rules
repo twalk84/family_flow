@@ -1,0 +1,25 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Student-related files
+    match /students/{studentId} {
+      // Allow authenticated users to upload their profile pictures
+      match /profile_pic {
+        allow read: if true;
+        allow write: if request.auth != null;
+      }
+      
+      // Allow authenticated users to upload assignment attachments
+      match /attachments/{fileName} {
+        allow read: if true;
+        allow write: if request.auth != null;
+      }
+    }
+    
+    // Add other rules as needed for your app
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}

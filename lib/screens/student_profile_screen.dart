@@ -14,9 +14,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../app_config.dart';
 import '../firestore_paths.dart';
 import '../models.dart';
 import '../widgets/mood_picker.dart';
+import '../widgets/media_viewer.dart';
+import '../services/storage_service.dart';
 import '../services/reward_service.dart';
 import '../services/course_config_service.dart';
 import 'rewards_page.dart';
@@ -594,6 +597,105 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                 ),
               if (assignment.grade != null)
                 _DetailRow('Grade', '${assignment.grade}%'),
+              if (assignment.attachments.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Text(
+                  'Attachments (${assignment.attachments.length})',
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white70),
+                ),
+                const SizedBox(height: 8),
+                ...assignment.attachments.map((att) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: () => AppConfig.openExternalUrl(att.url),
+                          child: Ink(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.white12),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  att.type == 'pdf' ? Icons.picture_as_pdf : Icons.image,
+                                  color: att.type == 'pdf' ? Colors.redAccent : Colors.blueAccent,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      if (att.type == 'image') {
+                                        MediaViewer.show(context, att.url, att.name);
+                                      } else {
+                                        try {
+                                          await AppConfig.openExternalUrl(att.url);
+                                        } catch (e) {
+                                          if (mounted) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(content: Text('Could not open file: $e'), backgroundColor: Colors.red),
+                                            );
+                                          }
+                                        }
+                                      }
+                                    },
+                                    child: Text(
+                                      att.name,
+                                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                                const Icon(Icons.open_in_new, size: 20, color: Colors.white60),
+                                IconButton(
+                                  tooltip: 'Delete',
+                                  icon: const Icon(Icons.delete_outline, size: 20, color: Colors.redAccent),
+                                  onPressed: () async {
+                                    final ok = await showDialog<bool>(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        backgroundColor: const Color(0xFF1F2937),
+                                        title: const Text('Delete attachment?'),
+                                        content: const Text('This will remove the attached file permanently.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(ctx, false),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(ctx, true),
+                                            child: const Text('Delete', style: TextStyle(color: Colors.redAccent)),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                    if (ok == true) {
+                                      await StorageService.deleteFile(att.url);
+                                      await FirestorePaths.assignmentsCol().doc(assignment.id).update({
+                                        'attachments': FieldValue.arrayRemove([att.toMap()]),
+                                        'attachmentUrl': FieldValue.delete(),
+                                        'attachment_url': FieldValue.delete(),
+                                        'updatedAt': FieldValue.serverTimestamp(),
+                                      });
+                                      if (mounted) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Attachment removed.')),
+                                        );
+                                        Navigator.pop(context); // Close modal since data changed
+                                      }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )),
+              ],
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -1172,16 +1274,31 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                     color: Colors.white60,
                                   ),
                                 ),
-                                trailing: a.grade != null
-                                    ? Text(
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    if (a.attachments.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8),
+                                        child: Icon(
+                                          a.attachments.any((att) => att.type == 'pdf')
+                                              ? Icons.picture_as_pdf
+                                              : Icons.image,
+                                          size: 16,
+                                          color: Colors.white38,
+                                        ),
+                                      ),
+                                    if (a.grade != null)
+                                      Text(
                                         '${a.grade}%',
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.amber,
                                         ),
-                                      )
-                                    : null,
+                                      ),
+                                  ],
+                                ),
                                 onTap: () => _showAssignmentDetailsModal(a),
                               );
                             },

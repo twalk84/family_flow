@@ -31,4 +31,31 @@ class StorageService {
       // Ignore if file doesn't exist or permission denied
     }
   }
+
+  /// Specialized upload for assignment attachments.
+  static Future<String> uploadAssignmentAttachment({
+    required File file,
+    required String studentId,
+    required String assignmentId,
+    required String fileName,
+  }) async {
+    try {
+      final extension = fileName.split('.').last;
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      // Standardizing on 'students/{id}/attachments/' which follows the profile_pic pattern
+      final fullPath = 'students/$studentId/attachments/${assignmentId}_$timestamp.$extension';
+
+      final ref = _storage.ref().child(fullPath);
+      final uploadTask = ref.putFile(file);
+      final snapshot = await uploadTask;
+      return await snapshot.ref.getDownloadURL();
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        throw 'Permission denied to upload attachment. Please check Storage Security Rules.';
+      }
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

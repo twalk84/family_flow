@@ -466,6 +466,8 @@ class AssignmentMutations {
      'rewardPointsApplied': 0,
      'reward_points_applied': 0,
    
+     'attachments': [],
+
      'createdAt': FieldValue.serverTimestamp(),
      'updatedAt': FieldValue.serverTimestamp(),
    });

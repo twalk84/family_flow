@@ -311,6 +311,35 @@ class Subject {
 }
 
 // =====================
+// AssignmentAttachment
+// =====================
+class AssignmentAttachment {
+  final String url;
+  final String name;
+  final String type; // 'image', 'pdf', etc.
+
+  const AssignmentAttachment({
+    required this.url,
+    required this.name,
+    required this.type,
+  });
+
+  factory AssignmentAttachment.fromMap(Map<String, dynamic> map) {
+    return AssignmentAttachment(
+      url: asString(map['url']),
+      name: asString(map['name']),
+      type: asString(map['type']),
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'url': url,
+        'name': name,
+        'type': type,
+      };
+}
+
+// =====================
 // Assignment
 // =====================
 class Assignment {
@@ -353,6 +382,9 @@ class Assignment {
   final String studentName;
   final String subjectName;
 
+  // Attachments
+  final List<AssignmentAttachment> attachments;
+
   const Assignment({
     required this.id,
     required this.studentId,
@@ -376,6 +408,7 @@ class Assignment {
     required this.rewardPointsApplied,
     required this.studentName,
     required this.subjectName,
+    required this.attachments,
   });
 
   factory Assignment.fromDoc(
@@ -413,6 +446,27 @@ class Assignment {
       fallback: 0,
     );
 
+    // Attachments parsing
+    final attachmentsList = <AssignmentAttachment>[];
+    final attachmentsRaw = data['attachments'];
+    if (attachmentsRaw is List) {
+      for (final a in attachmentsRaw) {
+        if (a is Map) {
+          attachmentsList.add(AssignmentAttachment.fromMap(Map<String, dynamic>.from(a)));
+        }
+      }
+    }
+
+    // Backward compatibility for single attachmentUrl
+    final legacyUrl = asString(data['attachmentUrl'] ?? data['attachment_url']);
+    if (legacyUrl.isNotEmpty && attachmentsList.isEmpty) {
+      attachmentsList.add(AssignmentAttachment(
+        url: legacyUrl,
+        name: 'Attachment',
+        type: legacyUrl.toLowerCase().contains('.pdf') ? 'pdf' : 'image',
+      ));
+    }
+
     return Assignment(
       id: doc.id,
       studentId: sid,
@@ -436,6 +490,7 @@ class Assignment {
       rewardPointsApplied: asInt(data['rewardPointsApplied'] ?? data['reward_points_applied'], fallback: 0),
       studentName: resolvedStudentName,
       subjectName: resolvedSubjectName,
+      attachments: attachmentsList,
     );
   }
 
@@ -464,6 +519,7 @@ class Assignment {
         'bestGrade': bestGrade,
         'rewardTxnId': rewardTxnId,
         'rewardPointsApplied': rewardPointsApplied,
+        'attachments': attachments.map((a) => a.toMap()).toList(),
       };
 
   Assignment copyWith({
@@ -489,6 +545,7 @@ class Assignment {
     int? rewardPointsApplied,
     String? studentName,
     String? subjectName,
+    List<AssignmentAttachment>? attachments,
   }) =>
       Assignment(
         id: id ?? this.id,
@@ -513,6 +570,7 @@ class Assignment {
         rewardPointsApplied: rewardPointsApplied ?? this.rewardPointsApplied,
         studentName: studentName ?? this.studentName,
         subjectName: subjectName ?? this.subjectName,
+        attachments: attachments ?? this.attachments,
       );
 }
 

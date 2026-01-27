@@ -4,6 +4,8 @@
 // We intentionally removed any “server address / port” runtime settings.
 // The assistant endpoint is configured in AssistantClient.baseUrl.
 
+import 'package:url_launcher/url_launcher.dart';
+
 class AppConfig {
   AppConfig._();
 
@@ -38,4 +40,30 @@ class AppConfig {
     '🙃', // Upside-Down Face (Feeling silly or goofy)
     '😎', // Wearing Shades (Feeling cool)
   ];
+
+  static Future<void> openExternalUrl(String url) async {
+    final uri = Uri.parse(url);
+    try {
+      // First try platform default which is most compatible
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.platformDefault,
+      );
+      
+      if (!launched) {
+        // Fallback to external application
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+      }
+    } catch (e) {
+      // Final fallback attempt
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

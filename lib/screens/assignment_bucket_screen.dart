@@ -6,11 +6,18 @@
 //
 // Live list: when you complete an item it disappears because it no longer matches.
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
+import '../app_config.dart';
 import '../firestore_paths.dart';
 import '../core/models/models.dart'; // <-- IMPORTANT: correct path
+import '../services/storage_service.dart';
+import '../widgets/media_viewer.dart';
 import '../widgets/app_scaffolds.dart';
 
 enum AssignmentBucket { dueToday, overdue }
@@ -124,6 +131,8 @@ class _BucketScaffold extends StatefulWidget {
 }
 
 class _BucketScaffoldState extends State<_BucketScaffold> {
+  bool _isUploading = false;
+
   void _snack(String msg, {Color? color}) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -154,6 +163,102 @@ class _BucketScaffoldState extends State<_BucketScaffold> {
 
   Future<void> _deleteAssignment(String assignmentId) async {
     await FirestorePaths.assignmentsCol().doc(assignmentId).delete();
+  }
+
+  Future<void> _pickAndUploadAttachment(Assignment a, StateSetter setSheetState) async {
+    if (_isUploading) return;
+
+    // Check if we have required IDs
+    if (a.studentId.isEmpty) {
+      _snack('Cannot upload: Student ID is missing.', color: Colors.red);
+      return;
+    }
+
+    try {
+      final source = await showDialog<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: const Color(0xFF1F2937),
+          title: const Text('Add Attachment'),
+          content: const Text('Choose a source for your attachment.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, 'camera'),
+              child: const Text('Camera'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, 'gallery'),
+              child: const Text('Gallery'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, 'pdf'),
+              child: const Text('PDF / File'),
+            ),
+          ],
+        ),
+      );
+
+      if (source == null) return;
+
+      File? file;
+      String? fileName;
+
+      if (source == 'camera' || source == 'gallery') {
+        final picked = await ImagePicker().pickImage(
+          source: source == 'camera' ? ImageSource.camera : ImageSource.gallery,
+        );
+        if (picked != null) {
+          file = File(picked.path);
+          fileName = picked.name;
+        }
+      } else if (source == 'pdf') {
+        final result = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowedExtensions: ['pdf', 'jpg', 'png'],
+        );
+        if (result != null && result.files.single.path != null) {
+          file = File(result.files.single.path!);
+          fileName = result.files.single.name;
+        }
+      }
+
+      if (file == null || fileName == null) return;
+
+      setSheetState(() => _isUploading = true);
+      _snack('Uploading attachment...');
+
+      final url = await StorageService.uploadAssignmentAttachment(
+        file: file,
+        studentId: a.studentId,
+        assignmentId: a.id,
+        fileName: fileName,
+      );
+
+      final newAttachment = AssignmentAttachment(
+        url: url,
+        name: fileName,
+        type: fileName.toLowerCase().contains('.pdf') ? 'pdf' : 'image',
+      );
+
+      await FirestorePaths.assignmentsCol().doc(a.id).update({
+        'attachments': FieldValue.arrayUnion([newAttachment.toMap()]),
+        'attachmentUrl': FieldValue.delete(),
+        'attachment_url': FieldValue.delete(),
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
+
+      if (mounted) {
+        _snack('Attachment uploaded!', color: Colors.green);
+      }
+    } catch (e) {
+      if (mounted) {
+        _snack('Upload failed: $e', color: Colors.red);
+      }
+    } finally {
+      if (mounted) {
+        setSheetState(() => _isUploading = false);
+      }
+    }
   }
 
   Future<T?> _showSmoothSheet<T>({
@@ -230,94 +335,239 @@ class _BucketScaffoldState extends State<_BucketScaffold> {
     await _showSmoothSheet<void>(
       title: 'Assignment',
       builder: (sheetContext) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(a.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 6),
-            Text('${a.subjectName} • ${a.studentName}', style: const TextStyle(color: Colors.white60)),
-            const SizedBox(height: 6),
-            Row(
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.event, size: 18, color: Colors.white70),
-                const SizedBox(width: 8),
-                Text(a.dueDate, style: const TextStyle(color: Colors.white70)),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Divider(color: Colors.white12),
-            const SizedBox(height: 10),
-            const Text('Complete', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            TextField(
-              controller: gradeCtrl,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Grade % (optional)',
-                hintText: 'e.g. 95',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.check),
-                    label: const Text('No Grade'),
-                    onPressed: () async {
-                      try {
-                        await _toggleAssignmentComplete(a.id, completed: true, grade: null);
-                        if (mounted) Navigator.pop(sheetContext);
-                        _snack('Marked complete.', color: Colors.green);
-                      } catch (e) {
-                        _snack('Update failed: $e', color: Colors.red);
-                      }
-                    },
+                Text(a.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                Text('${a.subjectName} • ${a.studentName}', style: const TextStyle(color: Colors.white60)),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    const Icon(Icons.event, size: 18, color: Colors.white70),
+                    const SizedBox(width: 8),
+                    Text(a.dueDate, style: const TextStyle(color: Colors.white70)),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Divider(color: Colors.white12),
+
+                // Attachments section
+                const SizedBox(height: 10),
+                const Text('Attachments', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                  stream: FirestorePaths.assignmentsCol().doc(a.id).snapshots(),
+                  builder: (context, snap) {
+                    final currentA = snap.data == null
+                        ? a
+                        : Assignment.fromDoc(
+                            snap.data!,
+                            studentsById: {}, // Not strictly needed here for attachment UI
+                            subjectsById: {},
+                          );
+                    final attachments = currentA.attachments;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (attachments.isEmpty)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Text('No attachments yet.', style: TextStyle(color: Colors.white38, fontSize: 13)),
+                          )
+                        else
+                          ...attachments.map((att) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(12),
+                                    onTap: () async {
+                                      if (att.type == 'image') {
+                                        MediaViewer.show(context, att.url, att.name);
+                                      } else {
+                                        try {
+                                          await AppConfig.openExternalUrl(att.url);
+                                        } catch (e) {
+                                          if (mounted) {
+                                            _snack('Could not open file: $e', color: Colors.red);
+                                          }
+                                        }
+                                      }
+                                    },
+                                    child: Ink(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.05),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(color: Colors.white12),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            att.type == 'pdf' ? Icons.picture_as_pdf : Icons.image,
+                                            color: att.type == 'pdf' ? Colors.redAccent : Colors.blueAccent,
+                                            size: 20,
+                                          ),
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Text(
+                                              att.name,
+                                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          const Icon(Icons.open_in_new, size: 18, color: Colors.white60),
+                                          const SizedBox(width: 4),
+                                          IconButton(
+                                            tooltip: 'Delete',
+                                            padding: EdgeInsets.zero,
+                                            constraints: const BoxConstraints(),
+                                            icon: const Icon(Icons.delete_outline, size: 18, color: Colors.redAccent),
+                                            onPressed: () async {
+                                              final ok = await showDialog<bool>(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  backgroundColor: const Color(0xFF1F2937),
+                                                  title: const Text('Delete attachment?'),
+                                                  content: const Text('This will remove the attached file permanently.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () => Navigator.pop(ctx, false),
+                                                      child: const Text('Cancel'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () => Navigator.pop(ctx, true),
+                                                      child: const Text('Delete', style: TextStyle(color: Colors.redAccent)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                              if (ok == true) {
+                                                await StorageService.deleteFile(att.url);
+                                                await FirestorePaths.assignmentsCol().doc(a.id).update({
+                                                  'attachments': FieldValue.arrayRemove([att.toMap()]),
+                                                  'attachmentUrl': FieldValue.delete(),
+                                                  'attachment_url': FieldValue.delete(),
+                                                  'updatedAt': FieldValue.serverTimestamp(),
+                                                });
+                                                _snack('Attachment removed.');
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        const SizedBox(height: 4),
+                        if (_isUploading)
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                ),
+                                SizedBox(width: 12),
+                                Text('Uploading...', style: TextStyle(color: Colors.white60, fontSize: 13)),
+                              ],
+                            ),
+                          )
+                        else
+                          OutlinedButton.icon(
+                            icon: const Icon(Icons.add_a_photo_outlined, size: 18),
+                            label: const Text('Add Attachment'),
+                            onPressed: () => _pickAndUploadAttachment(a, setSheetState),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 16),
+                const Divider(color: Colors.white12),
+
+                const SizedBox(height: 10),
+                const Text('Complete', style: TextStyle(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: gradeCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Grade % (optional)',
+                    hintText: 'e.g. 95',
+                    border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    icon: const Icon(Icons.check_circle),
-                    label: const Text('With Grade'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    onPressed: () async {
-                      final raw = gradeCtrl.text.trim();
-                      final g = raw.isEmpty ? null : int.tryParse(raw);
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.check),
+                        label: const Text('No Grade'),
+                        onPressed: () async {
+                          try {
+                            await _toggleAssignmentComplete(a.id, completed: true, grade: null);
+                            if (mounted) Navigator.pop(sheetContext);
+                            _snack('Marked complete.', color: Colors.green);
+                          } catch (e) {
+                            _snack('Update failed: $e', color: Colors.red);
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.check_circle),
+                        label: const Text('With Grade'),
+                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                        onPressed: () async {
+                          final raw = gradeCtrl.text.trim();
+                          final g = raw.isEmpty ? null : int.tryParse(raw);
 
-                      if (raw.isNotEmpty && (g == null || g < 0 || g > 100)) {
-                        _snack('Enter a grade 0–100, or leave blank.', color: Colors.orange);
-                        return;
-                      }
+                          if (raw.isNotEmpty && (g == null || g < 0 || g > 100)) {
+                            _snack('Enter a grade 0–100, or leave blank.', color: Colors.orange);
+                            return;
+                          }
 
-                      try {
-                        await _toggleAssignmentComplete(a.id, completed: true, grade: g);
-                        if (mounted) Navigator.pop(sheetContext);
-                        _snack(g == null ? 'Completed.' : 'Completed • $g%', color: Colors.green);
-                      } catch (e) {
-                        _snack('Update failed: $e', color: Colors.red);
-                      }
-                    },
-                  ),
+                          try {
+                            await _toggleAssignmentComplete(a.id, completed: true, grade: g);
+                            if (mounted) Navigator.pop(sheetContext);
+                            _snack(g == null ? 'Completed.' : 'Completed • $g%', color: Colors.green);
+                          } catch (e) {
+                            _snack('Update failed: $e', color: Colors.red);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Divider(color: Colors.white12),
+                const SizedBox(height: 10),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.delete, color: Colors.redAccent),
+                  title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
+                  subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
+                  onTap: () async {
+                    Navigator.pop(sheetContext);
+                    await _deleteAssignment(a.id);
+                    _snack('Deleted.', color: Colors.redAccent);
+                  },
                 ),
               ],
-            ),
-            const SizedBox(height: 16),
-            const Divider(color: Colors.white12),
-            const SizedBox(height: 10),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.delete, color: Colors.redAccent),
-              title: const Text('Delete assignment', style: TextStyle(color: Colors.redAccent)),
-              subtitle: const Text('This cannot be undone.', style: TextStyle(color: Colors.white60)),
-              onTap: () async {
-                Navigator.pop(sheetContext);
-                await _deleteAssignment(a.id);
-                _snack('Deleted.', color: Colors.redAccent);
-              },
-            ),
-          ],
+            );
+          },
         );
       },
     );
