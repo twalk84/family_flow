@@ -4,7 +4,7 @@
 // - Profile picture upload
 // - Mood tracking
 // - Wallet preview + link to Rewards Page
-// - ✅ Shows "Completed: <timestamp>" under assignment name when completionDate is present
+// - Stats and achievements
 
 import 'dart:io';
 
@@ -38,31 +38,15 @@ class StudentProfileScreen extends StatefulWidget {
 }
 
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
-  static const List<Color> _colorPalette = [
-    Colors.blue,
-    Colors.green,
-    Colors.purple,
-    Colors.pink,
-    Colors.orange,
-    Colors.teal,
-    Colors.red,
-    Colors.amber,
-    Colors.indigo,
-    Colors.cyan,
-  ];
-
   // Collapsible section states
   late bool _expandedCompletedThisWeek;
   late bool _expandedProgressBySubject;
-  late Map<String, bool>
-  _expandedSubjects; // Track expanded state for each subject
 
   @override
   void initState() {
     super.initState();
     _expandedCompletedThisWeek = false;
     _expandedProgressBySubject = false;
-    _expandedSubjects = {}; // Initialize as empty, will populate with subjects
   }
 
   DocumentReference<Map<String, dynamic>> get _studentRef =>
@@ -88,7 +72,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
   Map<String, List<Assignment>> get assignmentsBySubject {
     final result = <String, List<Assignment>>{};
     for (final a in widget.assignments) {
-      // Use subjectName if available, otherwise check subjectId, fallback to "No Subject"
       final key = a.subjectName.isNotEmpty
           ? a.subjectName
           : (a.subjectId.isNotEmpty ? a.subjectId : 'No Subject');
@@ -98,9 +81,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     return result;
   }
 
-  // ========== NEW HELPER METHODS ==========
-
-  // Due assignments (within 7 days or already due)
   List<Assignment> get dueAssignments {
     final now = DateTime.now();
     final weekFromNow = now.add(const Duration(days: 7));
@@ -139,10 +119,9 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     });
   }
 
-  // Overdue assignments (past due date, not completed)
   List<Assignment> get overdueAssignments {
     final now = DateTime.now();
-    final todayDate = DateTime(now.year, now.month, now.day); // Start of today
+    final todayDate = DateTime(now.year, now.month, now.day);
     return widget.assignments.where((a) {
       if (a.isCompleted) return false;
       try {
@@ -153,16 +132,13 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           int.parse(parts[1]),
           int.parse(parts[2]),
         );
-        return due.isBefore(
-          todayDate,
-        ); // Past due only if before TODAY (not before now)
+        return due.isBefore(todayDate);
       } catch (_) {
         return false;
       }
     }).toList();
   }
 
-  // Completed this week
   List<Assignment> get completedThisWeek {
     final now = DateTime.now();
     final weekAgo = now.subtract(const Duration(days: 7));
@@ -203,7 +179,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     });
   }
 
-  // Grade by subject
   Map<String, double> get gradeBySubject {
     final result = <String, double>{};
     for (final a in widget.assignments) {
@@ -213,20 +188,17 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           : (a.subjectId.isNotEmpty ? a.subjectId : 'No Subject');
       result.putIfAbsent(key, () => 0);
 
-      // Track count for average calculation
-      final current = result[key]!;
       if (!result.containsKey('${key}_count')) {
         result['${key}_count'] = 0;
       }
       result['${key}_count'] = result['${key}_count']! + 1;
       result[key] =
-          (current * (result['${key}_count']! - 1) + a.grade!) /
+          (result[key]! * (result['${key}_count']! - 1) + a.grade!) /
           result['${key}_count']!;
     }
     return result;
   }
 
-  // Progress by subject (completed / total)
   Map<String, Map<String, int>> get progressBySubject {
     final result = <String, Map<String, int>>{};
     for (final entry in assignmentsBySubject.entries) {
@@ -236,13 +208,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     return result;
   }
 
-  /// Calculate course-based progress (lessons completed / total lessons in course)
-  /// Groups assignments by courseConfigId and uses curriculum JSON to get total lessons
   Future<Map<String, Map<String, dynamic>>> calculateCourseProgress() async {
     final result = <String, Map<String, dynamic>>{};
     final configService = CourseConfigService.instance;
 
-    // Group assignments by courseConfigId
     final assignmentsByCourse = <String, List<Assignment>>{};
     for (final a in widget.assignments) {
       if (a.courseConfigId.trim().isEmpty) continue;
@@ -250,16 +219,13 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       assignmentsByCourse[a.courseConfigId]!.add(a);
     }
 
-    // For each course, fetch config and calculate progress
     for (final entry in assignmentsByCourse.entries) {
       final courseConfigId = entry.key;
       final assignments = entry.value;
 
       try {
-        // Fetch the curriculum config
         final config = await configService.getConfig(courseConfigId);
         if (config == null) {
-          // Fallback to assignment count if config not found
           final completed = assignments.where((a) => a.isCompleted).length;
           result[courseConfigId] = {
             'completed': completed,
@@ -272,16 +238,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           continue;
         }
 
-        // Get total lessons from config
-        // Most configs now have curriculum.totalLessons field
         int totalLessons = 0;
-
-        // Try getting totalLessons from curriculum object first
         final curriculum = config['curriculum'] as Map<String, dynamic>? ?? {};
         totalLessons = curriculum['totalLessons'] as int? ?? 0;
 
-        // Legacy fallback: Count total lessons from config structure
-        // Try the nested modules/units structure
         if (totalLessons == 0) {
           final modules = curriculum['modules'] as List? ?? [];
           for (final module in modules) {
@@ -292,19 +252,15 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           }
         }
 
-        // If still no lessons, try looking for a direct "lessons" key at config root
         if (totalLessons == 0) {
           final lessons = config['lessons'] as List? ?? [];
           totalLessons = lessons.length;
         }
 
-        // If still no lessons, use assignment count as fallback
         if (totalLessons == 0) {
           totalLessons = assignments.length;
         }
 
-        // Count completed lessons by orderInCourse position
-        // orderInCourse represents the position in the curriculum (1, 2, 3, ...)
         final completedOrders = assignments
             .where((a) => a.isCompleted && a.orderInCourse > 0)
             .map((a) => a.orderInCourse)
@@ -312,13 +268,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
         int completed = completedOrders.length;
 
-        // If no orderInCourse values were tracked, count unique completed assignments
-        // (this is for legacy data without orderInCourse set)
         if (completed == 0 && assignments.any((a) => a.isCompleted)) {
           completed = assignments.where((a) => a.isCompleted).length;
         }
 
-        // Ensure completed doesn't exceed total (in case of data inconsistency)
         if (completed > totalLessons) {
           completed = totalLessons;
         }
@@ -334,7 +287,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           'courseName': (config['title'] as String?) ?? courseConfigId,
         };
       } catch (e) {
-        // If anything fails, fall back to assignment count
         final completed = assignments.where((a) => a.isCompleted).length;
         result[courseConfigId] = {
           'completed': completed,
@@ -350,7 +302,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     return result;
   }
 
-  // Achievements/Badges
   List<String> get achievements {
     final badges = <String>[];
 
@@ -421,130 +372,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       }
     }
   }
-
-  Future<void> _showEditAssignmentSubjectSheet(
-    Assignment assignment,
-    List<Subject> allSubjects,
-  ) async {
-    String selectedSubjectId = assignment.subjectId;
-
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: const Color(0xFF111827),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
-      ),
-      builder: (_) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-          child: StatefulBuilder(
-            builder: (context, setSheetState) => Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Assign Subject: ${assignment.name}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                if (allSubjects.isEmpty)
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text('No subjects available. Create one first.'),
-                  )
-                else
-                  ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: allSubjects.length,
-                    separatorBuilder: (_, __) =>
-                        const Divider(color: Colors.white12),
-                    itemBuilder: (context, i) {
-                      final subject = allSubjects[i];
-                      final selected = selectedSubjectId == subject.id;
-
-                      return ListTile(
-                        onTap: () =>
-                            setSheetState(() => selectedSubjectId = subject.id),
-                        leading: Radio<String>(
-                          value: subject.id,
-                          groupValue: selectedSubjectId,
-                          onChanged: (v) =>
-                              setSheetState(() => selectedSubjectId = v ?? ''),
-                        ),
-                        title: Text(subject.name),
-                        selected: selected,
-                        selectedTileColor: Colors.purple.withOpacity(0.15),
-                      );
-                    },
-                  ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel'),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Icons.save),
-                        label: const Text('Save'),
-                        onPressed: selectedSubjectId.isEmpty
-                            ? null
-                            : () async {
-                                try {
-                                  final selectedSubject = allSubjects
-                                      .firstWhere(
-                                        (s) => s.id == selectedSubjectId,
-                                      );
-
-                                  await FirestorePaths.assignmentsCol()
-                                      .doc(assignment.id)
-                                      .update({
-                                        'subjectId': selectedSubjectId,
-                                        'subjectName': selectedSubject.name,
-                                        'updatedAt':
-                                            FieldValue.serverTimestamp(),
-                                      });
-
-                                  if (mounted) {
-                                    Navigator.pop(context);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'Assignment subject updated.',
-                                        ),
-                                        duration: Duration(seconds: 2),
-                                      ),
-                                    );
-                                  }
-                                } catch (e) {
-                                  if (mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Error: $e')),
-                                    );
-                                  }
-                                }
-                              },
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ========== NEW MODAL METHODS ==========
 
   Future<void> _showDueAssignmentsModal() async {
     await showModalBottomSheet<void>(
@@ -726,7 +553,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
   }
 
   Future<void> _showAssignmentDetailsModal(Assignment assignment) async {
-    Navigator.pop(context); // Close previous modal if any
+    Navigator.pop(context);
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -760,10 +587,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                 'Status',
                 assignment.isCompleted ? '✅ Completed' : '⏳ Incomplete',
               ),
-              if (assignment.isCompleted && assignment.completionDate != null)
+              if (assignment.isCompleted && assignment.completionDate.isNotEmpty)
                 _DetailRow(
                   'Completed On',
-                  assignment.completionDate.toString().split(' ')[0],
+                  assignment.completionDate,
                 ),
               if (assignment.grade != null)
                 _DetailRow('Grade', '${assignment.grade}%'),
@@ -1101,7 +928,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== DUE ASSIGNMENTS BUTTON ==========
                 if (dueAssignments.isNotEmpty)
                   Material(
                     color: Colors.transparent,
@@ -1159,7 +985,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== OVERDUE ASSIGNMENTS BUTTON ==========
                 if (overdueAssignments.isNotEmpty)
                   Material(
                     color: Colors.transparent,
@@ -1218,7 +1043,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== ACHIEVEMENTS / BADGES ==========
                 if (achievements.isNotEmpty)
                   Container(
                     width: double.infinity,
@@ -1282,7 +1106,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== COMPLETED THIS WEEK (COLLAPSIBLE) ==========
                 if (completedThisWeek.isNotEmpty)
                   Container(
                     width: double.infinity,
@@ -1370,7 +1193,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== ASSIGNMENT PROGRESS BY SUBJECT (COLLAPSIBLE) ==========
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -1488,157 +1310,9 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
                 const SizedBox(height: 16),
 
-                // ========== ASSIGNMENTS BY SUBJECT (COLLAPSIBLE) ==========
-                if (assignmentsBySubject.isNotEmpty)
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1F2937),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.purple.withOpacity(0.3)),
-                    ),
-                    child: Theme(
-                      data: Theme.of(
-                        context,
-                      ).copyWith(dividerColor: Colors.transparent),
-                      child: Column(
-                        children: assignmentsBySubject.entries.map((entry) {
-                          final subject = entry.key;
-                          final assignments = entry.value;
-
-                          // Ensure this subject has an expanded state
-                          _expandedSubjects.putIfAbsent(subject, () => false);
-                          final isExpanded =
-                              _expandedSubjects[subject] ?? false;
-
-                          final completed = assignments
-                              .where((a) => a.isCompleted)
-                              .length;
-                          final total = assignments.length;
-
-                          return Column(
-                            children: [
-                              ExpansionTile(
-                                initiallyExpanded: isExpanded,
-                                onExpansionChanged: (expanded) {
-                                  setState(
-                                    () => _expandedSubjects[subject] = expanded,
-                                  );
-                                },
-                                leading: const Icon(
-                                  Icons.school,
-                                  size: 18,
-                                  color: Colors.purple,
-                                ),
-                                title: Text(
-                                  subject,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  '$completed/$total completed',
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white60,
-                                  ),
-                                ),
-                                iconColor: Colors.purple,
-                                collapsedIconColor: Colors.purple,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      16,
-                                      0,
-                                      16,
-                                      16,
-                                    ),
-                                    child: ListView.separated(
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: assignments.length,
-                                      separatorBuilder: (_, __) =>
-                                          const Divider(
-                                            color: Colors.white12,
-                                            height: 1,
-                                          ),
-                                      itemBuilder: (context, i) {
-                                        final a = assignments[i];
-                                        return ListTile(
-                                          dense: true,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                vertical: 4,
-                                              ),
-                                          leading: Icon(
-                                            a.isCompleted
-                                                ? Icons.check_circle
-                                                : Icons.radio_button_unchecked,
-                                            size: 16,
-                                            color: a.isCompleted
-                                                ? Colors.green
-                                                : Colors.white30,
-                                          ),
-                                          title: Text(
-                                            a.name,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              decoration: a.isCompleted
-                                                  ? TextDecoration.lineThrough
-                                                  : null,
-                                              color: a.isCompleted
-                                                  ? Colors.white60
-                                                  : Colors.white,
-                                            ),
-                                          ),
-                                          trailing: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              if (a.grade != null)
-                                                Text(
-                                                  '${a.grade}%',
-                                                  style: const TextStyle(
-                                                    fontSize: 11,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.amber,
-                                                  ),
-                                                ),
-                                              const SizedBox(width: 8),
-                                              if (a.dueDate.isNotEmpty)
-                                                Text(
-                                                  a.dueDate,
-                                                  style: const TextStyle(
-                                                    fontSize: 11,
-                                                    color: Colors.white60,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                          onTap: () =>
-                                              _showAssignmentDetailsModal(a),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Divider(color: Colors.white10, height: 1),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-
-                const SizedBox(height: 16),
-
-                // ========== COURSE PROGRESS (LESSON-BASED) ==========
                 FutureBuilder<Map<String, Map<String, dynamic>>>(
                   future: calculateCourseProgress(),
                   builder: (context, snapshot) {
-                    // Always show something for debugging
                     final courseProgress = snapshot.data ?? {};
                     final isLoading =
                         snapshot.connectionState == ConnectionState.waiting;
@@ -1656,7 +1330,6 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       );
                     }
 
-                    // Show course progress section if we have data
                     if (courseProgress.isNotEmpty) {
                       return Container(
                         width: double.infinity,
@@ -1775,11 +1448,9 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       );
                     }
 
-                    // If no course progress data, don't show section
                     return const SizedBox.shrink();
                   },
                 ),
-
 
                 if (student.notes.isNotEmpty) ...[
                   const SizedBox(height: 16),
@@ -1808,196 +1479,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                   ),
                 ],
 
-                const SizedBox(height: 16),
-
-                Text(
-                  'Assignments',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-
-                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: FirestorePaths.subjectsCol().snapshots(),
-                  builder: (context, subjectsSnap) {
-                    final allSubjects =
-                        subjectsSnap.data?.docs.map(Subject.fromDoc).toList() ??
-                        [];
-
-                    return Column(
-                      children: [
-                        ...assignmentsBySubject.entries.map((entry) {
-                          final subject = entry.key;
-                          final items = entry.value;
-
-                          final done = items.where((a) => a.isCompleted).length;
-                          final total = items.length;
-
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 12),
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1F2937),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.white12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        subject,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Text(
-                                      '$done/$total',
-                                      style: const TextStyle(
-                                        color: Colors.white60,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                ...items.take(10).map((a) {
-                                  final completed = a.isCompleted;
-                                  final needsSubject = a.subjectId.isEmpty;
-
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: InkWell(
-                                      onTap: needsSubject
-                                          ? () =>
-                                                _showEditAssignmentSubjectSheet(
-                                                  a,
-                                                  allSubjects,
-                                                )
-                                          : null,
-                                      borderRadius: BorderRadius.circular(6),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 2,
-                                            ),
-                                            child: Icon(
-                                              completed
-                                                  ? Icons.check_circle
-                                                  : Icons.circle_outlined,
-                                              size: 18,
-                                              color: completed
-                                                  ? Colors.green
-                                                  : Colors.white24,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  a.name,
-                                                  style: TextStyle(
-                                                    color: completed
-                                                        ? Colors.white70
-                                                        : Colors.white,
-                                                    decoration: completed
-                                                        ? TextDecoration
-                                                              .lineThrough
-                                                        : null,
-                                                  ),
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                if (completed &&
-                                                    a
-                                                        .completionDate
-                                                        .isNotEmpty) ...[
-                                                  const SizedBox(height: 2),
-                                                  Text(
-                                                    'Completed: ${a.completionDate}',
-                                                    style: const TextStyle(
-                                                      color: Colors.greenAccent,
-                                                      fontSize: 12,
-                                                    ),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ] else if (needsSubject) ...[
-                                                  const SizedBox(height: 2),
-                                                  Text(
-                                                    'Tap to assign subject',
-                                                    style: const TextStyle(
-                                                      color: Colors.orange,
-                                                      fontSize: 11,
-                                                    ),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ],
-                                              ],
-                                            ),
-                                          ),
-                                          if (a.grade != null)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                              ),
-                                              child: Text(
-                                                '${a.grade}%',
-                                                style: const TextStyle(
-                                                  color: Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          if (needsSubject)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 8,
-                                              ),
-                                              child: Icon(
-                                                Icons.edit,
-                                                size: 16,
-                                                color: Colors.orange
-                                                    .withOpacity(0.7),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }),
-                                if (items.length > 10)
-                                  Text(
-                                    '+ ${items.length - 10} more…',
-                                    style: const TextStyle(
-                                      color: Colors.white60,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        }),
-                      ],
-                    );
-                  },
-                ),
+                const SizedBox(height: 32),
               ],
             ),
           ),
@@ -2130,9 +1612,6 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
-// ========================================
-// Detail Row Helper
-// ========================================
 
 class _DetailRow extends StatelessWidget {
   final String label;

@@ -130,6 +130,20 @@ class _DashboardScreenState extends State<DashboardScreen>
     return _defaultStudentPalette[index % _defaultStudentPalette.length];
   }
 
+  String _getSubjectIcon(Subject s) {
+    final id = (s.courseConfigId.isNotEmpty ? s.courseConfigId : s.name).toLowerCase();
+    if (id.contains('math') || id.contains('saxon')) return '📐';
+    if (id.contains('chem')) return '🧪';
+    if (id.contains('bio')) return '🧬';
+    if (id.contains('latin')) return '🏛️';
+    if (id.contains('lit')) return '📚';
+    if (id.contains('typing')) return '⌨️';
+    if (id.contains('spanish')) return '🇪🇸';
+    if (id.contains('german') || id.contains('deutsche')) return '🇩🇪';
+    if (id.contains('russian')) return '🇷🇺';
+    return '📖';
+  }
+
   // ============================================================
   // Smooth Bottom Sheet (general-purpose)
   // ============================================================
@@ -1462,17 +1476,6 @@ class _DashboardScreenState extends State<DashboardScreen>
       return a.studentName.toLowerCase().compareTo(b.studentName.toLowerCase());
     });
 
-    final sample = [...subjectAssignments];
-    sample.sort((a, b) {
-      final ac = a.isCompleted ? 1 : 0;
-      final bc = b.isCompleted ? 1 : 0;
-      if (ac != bc) return ac.compareTo(bc);
-      if (a.dueDate.isEmpty && b.dueDate.isNotEmpty) return 1;
-      if (a.dueDate.isNotEmpty && b.dueDate.isEmpty) return -1;
-      return a.dueDate.compareTo(b.dueDate);
-    });
-    final upcomingSample = sample.take(10).toList();
-
     await _showSmoothSheet<void>(
       title: 'Subject',
       builder: (sheetContext) {
@@ -1567,61 +1570,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                         Text(
                           '${r.completed}/${r.total}',
                           style: const TextStyle(color: Colors.white70),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            const SizedBox(height: 12),
-            const Divider(color: Colors.white12),
-            const SizedBox(height: 10),
-            const Text('Sample assignments', style: TextStyle(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            if (upcomingSample.isEmpty)
-              Text('No assignments yet.', style: TextStyle(color: Colors.grey[500]))
-            else
-              Column(
-                children: upcomingSample.map((a) {
-                  final done = a.isCompleted;
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: done ? Colors.green.withOpacity(0.10) : const Color(0xFF1F2937),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: done ? Colors.green.withOpacity(0.25) : Colors.white12),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(done ? Icons.check_circle : Icons.circle_outlined,
-                            color: done ? Colors.green : Colors.grey),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                a.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  decoration: done ? TextDecoration.lineThrough : null,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                a.studentName,
-                                style: const TextStyle(color: Colors.white60, fontSize: 12),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          a.dueDate.isEmpty ? '—' : a.dueDate,
-                          style: const TextStyle(color: Colors.white60, fontSize: 12),
                         ),
                       ],
                     ),
@@ -2403,10 +2351,19 @@ class _DashboardScreenState extends State<DashboardScreen>
           final total = items.length;
 
           final selected = _assignBrowserSubjectId == key;
+          final sub = subjectsById[key];
+          final iconStr = sub != null ? _getSubjectIcon(sub) : (key == unassignedKey ? '❓' : '📖');
 
           return ListTile(
             onTap: () => selectSubject(key),
-            leading: const Icon(Icons.book, color: Colors.white54, size: 20),
+            leading: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(iconStr, style: const TextStyle(fontSize: 16)),
+            ),
             title: Text(
               subjectLabel(key),
               maxLines: 1,
@@ -2658,6 +2615,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final studentSetBySubject = <String, Set<String>>{};
 
     for (final a in assignments) {
+      if (a.subjectId.isEmpty) continue;
       assignmentCountBySubject[a.subjectId] = (assignmentCountBySubject[a.subjectId] ?? 0) + 1;
       (studentSetBySubject[a.subjectId] ??= <String>{}).add(a.studentId);
     }
@@ -2690,12 +2648,13 @@ class _DashboardScreenState extends State<DashboardScreen>
         TextField(
           controller: _subjectSearchCtrl,
           decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.search),
+            prefixIcon: const Icon(Icons.search, color: Colors.white60),
             hintText: 'Search subjects...',
             filled: true,
             fillColor: const Color(0xFF1F2937),
+            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
             suffixIcon: _subjectQuery.isEmpty
@@ -2710,13 +2669,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                   ),
           ),
         ),
-        const SizedBox(height: 8),
-        if (_subjectQuery.isNotEmpty)
-          Text(
-            'Showing ${filtered.length} of ${subjects.length}',
-            style: const TextStyle(color: Colors.white60, fontSize: 12),
-          ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         Expanded(
           child: filtered.isEmpty
               ? Center(
@@ -2731,14 +2684,29 @@ class _DashboardScreenState extends State<DashboardScreen>
                   itemBuilder: (context, index) {
                     final s = filtered[index];
                     final aCount = assignmentCountBySubject[s.id] ?? 0;
-                    final stuCount = studentSetBySubject[s.id]?.length ?? 0;
+                    final studentIds = (studentSetBySubject[s.id] ?? <String>{}).toList();
+                    final icon = _getSubjectIcon(s);
+
+                    // turn studentIds into color dots
+                    final dots = <Color>[];
+                    for (int i = 0; i < students.length; i++) {
+                      final st = students[i];
+                      if (studentIds.contains(st.id)) {
+                        dots.add(_colorForStudent(st, i));
+                      }
+                    }
 
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Material(
-                        color: Colors.transparent,
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Card(
+                        color: const Color(0xFF1F2937),
+                        margin: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: const BorderSide(color: Colors.white10),
+                        ),
                         child: InkWell(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                           onTap: () => _showSubjectDetailSheet(
                             subject: s,
                             students: students,
@@ -2749,16 +2717,18 @@ class _DashboardScreenState extends State<DashboardScreen>
                             students: students,
                             allAssignments: assignments,
                           ),
-                          child: Ink(
+                          child: Padding(
                             padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF1F2937),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.white12),
-                            ),
                             child: Row(
                               children: [
-                                const Icon(Icons.book, color: Colors.white70),
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black26,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(icon, style: const TextStyle(fontSize: 20)),
+                                ),
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: Column(
@@ -2766,31 +2736,85 @@ class _DashboardScreenState extends State<DashboardScreen>
                                     children: [
                                       Text(
                                         s.name,
-                                        style: const TextStyle(fontWeight: FontWeight.w600),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       const SizedBox(height: 2),
-                                      Text(
-                                        '$aCount assignment${aCount == 1 ? '' : 's'} • $stuCount student${stuCount == 1 ? '' : 's'}',
-                                        style: const TextStyle(color: Colors.white60, fontSize: 12),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '$aCount assignment${aCount == 1 ? '' : 's'}',
+                                            style: const TextStyle(
+                                              color: Colors.white60,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          if (dots.isNotEmpty) ...[
+                                            for (final c in dots.take(5))
+                                              Container(
+                                                width: 6,
+                                                height: 6,
+                                                margin: const EdgeInsets.only(right: 3),
+                                                decoration: BoxDecoration(
+                                                  color: c,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                            if (dots.length > 5)
+                                              Text(
+                                                '+${dots.length - 5}',
+                                                style: const TextStyle(
+                                                  color: Colors.white60,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                          ],
+                                        ],
                                       ),
                                     ],
                                   ),
                                 ),
-                                IconButton(
-                                  tooltip: 'Edit subject',
-                                  icon: const Icon(Icons.edit, color: Colors.white70),
-                                  onPressed: () => _showEditSubjectSheet(s),
+                                PopupMenuButton<String>(
+                                  icon: const Icon(Icons.more_vert, color: Colors.white60),
+                                  onSelected: (val) {
+                                    if (val == 'edit') {
+                                      _showEditSubjectSheet(s);
+                                    } else if (val == 'delete') {
+                                      _confirmDeleteSubject(
+                                        subject: s,
+                                        students: students,
+                                        allAssignments: assignments,
+                                      );
+                                    }
+                                  },
+                                  itemBuilder: (ctx) => [
+                                    const PopupMenuItem(
+                                      value: 'edit',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.edit, size: 18),
+                                          SizedBox(width: 8),
+                                          Text('Edit Subject'),
+                                        ],
+                                      ),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 'delete',
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.delete, size: 18, color: Colors.redAccent),
+                                          SizedBox(width: 8),
+                                          Text('Delete Subject', style: TextStyle(color: Colors.redAccent)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                IconButton(
-                                  tooltip: 'Delete subject',
-                                  icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                                  onPressed: () => _confirmDeleteSubject(
-                                    subject: s,
-                                    students: students,
-                                    allAssignments: assignments,
-                                  ),
-                                ),
+                                const Icon(Icons.chevron_right, color: Colors.white24, size: 18),
                               ],
                             ),
                           ),

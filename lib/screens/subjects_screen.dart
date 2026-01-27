@@ -79,6 +79,20 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     return _fallbackStudentPalette[index % _fallbackStudentPalette.length];
   }
 
+  String _getSubjectIcon(Subject s) {
+    final id = (s.courseConfigId.isNotEmpty ? s.courseConfigId : s.name).toLowerCase();
+    if (id.contains('math') || id.contains('saxon')) return '📐';
+    if (id.contains('chem')) return '🧪';
+    if (id.contains('bio')) return '🧬';
+    if (id.contains('latin')) return '🏛️';
+    if (id.contains('lit')) return '📚';
+    if (id.contains('typing')) return '⌨️';
+    if (id.contains('spanish')) return '🇪🇸';
+    if (id.contains('german') || id.contains('deutsche')) return '🇩🇪';
+    if (id.contains('russian')) return '🇷🇺';
+    return '📖';
+  }
+
   Future<void> _renameSubject(Subject subject) async {
     final ctrl = TextEditingController(text: subject.name);
 
@@ -193,7 +207,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                               controller: _searchCtrl,
                               decoration: InputDecoration(
                                 hintText: 'Search subjects (e.g. “Latin”, “Math”)',
-                                prefixIcon: const Icon(Icons.search),
+                                prefixIcon: const Icon(Icons.search, color: Colors.white60),
                                 suffixIcon: _query.isEmpty
                                     ? null
                                     : IconButton(
@@ -201,25 +215,33 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                                         icon: const Icon(Icons.close),
                                         onPressed: () => _searchCtrl.text = '',
                                       ),
-                                border: const OutlineInputBorder(),
+                                filled: true,
+                                fillColor: const Color(0xFF1F2937),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
                               ),
                             ),
-                            const SizedBox(height: 14),
+                            const SizedBox(height: 20),
 
                             Row(
                               children: [
                                 Text(
                                   'Subjects (${filtered.length})',
-                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                                 const Spacer(),
-                                Text(
-                                  hasAssignments ? 'Live' : 'Loading…',
-                                  style: const TextStyle(color: Colors.white60, fontSize: 12),
-                                ),
+                                if (!hasAssignments)
+                                  const SizedBox(
+                                    width: 14,
+                                    height: 14,
+                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                  ),
                               ],
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 16),
 
                             Expanded(
                               child: filtered.isEmpty
@@ -242,77 +264,118 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                                           }
                                         }
 
-                                        return Padding(
-                                          padding: const EdgeInsets.only(bottom: 10),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: InkWell(
-                                              borderRadius: BorderRadius.circular(14),
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (_) => SubjectDetailScreen(
-                                                      subject: s,
-                                                      students: widget.students,
+                                        final icon = _getSubjectIcon(s);
+
+                                        return Card(
+                                          color: const Color(0xFF1F2937),
+                                          margin: const EdgeInsets.only(bottom: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(16),
+                                            side: const BorderSide(color: Colors.white10),
+                                          ),
+                                          child: InkWell(
+                                            borderRadius: BorderRadius.circular(16),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (_) => SubjectDetailScreen(
+                                                    subject: s,
+                                                    students: widget.students,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.all(10),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black26,
+                                                      borderRadius: BorderRadius.circular(12),
+                                                    ),
+                                                    child: Text(icon, style: const TextStyle(fontSize: 24)),
+                                                  ),
+                                                  const SizedBox(width: 16),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          s.name,
+                                                          style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight: FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(height: 4),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              '$count assignment${count == 1 ? '' : 's'}',
+                                                              style: const TextStyle(
+                                                                color: Colors.white60,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(width: 10),
+                                                            if (dots.isNotEmpty) ...[
+                                                              for (final c in dots.take(6))
+                                                                Container(
+                                                                  width: 7,
+                                                                  height: 7,
+                                                                  margin: const EdgeInsets.only(right: 4),
+                                                                  decoration: BoxDecoration(
+                                                                    color: c,
+                                                                    shape: BoxShape.circle,
+                                                                  ),
+                                                                ),
+                                                              if (dots.length > 6)
+                                                                Text(
+                                                                  '+${dots.length - 6}',
+                                                                  style: const TextStyle(
+                                                                    color: Colors.white60,
+                                                                    fontSize: 11,
+                                                                  ),
+                                                                ),
+                                                            ] else ...[
+                                                              const Text(
+                                                                '• no students yet',
+                                                                style: TextStyle(
+                                                                  color: Colors.white38,
+                                                                  fontSize: 12,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ],
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
-                                                );
-                                              },
-                                              child: Ink(
-                                                padding: const EdgeInsets.all(14),
-                                                decoration: BoxDecoration(
-                                                  color: const Color(0xFF1F2937),
-                                                  borderRadius: BorderRadius.circular(14),
-                                                  border: Border.all(color: Colors.white12),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    const Icon(Icons.menu_book, color: Colors.white70),
-                                                    const SizedBox(width: 12),
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(
-                                                            s.name,
-                                                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                                            overflow: TextOverflow.ellipsis,
-                                                          ),
-                                                          const SizedBox(height: 4),
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                '$count assignment${count == 1 ? '' : 's'}',
-                                                                style: const TextStyle(color: Colors.white60, fontSize: 12),
-                                                              ),
-                                                              const SizedBox(width: 10),
-                                                              if (dots.isNotEmpty) ...[
-                                                                for (final c in dots.take(6))
-                                                                  Container(
-                                                                    width: 7,
-                                                                    height: 7,
-                                                                    margin: const EdgeInsets.only(right: 4),
-                                                                    decoration: BoxDecoration(color: c, shape: BoxShape.circle),
-                                                                  ),
-                                                                if (dots.length > 6)
-                                                                  Text('+${dots.length - 6}', style: const TextStyle(color: Colors.white60, fontSize: 11)),
-                                                              ] else ...[
-                                                                const Text('• no students yet', style: TextStyle(color: Colors.white38, fontSize: 12)),
-                                                              ],
-                                                            ],
-                                                          ),
-                                                        ],
+                                                  PopupMenuButton<String>(
+                                                    icon: const Icon(Icons.more_vert, color: Colors.white60),
+                                                    onSelected: (val) {
+                                                      if (val == 'edit') {
+                                                        _renameSubject(s);
+                                                      }
+                                                    },
+                                                    itemBuilder: (ctx) => [
+                                                      const PopupMenuItem(
+                                                        value: 'edit',
+                                                        child: Row(
+                                                          children: [
+                                                            Icon(Icons.edit, size: 18),
+                                                            SizedBox(width: 8),
+                                                            Text('Edit Subject'),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                    IconButton(
-                                                      tooltip: 'Edit subject',
-                                                      icon: const Icon(Icons.edit, color: Colors.white70),
-                                                      onPressed: () => _renameSubject(s),
-                                                    ),
-                                                    const Icon(Icons.chevron_right, color: Colors.white38),
-                                                  ],
-                                                ),
+                                                    ],
+                                                  ),
+                                                  const Icon(Icons.chevron_right, color: Colors.white24),
+                                                ],
                                               ),
                                             ),
                                           ),
